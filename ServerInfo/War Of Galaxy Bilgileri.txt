@@ -1,5 +1,5 @@
 -- Local Production Scaffold
-Scaffold-DbContext "Server=3.17.37.73;Database=db_warofgalaxy;Trusted_Connection=False;User Id=sa;Password=sa;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -f
+Scaffold-DbContext "Server=3.17.37.73;Database=db_warofgalaxy;Trusted_Connection=False;User Id=sa;Password=VB79n7nq.;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -f
 
 
 -- Amazon Login Info
@@ -7,6 +7,11 @@ Username : akbalburak2@gmail.com
 Password : VB79n7nq.
 
 -- Main Server
-Url      : ec2-3-13-205-84.us-east-2.compute.amazonaws.com
+Url      : ec2-3-17-37-73.us-east-2.compute.amazonaws.com
 Username : Administrator
 Password : GkeIkpz@OfJ=q739GIp2SYxAAq5CR&VL
+
+-- DB
+Database = db_warofgalaxy
+Username = sa
+Password = VB79n7nq.
