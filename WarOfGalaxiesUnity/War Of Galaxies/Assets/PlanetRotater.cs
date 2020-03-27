@@ -13,6 +13,12 @@ public class PlanetRotater : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.RotateAround(transform.position, transform.up, RotateSpeed* Time.deltaTime);
+        transform.RotateAround(transform.position, transform.up, RotateSpeed * Time.deltaTime);
     }
+
+    private void OnMouseDown()
+    {
+        ZoomInPlanet.ZIP.BeginZoom(this.transform);
+    }
+
 }

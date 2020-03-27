@@ -62,8 +62,53 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Lean\Common\Examples\Scripts\LeanCircuit.cs" />
+    <Compile Include="Assets\Lean\Common\Examples\Scripts\LeanDocumentation.cs" />
+    <Compile Include="Assets\Lean\Common\Examples\Scripts\LeanLinkTo.cs" />
+    <Compile Include="Assets\Lean\Common\Scripts\LeanHelper.cs" />
+    <Compile Include="Assets\Lean\Common\Scripts\LeanInspector.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanDestroy.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanDragCamera.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanDragTrail.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanDragTranslate.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanFingerData.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanFingerDown.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanFingerFilter.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanFingerOld.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanFingerSet.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanFingerSwipe.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanFingerTap.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanFingerUp.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanInfoText.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanPath.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanPinchScale.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanPlane.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanPulseScale.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanRoll.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanScreenDepth.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanSelect.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanSelectable.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanSelectableBehaviour.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanSelectableGraphicColor.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanSelectableRendererColor.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanSelectableSpriteRendererColor.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanSpawn.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanSwipeBase.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanTouchEvents.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanTwistRotate.cs" />
+    <Compile Include="Assets\Lean\Touch\Examples\Scripts\LeanTwistRotateAxis.cs" />
+    <Compile Include="Assets\Lean\Touch\Scripts\LeanFinger.cs" />
+    <Compile Include="Assets\Lean\Touch\Scripts\LeanGesture.cs" />
+    <Compile Include="Assets\Lean\Touch\Scripts\LeanSnapshot.cs" />
+    <Compile Include="Assets\Lean\Touch\Scripts\LeanTouch.cs" />
     <Compile Include="Assets\PlanetRotater.cs" />
     <Compile Include="Assets\SolarSystemRotate.cs" />
+    <Compile Include="Assets\ZoomInPlanet.cs" />
+    <None Include="Assets\Lean\Common\Examples\Fonts\OFL.txt" />
+    <None Include="Assets\Lean\Common\Examples\Shaders\Object.shader" />
+    <None Include="Assets\Lean\Common\Examples\Shaders\Skybox.shader" />
+    <None Include="Assets\Lean\READ ME.txt" />
+    <None Include="Assets\Lean\Common\Examples\Shaders\Alpha.shader" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Furkan/Documents/GitHub/WarOfGalaxies/WarOfGalaxiesUnity/War Of Galaxies/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>

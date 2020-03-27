@@ -14,4 +14,9 @@ Password : GkeIkpz@OfJ=q739GIp2SYxAAq5CR&VL
 -- DB
 Database = db_warofgalaxy
 Username = sa
-Password = VB79n7nq.
+Password = sa
+
+-- Main Server Yeni
+Public DNS	: ec2-3-122-182-106.eu-central-1.compute.amazonaws.com
+User name	: Administrator
+Password	: 6Fi8nu4-m3C5asAgVJwga)sf3fxOso(&
