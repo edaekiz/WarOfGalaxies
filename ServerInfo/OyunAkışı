@@ -1,0 +1,34 @@
+-Her kullanıcıya özel token var.
+-Her kullanıcının kendisine ait bir veya birden fazla gezegeni var.
+-Her gezegenin kendisine ait temel kaynakları var.
+-Bu temel kaynaklar binalar tarafından temin edilecek.
+-Bir binada bir gezegende yalnızca bir tane olabilir ve yalnızca yükseltme yapılabilir.
+-Bina yükseltme gereksinimleri olarak Metal, Kristal ve Deutrium istenecek.
+-Ayrıca kullanıcının inşa edebileceği bir tersane mevcut.
+-Tersaneden gemi üretimi yapılacak.
+-Gemiler metal,deutrium yada kristal ile üretilecek. 
+-Gemilerin gereksinimi olarak Tersane seviyesi yada araştırma seviyesi gerekecek.
+-Ayrıca gemilerin üretim taban süresi olacak. Bu üretim seviyesi bina seviyesine bağlı olarak azalacak.
+-Ayrıca gemilerin, hareket hızı,saldırı puanı,saldırı hızı,yük kapasitesi,ve yakıt tüketimi, savunma puanı olacak.
+-Gemileri, savuma sistemlerini, savaşı hatta üretimleri etkilecek bir araştırmamız olacak.
+-Yapılan araştırmalar ile,
+.İticiler (Gemilerin hızını arttırmak için),
+.Gemilerin kapasitesini,
+.Gemilerin saldırı gücünü,
+.Kalkan tekniği (Gemilerin savunma puanını yükseltmek için),
+.Düşman tespit mesafesini,
+.Silah tekniği (Bazı makineli silahların atış gücünü yükseltmek için),
+.Lazer tekniği (Lazerli silahların atış gücünü yükseltmek için)
+.Casusluk tekniği (Gönderilen casus sondalarının daha detaylı bilgi alması için.)
+değerlerini yükseltecek araştırmalar yapabilecek.
+-Oyuncuların gezegenlerini savunabilmesi için Savunma ünitlerimiz olacak.
+-Yine bu savunma ünitelerini kurmak için metal,kristal,deutrium gerekecek.
+-Savunma üniteleri aynı zamanda araştırmalar gerektirecek.
+-Savunma ünitelerinin hız ve kapasite hariç diğer bütün değerleri olacak.
+-Savaş sisteminde kullanıcıların sahip olduğu gezegenlerin her birinin kordinatları mevcut. (3.Galaksi 6.Güneş sistemi 1.Yörünge) Kullanıcı düşmanlarını güneş sistemleri üzerinden arayacak.
+-Kullanıcının casusluk raporları tutulacak.
+-Kullanıcı saldıracağı gemileri seçtikten sonra gemiler yola çıkacak.
+-Savaş sonucu olarak turlar olacak. Her tur da gemiler birbirlerine saldıracaklar. Tabiki saldırı hızına bağlı olarak.
+ÖRN;Saldırı hızı 5 bu demek oluyor ki her 5 turda bir saldırı yapacak bu gemi.
+Savaşı kazanırsa savunan tarafın ganimetinin yarısını alacak. Yalnız burada dikkat etmemiz gereken adamın gemilerinin kapasitesinin yeterli olması lazım.
+-Daha sonra da geri dönecekler.
