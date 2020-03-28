@@ -186,7 +186,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &468418359
 GameObject:
@@ -324,7 +324,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: 0.5}
-  m_LocalPosition: {x: 60, y: 1500, z: 0}
+  m_LocalPosition: {x: 0, y: 1500, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -409,7 +409,7 @@ MonoBehaviour:
     RequiredMouseButtons: 0
     RequiredSelectable: {fileID: 0}
   ScreenDepth:
-    Conversion: 0
+    Conversion: 5
     Camera: {fileID: 963194227}
     Object: {fileID: 0}
     Layers:
@@ -420,50 +420,6 @@ MonoBehaviour:
   Dampening: 10
   Inertia: 0
   remainingDelta: {x: -8.3720346e-17, y: 2.7786437e-16, z: -4.046e-42}
---- !u!1 &1479950395
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1479950397}
-  - component: {fileID: 1479950396}
-  m_Layer: 0
-  m_Name: EffectManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1479950396
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1479950395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab035b616c5ed8e4693aa141ee5189cb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ZoomEffectSpeed: 120
---- !u!4 &1479950397
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1479950395}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -880.4754, y: 905.6268, z: -449.50958}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1511273342
 GameObject:
   m_ObjectHideFlags: 0
@@ -474,6 +430,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1511273344}
   - component: {fileID: 1511273343}
+  - component: {fileID: 1511273348}
+  - component: {fileID: 1511273347}
+  - component: {fileID: 1511273346}
+  - component: {fileID: 1511273345}
   m_Layer: 0
   m_Name: GalaxyManager
   m_TagString: Untagged
@@ -493,6 +453,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d856c00fcdb3cd341bfedf72d5284107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SolarPanetData:
+  - SolarPlanetType: 1
+    SolarPlanetMaterial: {fileID: 2100000, guid: 0b13d2a6681988b4aae18260285a1e33,
+      type: 2}
+  - SolarPlanetType: 2
+    SolarPlanetMaterial: {fileID: 2100000, guid: f7ffd9202c06db048b673cbab6bfaae4,
+      type: 2}
+  - SolarPlanetType: 3
+    SolarPlanetMaterial: {fileID: 2100000, guid: e54a1208d8b7267408a1fd16dafa15e4,
+      type: 2}
+  SolarSystem:
+    GalaxyIndex: 1
+    SolarSystemIndex: 1
+    Planets:
+    - PlanetIndexInSolarSystem: 1
+      SolarPlanetType: 1
+      AroundRotateSpeed: 10
+      SunAroundRotateSpeed: 5
+    - PlanetIndexInSolarSystem: 2
+      SolarPlanetType: 2
+      AroundRotateSpeed: 10
+      SunAroundRotateSpeed: 5
+    - PlanetIndexInSolarSystem: 6
+      SolarPlanetType: 3
+      AroundRotateSpeed: 10
+      SunAroundRotateSpeed: 5
+    - PlanetIndexInSolarSystem: 7
+      SolarPlanetType: 3
+      AroundRotateSpeed: 10
+      SunAroundRotateSpeed: 5
+    - PlanetIndexInSolarSystem: 0
+      SolarPlanetType: 3
+      AroundRotateSpeed: 10
+      SunAroundRotateSpeed: 5
+    - PlanetIndexInSolarSystem: 0
+      SolarPlanetType: 3
+      AroundRotateSpeed: 10
+      SunAroundRotateSpeed: 5
+    - PlanetIndexInSolarSystem: 0
+      SolarPlanetType: 3
+      AroundRotateSpeed: 10
+      SunAroundRotateSpeed: 5
+    - PlanetIndexInSolarSystem: 0
+      SolarPlanetType: 3
+      AroundRotateSpeed: 10
+      SunAroundRotateSpeed: 5
+  PlanetObject: {fileID: 8435698545201754100, guid: a82f141e128467b4199560704c91283c,
+    type: 3}
+  SunObject: {fileID: 6883090740009842018, guid: 299c35bf7a33dbf48a85ff0b065770fd,
+    type: 3}
 --- !u!4 &1511273344
 Transform:
   m_ObjectHideFlags: 0
@@ -505,8 +515,90 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1511273345
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511273342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c73c1ab94e28d244827af556dca1ed2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Use:
+    Filter: 0
+    IgnoreStartedOverGui: 1
+    RequiredFingerCount: 0
+    RequiredMouseButtons: 0
+    RequiredSelectable: {fileID: 0}
+  Camera: {fileID: 963194227}
+  Relative: 1
+  Sensitivity: 1
+  Dampening: -1
+  remainingScale: {x: 0, y: 0, z: 0}
+--- !u!114 &1511273346
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511273342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52d72cc6210cb7144a24acb7402222a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Use:
+    Filter: 0
+    IgnoreStartedOverGui: 1
+    RequiredFingerCount: 0
+    RequiredMouseButtons: 0
+    RequiredSelectable: {fileID: 0}
+  Camera: {fileID: 963194227}
+  Relative: 1
+  Dampening: -1
+  remainingTranslation: {x: 0, y: 0, z: 0}
+  remainingRotation: {x: 0, y: 0, z: 0, w: 1}
+--- !u!114 &1511273347
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511273342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4eda371e5375f454490a86f21559ee38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Use:
+    Filter: 0
+    IgnoreStartedOverGui: 1
+    RequiredFingerCount: 0
+    RequiredMouseButtons: 0
+    RequiredSelectable: {fileID: 0}
+  Camera: {fileID: 963194227}
+  Dampening: -1
+  Inertia: 0
+  remainingTranslation: {x: 0, y: 0, z: 0}
+--- !u!114 &1511273348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511273342}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab035b616c5ed8e4693aa141ee5189cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ZoomEffectSpeed: 120
+  ZoomState: 0
 --- !u!1 &2071399715
 GameObject:
   m_ObjectHideFlags: 0

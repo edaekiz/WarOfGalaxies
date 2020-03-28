@@ -62,7 +62,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\GalaxyController.cs" />
     <Compile Include="Assets\Lean\Common\Examples\Scripts\LeanCircuit.cs" />
     <Compile Include="Assets\Lean\Common\Examples\Scripts\LeanDocumentation.cs" />
     <Compile Include="Assets\Lean\Common\Examples\Scripts\LeanLinkTo.cs" />
@@ -102,10 +101,10 @@
     <Compile Include="Assets\Lean\Touch\Scripts\LeanGesture.cs" />
     <Compile Include="Assets\Lean\Touch\Scripts\LeanSnapshot.cs" />
     <Compile Include="Assets\Lean\Touch\Scripts\LeanTouch.cs" />
-    <Compile Include="Assets\Models\SolarSystemDTO.cs" />
-    <Compile Include="Assets\PlanetController.cs" />
-    <Compile Include="Assets\PlanetZoomController.cs" />
-    <Compile Include="Assets\SolarSystemController.cs" />
+    <Compile Include="Assets\Scripts\GalaxyController.cs" />
+    <Compile Include="Assets\Scripts\Models\SolarSystemDTO.cs" />
+    <Compile Include="Assets\Scripts\PlanetController.cs" />
+    <Compile Include="Assets\Scripts\PlanetZoomController.cs" />
     <None Include="Assets\Lean\Common\Examples\Fonts\OFL.txt" />
     <None Include="Assets\Lean\Common\Examples\Shaders\Object.shader" />
     <None Include="Assets\Lean\Common\Examples\Shaders\Skybox.shader" />

@@ -4,13 +4,16 @@ public class PlanetZoomController : MonoBehaviour
 {
     public static PlanetZoomController PZC { get; set; }
 
+    public enum ZoomStates { Zooming, Zoomed, ZoomingOut, ZoomedOut };
+
     [Header("Zoom efektinin hızı.")]
     public float ZoomEffectSpeed;
 
+    [Header("Zoom stateini tutuyoruz.")]
+    public ZoomStates ZoomState;
+
     private Transform _targetPlanet;
     private Camera _camera;
-    private bool _isZoomingOut;
-    private bool _isZooming = false;
 
     private void Awake()
     {
@@ -23,17 +26,21 @@ public class PlanetZoomController : MonoBehaviour
     // Start is called before the first frame update
     private void Start()
     {
+        // Main kamerayı tutuyoruz.
         _camera = Camera.main;
+
+        // Başlangıç da state zoomed out.
+        ZoomState = ZoomStates.ZoomedOut;
     }
 
     public void BeginZoom(Transform planet)
     {
         // Eğer zaten zoom yapıyor isek geri dön.
-        if (_isZooming)
+        if (ZoomState == ZoomStates.Zooming)
             return;
 
         // Zoom yapmaya başlıyoruz.
-        _isZooming = true;
+        ZoomState = ZoomStates.Zooming;
 
         // Zoom yapılacak gezegeni
         _targetPlanet = planet;
@@ -42,24 +49,44 @@ public class PlanetZoomController : MonoBehaviour
     public void BeginZoomOut(Transform planet)
     {
         // Eğer zaten zoom yapılıyor ise geri dön.
-        if (_isZoomingOut)
+        if (ZoomState == ZoomStates.ZoomingOut)
             return;
+
+        // Statei zoom out olarak ayarlıyoruz.
+        ZoomState = ZoomStates.ZoomingOut;
 
         // Zoom yapılacak gezegen.
         _targetPlanet = planet;
-
-        // ZOom out yapıyoruz.
-        _isZoomingOut = true;
     }
 
     private void Update()
     {
+        // Eğer gezegen yok ise geri dön.
+        if (_targetPlanet == null)
+            return;
+
         // Zoom out yapmaya başlıyoruz.
         if (Input.GetKeyDown(KeyCode.Space))
             BeginZoomOut(_targetPlanet);
 
+        // Eğer zoom yapıldıysa gezegeni takip etmeye başlıyoruz.
+        if (ZoomState == ZoomStates.Zoomed)
+        {
+            // Kameranın konumu.
+            Vector3 camPosition = _camera.transform.position;
+
+            // Hedef gezegenin konumu.
+            Vector3 planetPosition = _targetPlanet.transform.position;
+
+            // Kamera geminin üzerinde duracak.
+            planetPosition.y += 250;
+
+            // Oraya yürütüyoruz.
+            _camera.transform.position = Vector3.MoveTowards(camPosition, planetPosition, Time.deltaTime * ZoomEffectSpeed * ZoomEffectSpeed);
+        }
+
         // Zooming yapıyorsa hedef pointe doğru gidiyoruz.
-        if (_isZooming)
+        if (ZoomState == ZoomStates.Zooming)
         {
             // Kameranın konumu.
             Vector3 camPosition = _camera.transform.position;
@@ -75,11 +102,17 @@ public class PlanetZoomController : MonoBehaviour
 
             // Eğer yeterince yakın ise büyümeyi durduruyoruz.
             if (Vector3.Distance(_camera.transform.position, planetPosition) <= 1)
-                _isZooming = false;
+            {
+                // State zoom yaptığımızı söylüyoruz.
+                ZoomState = ZoomStates.Zoomed;
+
+                // Touch sistemi kapatıyoruz ki kaydırmalar yapılmasın.
+                GalaxyController.GC.DisableTouchSystem();
+            }
         }
 
         // Gezegene zoom out yaparken kullanıyoruz.
-        if (_isZoomingOut)
+        if (ZoomState == ZoomStates.ZoomingOut)
         {
             // Kameranın konumu.
             Vector3 camPosition = _camera.transform.position;
@@ -92,7 +125,13 @@ public class PlanetZoomController : MonoBehaviour
 
             // Eğer yeterince yakın ise büyümeyi durduruyoruz.
             if (Vector3.Distance(_camera.transform.position, planetPosition) <= 1)
-                _isZoomingOut = false;
+            {
+                // Statei güncelliyoruzz.
+                ZoomState = ZoomStates.ZoomedOut;
+
+                // Touch sistemi açıyorzz ki kaydırmalar yapılsın.
+                GalaxyController.GC.EnableTouchSystem();
+            }
         }
 
     }
