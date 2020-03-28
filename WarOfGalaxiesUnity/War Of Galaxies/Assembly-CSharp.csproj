@@ -62,6 +62,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\GalaxyController.cs" />
     <Compile Include="Assets\Lean\Common\Examples\Scripts\LeanCircuit.cs" />
     <Compile Include="Assets\Lean\Common\Examples\Scripts\LeanDocumentation.cs" />
     <Compile Include="Assets\Lean\Common\Examples\Scripts\LeanLinkTo.cs" />
@@ -101,9 +102,10 @@
     <Compile Include="Assets\Lean\Touch\Scripts\LeanGesture.cs" />
     <Compile Include="Assets\Lean\Touch\Scripts\LeanSnapshot.cs" />
     <Compile Include="Assets\Lean\Touch\Scripts\LeanTouch.cs" />
-    <Compile Include="Assets\PlanetRotater.cs" />
-    <Compile Include="Assets\SolarSystemRotate.cs" />
-    <Compile Include="Assets\ZoomInPlanet.cs" />
+    <Compile Include="Assets\Models\SolarSystemDTO.cs" />
+    <Compile Include="Assets\PlanetController.cs" />
+    <Compile Include="Assets\PlanetZoomController.cs" />
+    <Compile Include="Assets\SolarSystemController.cs" />
     <None Include="Assets\Lean\Common\Examples\Fonts\OFL.txt" />
     <None Include="Assets\Lean\Common\Examples\Shaders\Object.shader" />
     <None Include="Assets\Lean\Common\Examples\Shaders\Skybox.shader" />
@@ -114,12 +116,6 @@
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>C:/Users/Furkan/Documents/GitHub/WarOfGalaxies/WarOfGalaxiesUnity/War Of Galaxies/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Polybrush">
-      <HintPath>C:/Users/Furkan/Documents/GitHub/WarOfGalaxies/WarOfGalaxiesUnity/War Of Galaxies/Library/ScriptAssemblies/Unity.Polybrush.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Polybrush.Editor">
-      <HintPath>C:/Users/Furkan/Documents/GitHub/WarOfGalaxies/WarOfGalaxiesUnity/War Of Galaxies/Library/ScriptAssemblies/Unity.Polybrush.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Furkan/Documents/GitHub/WarOfGalaxies/WarOfGalaxiesUnity/War Of Galaxies/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>

@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class ZoomInPlanet : MonoBehaviour
+public class PlanetZoomController : MonoBehaviour
 {
-    public static ZoomInPlanet ZIP { get; set; }
+    public static PlanetZoomController PZC { get; set; }
 
     [Header("Zoom efektinin hızı.")]
     public float ZoomEffectSpeed;
@@ -11,12 +10,12 @@ public class ZoomInPlanet : MonoBehaviour
     private Transform _targetPlanet;
     private Camera _camera;
     private bool _isZoomingOut;
-    private Quaternion _zoomBeginRotation;
+    private bool _isZooming = false;
 
     private void Awake()
     {
-        if (ZIP == null)
-            ZIP = this;
+        if (PZC == null)
+            PZC = this;
         else
             Destroy(gameObject);
     }
@@ -26,8 +25,6 @@ public class ZoomInPlanet : MonoBehaviour
     {
         _camera = Camera.main;
     }
-
-    private bool _isZooming = false;
 
     public void BeginZoom(Transform planet)
     {
@@ -42,7 +39,6 @@ public class ZoomInPlanet : MonoBehaviour
         _targetPlanet = planet;
     }
 
-
     public void BeginZoomOut(Transform planet)
     {
         // Eğer zaten zoom yapılıyor ise geri dön.
@@ -56,9 +52,9 @@ public class ZoomInPlanet : MonoBehaviour
         _isZoomingOut = true;
     }
 
-    
     private void Update()
     {
+        // Zoom out yapmaya başlıyoruz.
         if (Input.GetKeyDown(KeyCode.Space))
             BeginZoomOut(_targetPlanet);
 
@@ -81,5 +77,23 @@ public class ZoomInPlanet : MonoBehaviour
             if (Vector3.Distance(_camera.transform.position, planetPosition) <= 1)
                 _isZooming = false;
         }
+
+        // Gezegene zoom out yaparken kullanıyoruz.
+        if (_isZoomingOut)
+        {
+            // Kameranın konumu.
+            Vector3 camPosition = _camera.transform.position;
+
+            // Hedef gezegenin konumu.
+            Vector3 planetPosition = new Vector3(_camera.transform.position.x, 1500, _camera.transform.position.z);
+
+            // Oraya yürütüyoruz.
+            _camera.transform.position = Vector3.MoveTowards(camPosition, planetPosition, Time.deltaTime * ZoomEffectSpeed * (ZoomEffectSpeed / 2));
+
+            // Eğer yeterince yakın ise büyümeyi durduruyoruz.
+            if (Vector3.Distance(_camera.transform.position, planetPosition) <= 1)
+                _isZoomingOut = false;
+        }
+
     }
 }
