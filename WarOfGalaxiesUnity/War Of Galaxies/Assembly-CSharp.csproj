@@ -125,6 +125,7 @@
     <Compile Include="Assets\Scripts\PlanetController.cs" />
     <Compile Include="Assets\Scripts\PlanetZoomController.cs" />
     <Compile Include="Assets\Scripts\SunController.cs" />
+    <Compile Include="Assets\Scripts\ZoomPanController.cs" />
     <Compile Include="Assets\_MK\MKGlowLite\Components\Legacy\MKGlowLite.cs" />
     <Compile Include="Assets\_MK\MKGlowLite\Components\Legacy\SettingsLegacy.cs" />
     <Compile Include="Assets\_MK\MKGlowLite\Examples\Scripts\Asteroid.cs" />

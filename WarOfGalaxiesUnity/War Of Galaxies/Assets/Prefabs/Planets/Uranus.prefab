@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8139254100556558338}
   - component: {fileID: 6269045806083514755}
+  - component: {fileID: -1812510295072813908}
   m_Layer: 0
   m_Name: Uranus
   m_TagString: Untagged
@@ -50,6 +51,19 @@ MonoBehaviour:
     SolarPlanetType: 0
     AroundRotateSpeed: 0
     SunAroundRotateSpeed: 0
+--- !u!135 &-1812510295072813908
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8139254100556558341}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8139254101083534532
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5194507508000716693}
   - component: {fileID: -72972029953050208}
+  - component: {fileID: -3563646372829684576}
   m_Layer: 0
   m_Name: Neptune
   m_TagString: Untagged
@@ -50,6 +51,19 @@ MonoBehaviour:
     SolarPlanetType: 0
     AroundRotateSpeed: 0
     SunAroundRotateSpeed: 0
+--- !u!135 &-3563646372829684576
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5194507508000716714}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &5194507508159286545
 GameObject:
   m_ObjectHideFlags: 0

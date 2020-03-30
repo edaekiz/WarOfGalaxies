@@ -88,7 +88,6 @@ public class GalaxyController : MonoBehaviour
     public void DisableTouchSystem()
     {
         GetComponent<Lean.Touch.LeanDragTranslate>().enabled = false;
-        GetComponent<Lean.Touch.LeanTwistRotate>().enabled = false;
         GetComponent<Lean.Touch.LeanPinchScale>().enabled = false;
     }
 
@@ -98,7 +97,6 @@ public class GalaxyController : MonoBehaviour
     public void EnableTouchSystem()
     {
         GetComponent<Lean.Touch.LeanDragTranslate>().enabled = true;
-        GetComponent<Lean.Touch.LeanTwistRotate>().enabled = true;
         GetComponent<Lean.Touch.LeanPinchScale>().enabled = true;
     }
 

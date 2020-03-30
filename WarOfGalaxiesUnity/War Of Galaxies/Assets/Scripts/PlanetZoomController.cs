@@ -38,7 +38,6 @@ public class PlanetZoomController : MonoBehaviour
         ZoomState = ZoomStates.ZoomedOut;
     }
 
-    public int frameCount;
     public void BeginZoom(Transform planet)
     {
         // Eğer zaten zoom yapıyor isek geri dön.
@@ -51,8 +50,11 @@ public class PlanetZoomController : MonoBehaviour
         // Zoom yapılacak gezegeni
         _targetPlanet = planet;
 
-        // Başlangıç konumu.
-        beginPosition = _camera.transform.position;
+        // Hedefe gezegene merkezliyoruz.
+        Vector3 destination = _targetPlanet.transform.position;
+
+        destination.y = _camera.transform.position.y;
+        beginPosition = destination;
     }
 
     public void BeginZoomOut(Transform planet)
@@ -64,8 +66,6 @@ public class PlanetZoomController : MonoBehaviour
         // Statei zoom out olarak ayarlıyoruz.
         ZoomState = ZoomStates.ZoomingOut;
 
-        // Zoom yapılacak gezegen.
-        _targetPlanet = planet;
     }
 
     private void LateUpdate()
@@ -81,44 +81,38 @@ public class PlanetZoomController : MonoBehaviour
         // Zooming yapıyorsa hedef pointe doğru gidiyoruz.
         if (ZoomState == ZoomStates.Zooming)
         {
-            // Hedefe gezegene merkezliyoruz.
-            Vector3 destination = _targetPlanet.transform.position;
+            // Büyük halde mi.
+            bool isGrowed = false;
 
-            // Y ekseni hiç değişmemeli.
-            destination.y = _camera.transform.position.y;
+            // Yeterince büyümediyse büyütüyoruz.
+            if (transform.localScale.x < .4f && transform.localScale.y < .4f && transform.localScale.z < .4f)
+                transform.localScale += Vector3.one * Time.deltaTime * ZoomSpeed;
+            else
+                isGrowed = true;
 
-            // Hedef konum ile arasındaki mesafe.
-            float distance = Vector3.Distance(_camera.transform.position, destination);
-
-            // Mesafe uzak ise hedef konuma doğru ilerleyeceğiz.
-            if (distance >= 0.25f)
+            // Eğer büyüdüyse de state değişiyor.
+            if (isGrowed)
             {
-                // Konuma doğru yürütüyoruz kamerayı.
-                _camera.transform.position += (destination - beginPosition) * Time.deltaTime * ZoomMoveSpeed;
+                // Hedefe gezegene merkezliyoruz.
+                Vector3 destination = _targetPlanet.transform.position;
 
-                // Hedef konum ile mesafeyi tekrar hesaplıyoruz.
-                distance = Vector3.Distance(_camera.transform.position, destination);
-            }
-            
-            // Eğer yeterince yakın ise büyümeyi durduruyoruz.
-            if (distance <= 1)
-            {
-                // Büyük halde mi.
-                bool isGrowed = false;
+                destination.y = _camera.transform.position.y;
 
-                // Yeterince büyümediyse büyütüyoruz.
-                if (transform.localScale.x < 1 && transform.localScale.y < 1 && transform.localScale.z < 1)
-                    transform.localScale += Vector3.one * Time.deltaTime * ZoomSpeed;
-                else
-                    isGrowed = true;
+                // Hedef konum ile arasındaki mesafe.
+                float distance = Vector3.Distance(_camera.transform.position, destination);
 
-                // Sabitliyoruz.
-                _camera.transform.position = destination;
+                // Mesafe uzak ise hedef konuma doğru ilerleyeceğiz.
+                if (distance > .1f)
+                {
+                    // Konuma doğru yürütüyoruz kamerayı.
+                    _camera.transform.position = Vector3.MoveTowards(_camera.transform.position, destination, Time.deltaTime * ZoomMoveSpeed);
 
-                Debug.Log("Zoomed");
+                    // Hedef konum ile mesafeyi tekrar hesaplıyoruz.
+                    distance = Vector3.Distance(_camera.transform.position, destination);
+                }
 
-                // Eğer büyüdüyse de state değişiyor.
-                if (isGrowed)
+                // Eğer yeterince yakın ise büyümeyi durduruyoruz.
+                if (distance <= .1f)
                 {
                     // State zoom yaptığımızı söylüyoruz.
                     ZoomState = ZoomStates.Zoomed;

@@ -141,6 +141,7 @@ GameObject:
   m_Component:
   - component: {fileID: 424058020241796551}
   - component: {fileID: -40278646951081697}
+  - component: {fileID: -6805411055658116323}
   m_Layer: 0
   m_Name: Jupiter
   m_TagString: Untagged
@@ -181,6 +182,19 @@ MonoBehaviour:
     SolarPlanetType: 0
     AroundRotateSpeed: 0
     SunAroundRotateSpeed: 0
+--- !u!135 &-6805411055658116323
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 424058020241796548}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &424058020531358443
 PrefabInstance:
   m_ObjectHideFlags: 0

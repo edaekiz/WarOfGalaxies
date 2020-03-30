@@ -137,6 +137,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1642177161182402484}
   - component: {fileID: -3186682322086164865}
+  - component: {fileID: 3167326723594218756}
   m_Layer: 0
   m_Name: Mercury
   m_TagString: Untagged
@@ -177,3 +178,16 @@ MonoBehaviour:
     SolarPlanetType: 0
     AroundRotateSpeed: 0
     SunAroundRotateSpeed: 0
+--- !u!135 &3167326723594218756
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1642177161182402485}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0, z: 0}
