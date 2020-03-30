@@ -31,6 +31,11 @@ public class PlanetController : MonoBehaviour
         // Kendi etrafında döndürüyoruz.
         transform.RotateAround(transform.position, transform.up, SolarPlanetInfo.AroundRotateSpeed * Time.deltaTime);
 
+        if (PlanetZoomController.PZC.ZoomState == PlanetZoomController.ZoomStates.Zoomed ||
+            PlanetZoomController.PZC.ZoomState == PlanetZoomController.ZoomStates.Zooming ||
+            PlanetZoomController.PZC.ZoomState == PlanetZoomController.ZoomStates.ZoomingOut)
+            return;
+
         // Güneşin etrafında rastgele bir konuma atıyoruz.
         transform.RotateAround(Sun.transform.position, transform.up, SolarPlanetInfo.SunAroundRotateSpeed * Time.deltaTime);
     }
@@ -38,6 +43,9 @@ public class PlanetController : MonoBehaviour
     private void OnMouseDown()
     {
         // Üzerine tıklandığında fokuslanıyoruz.
-        PlanetZoomController.PZC.BeginZoom(this.transform);
+        if (PlanetZoomController.PZC.ZoomState == PlanetZoomController.ZoomStates.Zoomed)
+            PlanetZoomController.PZC.BeginZoomOut(this.transform);
+        else
+            PlanetZoomController.PZC.BeginZoom(this.transform);
     }
 }

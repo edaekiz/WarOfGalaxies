@@ -6,14 +6,19 @@ public class PlanetZoomController : MonoBehaviour
 
     public enum ZoomStates { Zooming, Zoomed, ZoomingOut, ZoomedOut };
 
-    [Header("Zoom efektinin hızı.")]
-    public float ZoomEffectSpeed;
+    [Header("Zoom efektinin hareket hızı.")]
+    public float ZoomMoveSpeed;
+
+    [Header("Zoom hızı.")]
+    public float ZoomSpeed;
 
     [Header("Zoom stateini tutuyoruz.")]
     public ZoomStates ZoomState;
 
     private Transform _targetPlanet;
     private Camera _camera;
+    private float zoomSpeed = 0;
+    private Vector3 beginPosition;
 
     private void Awake()
     {
@@ -33,6 +38,7 @@ public class PlanetZoomController : MonoBehaviour
         ZoomState = ZoomStates.ZoomedOut;
     }
 
+    public int frameCount;
     public void BeginZoom(Transform planet)
     {
         // Eğer zaten zoom yapıyor isek geri dön.
@@ -44,6 +50,9 @@ public class PlanetZoomController : MonoBehaviour
 
         // Zoom yapılacak gezegeni
         _targetPlanet = planet;
+
+        // Başlangıç konumu.
+        beginPosition = _camera.transform.position;
     }
 
     public void BeginZoomOut(Transform planet)
@@ -59,7 +68,7 @@ public class PlanetZoomController : MonoBehaviour
         _targetPlanet = planet;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         // Eğer gezegen yok ise geri dön.
         if (_targetPlanet == null)
@@ -69,62 +78,83 @@ public class PlanetZoomController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
             BeginZoomOut(_targetPlanet);
 
-        // Eğer zoom yapıldıysa gezegeni takip etmeye başlıyoruz.
-        if (ZoomState == ZoomStates.Zoomed)
-        {
-            // Kameranın konumu.
-            Vector3 camPosition = _camera.transform.position;
-
-            // Hedef gezegenin konumu.
-            Vector3 planetPosition = _targetPlanet.transform.position;
-
-            // Kamera geminin üzerinde duracak.
-            planetPosition.y += 250;
-
-            // Oraya yürütüyoruz.
-            _camera.transform.position = Vector3.MoveTowards(camPosition, planetPosition, Time.deltaTime * ZoomEffectSpeed * ZoomEffectSpeed);
-        }
-
         // Zooming yapıyorsa hedef pointe doğru gidiyoruz.
         if (ZoomState == ZoomStates.Zooming)
         {
-            // Kameranın konumu.
-            Vector3 camPosition = _camera.transform.position;
+            // Hedefe gezegene merkezliyoruz.
+            Vector3 destination = _targetPlanet.transform.position;
 
-            // Hedef gezegenin konumu.
-            Vector3 planetPosition = _targetPlanet.transform.position;
+            // Y ekseni hiç değişmemeli.
+            destination.y = _camera.transform.position.y;
 
-            // Kamera geminin üzerinde duracak.
-            planetPosition.y += 250;
+            // Hedef konum ile arasındaki mesafe.
+            float distance = Vector3.Distance(_camera.transform.position, destination);
 
-            // Oraya yürütüyoruz.
-            _camera.transform.position = Vector3.MoveTowards(camPosition, planetPosition, Time.deltaTime * ZoomEffectSpeed * ZoomEffectSpeed);
-
-            // Eğer yeterince yakın ise büyümeyi durduruyoruz.
-            if (Vector3.Distance(_camera.transform.position, planetPosition) <= 1)
+            // Mesafe uzak ise hedef konuma doğru ilerleyeceğiz.
+            if (distance >= 0.25f)
             {
-                // State zoom yaptığımızı söylüyoruz.
-                ZoomState = ZoomStates.Zoomed;
+                // Konuma doğru yürütüyoruz kamerayı.
+                _camera.transform.position += (destination - beginPosition) * Time.deltaTime * ZoomMoveSpeed;
 
-                // Touch sistemi kapatıyoruz ki kaydırmalar yapılmasın.
-                GalaxyController.GC.DisableTouchSystem();
+                // Hedef konum ile mesafeyi tekrar hesaplıyoruz.
+                distance = Vector3.Distance(_camera.transform.position, destination);
+            }
+            
+            // Eğer yeterince yakın ise büyümeyi durduruyoruz.
+            if (distance <= 1)
+            {
+                // Büyük halde mi.
+                bool isGrowed = false;
+
+                // Yeterince büyümediyse büyütüyoruz.
+                if (transform.localScale.x < 1 && transform.localScale.y < 1 && transform.localScale.z < 1)
+                    transform.localScale += Vector3.one * Time.deltaTime * ZoomSpeed;
+                else
+                    isGrowed = true;
+
+                // Sabitliyoruz.
+                _camera.transform.position = destination;
+
+                Debug.Log("Zoomed");
+
+                // Eğer büyüdüyse de state değişiyor.
+                if (isGrowed)
+                {
+                    // State zoom yaptığımızı söylüyoruz.
+                    ZoomState = ZoomStates.Zoomed;
+
+                    // Touch sistemi kapatıyoruz ki kaydırmalar yapılmasın.
+                    GalaxyController.GC.DisableTouchSystem();
+                }
             }
         }
 
         // Gezegene zoom out yaparken kullanıyoruz.
         if (ZoomState == ZoomStates.ZoomingOut)
         {
-            // Kameranın konumu.
-            Vector3 camPosition = _camera.transform.position;
+            // Eski haline getiriyoruz.
+            Vector3 targetScale = Vector3.one / 5;
 
-            // Hedef gezegenin konumu.
-            Vector3 planetPosition = new Vector3(_camera.transform.position.x, 1500, _camera.transform.position.z);
+            // Büyük halde mi.
+            bool isSmalled = false;
 
-            // Oraya yürütüyoruz.
-            _camera.transform.position = Vector3.MoveTowards(camPosition, planetPosition, Time.deltaTime * ZoomEffectSpeed * (ZoomEffectSpeed / 2));
+            // Yeterince büyümediyse büyütüyoruz.
+            if (transform.localScale.x > targetScale.x && transform.localScale.y > targetScale.y && transform.localScale.z > targetScale.z)
+                transform.localScale -= Vector3.one * Time.deltaTime * ZoomSpeed;
+            else
+                isSmalled = true;
+
+            // Hedefe gezegene merkezliyoruz.
+            Vector3 destination = _targetPlanet.transform.position;
+
+            // Y ekseni hiç değişmemeli.
+            destination.y = _camera.transform.position.y;
+
+            // Konuma doğru yürütüyoruz kamerayı.
+            _camera.transform.position = destination;//= Vector3.MoveTowards(_camera.transform.position, destination, Time.deltaTime * (ZoomMoveBaseSpeed / 2));
 
             // Eğer yeterince yakın ise büyümeyi durduruyoruz.
-            if (Vector3.Distance(_camera.transform.position, planetPosition) <= 1)
+            if (isSmalled && Vector3.Distance(_camera.transform.position, destination) <= 0.1f)
             {
                 // Statei güncelliyoruzz.
                 ZoomState = ZoomStates.ZoomedOut;
@@ -133,6 +163,5 @@ public class PlanetZoomController : MonoBehaviour
                 GalaxyController.GC.EnableTouchSystem();
             }
         }
-
     }
 }

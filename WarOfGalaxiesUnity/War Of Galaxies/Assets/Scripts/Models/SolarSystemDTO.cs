@@ -37,6 +37,6 @@ namespace Assets.Scripts.Models
     public class SolarPanetDataDTO
     {
         public SolarPlanetTypes SolarPlanetType;
-        public Material SolarPlanetMaterial;
+        public GameObject SolarPlanet;
     }
 }
