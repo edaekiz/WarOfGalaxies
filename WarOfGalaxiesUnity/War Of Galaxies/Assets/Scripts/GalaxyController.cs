@@ -23,7 +23,10 @@ public class GalaxyController : MonoBehaviour
     [Header("Güneş modeli")]
     public GameObject SunObject;
 
+    [Header("Fpsı bastığımız field.")]
     public Text FpsText;
+
+    private float deltaTime;
 
     private void Awake()
     {
@@ -39,7 +42,6 @@ public class GalaxyController : MonoBehaviour
         LoadSolarSystem();
     }
 
-    public float deltaTime;
 
     void Update()
     {
@@ -87,8 +89,7 @@ public class GalaxyController : MonoBehaviour
     /// </summary>
     public void DisableTouchSystem()
     {
-        GetComponent<Lean.Touch.LeanDragTranslate>().enabled = false;
-        GetComponent<Lean.Touch.LeanPinchScale>().enabled = false;
+        Camera.main.GetComponent<ZoomPanController>().enabled = false;
     }
 
     /// <summary>
@@ -96,8 +97,7 @@ public class GalaxyController : MonoBehaviour
     /// </summary>
     public void EnableTouchSystem()
     {
-        GetComponent<Lean.Touch.LeanDragTranslate>().enabled = true;
-        GetComponent<Lean.Touch.LeanPinchScale>().enabled = true;
+        Camera.main.GetComponent<ZoomPanController>().enabled = true;
     }
 
 }
