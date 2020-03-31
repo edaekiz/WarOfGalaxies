@@ -4,12 +4,12 @@ using UnityEngine;
 public class PlanetController : MonoBehaviour
 {
     [Header("Yörüngesindeki güneş")]
-    public GameObject Sun;
+    public SunController Sun;
 
     [Header("Gösterdiği gezegen bilgisi.")]
     public SolarPlanetDTO SolarPlanetInfo;
 
-    public void LoadPlanetInfo(GameObject sun, SolarPlanetDTO solarPlanet)
+    public void LoadPlanetInfo(SunController sun, SolarPlanetDTO solarPlanet)
     {
         // Güneşi atıyoruz.
         Sun = sun;
@@ -44,8 +44,8 @@ public class PlanetController : MonoBehaviour
     {
         // Üzerine tıklandığında fokuslanıyoruz.
         if (PlanetZoomController.PZC.ZoomState == PlanetZoomController.ZoomStates.Zoomed)
-            PlanetZoomController.PZC.BeginZoomOut(this.transform);
+            PlanetZoomController.PZC.BeginZoomOut();
         else
-            PlanetZoomController.PZC.BeginZoom(this.transform);
+            PlanetZoomController.PZC.BeginZoom(this);
     }
 }

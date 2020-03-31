@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class SunController : MonoBehaviour
 {
@@ -7,10 +8,8 @@ public class SunController : MonoBehaviour
     public GameObject OrbitLine;
     public Transform lineContent;
     public GameObject lineMover;
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
+
+    public List<PlanetController> Planets = new List<PlanetController>();
 
     // Update is called once per frame
     void Update()
@@ -48,6 +47,45 @@ public class SunController : MonoBehaviour
                 lr.SetPosition(tt, vec);
             }
         }
+    }
+
+
+    public void DisableLines()
+    {
+        lineContent.gameObject.SetActive(false);
+    }
+
+    public void EnableLines()
+    {
+        lineContent.gameObject.SetActive(true);
+    }
+
+    public void AddPlanet(PlanetController planet)
+    {
+        Planets.Add(planet);
+    }
+
+    public void DisableNotSelectedPlanets(PlanetController selectedPlanet)
+    {
+        // Gezgenleri kapatıyoruz.
+        Planets.ForEach(e =>
+        {
+            // Seçili olan dışındaki gezegenleri kapatıyoruz.
+            if (!ReferenceEquals(e, selectedPlanet))
+                e.gameObject.SetActive(false);
+        });
+
+        // Güneşi de kapatıyoruz.
+        gameObject.SetActive(false);
+    }
+
+    public void EnableAllPlanets()
+    {
+        // Gezegenleri açıyoruz.
+        Planets.ForEach(e => e.gameObject.SetActive(true));
+
+        // Güneşi de açıyoruz.
+        gameObject.SetActive(true);
     }
 
 }

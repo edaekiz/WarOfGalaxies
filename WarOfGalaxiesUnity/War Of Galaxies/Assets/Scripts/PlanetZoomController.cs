@@ -15,8 +15,10 @@ public class PlanetZoomController : MonoBehaviour
     [Header("Zoom stateini tutuyoruz.")]
     public ZoomStates ZoomState;
 
-    private Transform _targetPlanet;
+    private PlanetController _targetPlanet;
     private Camera _camera;
+    private float zoomRate = 0;
+
 
     private void Awake()
     {
@@ -36,7 +38,7 @@ public class PlanetZoomController : MonoBehaviour
         ZoomState = ZoomStates.ZoomedOut;
     }
 
-    public void BeginZoom(Transform planet)
+    public void BeginZoom(PlanetController planet)
     {
         // Eğer zaten zoom yapıyor isek geri dön.
         if (ZoomState == ZoomStates.Zooming)
@@ -51,14 +53,14 @@ public class PlanetZoomController : MonoBehaviour
         // Zoom yapma oranı.
         zoomRate = _camera.orthographicSize / 1;
 
+        // Diğer gezegenleri kapatıyoruz.
+        _targetPlanet.Sun.DisableNotSelectedPlanets(_targetPlanet);
+
         // Touch sistemi kapatıyoruz ki kaydırmalar yapılmasın.
         GalaxyController.GC.DisableTouchSystem();
     }
 
-    float zoomRate = 0;
-
-
-    public void BeginZoomOut(Transform planet)
+    public void BeginZoomOut()
     {
         // Eğer zaten zoom yapılıyor ise geri dön.
         if (ZoomState == ZoomStates.ZoomingOut)
@@ -67,6 +69,8 @@ public class PlanetZoomController : MonoBehaviour
         // Statei zoom out olarak ayarlıyoruz.
         ZoomState = ZoomStates.ZoomingOut;
 
+        // Bütün gezegenleri açıyoruz.
+        _targetPlanet.Sun.EnableAllPlanets();
     }
 
     private void LateUpdate()
@@ -77,7 +81,7 @@ public class PlanetZoomController : MonoBehaviour
 
         // Zoom out yapmaya başlıyoruz.
         if (Input.GetKeyDown(KeyCode.Space))
-            BeginZoomOut(_targetPlanet);
+            BeginZoomOut();
 
         // Zooming yapıyorsa hedef pointe doğru gidiyoruz.
         if (ZoomState == ZoomStates.Zooming)
@@ -101,6 +105,9 @@ public class PlanetZoomController : MonoBehaviour
             // Eğer yeterince yakın ise büyümeyi durduruyoruz.
             if (distance <= .1f && _camera.orthographicSize <= 0.25f)
             {
+                // Size sabitleniyor.
+                _camera.orthographicSize = 0.25f;
+
                 // State zoom yaptığımızı söylüyoruz.
                 ZoomState = ZoomStates.Zoomed;
             }

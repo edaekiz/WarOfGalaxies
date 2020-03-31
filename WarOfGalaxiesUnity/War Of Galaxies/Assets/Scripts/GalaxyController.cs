@@ -28,6 +28,9 @@ public class GalaxyController : MonoBehaviour
 
     private float deltaTime;
 
+    // Güneş bilgisi.
+    private SunController currentSun;
+
     private void Awake()
     {
         if (GC == null)
@@ -55,6 +58,9 @@ public class GalaxyController : MonoBehaviour
         // Güneş sisteme koyuyoruz.
         GameObject sun = Instantiate(SunObject, Vector3.zero, Quaternion.identity, transform);
 
+        // Güneş bilgisi.
+        currentSun = sun.GetComponent<SunController>();
+
         // Gezegenleri yüklüyoruz.
         for (int ii = 0; ii < SolarSystem.Planets.Count; ii++)
         {
@@ -77,10 +83,14 @@ public class GalaxyController : MonoBehaviour
             PlanetController planetController = planet.GetComponent<PlanetController>();
 
             // Gezegen bilgisini yüklüyoruz.
-            planetController.LoadPlanetInfo(sun, solarPlanet);
+            planetController.LoadPlanetInfo(currentSun, solarPlanet);
+
+            // Oluşan gezegeni ekliyoruz.
+            currentSun.AddPlanet(planetController);
         }
 
-        sun.GetComponent<SunController>().LoadLines(SolarSystem.Planets.Select(x => x.PlanetIndexInSolarSystem).ToArray());
+        // Lineları yüklüyoruz.
+        currentSun.LoadLines(SolarSystem.Planets.Select(x => x.PlanetIndexInSolarSystem).ToArray());
 
     }
 
@@ -89,7 +99,11 @@ public class GalaxyController : MonoBehaviour
     /// </summary>
     public void DisableTouchSystem()
     {
+        // Kamera kontrolünü kapatıyoruz.
         Camera.main.GetComponent<ZoomPanController>().enabled = false;
+
+        // Lineları devre dışı bırakıyoruz.
+        currentSun.DisableLines();
     }
 
     /// <summary>
@@ -97,7 +111,11 @@ public class GalaxyController : MonoBehaviour
     /// </summary>
     public void EnableTouchSystem()
     {
+        // Kamera kontrolü açıyoruz.
         Camera.main.GetComponent<ZoomPanController>().enabled = true;
+
+        // Lineları tekrar açıyoruz.
+        currentSun.EnableLines();
     }
 
 }
