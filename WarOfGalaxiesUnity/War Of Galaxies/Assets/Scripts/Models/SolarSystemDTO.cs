@@ -30,7 +30,12 @@ namespace Assets.Scripts.Models
     {
         VENUS = 1,
         MARS = 2,
-        MERKURY = 3
+        MERKURY = 3,
+        SATURN = 4,
+        EARTH = 5,
+        JUPITER = 6,
+        NEPTUNE = 7,
+        URANUS = 8
     }
 
     [Serializable]

@@ -365,7 +365,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 0, y: 10, z: 0}
+  m_LocalPosition: {x: 0, y: 10, z: -16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -499,8 +499,23 @@ MonoBehaviour:
   - SolarPlanetType: 2
     SolarPlanet: {fileID: 616083102014630432, guid: cbef6768d9c4a2f41b519134b074d5af,
       type: 3}
+  - SolarPlanetType: 4
+    SolarPlanet: {fileID: 2764226748520848458, guid: 96a736d31419a7d4f89102fa29bee3c3,
+      type: 3}
   - SolarPlanetType: 3
     SolarPlanet: {fileID: 1642177161182402485, guid: ba1b8977029c05d4abdb86eaa35baa96,
+      type: 3}
+  - SolarPlanetType: 5
+    SolarPlanet: {fileID: 2218376238159798295, guid: ab3d5ef129738774ea9db8effaee0d90,
+      type: 3}
+  - SolarPlanetType: 6
+    SolarPlanet: {fileID: 424058020241796548, guid: 8fc1fa8ee41054943a3fb0cd63e3bb12,
+      type: 3}
+  - SolarPlanetType: 7
+    SolarPlanet: {fileID: 5194507508000716714, guid: ee046d7640939624983a8b79cf6ad697,
+      type: 3}
+  - SolarPlanetType: 8
+    SolarPlanet: {fileID: 8139254100556558341, guid: 2770bd42d22efb645ad56c49f1c44598,
       type: 3}
   SolarSystem:
     GalaxyIndex: 1
@@ -514,12 +529,28 @@ MonoBehaviour:
       SolarPlanetType: 2
       AroundRotateSpeed: 10
       SunAroundRotateSpeed: 5
-    - PlanetIndexInSolarSystem: 6
+    - PlanetIndexInSolarSystem: 3
       SolarPlanetType: 3
       AroundRotateSpeed: 10
       SunAroundRotateSpeed: 5
+    - PlanetIndexInSolarSystem: 4
+      SolarPlanetType: 4
+      AroundRotateSpeed: 10
+      SunAroundRotateSpeed: 5
+    - PlanetIndexInSolarSystem: 5
+      SolarPlanetType: 5
+      AroundRotateSpeed: 10
+      SunAroundRotateSpeed: 5
+    - PlanetIndexInSolarSystem: 6
+      SolarPlanetType: 6
+      AroundRotateSpeed: 10
+      SunAroundRotateSpeed: 5
     - PlanetIndexInSolarSystem: 7
-      SolarPlanetType: 3
+      SolarPlanetType: 7
+      AroundRotateSpeed: 10
+      SunAroundRotateSpeed: 5
+    - PlanetIndexInSolarSystem: 8
+      SolarPlanetType: 8
       AroundRotateSpeed: 10
       SunAroundRotateSpeed: 5
   PlanetsDistancePer: 1
