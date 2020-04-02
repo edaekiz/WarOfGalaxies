@@ -94,6 +94,9 @@ public class ZoomPanController : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Kamera kenarlarını kontrol eder ekran içerisinde mi?
+    /// </summary>
     void CheckCameraBounds()
     {
         // Ekran genişliğini hesaplıyoruz.
