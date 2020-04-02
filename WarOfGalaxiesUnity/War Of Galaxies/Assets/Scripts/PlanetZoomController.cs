@@ -93,6 +93,8 @@ public class PlanetZoomController : MonoBehaviour
 
     private void LateUpdate()
     {
+        #region Zoom out yapma işleri
+
         // Gezegene zoom out yaparken kullanıyoruz.
         if (ZoomState == ZoomStates.ZoomingOut)
         {
@@ -115,9 +117,17 @@ public class PlanetZoomController : MonoBehaviour
             }
         }
 
+        #endregion
+
+        #region Klavyeden Zoom out yapmak
+
         // Zoom out yapmaya başlıyoruz.
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && ZoomState == ZoomStates.Zoomed)
             BeginZoomOut();
+
+        #endregion
+
+        #region Zoom Yapma işleri
 
         // Zooming yapıyorsa hedef pointe doğru gidiyoruz.
         if (ZoomState == ZoomStates.Zooming)
@@ -149,5 +159,8 @@ public class PlanetZoomController : MonoBehaviour
                 SelectedPlanet.Sun.DisableNotSelectedPlanets(SelectedPlanet);
             }
         }
+
+        #endregion
+
     }
 }
