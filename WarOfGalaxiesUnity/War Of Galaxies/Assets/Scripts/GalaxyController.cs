@@ -97,7 +97,7 @@ public class GalaxyController : MonoBehaviour
     public void DisableTouchSystem()
     {
         // Kamera kontrolünü kapatıyoruz.
-        Camera.main.GetComponent<ZoomPanController>().enabled = false;
+        ZoomPanController.ZPC.ZoomPanEnabled = false;
 
         // Lineları devre dışı bırakıyoruz.
         currentSun.DisableLines();
@@ -109,7 +109,7 @@ public class GalaxyController : MonoBehaviour
     public void EnableTouchSystem()
     {
         // Kamera kontrolü açıyoruz.
-        Camera.main.GetComponent<ZoomPanController>().enabled = true;
+        ZoomPanController.ZPC.ZoomPanEnabled = true;
 
         // Lineları tekrar açıyoruz.
         currentSun.EnableLines();

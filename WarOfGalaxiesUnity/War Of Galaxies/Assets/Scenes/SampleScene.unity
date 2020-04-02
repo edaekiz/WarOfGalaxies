@@ -341,7 +341,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 4
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -383,6 +383,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ddb9a42fbf8ebc4cb584a7ce319f845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ZoomPanEnabled: 1
   ZoomOutMin: 0.3
   ZoomOutMax: 4
   DefaultZoomRate: 3.8
@@ -577,7 +578,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ZoomMoveSpeed: 150
-  ZoomSpeed: 10
+  ZoomSpeed: 0.035
   ZoomState: 3
   SelectedPlanet: {fileID: 0}
 --- !u!1 &2030998074

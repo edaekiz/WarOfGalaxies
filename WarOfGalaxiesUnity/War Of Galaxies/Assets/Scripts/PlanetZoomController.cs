@@ -10,6 +10,7 @@ public class PlanetZoomController : MonoBehaviour
     public float ZoomMoveSpeed;
 
     [Header("Zoom hızı.")]
+    [Range(0, 0.09f)]
     public float ZoomSpeed;
 
     [Header("Zoom stateini tutuyoruz.")]
@@ -18,8 +19,6 @@ public class PlanetZoomController : MonoBehaviour
     [Header("Seçili olan gezegen.")]
     public PlanetController SelectedPlanet;
 
-
-    private float zoomRate = 0;
     private float zoomMoveRate = 0;
 
     private void Awake()
@@ -56,9 +55,6 @@ public class PlanetZoomController : MonoBehaviour
         // Zoom yapılacak gezegeni
         SelectedPlanet = planet;
 
-        // Zoom yapma oranı.
-        zoomRate = (ZoomPanController.ZPC.MainCamera.orthographicSize / 1) * Time.deltaTime;
-
         // Zoom yaparken ki hızı.
         zoomMoveRate = Time.deltaTime * ZoomMoveSpeed;
 
@@ -89,6 +85,9 @@ public class PlanetZoomController : MonoBehaviour
 
         // Zoom yapılacak gezegeni iptal ediyoruz.
         SelectedPlanet = null;
+
+        // Touch sistemi açıyorzz ki kaydırmalar yapılsın.
+        GalaxyController.GC.EnableTouchSystem();
     }
 
     private void LateUpdate()
@@ -100,7 +99,7 @@ public class PlanetZoomController : MonoBehaviour
         {
             // Uzaklaşmaya devam et.
             if (ZoomPanController.ZPC.MainCamera.orthographicSize < ZoomPanController.ZPC.DefaultZoomRate)
-                ZoomPanController.ZPC.MainCamera.orthographicSize += zoomRate;
+                ZoomPanController.ZPC.MainCamera.orthographicSize += ZoomSpeed;
 
             // Eğer yeterince yakın ise büyümeyi durduruyoruz.
             if (ZoomPanController.ZPC.MainCamera.orthographicSize >= ZoomPanController.ZPC.DefaultZoomRate)
@@ -108,12 +107,8 @@ public class PlanetZoomController : MonoBehaviour
                 // Size sabitleniyor.
                 ZoomPanController.ZPC.MainCamera.orthographicSize = ZoomPanController.ZPC.DefaultZoomRate;
 
-
                 // Statei güncelliyoruzz.
                 ZoomState = ZoomStates.ZoomedOut;
-
-                // Touch sistemi açıyorzz ki kaydırmalar yapılsın.
-                GalaxyController.GC.EnableTouchSystem();
             }
         }
 
@@ -137,7 +132,7 @@ public class PlanetZoomController : MonoBehaviour
 
             // Küçültmeye devam et.
             if (ZoomPanController.ZPC.MainCamera.orthographicSize > ZoomPanController.ZPC.ZoomOutMin)
-                ZoomPanController.ZPC.MainCamera.orthographicSize -= zoomRate;
+                ZoomPanController.ZPC.MainCamera.orthographicSize -= ZoomSpeed;
 
             // Konuma doğru yürütüyoruz kamerayı.
             if (distance > .1f)

@@ -4,6 +4,9 @@ public class ZoomPanController : MonoBehaviour
 {
     public static ZoomPanController ZPC { get; set; }
 
+    [Header("Zoom pan özelliği açık yada kapalı")]
+    public bool ZoomPanEnabled;
+
     [Header("Minimum yapılabilecek zoom in.")]
     public float ZoomOutMin;
 
@@ -52,6 +55,11 @@ public class ZoomPanController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+        // Eğer zoom pan yani zoom etme yada hareket ettirme kapalı ise geri dön.
+        if (!ZoomPanEnabled)
+            return;
+
         // Ekrana dokunduğu andaki konumu alıyoruz.
         if (Input.GetMouseButtonDown(0))
         {
@@ -81,9 +89,6 @@ public class ZoomPanController : MonoBehaviour
             MainCamera.transform.position += direction;
         }
 
-        // Her zaman ekran içerisinde mi diye kontrol ediyoruz.
-        CheckCameraBounds();
-
         // Yalnızca editördeyken mouse tekeri ile zoom yapılabilecek.
         if (Application.isEditor)
             DoZoom(Input.GetAxis("Mouse ScrollWheel"));
@@ -91,7 +96,13 @@ public class ZoomPanController : MonoBehaviour
         // Dokunan parmak kalmadığında değer zoom modunu kapatıyoruz.
         if (Input.touchCount == 0)
             isInZoom = false;
+    }
 
+    private void LateUpdate()
+    {
+        // Her zaman ekran içerisinde mi diye kontrol ediyoruz.
+        if (ZoomPanEnabled)
+            CheckCameraBounds();
     }
 
     /// <summary>
@@ -109,7 +120,10 @@ public class ZoomPanController : MonoBehaviour
         float y = Mathf.Clamp(MainCamera.transform.position.y, BottomBorder + viewSize.y, TopBorder - viewSize.y);
 
         // Konumunu güncelliyoruz.
-        MainCamera.transform.position = new Vector3(x, y, 0);
+        if (Input.GetMouseButton(0))
+            MainCamera.transform.position = new Vector3(x, y, 0);
+        else
+            MainCamera.transform.position = Vector3.MoveTowards(MainCamera.transform.position, new Vector3(x, y, 0), .05f);
     }
 
     void DoZoom(float increment)
