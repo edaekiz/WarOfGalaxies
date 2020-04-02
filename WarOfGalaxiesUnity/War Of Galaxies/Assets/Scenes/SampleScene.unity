@@ -341,7 +341,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3
+  orthographic size: 3.8
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
@@ -365,7 +365,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: 0.2588191, y: 0, z: 0, w: 0.9659258}
-  m_LocalPosition: {x: 0, y: 10, z: -16}
+  m_LocalPosition: {x: 0, y: 10, z: -17.35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -383,8 +383,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ddb9a42fbf8ebc4cb584a7ce319f845, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  zoomOutMin: 0.5
-  zoomOutMax: 7
+  ZoomOutMin: 0.3
+  ZoomOutMax: 8
+  DefaultZoomRate: 3.8
+  MainCamera: {fileID: 963194227}
 --- !u!1 &1188955012
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,16 +508,10 @@ MonoBehaviour:
     SolarPlanet: {fileID: 1642177161182402485, guid: ba1b8977029c05d4abdb86eaa35baa96,
       type: 3}
   - SolarPlanetType: 5
-    SolarPlanet: {fileID: 2218376238159798295, guid: ab3d5ef129738774ea9db8effaee0d90,
-      type: 3}
-  - SolarPlanetType: 6
     SolarPlanet: {fileID: 424058020241796548, guid: 8fc1fa8ee41054943a3fb0cd63e3bb12,
       type: 3}
-  - SolarPlanetType: 7
+  - SolarPlanetType: 6
     SolarPlanet: {fileID: 5194507508000716714, guid: ee046d7640939624983a8b79cf6ad697,
-      type: 3}
-  - SolarPlanetType: 8
-    SolarPlanet: {fileID: 8139254100556558341, guid: 2770bd42d22efb645ad56c49f1c44598,
       type: 3}
   SolarSystem:
     GalaxyIndex: 1
@@ -524,38 +520,28 @@ MonoBehaviour:
     - PlanetIndexInSolarSystem: 1
       SolarPlanetType: 1
       AroundRotateSpeed: 10
-      SunAroundRotateSpeed: 5
+      SunAroundRotateSpeed: 1
     - PlanetIndexInSolarSystem: 2
       SolarPlanetType: 2
       AroundRotateSpeed: 10
-      SunAroundRotateSpeed: 5
+      SunAroundRotateSpeed: 1
     - PlanetIndexInSolarSystem: 3
       SolarPlanetType: 3
       AroundRotateSpeed: 10
-      SunAroundRotateSpeed: 5
+      SunAroundRotateSpeed: 0.5
     - PlanetIndexInSolarSystem: 4
       SolarPlanetType: 4
       AroundRotateSpeed: 10
-      SunAroundRotateSpeed: 5
+      SunAroundRotateSpeed: 2
     - PlanetIndexInSolarSystem: 5
       SolarPlanetType: 5
       AroundRotateSpeed: 10
-      SunAroundRotateSpeed: 5
+      SunAroundRotateSpeed: 3
     - PlanetIndexInSolarSystem: 6
       SolarPlanetType: 6
       AroundRotateSpeed: 10
-      SunAroundRotateSpeed: 5
-    - PlanetIndexInSolarSystem: 7
-      SolarPlanetType: 7
-      AroundRotateSpeed: 10
-      SunAroundRotateSpeed: 5
-    - PlanetIndexInSolarSystem: 8
-      SolarPlanetType: 8
-      AroundRotateSpeed: 10
-      SunAroundRotateSpeed: 5
+      SunAroundRotateSpeed: 2.5
   PlanetsDistancePer: 1
-  PlanetObject: {fileID: 8435698545201754100, guid: a82f141e128467b4199560704c91283c,
-    type: 3}
   SunObject: {fileID: 6883090740009842018, guid: 299c35bf7a33dbf48a85ff0b065770fd,
     type: 3}
   FpsText: {fileID: 1188955014}
@@ -586,9 +572,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab035b616c5ed8e4693aa141ee5189cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ZoomMoveSpeed: 10
+  ZoomMoveSpeed: 100
   ZoomSpeed: 10
-  ZoomState: 0
+  ZoomState: 3
+  SelectedPlanet: {fileID: 0}
 --- !u!1 &2030998074
 GameObject:
   m_ObjectHideFlags: 0

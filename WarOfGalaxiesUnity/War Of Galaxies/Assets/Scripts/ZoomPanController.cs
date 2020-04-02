@@ -2,15 +2,35 @@
 
 public class ZoomPanController : MonoBehaviour
 {
-    Vector3 touchStart;
-    public float zoomOutMin = 1;
-    public float zoomOutMax = 8;
-    private Camera main;
+    public static ZoomPanController ZPC { get; set; }
+    
+    [Header("Minimum yapılabilecek zoom in.")]
+    public float ZoomOutMin;
+
+    [Header("Maksimum yapılabilecek zoom out.")]
+    public float ZoomOutMax;
+
+    [Header("Varsayılan zoom oranı.")]
+    public float DefaultZoomRate;
+
+    [Header("Oyundaki aktif kamera.")]
+    public Camera MainCamera;
+
     private bool isInZoom;
+    private Vector3 touchStart;
+
+    private void Awake()
+    {
+        if (ZPC == null)
+            ZPC = this;
+        else
+            Destroy(gameObject);
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        main = GetComponent<Camera>();
+        MainCamera = GetComponent<Camera>();
     }
 
     // Update is called once per frame
@@ -21,7 +41,7 @@ public class ZoomPanController : MonoBehaviour
         {
             // Zoom yapmadığından emin olmamız lazım.
             if (!isInZoom)
-                touchStart = main.ScreenToWorldPoint(Input.mousePosition);
+                touchStart = MainCamera.ScreenToWorldPoint(Input.mousePosition);
         }
 
         // Zoom işlemi.
@@ -35,17 +55,17 @@ public class ZoomPanController : MonoBehaviour
             float prevMagnitude = (touchZeroPrevPos - touchOnePrevPos).magnitude;
             float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
             float diffrence = currentMagnitude - prevMagnitude;
-            zoom(diffrence * 0.01f);
+            DoZoom(diffrence * 0.01f);
         }
         else if (Input.GetMouseButton(0) && !isInZoom) // Eğer zoom yapmıyor ise ekranı hareket ettireceğiz.
         {
-            Vector3 direction = touchStart - main.ScreenToWorldPoint(Input.mousePosition);
-            main.transform.position += direction;
+            Vector3 direction = touchStart - MainCamera.ScreenToWorldPoint(Input.mousePosition);
+            MainCamera.transform.position += direction;
         }
 
         // Yalnızca editördeyken mouse tekeri ile zoom yapılabilecek.
         if (Application.isEditor)
-            zoom(Input.GetAxis("Mouse ScrollWheel"));
+            DoZoom(Input.GetAxis("Mouse ScrollWheel"));
 
         // Dokunan parmak kalmadığında değer zoom modunu kapatıyoruz.
         if (Input.touchCount == 0)
@@ -53,9 +73,9 @@ public class ZoomPanController : MonoBehaviour
 
     }
 
-    void zoom(float increment)
+    void DoZoom(float increment)
     {
-        main.orthographicSize = Mathf.Clamp(main.orthographicSize - increment, zoomOutMin, zoomOutMax);
+        MainCamera.orthographicSize = Mathf.Clamp(MainCamera.orthographicSize - increment, ZoomOutMin, ZoomOutMax);
     }
 
 }

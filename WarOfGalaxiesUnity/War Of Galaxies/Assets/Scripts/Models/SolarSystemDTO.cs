@@ -32,10 +32,9 @@ namespace Assets.Scripts.Models
         MARS = 2,
         MERKURY = 3,
         SATURN = 4,
-        EARTH = 5,
-        JUPITER = 6,
-        NEPTUNE = 7,
-        URANUS = 8
+        JUPITER = 5,
+        NEPTUNE = 6,
+        URANUS = 7
     }
 
     [Serializable]

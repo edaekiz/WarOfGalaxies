@@ -17,9 +17,6 @@ public class GalaxyController : MonoBehaviour
     [Header("Her bir gezegen arasındaki mesafe.")]
     public float PlanetsDistancePer;
 
-    [Header("Gezegen modeli")]
-    public GameObject PlanetObject;
-
     [Header("Güneş modeli")]
     public GameObject SunObject;
 

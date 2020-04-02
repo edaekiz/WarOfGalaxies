@@ -9,6 +9,9 @@ public class PlanetController : MonoBehaviour
     [Header("Gösterdiği gezegen bilgisi.")]
     public SolarPlanetDTO SolarPlanetInfo;
 
+    private float rotateSelfSpeed;
+    private float rotateAroundSunSpeed;
+
     public void LoadPlanetInfo(SunController sun, SolarPlanetDTO solarPlanet)
     {
         // Güneşi atıyoruz.
@@ -19,6 +22,12 @@ public class PlanetController : MonoBehaviour
 
         // Güneşin etrafında rastgele bir konuma atıyoruz.
         transform.RotateAround(Sun.transform.position, transform.up, Random.Range(1, 360));
+
+        // Kendi etrafındaki hızı.
+        rotateSelfSpeed = SolarPlanetInfo.AroundRotateSpeed * Time.deltaTime;
+
+        // Güneşin etrafındaki hızı.
+        rotateAroundSunSpeed = SolarPlanetInfo.SunAroundRotateSpeed * Time.deltaTime;
     }
 
     // Update is called once per frame
@@ -29,15 +38,15 @@ public class PlanetController : MonoBehaviour
             return;
 
         // Kendi etrafında döndürüyoruz.
-        transform.RotateAround(transform.position, transform.up, SolarPlanetInfo.AroundRotateSpeed * Time.deltaTime);
+        transform.RotateAround(transform.position, transform.up, rotateSelfSpeed);
 
-        if (PlanetZoomController.PZC.ZoomState == PlanetZoomController.ZoomStates.Zoomed ||
-            PlanetZoomController.PZC.ZoomState == PlanetZoomController.ZoomStates.Zooming ||
-            PlanetZoomController.PZC.ZoomState == PlanetZoomController.ZoomStates.ZoomingOut)
-            return;
+        // Eğer bu gezegen seçili ise kendi yönünün tersinde çeviriyoruz ki 
+        if (PlanetZoomController.PZC.IsPlanetSelected(this))
+            ZoomPanController.ZPC.MainCamera.transform.RotateAround(transform.position, -transform.up, rotateSelfSpeed);
 
-        // Güneşin etrafında rastgele bir konuma atıyoruz.
-        transform.RotateAround(Sun.transform.position, transform.up, SolarPlanetInfo.SunAroundRotateSpeed * Time.deltaTime);
+        // Güneşin etrafında çeviriyoruz.
+        if (PlanetZoomController.PZC.ZoomState == PlanetZoomController.ZoomStates.ZoomedOut)
+            transform.RotateAround(Sun.transform.position, transform.up, rotateAroundSunSpeed);
     }
 
     private void OnMouseDown()
