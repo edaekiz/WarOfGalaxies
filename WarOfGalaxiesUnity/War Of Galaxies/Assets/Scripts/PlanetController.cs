@@ -51,10 +51,17 @@ public class PlanetController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        // Üzerine tıklandığında fokuslanıyoruz.
-        if (PlanetZoomController.PZC.ZoomState == PlanetZoomController.ZoomStates.Zoomed)
-            PlanetZoomController.PZC.BeginZoomOut();
-        else
-            PlanetZoomController.PZC.BeginZoom(this);
+        // Eğer herhangi bir panel açık ise geri dön.
+        if (GlobalPanelController.GPC.IsAnyPanelOpen)
+            return;
+
+        // Building paneli açıyoruz.
+        GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.BuildingPanel);
+
+        //// Üzerine tıklandığında fokuslanıyoruz.
+        //if (PlanetZoomController.PZC.ZoomState == PlanetZoomController.ZoomStates.Zoomed)
+        //    PlanetZoomController.PZC.BeginZoomOut();
+        //else
+        //    PlanetZoomController.PZC.BeginZoom(this);
     }
 }
