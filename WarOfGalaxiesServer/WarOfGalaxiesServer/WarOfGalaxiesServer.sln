@@ -7,9 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarOfGalaxiesApi", "WarOfGa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarOfGalaxiesApi.DAL", "WarOfGalaxiesApi.DAL\WarOfGalaxiesApi.DAL.csproj", "{AF69DCE7-D483-4851-BCA5-28CED5CEA966}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarOfGalaxiesApi.BLL", "WarOfGalaxiesApi.BLL\WarOfGalaxiesApi.BLL.csproj", "{4BAAC49A-C921-48D0-925A-37CFD0472E6E}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarOfGalaxiesApi.DTO", "WarOfGalaxiesApi.DTO\WarOfGalaxiesApi.DTO.csproj", "{19A9BBB0-318B-4712-AC73-6200B52752A9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WarOfGalaxiesApi.DTO", "WarOfGalaxiesApi.DTO\WarOfGalaxiesApi.DTO.csproj", "{19A9BBB0-318B-4712-AC73-6200B52752A9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,10 +23,6 @@ Global
 		{AF69DCE7-D483-4851-BCA5-28CED5CEA966}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AF69DCE7-D483-4851-BCA5-28CED5CEA966}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AF69DCE7-D483-4851-BCA5-28CED5CEA966}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4BAAC49A-C921-48D0-925A-37CFD0472E6E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4BAAC49A-C921-48D0-925A-37CFD0472E6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4BAAC49A-C921-48D0-925A-37CFD0472E6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4BAAC49A-C921-48D0-925A-37CFD0472E6E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{19A9BBB0-318B-4712-AC73-6200B52752A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{19A9BBB0-318B-4712-AC73-6200B52752A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19A9BBB0-318B-4712-AC73-6200B52752A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
