@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27703.2035
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarOfGalaxiesApi", "WarOfGalaxiesApi\WarOfGalaxiesApi.csproj", "{87705D43-E085-48BC-B6E2-2E51A350B6DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WarOfGalaxiesApi", "WarOfGalaxiesApi\WarOfGalaxiesApi.csproj", "{0B5259A3-30F7-4E28-9BE3-5353BC180F03}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{87705D43-E085-48BC-B6E2-2E51A350B6DD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{87705D43-E085-48BC-B6E2-2E51A350B6DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{87705D43-E085-48BC-B6E2-2E51A350B6DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{87705D43-E085-48BC-B6E2-2E51A350B6DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B5259A3-30F7-4E28-9BE3-5353BC180F03}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B5259A3-30F7-4E28-9BE3-5353BC180F03}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B5259A3-30F7-4E28-9BE3-5353BC180F03}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B5259A3-30F7-4E28-9BE3-5353BC180F03}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

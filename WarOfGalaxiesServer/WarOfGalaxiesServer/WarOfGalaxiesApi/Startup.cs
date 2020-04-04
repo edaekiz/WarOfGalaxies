@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Azure.KeyVault.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace WarOfGalaxiesApi
 {
@@ -22,6 +20,20 @@ namespace WarOfGalaxiesApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            #region Swagger
+
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("CoreSwagger", new Microsoft.OpenApi.Models.OpenApiInfo
+                {
+                    Title = "Swagger on ASP.NET Core",
+                    Version = "1.0.0",
+                    Description = "Try Swagger on (ASP.NET Core 2.0)"
+                });
+            });
+
+            #endregion
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -29,22 +41,22 @@ namespace WarOfGalaxiesApi
         {
             if (env.IsDevelopment())
             {
-                app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-            }
 
-            app.UseStaticFiles();
 
-            app.UseMvc(routes =>
+            app.UseSwagger()
+            .UseSwaggerUI(c =>
             {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                //TODO: Either use the SwaggerGen generated Swagger contract (generated from C# classes)
+                c.SwaggerEndpoint("/swagger/CoreSwagger/swagger.json", "Swagger Test .Net Core");
+
+                //TODO: Or alternatively use the original Swagger contract that's included in the static files
+                // c.SwaggerEndpoint("/swagger-original.json", "Swagger Petstore Original");
             });
+
+
+            app.UseMvc();
         }
     }
 }
