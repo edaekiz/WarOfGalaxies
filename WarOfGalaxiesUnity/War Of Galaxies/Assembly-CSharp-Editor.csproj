@@ -62,22 +62,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\AHProxy\PlanetShader\DemoScene\Standard Assets\Editor\ImageEffects\BloomAndFlaresEditor.cs" />
-    <Compile Include="Assets\AHProxy\PlanetShader\DemoScene\Standard Assets\Editor\ImageEffects\BloomEditor.cs" />
-    <Compile Include="Assets\AHProxy\PlanetShader\DemoScene\Standard Assets\Editor\ImageEffects\SunShaftsEditor.cs" />
-    <Compile Include="Assets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\Editor\AntiAliasingEditor.cs" />
-    <Compile Include="Assets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\Editor\IAntiAliasingEditor.cs" />
-    <Compile Include="Assets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\FXAA\Editor\FXAAEditor.cs" />
-    <Compile Include="Assets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\SMAA\Editor\SMAAEditor.cs" />
-    <Compile Include="Assets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\Common\Editor\EditorGUIHelper.cs" />
-    <Compile Include="Assets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\Common\Editor\FieldFinder.cs" />
-    <Compile Include="Assets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\Common\Editor\MinDrawer.cs" />
-    <Compile Include="Assets\_MK\MKGlowLite\Components\Legacy\Editor\MKGlowEditor.cs" />
-    <Compile Include="Assets\_MK\MKGlowLite\Components\Legacy\Editor\MinMaxRangeDrawer.cs" />
-    <Compile Include="Assets\_MK\MKGlowLite\Components\Legacy\Editor\SelectiveStandardShaderGUI.cs" />
-    <Compile Include="Assets\_MK\MKGlowLite\Editor\EditorHelper.EditorStyles.cs" />
-    <Compile Include="Assets\_MK\MKGlowLite\Editor\EditorHelper.EditorUIContent.cs" />
-    <Compile Include="Assets\_MK\MKGlowLite\Editor\EditorHelper.cs" />
+    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Editor\ImageEffects\BloomAndFlaresEditor.cs" />
+    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Editor\ImageEffects\BloomEditor.cs" />
+    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Editor\ImageEffects\SunShaftsEditor.cs" />
+    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\Editor\AntiAliasingEditor.cs" />
+    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\Editor\IAntiAliasingEditor.cs" />
+    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\FXAA\Editor\FXAAEditor.cs" />
+    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\SMAA\Editor\SMAAEditor.cs" />
+    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\Common\Editor\EditorGUIHelper.cs" />
+    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\Common\Editor\FieldFinder.cs" />
+    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\Common\Editor\MinDrawer.cs" />
+    <Compile Include="Assets\ExternalAssets\_MK\MKGlowLite\Components\Legacy\Editor\MKGlowEditor.cs" />
+    <Compile Include="Assets\ExternalAssets\_MK\MKGlowLite\Components\Legacy\Editor\MinMaxRangeDrawer.cs" />
+    <Compile Include="Assets\ExternalAssets\_MK\MKGlowLite\Components\Legacy\Editor\SelectiveStandardShaderGUI.cs" />
+    <Compile Include="Assets\ExternalAssets\_MK\MKGlowLite\Editor\EditorHelper.EditorStyles.cs" />
+    <Compile Include="Assets\ExternalAssets\_MK\MKGlowLite\Editor\EditorHelper.EditorUIContent.cs" />
+    <Compile Include="Assets\ExternalAssets\_MK\MKGlowLite\Editor\EditorHelper.cs" />
     <Reference Include="UnityEditor.TestRunner">
       <HintPath>C:/Users/Furkan/Documents/GitHub/WarOfGalaxies/WarOfGalaxiesUnity/War Of Galaxies/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
     </Reference>

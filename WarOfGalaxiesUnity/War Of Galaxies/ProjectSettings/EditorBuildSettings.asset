@@ -9,6 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/SampleScene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 0
-    path: Assets/AHProxy/PlanetShader/DemoScene/DemoScene.unity
+    path: Assets/ExternalAssets/AHProxy/PlanetShader/DemoScene/DemoScene.unity
     guid: 4d95ba533d773d140bb3d8f54c5ec072
   m_configObjects: {}
