@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.Models;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlanetController : MonoBehaviour
 {
@@ -38,11 +39,8 @@ public class PlanetController : MonoBehaviour
             return;
 
         // Kendi etrafında döndürüyoruz.
-        transform.RotateAround(transform.position, transform.up, rotateSelfSpeed);
-
-        // Eğer bu gezegen seçili ise kendi yönünün tersinde çeviriyoruz ki 
-        if (PlanetZoomController.PZC.IsPlanetSelected(this))
-            ZoomPanController.ZPC.MainCamera.transform.RotateAround(transform.position, -transform.up, rotateSelfSpeed);
+        if (!PlanetZoomController.PZC.IsPlanetSelected(this))
+            transform.RotateAround(transform.position, transform.up, rotateSelfSpeed);
 
         // Güneşin etrafında çeviriyoruz.
         if (PlanetZoomController.PZC.ZoomState == PlanetZoomController.ZoomStates.ZoomedOut)
@@ -51,17 +49,16 @@ public class PlanetController : MonoBehaviour
 
     private void OnMouseDown()
     {
-        //// Eğer herhangi bir panel açık ise geri dön.
-        //if (GlobalPanelController.GPC.IsAnyPanelOpen)
-        //    return;
+        // Eğer panel açık ise geri dön.
+        if (GlobalPanelController.GPC.IsAnyPanelOpen)
+            return;
 
-        //// Building paneli açıyoruz.
-        //GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.BuildingPanel);
+        // Eğer bir panele tıklanıyor ise geri dön.
+        if (EventSystem.current.currentSelectedGameObject != null)
+            return;
 
-        //// Üzerine tıklandığında fokuslanıyoruz.
-        //if (PlanetZoomController.PZC.ZoomState == PlanetZoomController.ZoomStates.Zoomed)
-        //    PlanetZoomController.PZC.BeginZoomOut();
-        //else
-        //    PlanetZoomController.PZC.BeginZoom(this);
+        // Üzerine tıklandığında fokuslanıyoruz.
+        if (PlanetZoomController.PZC.ZoomState != PlanetZoomController.ZoomStates.Zoomed)
+            PlanetZoomController.PZC.BeginZoom(this);
     }
 }

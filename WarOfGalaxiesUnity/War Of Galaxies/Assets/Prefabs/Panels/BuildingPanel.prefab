@@ -1497,7 +1497,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 625723eca88f7df448232176d685992d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1f52ba648fbc5f24fa6eb01d25a7fe74, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1621,9 +1621,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PanelType: 0
-  TransitionSpeed: 4000
-  OpenTransition: 0
-  CloseTransition: 3
+  TransitionSpeed: 4
+  OpenTransition: 4
+  CloseTransition: 4
   MainPanel: {fileID: 2732144399068031673}
   UpgradeButton: {fileID: 8734965623734161164}
   DowngradeButton: {fileID: 8734965623764424033}
@@ -2633,7 +2633,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 625723eca88f7df448232176d685992d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: dff2645c419176d4688b1da63ecb02e9, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2862,7 +2862,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 625723eca88f7df448232176d685992d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f58c14d6238ac314f8a8c4cfce21da88, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

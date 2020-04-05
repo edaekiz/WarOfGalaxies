@@ -643,6 +643,7 @@ GameObject:
   - component: {fileID: 284696125}
   - component: {fileID: 284696127}
   - component: {fileID: 284696126}
+  - component: {fileID: 284696128}
   m_Layer: 5
   m_Name: DetailPanel
   m_TagString: Untagged
@@ -706,6 +707,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 284696124}
   m_CullTransparentMesh: 0
+--- !u!114 &284696128
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 284696124}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 284696126}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &367666445
 GameObject:
   m_ObjectHideFlags: 0
@@ -2335,6 +2379,7 @@ GameObject:
   - component: {fileID: 1188370449}
   - component: {fileID: 1188370451}
   - component: {fileID: 1188370450}
+  - component: {fileID: 1188370452}
   m_Layer: 5
   m_Name: DetailPanel
   m_TagString: Untagged
@@ -2398,6 +2443,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1188370448}
   m_CullTransparentMesh: 0
+--- !u!114 &1188370452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1188370448}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1188370450}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1188955012
 GameObject:
   m_ObjectHideFlags: 0
@@ -2665,6 +2753,7 @@ GameObject:
   - component: {fileID: 1436684452}
   - component: {fileID: 1436684454}
   - component: {fileID: 1436684453}
+  - component: {fileID: 1436684455}
   m_Layer: 5
   m_Name: DetailPanel
   m_TagString: Untagged
@@ -2706,7 +2795,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -2728,6 +2817,49 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436684451}
   m_CullTransparentMesh: 0
+--- !u!114 &1436684455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436684451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Navigation:
+    m_Mode: 3
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 1
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 0}
+    m_PressedSprite: {fileID: 0}
+    m_SelectedSprite: {fileID: 0}
+    m_DisabledSprite: {fileID: 0}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 1436684453}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1508971519
 GameObject:
   m_ObjectHideFlags: 0
@@ -2919,28 +3051,28 @@ MonoBehaviour:
     Planets:
     - PlanetIndexInSolarSystem: 1
       SolarPlanetType: 1
-      AroundRotateSpeed: 10
-      SunAroundRotateSpeed: 1
+      AroundRotateSpeed: 1
+      SunAroundRotateSpeed: 0.3
     - PlanetIndexInSolarSystem: 2
       SolarPlanetType: 2
-      AroundRotateSpeed: 10
-      SunAroundRotateSpeed: 1
+      AroundRotateSpeed: 1
+      SunAroundRotateSpeed: 0.3
     - PlanetIndexInSolarSystem: 3
       SolarPlanetType: 3
-      AroundRotateSpeed: 10
-      SunAroundRotateSpeed: 0.5
+      AroundRotateSpeed: 1
+      SunAroundRotateSpeed: 0.3
     - PlanetIndexInSolarSystem: 4
       SolarPlanetType: 4
-      AroundRotateSpeed: 10
-      SunAroundRotateSpeed: 2
+      AroundRotateSpeed: 1
+      SunAroundRotateSpeed: 0.3
     - PlanetIndexInSolarSystem: 5
       SolarPlanetType: 5
-      AroundRotateSpeed: 10
-      SunAroundRotateSpeed: 3
+      AroundRotateSpeed: 1
+      SunAroundRotateSpeed: 0.3
     - PlanetIndexInSolarSystem: 6
       SolarPlanetType: 6
-      AroundRotateSpeed: 10
-      SunAroundRotateSpeed: 2.5
+      AroundRotateSpeed: 1
+      SunAroundRotateSpeed: 0.3
   PlanetsDistancePer: 1
   SunObject: {fileID: 6883090740009842018, guid: 299c35bf7a33dbf48a85ff0b065770fd,
     type: 3}
@@ -3057,7 +3189,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1605889583}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1511273348}
+        m_MethodName: BeginZoomOut
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1605889583
 MonoBehaviour:
   m_ObjectHideFlags: 0

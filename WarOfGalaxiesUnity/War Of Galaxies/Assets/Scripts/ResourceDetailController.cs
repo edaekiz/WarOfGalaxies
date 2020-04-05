@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-public class ResourceDetailController : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 {
     [Header("Transparan olma hızı.")]
     [Range(0.1f, 5)]
@@ -58,6 +58,22 @@ public class ResourceDetailController : MonoBehaviour, IPointerEnterHandler, IPo
         // Panel açılıyor ise açılış animasyonunu yapıyoruz.
         if (isOpening)
         {
+            // Eğer açık ise boş bir alana ya da kendi alanı dışında bir yere tıklanırsa kapatacağız.
+            if (Input.GetMouseButtonDown(0))
+            {
+                // Eğer seçili olan obje kendisi değil ise geri dön.
+                if (!ReferenceEquals(EventSystem.current.currentSelectedGameObject, ResourceDetailPanel.gameObject) &&
+                    !ReferenceEquals(EventSystem.current.currentSelectedGameObject, gameObject))
+                {
+                    // Kapatıyoruz..
+                    isOpening = false;
+
+                    // Geri dön.
+                    return;
+
+                }
+            }
+
             // Eğer zaten açık ise geri dön.
             if (ContentField.color.a < contentFieldDefaultColor.a)
             {
@@ -119,17 +135,20 @@ public class ResourceDetailController : MonoBehaviour, IPointerEnterHandler, IPo
         }
     }
 
-    public void OnPointerEnter(PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)
     {
-        // Panelin açık olduğundan emin oluyoruz.
-        ResourceDetailPanel.SetActive(true);
+        // Eğer açık değil ise açıyoruz.
+        if (!isOpening)
+        {
+            // Panelin açık olduğundan emin oluyoruz.
+            ResourceDetailPanel.SetActive(true);
 
-        // Ve artık panelin açıldığını söylüyoruz.
-        isOpening = true;
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        isOpening = false;
+            // Ve artık panelin açıldığını söylüyoruz.
+            isOpening = true;
+        }else // Geri dön.
+        {
+            isOpening = false;
+            return;
+        }
     }
 }

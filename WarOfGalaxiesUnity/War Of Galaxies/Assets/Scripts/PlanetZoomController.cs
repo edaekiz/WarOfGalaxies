@@ -70,6 +70,10 @@ public class PlanetZoomController : MonoBehaviour
     /// </summary>
     public void BeginZoomOut()
     {
+        // Eğer seçili bir gezegen yok ise geri dön.
+        if (SelectedPlanet == null)
+            return;
+
         // Eğer zaten zoom yapılıyor ise geri dön.
         if (ZoomState == ZoomStates.ZoomingOut)
             return;
