@@ -59,7 +59,7 @@ public class PlanetZoomController : MonoBehaviour
         zoomMoveRate = Time.deltaTime * ZoomMoveSpeed;
 
         // Planetin altına atıyoruz.
-        ZoomPanController.ZPC.MainCamera.transform.SetParent(SelectedPlanet.transform);
+        ZoomPanController.ZPC.MainCameraOffset.SetParent(SelectedPlanet.transform);
 
         // Touch sistemi kapatıyoruz ki kaydırmalar yapılmasın.
         GalaxyController.GC.DisableTouchSystem();
@@ -82,7 +82,7 @@ public class PlanetZoomController : MonoBehaviour
         ZoomState = ZoomStates.ZoomingOut;
 
         // Planetin altından alıyoruz.
-        ZoomPanController.ZPC.MainCamera.transform.SetParent(null);
+        ZoomPanController.ZPC.MainCameraOffset.SetParent(null);
 
         // Bütün gezegenleri açıyoruz.
         SelectedPlanet.Sun.EnableAllPlanets();
@@ -132,7 +132,7 @@ public class PlanetZoomController : MonoBehaviour
         if (ZoomState == ZoomStates.Zooming)
         {
             // Hedef konum ile arasındaki mesafe.
-            float distance = Vector3.Distance(ZoomPanController.ZPC.MainCamera.transform.localPosition, Vector3.zero);
+            float distance = Vector3.Distance(ZoomPanController.ZPC.MainCameraOffset.localPosition, Vector3.zero);
 
             // Küçültmeye devam et.
             if (ZoomPanController.ZPC.MainCamera.orthographicSize > ZoomPanController.ZPC.ZoomOutMin)
@@ -140,10 +140,10 @@ public class PlanetZoomController : MonoBehaviour
 
             // Konuma doğru yürütüyoruz kamerayı.
             if (distance > .1f)
-                ZoomPanController.ZPC.MainCamera.transform.localPosition = Vector3.MoveTowards(ZoomPanController.ZPC.MainCamera.transform.localPosition, Vector3.zero, zoomMoveRate);
+                ZoomPanController.ZPC.MainCameraOffset.localPosition = Vector3.MoveTowards(ZoomPanController.ZPC.MainCameraOffset.localPosition, Vector3.zero, zoomMoveRate);
 
             // Hedef konum ile arasındaki mesafe.
-            distance = Vector3.Distance(ZoomPanController.ZPC.MainCamera.transform.localPosition, Vector3.zero);
+            distance = Vector3.Distance(ZoomPanController.ZPC.MainCameraOffset.localPosition, Vector3.zero);
 
             // Eğer yeterince yakın ise büyümeyi durduruyoruz.
             if (distance <= .1f && ZoomPanController.ZPC.MainCamera.orthographicSize <= ZoomPanController.ZPC.ZoomOutMin)

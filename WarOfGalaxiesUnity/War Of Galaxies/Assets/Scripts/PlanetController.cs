@@ -47,7 +47,7 @@ public class PlanetController : MonoBehaviour
             transform.RotateAround(Sun.transform.position, transform.up, rotateAroundSunSpeed);
     }
 
-    private void OnMouseDown()
+    public void OnMouseDown()
     {
         // Eğer panel açık ise geri dön.
         if (GlobalPanelController.GPC.IsAnyPanelOpen)

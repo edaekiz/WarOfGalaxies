@@ -17,7 +17,12 @@ public class ZoomPanController : MonoBehaviour
     [Header("Default zoom rate bu değer olacak.")]
     public float DefaultZoomRate;
 
+    [Header("Kamerayı istediğimiz gibi oynatmak için offset koyduk.")]
+    [HideInInspector]
+    public Transform MainCameraOffset;
+
     [Header("Oyundaki aktif kamera.")]
+    [HideInInspector]
     public Camera MainCamera;
 
     [Header("Kameranın sol sınırı.")]
@@ -34,6 +39,7 @@ public class ZoomPanController : MonoBehaviour
 
     private bool isInZoom;
     private Vector3 touchStart;
+    private Vector3 StartPos;
 
     private void Awake()
     {
@@ -47,6 +53,12 @@ public class ZoomPanController : MonoBehaviour
     void Start()
     {
         MainCamera = GetComponent<Camera>();
+
+        // Offset yapmak için bu kamerayı kullanacağız.
+        MainCameraOffset = MainCamera.transform.parent;
+
+        // Kameranın başlangıç konumu.
+        StartPos = MainCameraOffset.position;
 
         // Kameranin orthographic boyutunu tutuyoruz.
         DefaultZoomRate = MainCamera.orthographicSize;
@@ -86,7 +98,7 @@ public class ZoomPanController : MonoBehaviour
             Vector3 direction = touchStart - MainCamera.ScreenToWorldPoint(Input.mousePosition);
 
             // Hedefe doğru kaydırıyoruz.
-            MainCamera.transform.position += direction;
+            MainCameraOffset.position += direction;
         }
 
         // Yalnızca editördeyken mouse tekeri ile zoom yapılabilecek.
@@ -114,16 +126,16 @@ public class ZoomPanController : MonoBehaviour
         Vector2 viewSize = new Vector2(MainCamera.orthographicSize * MainCamera.aspect, MainCamera.orthographicSize);
 
         // X ekseninin sınırlarını kontrol ediyoruz.
-        float x = Mathf.Clamp(MainCamera.transform.position.x, LeftBorder + viewSize.x, RightBorder - viewSize.x);
+        float x = Mathf.Clamp(MainCameraOffset.position.x, LeftBorder + viewSize.x, RightBorder - viewSize.x);
 
         // Y ekseninin sınırlarını kontrol ediyoruz.
-        float y = Mathf.Clamp(MainCamera.transform.position.y, BottomBorder + viewSize.y, TopBorder - viewSize.y);
+        float y = Mathf.Clamp(MainCameraOffset.position.y, BottomBorder + viewSize.y, TopBorder - viewSize.y);
 
         // Konumunu güncelliyoruz.
         if (Input.GetMouseButton(0))
-            MainCamera.transform.position = new Vector3(x, y, 0);
+            MainCameraOffset.position = new Vector3(x, y, 0);
         else
-            MainCamera.transform.position = Vector3.MoveTowards(MainCamera.transform.position, new Vector3(x, y, 0), .05f);
+            MainCameraOffset.position = Vector3.MoveTowards(MainCameraOffset.position, new Vector3(x, y, 0), .05f);
     }
 
     void DoZoom(float increment)

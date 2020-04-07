@@ -136,7 +136,7 @@ Material:
     - _UVSec: 0
     - _ZWrite: 1
     m_Colors:
-    - _AtmosphereColor: {r: 0.4411765, g: 0.6300204, b: 1, a: 1}
+    - _AtmosphereColor: {r: 0, g: 0, b: 0, a: 1}
     - _CameraPosition: {r: 0, g: 0, b: 0, a: 0}
     - _CityLightColor: {r: 1, g: 1, b: 1, a: 1}
     - _CloudColor: {r: 1, g: 1, b: 1, a: 1}
@@ -148,4 +148,4 @@ Material:
     - _MKGlowColor: {r: 1, g: 0.620667, b: 0.2688679, a: 1}
     - _MKGlowTexColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
-    - _TextureColor: {r: 1, g: 0.81589437, b: 0.5235849, a: 1}
+    - _TextureColor: {r: 1, g: 1, b: 1, a: 1}
