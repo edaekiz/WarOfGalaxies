@@ -5117,6 +5117,7 @@ MonoBehaviour:
   SunObject: {fileID: 930926894866197967, guid: 7e40ac49acd1a4847b310cf0f07697f6,
     type: 3}
   FpsText: {fileID: 1188955014}
+  GalaxyRotationSpeed: 0.5
 --- !u!4 &1511273344
 Transform:
   m_ObjectHideFlags: 0

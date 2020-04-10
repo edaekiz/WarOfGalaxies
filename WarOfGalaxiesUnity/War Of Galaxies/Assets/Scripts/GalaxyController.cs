@@ -23,6 +23,9 @@ public class GalaxyController : MonoBehaviour
     [Header("Fpsı bastığımız field.")]
     public Text FpsText;
 
+    [Header("Galaksinin dönüş hızı.")]
+    public float GalaxyRotationSpeed;
+
     private float deltaTime;
 
     // Güneş bilgisi.
@@ -45,9 +48,21 @@ public class GalaxyController : MonoBehaviour
 
     void Update()
     {
+
+        #region Fps Değeri
+
         deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
         float fps = 1.0f / deltaTime;
         FpsText.text = Mathf.Ceil(fps).ToString();
+
+        #endregion
+
+        #region Galaxiyi çeviriyoruz.
+
+        RenderSettings.skybox.SetFloat("_Rotation", Time.time * GalaxyRotationSpeed);
+
+        #endregion
+
     }
 
     public void LoadSolarSystem()
