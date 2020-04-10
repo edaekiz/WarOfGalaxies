@@ -76,6 +76,11 @@ public class GalaxyController : MonoBehaviour
             // Gezegeni oluşturuyoruz.
             GameObject planet = Instantiate(planetData.SolarPlanet, planetPosition, Quaternion.identity, transform);
 
+            // İzini buluyoruz.
+            TrailRenderer trail = planet.GetComponent<TrailRenderer>();
+
+            trail.endColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+
             // Gezegeni yönetmek için bilgileri aktarmamız lazım. Componentini alıyoruz.
             PlanetController planetController = planet.GetComponent<PlanetController>();
 
@@ -87,7 +92,8 @@ public class GalaxyController : MonoBehaviour
         }
 
         // Lineları yüklüyoruz.
-        currentSun.LoadLines(SolarSystem.Planets.Select(x => x.PlanetIndexInSolarSystem).ToArray());
+        if (currentSun.IsLineEnabled)
+            currentSun.LoadLines(SolarSystem.Planets.Select(x => x.PlanetIndexInSolarSystem).ToArray());
 
     }
 

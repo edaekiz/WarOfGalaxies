@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class SunController : MonoBehaviour
 {
+    public bool IsLineEnabled;
     public float RotateSpeed;
     public int OrbitalDetail;
     public GameObject OrbitLine;

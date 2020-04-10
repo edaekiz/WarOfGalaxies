@@ -82,7 +82,7 @@ public class PlanetZoomController : MonoBehaviour
         ZoomState = ZoomStates.ZoomingOut;
 
         // Planetin altından alıyoruz.
-        ZoomPanController.ZPC.MainCameraOffset.SetParent(null);
+        ZoomPanController.ZPC.MainCameraOffset.SetParent(transform);
 
         // Bütün gezegenleri açıyoruz.
         SelectedPlanet.Sun.EnableAllPlanets();
