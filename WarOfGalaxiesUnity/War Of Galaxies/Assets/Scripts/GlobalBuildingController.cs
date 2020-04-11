@@ -23,13 +23,13 @@ public class GlobalBuildingController : MonoBehaviour
         CurrentSelectedBuilding = _selectedBuilding;
 
         // Seçimini açıyoruz.
-        CurrentSelectedBuilding.SelectionObject.gameObject.SetActive(true);
+        CurrentSelectedBuilding.SelectionMesh.gameObject.SetActive(true);
     }
 
     public void DeSelectBuilding()
     {
         // Bütün seçimleri kaldırıyoruz.
         foreach (BuildingController bc in FindObjectsOfType<BuildingController>())
-            bc.SelectionObject.SetActive(false);
+            bc.SelectionMesh.SetActive(false);
     }
 }

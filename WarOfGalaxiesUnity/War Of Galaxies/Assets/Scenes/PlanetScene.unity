@@ -406,7 +406,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f6d90b3eb02654d9bc8787a755bc8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectionObject: {fileID: 1995866185}
+  SelectionMesh: {fileID: 1995866185}
+  BuildingMesh: {fileID: 8375511014461560208}
+  ConstructableMesh: {fileID: 369816373}
 --- !u!65 &176010341
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -557,7 +559,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f6d90b3eb02654d9bc8787a755bc8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectionObject: {fileID: 128858728}
+  SelectionMesh: {fileID: 128858728}
+  BuildingMesh: {fileID: 5026922954813490758}
+  ConstructableMesh: {fileID: 881929181}
 --- !u!65 &336724080
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -795,7 +799,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 445040180}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 13.05064, y: 0.22000001, z: 10.861142}
+  m_LocalPosition: {x: 13.05064, y: 0.11, z: 10.861142}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1256584950685668804}
@@ -829,7 +833,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f6d90b3eb02654d9bc8787a755bc8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectionObject: {fileID: 163813063}
+  SelectionMesh: {fileID: 163813063}
+  BuildingMesh: {fileID: 1256584950686091748}
+  ConstructableMesh: {fileID: 525442637}
 --- !u!1 &515747088
 GameObject:
   m_ObjectHideFlags: 0
@@ -1464,7 +1470,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f6d90b3eb02654d9bc8787a755bc8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectionObject: {fileID: 1451719421}
+  SelectionMesh: {fileID: 1451719421}
+  BuildingMesh: {fileID: 3944204406772103421}
+  ConstructableMesh: {fileID: 442022388}
 --- !u!65 &1066720820
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1703,7 +1711,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f6d90b3eb02654d9bc8787a755bc8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectionObject: {fileID: 132223750}
+  SelectionMesh: {fileID: 132223750}
+  BuildingMesh: {fileID: 242219680839729323}
+  ConstructableMesh: {fileID: 1137609013}
 --- !u!65 &1539711266
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1934,7 +1944,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1707198218}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.0172515, y: 0.135, z: 8.044496}
+  m_LocalPosition: {x: 7.0172515, y: 0.111, z: 8.044496}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1731045909290357689}
@@ -1968,7 +1978,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f6d90b3eb02654d9bc8787a755bc8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectionObject: {fileID: 536466591}
+  SelectionMesh: {fileID: 536466591}
+  BuildingMesh: {fileID: 1731045909290192793}
+  ConstructableMesh: {fileID: 801958557}
 --- !u!1 &1841658464
 GameObject:
   m_ObjectHideFlags: 0
@@ -2159,7 +2171,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 18f6d90b3eb02654d9bc8787a755bc8f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SelectionObject: {fileID: 8296172667778005601}
+  SelectionMesh: {fileID: 8296172667778005601}
+  BuildingMesh: {fileID: 840208279882447614}
+  ConstructableMesh: {fileID: 1558284119}
 --- !u!65 &1915553829
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -2368,7 +2382,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 242219680839729323}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.021, z: 0}
   m_LocalScale: {x: 0.20000002, y: 0.2, z: 0.20000002}
   m_Children: []
   m_Father: {fileID: 1539711264}
@@ -24583,7 +24597,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1256584950686091748}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.036, z: 0}
   m_LocalScale: {x: 0.20000002, y: 0.2, z: 0.20000002}
   m_Children: []
   m_Father: {fileID: 445040181}
@@ -25127,7 +25141,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8375511014461560208}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.016, z: 0}
   m_LocalScale: {x: 0.15000002, y: 0.15, z: 0.15000002}
   m_Children:
   - {fileID: 8375511014461786548}
