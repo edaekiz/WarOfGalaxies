@@ -62,7 +62,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BuildingController.cs" />
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\AntiAliasing.cs" />
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\FXAA\FXAA.cs" />
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\IAntiAliasing.cs" />
@@ -84,22 +83,24 @@
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Utility\FPSCounter.cs" />
     <Compile Include="Assets\ExternalAssets\Asteroids Pack\Assets\Scripts\RandomRotator.cs" />
     <Compile Include="Assets\ExternalAssets\Hi-Tech Buttons and Panels\Resources\Scripts\JustRotate.cs" />
-    <Compile Include="Assets\Scripts\BasePanelController.cs" />
-    <Compile Include="Assets\Scripts\BuildingPanelController.cs" />
+    <Compile Include="Assets\Scripts\ApiService.cs" />
+    <Compile Include="Assets\Scripts\Controllers\BasePanelController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\BuildingController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\BuildingPanelController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\GalaxyController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\GlobalBuildingController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\GlobalPanelController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlanetActionController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlanetController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlanetRotateController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlanetZoomController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\ResourceController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\ResourceDetailController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\StaticValuesController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\SunController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\ZoomPanController.cs" />
     <Compile Include="Assets\Scripts\Extends\VectorExtends.cs" />
-    <Compile Include="Assets\Scripts\GalaxyController.cs" />
-    <Compile Include="Assets\Scripts\GlobalBuildingController.cs" />
-    <Compile Include="Assets\Scripts\GlobalPanelController.cs" />
     <Compile Include="Assets\Scripts\Models\SolarSystemDTO.cs" />
-    <Compile Include="Assets\Scripts\PlanetActionController.cs" />
-    <Compile Include="Assets\Scripts\PlanetController.cs" />
-    <Compile Include="Assets\Scripts\PlanetRotateController.cs" />
-    <Compile Include="Assets\Scripts\PlanetZoomController.cs" />
-    <Compile Include="Assets\Scripts\ResourceController.cs" />
-    <Compile Include="Assets\Scripts\ResourceDetailController.cs" />
-    <Compile Include="Assets\Scripts\StaticValuesController.cs" />
-    <Compile Include="Assets\Scripts\SunController.cs" />
-    <Compile Include="Assets\Scripts\ZoomPanController.cs" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Ring.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MultiPassHollywoodFlares.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\Blend.shader" />
