@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GalaxyController : MonoBehaviour
 {
@@ -20,13 +19,8 @@ public class GalaxyController : MonoBehaviour
     [Header("Güneş modeli")]
     public GameObject SunObject;
 
-    [Header("Fpsı bastığımız field.")]
-    public Text FpsText;
-
     [Header("Galaksinin dönüş hızı.")]
     public float GalaxyRotationSpeed;
-
-    private float deltaTime;
 
     // Güneş bilgisi.
     private SunController currentSun;
@@ -45,24 +39,13 @@ public class GalaxyController : MonoBehaviour
         LoadSolarSystem();
     }
 
-
     void Update()
     {
-
-        #region Fps Değeri
-
-        deltaTime += (Time.deltaTime - deltaTime) * 0.1f;
-        float fps = 1.0f / deltaTime;
-        FpsText.text = Mathf.Ceil(fps).ToString();
-
-        #endregion
-
         #region Galaxiyi çeviriyoruz.
 
         RenderSettings.skybox.SetFloat("_Rotation", Time.time * GalaxyRotationSpeed);
 
         #endregion
-
     }
 
     public void LoadSolarSystem()

@@ -34,4 +34,10 @@ public class BuildingPanelController : BasePanelController
     [Header("Gereken deuterium miktarını buraya basacağız.")]
     public TextMeshProUGUI RequiredDeuteriumQuantity;
 
+    private void OnDestroy()
+    {
+        // Binanın seçimini kaldırıyoruz.
+        GlobalBuildingController.GBC.DeSelectBuilding();
+    }
+
 }

@@ -6,7 +6,7 @@ public class PlanetRotateController : MonoBehaviour
 
     void OnMouseDrag()
     {
-        //Dünyayı döndürmek için.
+        // Dünyayı döndürmek için.
         if (Input.touchCount <= 1)
         {
             float rotX = Input.GetAxis("Mouse X") * rotationSpeed * Mathf.Deg2Rad;

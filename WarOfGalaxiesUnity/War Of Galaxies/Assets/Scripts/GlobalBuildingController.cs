@@ -1,0 +1,35 @@
+﻿using UnityEngine;
+
+public class GlobalBuildingController : MonoBehaviour
+{
+    public static GlobalBuildingController GBC { get; set; }
+    private void Awake()
+    {
+        if (GBC == null)
+            GBC = this;
+        else
+            Destroy(GBC);
+    }
+
+    [Header("Seçili olan bina.")]
+    public BuildingController CurrentSelectedBuilding;
+
+    public void SelectBuilding(BuildingController _selectedBuilding)
+    {
+        // Tüm seçimleri kaldırıyoruz.
+        DeSelectBuilding();
+
+        // Binayı seçiyoruz.
+        CurrentSelectedBuilding = _selectedBuilding;
+
+        // Seçimini açıyoruz.
+        CurrentSelectedBuilding.SelectionObject.gameObject.SetActive(true);
+    }
+
+    public void DeSelectBuilding()
+    {
+        // Bütün seçimleri kaldırıyoruz.
+        foreach (BuildingController bc in FindObjectsOfType<BuildingController>())
+            bc.SelectionObject.SetActive(false);
+    }
+}
