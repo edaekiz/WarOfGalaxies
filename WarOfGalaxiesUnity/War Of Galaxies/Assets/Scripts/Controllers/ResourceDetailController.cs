@@ -2,6 +2,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Assets.Scripts.Enums;
+using Assets.Scripts.Models;
+
 public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 {
     [Header("Transparan olma hızı.")]
@@ -13,6 +16,9 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 
     [Header("Detayların basılacağı alan.")]
     public TextMeshProUGUI ContentField;
+
+    [Header("Datalarının basılacağı kaynak.")]
+    public ResourceTypes Resource;
 
     private bool isOpening;
     private Image detailPanelImage;
@@ -145,10 +151,72 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 
             // Ve artık panelin açıldığını söylüyoruz.
             isOpening = true;
-        }else // Geri dön.
+
+            // Load resource Details.
+            LoadResouceData();
+
+        }
+        else // Geri dön.
         {
             isOpening = false;
             return;
         }
     }
+
+    public void LoadResouceData()
+    {
+        switch (Resource)
+        {
+            case ResourceTypes.Metal:
+                {
+
+                    #region Metal Üretim hesaplaması.
+
+                    int metalQuantity = 0;
+
+                    UserPlanetBuildingDTO metalBuilding = Data.UserPlanetBuidings.Find(x => x.BuildingID == Buildings.MetalMadeni);
+
+                    if (metalBuilding != null)
+                    {
+                        BuildingLevelDTO upgrade = Data.BuildingLevels.Find(x => x.BuildingID == Buildings.MetalMadeni && x.BuildingLevel == metalBuilding.BuildingLevel);
+
+                        if (upgrade != null)
+                            metalQuantity = upgrade.BuildingValue;
+                    }
+
+                    #endregion
+
+                    #region Depo Kapasitesini hesaplıyoruz.
+
+                    int metalCapacityQuantity = 0;
+
+                    UserPlanetBuildingDTO metalCapacityBuilding = Data.UserPlanetBuidings.Find(x => x.BuildingID == Buildings.MetalDeposu);
+
+                    if (metalBuilding != null)
+                    {
+                        BuildingLevelDTO upgrade = Data.BuildingLevels.Find(x => x.BuildingID == Buildings.MetalDeposu && x.BuildingLevel == metalBuilding.BuildingLevel);
+
+                        if (upgrade != null)
+                            metalCapacityQuantity = upgrade.BuildingValue;
+                    }
+
+                    #endregion
+
+                    #region Ekrana basıyoruz.
+
+                    ContentField.text = $"Anlık\n<color=white>{ResourceController.RC.MetalQuantity}</color>\nDepo Kapasitesi\n<color=white>{metalCapacityQuantity}</color>\nSaaatlik Üretim\n<color=white>{metalQuantity}</color>";
+
+                    #endregion
+
+                }
+                break;
+            case ResourceTypes.Crystal:
+                break;
+            case ResourceTypes.Boron:
+                break;
+            default:
+                break;
+        }
+    }
+
 }

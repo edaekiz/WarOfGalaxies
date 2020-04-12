@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿using Assets.Scripts.Models;
+using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class ResourceController : MonoBehaviour
@@ -38,6 +40,10 @@ public class ResourceController : MonoBehaviour
     [Header("Kaynağa tıklandığında açılacak detay paneli.")]
     public ResourceDetailController MetalDetailPanel;
 
+    private void Start()
+    {
+        StartCoroutine(ReCalculateResourcesInSeconds());
+    }
 
     private void Update()
     {
@@ -50,6 +56,46 @@ public class ResourceController : MonoBehaviour
         // Boron animasyonu.
         DoBoronAnimation();
     }
+
+    #region Üretim Hesaplamaları
+
+    public IEnumerator ReCalculateResourcesInSeconds()
+    {
+        try
+        {
+            #region Metal Binası Üretimini hesaplıyoruz.
+
+            UserPlanetBuildingDTO metalBuilding = Data.UserPlanetBuidings.Find(x => x.BuildingID == Assets.Scripts.Enums.Buildings.MetalMadeni);
+
+            if (metalBuilding != null)
+            {
+                BuildingLevelDTO upgrade = Data.BuildingLevels.Find(x => x.BuildingID == Assets.Scripts.Enums.Buildings.MetalMadeni && x.BuildingLevel == metalBuilding.BuildingLevel);
+
+                if (upgrade != null)
+                {
+                    int perProduceInSecs = upgrade.BuildingValue / 60 / 60;
+
+                    SetMetalQuantity(perProduceInSecs);
+                }
+            }
+
+            #endregion
+
+        }
+        catch (System.Exception exc)
+        {
+            Debug.LogException(exc);
+        }
+
+        // Her saniye tekrar çağıracağız bu methotu. Bu yüzden 1 saniye bekletiyoruz.
+        yield return new WaitForSecondsRealtime(1);
+
+        // Tekrar kendisin çağırıyoruz.
+        StartCoroutine(ReCalculateResourcesInSeconds());
+
+    }
+
+    #endregion
 
     #region Metal ve Animasyon
 
@@ -209,7 +255,5 @@ public class ResourceController : MonoBehaviour
     public void SetBoronQuantity(int quantity) => BoronQuantity += quantity;
 
     #endregion
-
-
 
 }

@@ -977,6 +977,7 @@ MonoBehaviour:
   AnimationSpeed: 3
   ResourceDetailPanel: {fileID: 500339734}
   ContentField: {fileID: 1505810897}
+  Resource: 1
 --- !u!114 &355289714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1311,6 +1312,7 @@ MonoBehaviour:
   AnimationSpeed: 3
   ResourceDetailPanel: {fileID: 1293499344}
   ContentField: {fileID: 483176013}
+  Resource: 3
 --- !u!114 &442223620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3240,6 +3242,7 @@ MonoBehaviour:
   AnimationSpeed: 3
   ResourceDetailPanel: {fileID: 659951285}
   ContentField: {fileID: 472800929}
+  Resource: 2
 --- !u!114 &952155739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3733,7 +3736,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b86396077458f254d8aa185d203ed32c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  QuantityAnimationIncreaseSpeed: 5
+  QuantityAnimationIncreaseSpeed: 1
   MetalQuantityText: {fileID: 1974497942}
   CrystalQuantityText: {fileID: 1498060881}
   BoronQuantityText: {fileID: 644186182}
