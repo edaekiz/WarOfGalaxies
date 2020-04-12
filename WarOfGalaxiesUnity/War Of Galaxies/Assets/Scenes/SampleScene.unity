@@ -4686,6 +4686,48 @@ MonoBehaviour:
   - PlanetType: 6
     SolarPlanet: {fileID: 1777916280782844, guid: d9c0c5d4ef5159d47a21e4b62b6d9728,
       type: 3}
+  - PlanetType: 7
+    SolarPlanet: {fileID: 1789615838080712, guid: 83be0680b8fcaa6459614bb010d3243d,
+      type: 3}
+  - PlanetType: 8
+    SolarPlanet: {fileID: 1771864433433622, guid: 431ed76078927774cacca3fc1237395b,
+      type: 3}
+  - PlanetType: 9
+    SolarPlanet: {fileID: 1734382902888822, guid: 883ebbd5ecab57a488e25f2da53fc08e,
+      type: 3}
+  - PlanetType: 10
+    SolarPlanet: {fileID: 1169996773012552, guid: 848a7008e647d1045b1cac71538e2f2c,
+      type: 3}
+  - PlanetType: 11
+    SolarPlanet: {fileID: 1894442630516658, guid: 08637768f8dcb5c4bb1cd7b47abdd786,
+      type: 3}
+  - PlanetType: 12
+    SolarPlanet: {fileID: 1152689187702200, guid: de6298fb37c90db488531e101dc295ab,
+      type: 3}
+  - PlanetType: 13
+    SolarPlanet: {fileID: 1974506447651676, guid: 65d7941e1df2662498aecb6b770b7c95,
+      type: 3}
+  - PlanetType: 14
+    SolarPlanet: {fileID: 1997016638684582, guid: 5854bfdb34b32df428411eb8fb12934b,
+      type: 3}
+  - PlanetType: 15
+    SolarPlanet: {fileID: 1508073112075824, guid: 9b418326b2234704b801edacda652771,
+      type: 3}
+  - PlanetType: 16
+    SolarPlanet: {fileID: 1115538951136088, guid: a261b80428192ee48b1c37996454e780,
+      type: 3}
+  - PlanetType: 17
+    SolarPlanet: {fileID: 1194884068563600, guid: 11e7bf1572116e143b5a907bdd68d453,
+      type: 3}
+  - PlanetType: 18
+    SolarPlanet: {fileID: 1799160012814618, guid: 196f9b31dc141a145b23f1303f315f72,
+      type: 3}
+  - PlanetType: 19
+    SolarPlanet: {fileID: 1745261989477238, guid: 2effdd9487c9723458cccd833b582a15,
+      type: 3}
+  - PlanetType: 20
+    SolarPlanet: {fileID: 1855073473284052, guid: 20d0b5d8dbfc7ad4cb8f40c974549375,
+      type: 3}
   SolarSystem:
   - UserPlanetID: 1
     UserName: Semiramis
