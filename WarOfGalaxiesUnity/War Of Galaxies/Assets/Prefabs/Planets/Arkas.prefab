@@ -108,8 +108,7 @@ Transform:
   m_LocalRotation: {x: -0.68887806, y: 0.1636518, z: 0.5201773, w: 0.47757804}
   m_LocalPosition: {x: 0.00015008195, y: -0.000009727144, z: -0.0000072118382}
   m_LocalScale: {x: 0.76843154, y: 0.7684317, z: 0.7684317}
-  m_Children:
-  - {fileID: 3214085181752113334}
+  m_Children: []
   m_Father: {fileID: 4225342862600738}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -241,10 +240,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sun: {fileID: 0}
   SolarPlanetInfo:
-    PlanetIndexInSolarSystem: 0
-    SolarPlanetType: 0
-    AroundRotateSpeed: 0
-    SunAroundRotateSpeed: 0
+    UserPlanetID: 0
+    UserName: 
+    PlanetName: 
+    PlanetCordinate: 
+    PlanetType: 0
+  RotateSunsAroundSpeed: 6
 --- !u!96 &-6795982831908316810
 TrailRenderer:
   serializedVersion: 2
@@ -285,7 +286,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 60
+  m_Time: 45
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
@@ -342,78 +343,3 @@ TrailRenderer:
   m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
---- !u!1001 &7629112883321230252
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 4998567784369932}
-    m_Modifications:
-    - target: {fileID: -4216859302048453862, guid: f58550163eafb5748b4da890427cc257,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -34.6
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: f58550163eafb5748b4da890427cc257,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -5.5
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: f58550163eafb5748b4da890427cc257,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: f58550163eafb5748b4da890427cc257,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.45429638
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: f58550163eafb5748b4da890427cc257,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.5418625
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: f58550163eafb5748b4da890427cc257,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.54186225
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: f58550163eafb5748b4da890427cc257,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.45429635
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: f58550163eafb5748b4da890427cc257,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: f58550163eafb5748b4da890427cc257,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 10.047001
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: f58550163eafb5748b4da890427cc257,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -90.00001
-      objectReference: {fileID: 0}
-    - target: {fileID: -4216859302048453862, guid: f58550163eafb5748b4da890427cc257,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 90.00001
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: f58550163eafb5748b4da890427cc257,
-        type: 3}
-      propertyPath: m_Name
-      value: Defense_Tower-FBX
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: f58550163eafb5748b4da890427cc257, type: 3}
---- !u!4 &3214085181752113334 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -4216859302048453862, guid: f58550163eafb5748b4da890427cc257,
-    type: 3}
-  m_PrefabInstance: {fileID: 7629112883321230252}
-  m_PrefabAsset: {fileID: 0}

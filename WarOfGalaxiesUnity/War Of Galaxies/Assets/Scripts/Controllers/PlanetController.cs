@@ -4,16 +4,19 @@ using UnityEngine.EventSystems;
 
 public class PlanetController : MonoBehaviour
 {
-    [Header("Yörüngesindeki güneş")]
+    [Header("Yörüngesindeki güneş.")]
     public SunController Sun;
 
     [Header("Gösterdiği gezegen bilgisi.")]
     public SolarPlanetDTO SolarPlanetInfo;
 
-    private float rotateSelfSpeed;
-    private float rotateAroundSunSpeed;
+    [Header("Gezegenin sistemdeki kordinatları.")]
+    public CordinateDTO CordinateInfo;
 
-    public void LoadPlanetInfo(SunController sun, SolarPlanetDTO solarPlanet)
+    [Header("Güneşin etrafındaki dönüş hızı.")]
+    public float RotateSunsAroundSpeed = 5;
+
+    public void LoadPlanetInfo(SunController sun, SolarPlanetDTO solarPlanet, CordinateDTO cordinate)
     {
         // Güneşi atıyoruz.
         Sun = sun;
@@ -21,14 +24,11 @@ public class PlanetController : MonoBehaviour
         // Gezegen bilgisini atıyoruz.
         SolarPlanetInfo = solarPlanet;
 
+        // Kordinat bilgisini atıyoruz.
+        CordinateInfo = cordinate;
+
         // Güneşin etrafında rastgele bir konuma atıyoruz.
         transform.RotateAround(Sun.transform.position, transform.up, Random.Range(1, 360));
-
-        // Kendi etrafındaki hızı.
-        rotateSelfSpeed = SolarPlanetInfo.AroundRotateSpeed * Time.deltaTime;
-
-        // Güneşin etrafındaki hızı.
-        rotateAroundSunSpeed = SolarPlanetInfo.SunAroundRotateSpeed * Time.deltaTime;
     }
 
     // Update is called once per frame
@@ -40,11 +40,11 @@ public class PlanetController : MonoBehaviour
 
         // Kendi etrafında döndürüyoruz.
         if (!PlanetZoomController.PZC.IsPlanetSelected(this))
-            transform.RotateAround(transform.position, transform.up, rotateSelfSpeed);
+            transform.RotateAround(transform.position, transform.up, CordinateInfo.SolarSystemOrderIndex * Time.deltaTime);
 
         // Güneşin etrafında çeviriyoruz.
         if (PlanetZoomController.PZC.ZoomState == PlanetZoomController.ZoomStates.ZoomedOut)
-            transform.RotateAround(Sun.transform.position, transform.up, rotateAroundSunSpeed);
+            transform.RotateAround(Sun.transform.position, transform.up, RotateSunsAroundSpeed * Time.deltaTime);
     }
 
     public void OnMouseDown()

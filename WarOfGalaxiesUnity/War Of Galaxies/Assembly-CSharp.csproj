@@ -99,7 +99,12 @@
     <Compile Include="Assets\Scripts\Controllers\StaticValuesController.cs" />
     <Compile Include="Assets\Scripts\Controllers\SunController.cs" />
     <Compile Include="Assets\Scripts\Controllers\ZoomPanController.cs" />
+    <Compile Include="Assets\Scripts\Enums\Buildings.cs" />
+    <Compile Include="Assets\Scripts\Enums\PlanetTypes.cs" />
+    <Compile Include="Assets\Scripts\Extends\CordinateExtends.cs" />
     <Compile Include="Assets\Scripts\Extends\VectorExtends.cs" />
+    <Compile Include="Assets\Scripts\Ignored\IgnoredCodes.cs" />
+    <Compile Include="Assets\Scripts\Models\CordinateDTO.cs" />
     <Compile Include="Assets\Scripts\Models\SolarSystemDTO.cs" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Ring.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MultiPassHollywoodFlares.shader" />

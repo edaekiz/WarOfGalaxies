@@ -2009,9 +2009,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 515747090}
+  - component: {fileID: 515747092}
   - component: {fileID: 515747089}
   - component: {fileID: 515747091}
-  - component: {fileID: 515747092}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -2075,7 +2075,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1935d206958581c49a051bcbe9732c75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  BaseUrl: http://localhost:1317
+  Environment: 0
   Token: 
 --- !u!1 &525442637
 GameObject:

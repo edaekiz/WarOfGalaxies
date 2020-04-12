@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Models;
+﻿using Assets.Scripts.Extends;
+using Assets.Scripts.Models;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -11,7 +12,7 @@ public class GalaxyController : MonoBehaviour
     public List<SolarPanetDataDTO> SolarPanetData;
 
     [Header("Sunucudaki gezegenlerin listesi")]
-    public SolarSystemDTO SolarSystem;
+    public List<SolarPlanetDTO> SolarSystem;
 
     [Header("Her bir gezegen arasındaki mesafe.")]
     public float PlanetsDistancePer;
@@ -57,19 +58,22 @@ public class GalaxyController : MonoBehaviour
         currentSun = sun.GetComponent<SunController>();
 
         // Gezegenleri yüklüyoruz.
-        for (int ii = 0; ii < SolarSystem.Planets.Count; ii++)
+        for (int ii = 0; ii < SolarSystem.Count; ii++)
         {
             // Gezegen bilgisi.
-            SolarPlanetDTO solarPlanet = SolarSystem.Planets[ii];
+            SolarPlanetDTO solarPlanet = SolarSystem[ii];
+
+            // Stringi kordinata çeviriyoruz.
+            CordinateDTO cordinate = solarPlanet.PlanetCordinate.ToCordinate();
 
             // Her gezegen arasında 100 birim fark olacak.
-            float offsetX = PlanetsDistancePer * solarPlanet.PlanetIndexInSolarSystem;
+            float offsetX = PlanetsDistancePer * cordinate.SolarSystemOrderIndex;
 
             // Gezegenin konumu.
             Vector3 planetPosition = new Vector3(offsetX, 0, 0);
 
             // Gezegen bilgisini buluyoruz.
-            SolarPanetDataDTO planetData = SolarPanetData.Find(x => x.SolarPlanetType == solarPlanet.SolarPlanetType);
+            SolarPanetDataDTO planetData = SolarPanetData.Find(x => x.PlanetType == solarPlanet.PlanetType);
 
             // Gezegeni oluşturuyoruz.
             GameObject planet = Instantiate(planetData.SolarPlanet, planetPosition, Quaternion.identity, transform);
@@ -77,22 +81,18 @@ public class GalaxyController : MonoBehaviour
             // İzini buluyoruz.
             TrailRenderer trail = planet.GetComponent<TrailRenderer>();
 
+            // İzin rengini değiştiriyoruz.
             trail.endColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
 
             // Gezegeni yönetmek için bilgileri aktarmamız lazım. Componentini alıyoruz.
             PlanetController planetController = planet.GetComponent<PlanetController>();
 
             // Gezegen bilgisini yüklüyoruz.
-            planetController.LoadPlanetInfo(currentSun, solarPlanet);
+            planetController.LoadPlanetInfo(currentSun, solarPlanet, cordinate);
 
             // Oluşan gezegeni ekliyoruz.
             currentSun.AddPlanet(planetController);
         }
-
-        // Lineları yüklüyoruz.
-        if (currentSun.IsLineEnabled)
-            currentSun.LoadLines(SolarSystem.Planets.Select(x => x.PlanetIndexInSolarSystem).ToArray());
-
     }
 
     /// <summary>
@@ -102,9 +102,6 @@ public class GalaxyController : MonoBehaviour
     {
         // Kamera kontrolünü kapatıyoruz.
         ZoomPanController.ZPC.ZoomPanEnabled = false;
-
-        // Lineları devre dışı bırakıyoruz.
-        currentSun.DisableLines();
     }
 
     /// <summary>
@@ -114,9 +111,6 @@ public class GalaxyController : MonoBehaviour
     {
         // Kamera kontrolü açıyoruz.
         ZoomPanController.ZPC.ZoomPanEnabled = true;
-
-        // Lineları tekrar açıyoruz.
-        currentSun.EnableLines();
     }
 
 }

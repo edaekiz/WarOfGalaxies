@@ -240,10 +240,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sun: {fileID: 0}
   SolarPlanetInfo:
-    PlanetIndexInSolarSystem: 0
-    SolarPlanetType: 0
-    AroundRotateSpeed: 0
-    SunAroundRotateSpeed: 0
+    UserPlanetID: 0
+    UserName: 
+    PlanetName: 
+    PlanetCordinate: 
+    PlanetType: 0
+  SpawnPosition: {x: 0, y: 0, z: 0}
+  Offset: 0
 --- !u!96 &6566006781702381906
 TrailRenderer:
   serializedVersion: 2
@@ -284,7 +287,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 60
+  m_Time: 45
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1

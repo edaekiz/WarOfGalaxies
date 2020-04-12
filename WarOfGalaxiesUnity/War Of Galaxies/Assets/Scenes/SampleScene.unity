@@ -4668,52 +4668,40 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SolarPanetData:
-  - SolarPlanetType: 1
+  - PlanetType: 1
     SolarPlanet: {fileID: 1439394164863710, guid: d8f7a9c5e91783443893c8e1138fc86a,
       type: 3}
-  - SolarPlanetType: 2
+  - PlanetType: 2
     SolarPlanet: {fileID: 1785624878213954, guid: aebba01f65101394a9efc50c5b3c3164,
       type: 3}
-  - SolarPlanetType: 4
+  - PlanetType: 3
     SolarPlanet: {fileID: 1865746026661926, guid: 020f511db6c8fc64daf490fa99bcbdd4,
       type: 3}
-  - SolarPlanetType: 3
+  - PlanetType: 4
     SolarPlanet: {fileID: 1777916280782844, guid: d9c0c5d4ef5159d47a21e4b62b6d9728,
       type: 3}
-  - SolarPlanetType: 5
+  - PlanetType: 5
     SolarPlanet: {fileID: 1789615838080712, guid: 83be0680b8fcaa6459614bb010d3243d,
       type: 3}
-  - SolarPlanetType: 6
+  - PlanetType: 6
     SolarPlanet: {fileID: 1771864433433622, guid: 431ed76078927774cacca3fc1237395b,
       type: 3}
   SolarSystem:
-    GalaxyIndex: 1
-    SolarSystemIndex: 1
-    Planets:
-    - PlanetIndexInSolarSystem: 1
-      SolarPlanetType: 1
-      AroundRotateSpeed: 1
-      SunAroundRotateSpeed: 1.2
-    - PlanetIndexInSolarSystem: 2
-      SolarPlanetType: 2
-      AroundRotateSpeed: 1
-      SunAroundRotateSpeed: 1
-    - PlanetIndexInSolarSystem: 3
-      SolarPlanetType: 3
-      AroundRotateSpeed: 1
-      SunAroundRotateSpeed: 1.6
-    - PlanetIndexInSolarSystem: 4
-      SolarPlanetType: 4
-      AroundRotateSpeed: 1
-      SunAroundRotateSpeed: 1.2
-    - PlanetIndexInSolarSystem: 5
-      SolarPlanetType: 5
-      AroundRotateSpeed: 1
-      SunAroundRotateSpeed: 1.4
-    - PlanetIndexInSolarSystem: 6
-      SolarPlanetType: 6
-      AroundRotateSpeed: 1
-      SunAroundRotateSpeed: 1.8
+  - UserPlanetID: 1
+    UserName: Semiramis
+    PlanetName: Semiramis1
+    PlanetCordinate: 1:423:1
+    PlanetType: 1
+  - UserPlanetID: 2
+    UserName: Semiramis
+    PlanetName: Semiramis2
+    PlanetCordinate: 1:423:2
+    PlanetType: 2
+  - UserPlanetID: 3
+    UserName: Semiramis
+    PlanetName: Semiramis3
+    PlanetCordinate: 1:423:3
+    PlanetType: 3
   PlanetsDistancePer: 1
   SunObject: {fileID: 930926894866197967, guid: 7e40ac49acd1a4847b310cf0f07697f6,
     type: 3}

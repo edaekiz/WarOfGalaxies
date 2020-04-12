@@ -2,6 +2,8 @@
 
 public class GlobalBuildingController : MonoBehaviour
 {
+    #region Singleton
+
     public static GlobalBuildingController GBC { get; set; }
     private void Awake()
     {
@@ -10,6 +12,23 @@ public class GlobalBuildingController : MonoBehaviour
         else
             Destroy(GBC);
     }
+
+    #endregion
+
+    #region Binalar
+
+    public enum Buildings
+    {
+        MetalMadeni = 1,
+        KristalMadeni = 2,
+        BoronMadeni = 3,
+        SolarEnerji = 4,
+        MetalDeposu = 5,
+        KristalDeposu = 6,
+        BoronDeposu = 7
+    }
+
+    #endregion
 
     [Header("Seçili olan bina.")]
     public BuildingController CurrentSelectedBuilding;
