@@ -245,8 +245,7 @@ MonoBehaviour:
     PlanetName: 
     PlanetCordinate: 
     PlanetType: 0
-  SpawnPosition: {x: 0, y: 0, z: 0}
-  Offset: 0
+  RotateSunsAroundSpeed: 7
 --- !u!96 &6566006781702381906
 TrailRenderer:
   serializedVersion: 2

@@ -5,12 +5,12 @@ namespace Assets.Scripts.Enums
     [Serializable]
     public enum PlanetTypes
     {
-        VENUS = 1,
-        MARS = 2,
-        MERKURY = 3,
-        SATURN = 4,
-        JUPITER = 5,
-        NEPTUNE = 6,
-        URANUS = 7
+        AMERALD = 1,
+        ARKAS = 2,
+        ATAWI = 3,
+        BISTAR = 4,
+        DAGON = 5,
+        GATACA = 6,
+        HOTH = 7
     }
 }

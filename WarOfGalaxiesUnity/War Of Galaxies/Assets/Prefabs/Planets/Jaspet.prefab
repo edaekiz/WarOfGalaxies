@@ -245,7 +245,7 @@ MonoBehaviour:
     PlanetName: 
     PlanetCordinate: 
     PlanetType: 0
-  RotateSunsAroundSpeed: 7
+  RotateSunsAroundSpeed: 5
 --- !u!96 &1007677306691519036
 TrailRenderer:
   serializedVersion: 2

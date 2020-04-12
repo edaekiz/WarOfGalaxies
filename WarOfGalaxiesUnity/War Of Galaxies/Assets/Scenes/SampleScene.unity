@@ -4675,16 +4675,16 @@ MonoBehaviour:
     SolarPlanet: {fileID: 1785624878213954, guid: aebba01f65101394a9efc50c5b3c3164,
       type: 3}
   - PlanetType: 3
-    SolarPlanet: {fileID: 1865746026661926, guid: 020f511db6c8fc64daf490fa99bcbdd4,
+    SolarPlanet: {fileID: 1726110630314294, guid: 6a49e38f5d3ff5749b06f99791a75bfa,
       type: 3}
   - PlanetType: 4
-    SolarPlanet: {fileID: 1777916280782844, guid: d9c0c5d4ef5159d47a21e4b62b6d9728,
+    SolarPlanet: {fileID: 1865746026661926, guid: 020f511db6c8fc64daf490fa99bcbdd4,
       type: 3}
   - PlanetType: 5
-    SolarPlanet: {fileID: 1789615838080712, guid: 83be0680b8fcaa6459614bb010d3243d,
+    SolarPlanet: {fileID: 1937954368130086, guid: 22c73f37409ed1e4db92c2597424151b,
       type: 3}
   - PlanetType: 6
-    SolarPlanet: {fileID: 1771864433433622, guid: 431ed76078927774cacca3fc1237395b,
+    SolarPlanet: {fileID: 1777916280782844, guid: d9c0c5d4ef5159d47a21e4b62b6d9728,
       type: 3}
   SolarSystem:
   - UserPlanetID: 1
@@ -4700,8 +4700,18 @@ MonoBehaviour:
   - UserPlanetID: 3
     UserName: Semiramis
     PlanetName: Semiramis3
-    PlanetCordinate: 1:423:3
+    PlanetCordinate: 1:423:4
     PlanetType: 3
+  - UserPlanetID: 5
+    UserName: Semiramis
+    PlanetName: Semiramis4
+    PlanetCordinate: 1:423:6
+    PlanetType: 5
+  - UserPlanetID: 7
+    UserName: Semiramis
+    PlanetName: Semiramis5
+    PlanetCordinate: 1:423:8
+    PlanetType: 6
   PlanetsDistancePer: 1
   SunObject: {fileID: 930926894866197967, guid: 7e40ac49acd1a4847b310cf0f07697f6,
     type: 3}

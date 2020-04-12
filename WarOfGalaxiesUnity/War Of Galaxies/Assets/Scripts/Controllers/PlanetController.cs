@@ -31,8 +31,7 @@ public class PlanetController : MonoBehaviour
         transform.RotateAround(Sun.transform.position, transform.up, Random.Range(1, 360));
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
         // Eğer gezegen bilgisi tanımlı değil ise geri dön.
         if (SolarPlanetInfo == null)
