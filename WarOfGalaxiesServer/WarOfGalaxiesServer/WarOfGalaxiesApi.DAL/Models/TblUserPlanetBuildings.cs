@@ -3,9 +3,10 @@ using System.Collections.Generic;
 
 namespace WarOfGalaxiesApi.DAL.Models
 {
-    public partial class TblPlanets
+    public partial class TblUserPlanetBuildings
     {
+        public int BuildingId { get; set; }
         public int PlanetId { get; set; }
-        public string PlanetName { get; set; }
+        public int BuildingLevel { get; set; }
     }
 }
