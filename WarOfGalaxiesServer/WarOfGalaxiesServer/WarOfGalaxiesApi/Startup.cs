@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Azure.KeyVault.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Newtonsoft.Json.Serialization;
 using Swashbuckle.AspNetCore.Swagger;
+using WarOfGalaxiesApi.DAL.Interfaces;
+using WarOfGalaxiesApi.DAL.Repositories;
 
 namespace WarOfGalaxiesApi
 {
@@ -19,7 +23,9 @@ namespace WarOfGalaxiesApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc();
+            // Veritabanı contextini atıyoruz.
+            services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork));
+
 
             #region Swagger
 
@@ -34,6 +40,13 @@ namespace WarOfGalaxiesApi
             });
 
             #endregion
+
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1)
+                .AddJsonOptions(options =>
+                {
+                    options.SerializerSettings.ContractResolver = new DefaultContractResolver();
+                    options.SerializerSettings.DateTimeZoneHandling = Newtonsoft.Json.DateTimeZoneHandling.Utc;
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

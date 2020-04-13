@@ -70,7 +70,7 @@ namespace WarOfGalaxiesApi.DAL.Repositories
         {
             _dbContext.Set<T>().RemoveRange(entities);
         }
-    
+
         /// <summary>
         /// Primary key idsi verilen entityi döner.
         /// </summary>
@@ -80,7 +80,18 @@ namespace WarOfGalaxiesApi.DAL.Repositories
         {
             return _dbContext.Set<T>().Find(id);
         }
-        
+
+        /// <summary>
+        /// Koşulları sağlayan ilk kaydı döner.
+        /// </summary>
+        /// <param name="predicate">Dönülecek olan koşul.</param>
+        /// <returns></returns>
+        public T FirstOrDefault(Func<T, bool> predicate)
+        {
+            return _dbContext.Set<T>().FirstOrDefault(predicate);
+        }
+
+
         /// <summary>
         /// Entityi günceller. Entity default olarak tracking modunda olduğu için update gerekmeyecektir.
         /// </summary>

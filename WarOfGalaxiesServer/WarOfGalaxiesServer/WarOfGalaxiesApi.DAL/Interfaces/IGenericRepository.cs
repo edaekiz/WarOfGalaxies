@@ -7,6 +7,7 @@ namespace WarOfGalaxiesApi.DAL.Interfaces
     {
         IEnumerable<T> Where(Func<T, bool> predicate);
         T Find(int id);
+        T FirstOrDefault(Func<T, bool> predicate);
         T Update(T entity);
         void Delete(T entity);
         void Delete(int id);
