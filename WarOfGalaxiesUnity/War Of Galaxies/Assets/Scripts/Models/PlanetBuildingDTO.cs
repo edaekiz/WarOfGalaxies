@@ -49,7 +49,7 @@ namespace Assets.Scripts.Models
             {
                 BuildingID = Buildings.MetalMadeni,
                 BuildingLevel = 1,
-                BuildingValue = 25000,
+                BuildingValue = 300,
                 RequiredBoron = 0,
                 RequiredMetal = 250,
                 RequiredCrystal = 100,
@@ -60,7 +60,7 @@ namespace Assets.Scripts.Models
             {
                 BuildingID = Buildings.MetalMadeni,
                 BuildingLevel = 2,
-                BuildingValue = 28000,
+                BuildingValue = 450,
                 RequiredBoron = 0,
                 RequiredMetal = 300,
                 RequiredCrystal = 125,
