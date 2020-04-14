@@ -19,7 +19,7 @@ public class ApiService : MonoBehaviour
         switch (Environment)
         {
             case Environments.Development:
-                BaseUrl = "http://localhost:1317";
+                BaseUrl = "http://localhost:1317/";
                 break;
             case Environments.Local:
                 BaseUrl = "http://3.122.182.106:8080/";

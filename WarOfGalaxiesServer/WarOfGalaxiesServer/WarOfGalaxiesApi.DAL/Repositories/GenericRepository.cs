@@ -37,6 +37,15 @@ namespace WarOfGalaxiesApi.DAL.Repositories
         }
 
         /// <summary>
+        /// Koşulu verilen dataları döner.
+        /// </summary>
+        /// <returns></returns>
+        public List<T> ToList()
+        {
+            return _dbContext.Set<T>().ToList();
+        }
+
+        /// <summary>
         /// Verilen entityi veritabanından siler.
         /// </summary>
         /// <param name="entity">Silinecek olan entity.</param>
@@ -90,7 +99,6 @@ namespace WarOfGalaxiesApi.DAL.Repositories
         {
             return _dbContext.Set<T>().FirstOrDefault(predicate);
         }
-
 
         /// <summary>
         /// Entityi günceller. Entity default olarak tracking modunda olduğu için update gerekmeyecektir.

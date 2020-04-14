@@ -2238,6 +2238,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ffd6000132f7f4387dfdfaee0d10f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UserPlanets: []
 --- !u!1 &525442637
 GameObject:
   m_ObjectHideFlags: 0

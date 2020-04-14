@@ -29,20 +29,38 @@ public class ResourceController : MonoBehaviour
     public TextMeshProUGUI BoronQuantityText;
 
     [Header("Kullanıcının metal miktarı.")]
-    public int MetalQuantity;
+    public long MetalQuantity;
 
     [Header("Kullanıcının kristal miktarı.")]
-    public int CrystalQuantity;
+    public long CrystalQuantity;
 
     [Header("Kullanıcının boron miktarı.")]
-    public int BoronQuantity;
+    public long BoronQuantity;
 
     [Header("Kaynağa tıklandığında açılacak detay paneli.")]
     public ResourceDetailController MetalDetailPanel;
 
-    private void Start()
+    [Header("Kaynaklar yükseltilmeye hazır mı?")]
+    public bool IsResourceReadyToExecute;
+
+    IEnumerator Start()
     {
+
+        // Kullanıcının gezegenleri yüklenene kadar bekliyoruz.
+        yield return new WaitUntil(() => GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId > 0);
+
+        // Gezegenin kaynakları yüklendiğinde kaynakları yeniliyoruz.
+        SetMetalQuantity(GlobalPlanetController.GPC.CurrentPlanet.Metal);
+
+        // Gezegenin kaynakları yüklendiğinde kaynakları yeniliyoruz.
+        SetCrystalQuantity(GlobalPlanetController.GPC.CurrentPlanet.Crystal);
+
+        // Gezegenin kaynakları yüklendiğinde kaynakları yeniliyoruz.
+        SetBoronQuantity(GlobalPlanetController.GPC.CurrentPlanet.Boron);
+
+        // Hesaplamalara başlıyoruz.
         StartCoroutine(ReCalculateResourcesInSeconds());
+
     }
 
     private void Update()
@@ -99,7 +117,7 @@ public class ResourceController : MonoBehaviour
 
     #region Metal ve Animasyon
 
-    private int metalAnimQuantity;
+    private long metalAnimQuantity;
 
     private void DoMetalAnimation()
     {
@@ -108,10 +126,10 @@ public class ResourceController : MonoBehaviour
             return;
 
         // Azalacaksa -1 olacak artacaksa 1.
-        int multiply = metalAnimQuantity > MetalQuantity ? -1 : 1;
+        long multiply = metalAnimQuantity > MetalQuantity ? -1 : 1;
 
         // Artış oranını hespalıyoruz.
-        int rate;
+        long rate;
 
         // Eğer azalıyor ise yüksek olan değerle - yönünde çarpıyoruz.
         if (multiply == -1)
@@ -126,7 +144,7 @@ public class ResourceController : MonoBehaviour
         if (multiply == -1)
         {
             // Aradaki farkı alıyoruz.
-            int quantity = metalAnimQuantity - MetalQuantity;
+            long quantity = metalAnimQuantity - MetalQuantity;
 
             // Miktarı kontrol ediyoruz.
             if (quantity <= 0)
@@ -135,7 +153,7 @@ public class ResourceController : MonoBehaviour
         else // Eğer miktar artıyor ise.
         {
             // Aradaki farkı alıyoruz.
-            int quantity = MetalQuantity - metalAnimQuantity;
+            long quantity = MetalQuantity - metalAnimQuantity;
 
             // Miktarı kontrol ediyoruz.
             if (quantity <= 0)
@@ -146,13 +164,13 @@ public class ResourceController : MonoBehaviour
         MetalQuantityText.text = metalAnimQuantity.ToString();
     }
 
-    public void SetMetalQuantity(int quantity) => MetalQuantity += quantity;
+    public void SetMetalQuantity(long quantity) => MetalQuantity += quantity;
 
     #endregion
 
     #region Crystal ve Animasyon
 
-    private int crystalAnimQuantity;
+    private long crystalAnimQuantity;
 
     private void DoCrystalAnimation()
     {
@@ -164,7 +182,7 @@ public class ResourceController : MonoBehaviour
         int multiply = crystalAnimQuantity > CrystalQuantity ? -1 : 1;
 
         // Artış oranını hespalıyoruz.
-        int rate;
+        long rate;
 
         // Eğer azalıyor ise yüksek olan değerle - yönünde çarpıyoruz.
         if (multiply == -1)
@@ -179,7 +197,7 @@ public class ResourceController : MonoBehaviour
         if (multiply == -1)
         {
             // Aradaki farkı alıyoruz.
-            int quantity = crystalAnimQuantity - CrystalQuantity;
+            long quantity = crystalAnimQuantity - CrystalQuantity;
 
             // Miktarı kontrol ediyoruz.
             if (quantity <= 0)
@@ -188,7 +206,7 @@ public class ResourceController : MonoBehaviour
         else // Eğer miktar artıyor ise.
         {
             // Aradaki farkı alıyoruz.
-            int quantity = CrystalQuantity - crystalAnimQuantity;
+            long quantity = CrystalQuantity - crystalAnimQuantity;
 
             // Miktarı kontrol ediyoruz.
             if (quantity <= 0)
@@ -199,13 +217,13 @@ public class ResourceController : MonoBehaviour
         CrystalQuantityText.text = crystalAnimQuantity.ToString();
     }
 
-    public void SetCrystalQuantity(int quantity) => CrystalQuantity += quantity;
+    public void SetCrystalQuantity(long quantity) => CrystalQuantity += quantity;
 
     #endregion
 
     #region Bor ve Animasyon
 
-    private int boronAnimQuantity;
+    private long boronAnimQuantity;
 
     private void DoBoronAnimation()
     {
@@ -214,10 +232,10 @@ public class ResourceController : MonoBehaviour
             return;
 
         // Azalacaksa -1 olacak artacaksa 1.
-        int multiply = boronAnimQuantity > BoronQuantity ? -1 : 1;
+        long multiply = boronAnimQuantity > BoronQuantity ? -1 : 1;
 
         // Artış oranını hespalıyoruz.
-        int rate;
+        long rate;
 
         // Eğer azalıyor ise yüksek olan değerle - yönünde çarpıyoruz.
         if (multiply == -1)
@@ -232,7 +250,7 @@ public class ResourceController : MonoBehaviour
         if (multiply == -1)
         {
             // Aradaki farkı alıyoruz.
-            int quantity = boronAnimQuantity - BoronQuantity;
+            long quantity = boronAnimQuantity - BoronQuantity;
 
             // Miktarı kontrol ediyoruz.
             if (quantity <= 0)
@@ -241,7 +259,7 @@ public class ResourceController : MonoBehaviour
         else // Eğer miktar artıyor ise.
         {
             // Aradaki farkı alıyoruz.
-            int quantity = BoronQuantity - boronAnimQuantity;
+            long quantity = BoronQuantity - boronAnimQuantity;
 
             // Miktarı kontrol ediyoruz.
             if (quantity <= 0)
@@ -252,7 +270,7 @@ public class ResourceController : MonoBehaviour
         BoronQuantityText.text = boronAnimQuantity.ToString();
     }
 
-    public void SetBoronQuantity(int quantity) => BoronQuantity += quantity;
+    public void SetBoronQuantity(long quantity) => BoronQuantity += quantity;
 
     #endregion
 

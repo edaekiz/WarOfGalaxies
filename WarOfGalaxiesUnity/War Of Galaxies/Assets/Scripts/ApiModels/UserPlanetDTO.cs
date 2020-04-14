@@ -10,9 +10,9 @@ namespace Assets.Scripts.ApiModels
         public string PlanetCordinate;
         public int PlanetType;
         public string PlanetName;
-        public int Metal;
-        public int Crystal;
-        public int Boron;
+        public long Metal;
+        public long Crystal;
+        public long Boron;
         public DateTime LastUpdateDate;
     }
 }

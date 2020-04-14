@@ -5,8 +5,8 @@ namespace WarOfGalaxiesApi.DAL.Models
 {
     public partial class TblUserPlanetBuildings
     {
+        public int UserPlanetId { get; set; }
         public int BuildingId { get; set; }
-        public int PlanetId { get; set; }
         public int BuildingLevel { get; set; }
     }
 }

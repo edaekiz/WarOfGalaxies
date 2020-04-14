@@ -4,7 +4,7 @@ using WarOfGalaxiesApi.DAL.Models;
 
 namespace WarOfGalaxiesApi.DAL.Repositories
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private db_warofgalaxyContext _context;
         public UnitOfWork()

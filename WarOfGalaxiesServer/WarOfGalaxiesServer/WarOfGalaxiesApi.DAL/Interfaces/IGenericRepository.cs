@@ -6,6 +6,7 @@ namespace WarOfGalaxiesApi.DAL.Interfaces
     public interface IGenericRepository<T> where T : class
     {
         IEnumerable<T> Where(Func<T, bool> predicate);
+        List<T> ToList();
         T Find(int id);
         T FirstOrDefault(Func<T, bool> predicate);
         T Update(T entity);

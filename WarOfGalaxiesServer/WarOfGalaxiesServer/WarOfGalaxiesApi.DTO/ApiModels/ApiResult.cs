@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WarOfGalaxiesApi.DTO.ResponseModels
+namespace WarOfGalaxiesApi.DTO.ApiModels
 {
     [Serializable]
     public class ApiResult

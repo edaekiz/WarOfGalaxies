@@ -105,13 +105,13 @@ namespace WarOfGalaxiesApi.DAL.Models
 
                 entity.ToTable("tbl_user_planet_buildings");
 
-                entity.HasIndex(e => new { e.PlanetId, e.BuildingId })
+                entity.HasIndex(e => new { e.UserPlanetId, e.BuildingId })
                     .HasName("IX_tbl_planet_buildings")
                     .IsUnique();
 
                 entity.Property(e => e.BuildingId).HasColumnName("BuildingID");
 
-                entity.Property(e => e.PlanetId).HasColumnName("PlanetID");
+                entity.Property(e => e.UserPlanetId).HasColumnName("UserPlanetID");
             });
 
             modelBuilder.Entity<TblUserPlanets>(entity =>
