@@ -83,6 +83,8 @@
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Utility\FPSCounter.cs" />
     <Compile Include="Assets\ExternalAssets\Asteroids Pack\Assets\Scripts\RandomRotator.cs" />
     <Compile Include="Assets\ExternalAssets\Hi-Tech Buttons and Panels\Resources\Scripts\JustRotate.cs" />
+    <Compile Include="Assets\Scripts\ApiModels\ApiResult.cs" />
+    <Compile Include="Assets\Scripts\ApiModels\UserDTO.cs" />
     <Compile Include="Assets\Scripts\ApiService.cs" />
     <Compile Include="Assets\Scripts\Controllers\BasePanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\BuildingController.cs" />
@@ -90,6 +92,8 @@
     <Compile Include="Assets\Scripts\Controllers\GalaxyController.cs" />
     <Compile Include="Assets\Scripts\Controllers\GlobalBuildingController.cs" />
     <Compile Include="Assets\Scripts\Controllers\GlobalPanelController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\LoadingController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\LoginController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlanetActionController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlanetController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlanetRotateController.cs" />
@@ -103,6 +107,7 @@
     <Compile Include="Assets\Scripts\Enums\PlanetTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\ResourceTypes.cs" />
     <Compile Include="Assets\Scripts\Extends\CordinateExtends.cs" />
+    <Compile Include="Assets\Scripts\Extends\JsonHelper.cs" />
     <Compile Include="Assets\Scripts\Extends\VectorExtends.cs" />
     <Compile Include="Assets\Scripts\Ignored\IgnoredCodes.cs" />
     <Compile Include="Assets\Scripts\Models\CordinateDTO.cs" />

@@ -1,4 +1,5 @@
-﻿using WarOfGalaxiesApi.DTO.ResponseModels;
+﻿using WarOfGalaxiesApi.DTO.Extends;
+using WarOfGalaxiesApi.DTO.ResponseModels;
 
 namespace WarOfGalaxiesApi.DTO.Helpers
 {
@@ -10,7 +11,7 @@ namespace WarOfGalaxiesApi.DTO.Helpers
         {
             return new ApiResult
             {
-                Data = data,
+                Data = data.ToJson(),
                 IsSuccess = true,
                 Message = string.Empty
             };
@@ -20,7 +21,7 @@ namespace WarOfGalaxiesApi.DTO.Helpers
         {
             return new ApiResult
             {
-                Data = data,
+                Data = data.ToJson(),
                 IsSuccess = true,
                 Message = message
             };
@@ -44,7 +45,7 @@ namespace WarOfGalaxiesApi.DTO.Helpers
         {
             return new ApiResult
             {
-                Data = data,
+                Data = data.ToJson(),
                 IsSuccess = false,
                 Message = string.Empty
             };
@@ -54,7 +55,7 @@ namespace WarOfGalaxiesApi.DTO.Helpers
         {
             return new ApiResult
             {
-                Data = data,
+                Data = data.ToJson(),
                 IsSuccess = false,
                 Message = message
             };

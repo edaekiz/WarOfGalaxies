@@ -1,20 +1,23 @@
-﻿namespace WarOfGalaxiesApi.DTO.ResponseModels
+﻿using System;
+
+namespace WarOfGalaxiesApi.DTO.ResponseModels
 {
+    [Serializable]
     public class ApiResult
     {
         /// <summary>
         /// Başarılı yada başarısız olma durumu.
         /// </summary>
-        public bool IsSuccess { get; set; }
+        public bool IsSuccess;
 
         /// <summary>
         /// Gönderilecek olan data json formatına otomatik dönüştürülür.
         /// </summary>
-        public object Data { get; set; }
+        public string Data;
 
         /// <summary>
         /// Herhangi bir mesaj içeriyor mu?
         /// </summary>
-        public string Message { get; set; }
+        public string Message;
     }
 }

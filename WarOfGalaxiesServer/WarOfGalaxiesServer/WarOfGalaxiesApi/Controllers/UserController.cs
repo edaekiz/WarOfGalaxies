@@ -4,7 +4,6 @@ using WarOfGalaxiesApi.Controllers.Base;
 using WarOfGalaxiesApi.DAL.Interfaces;
 using WarOfGalaxiesApi.DTO.Helpers;
 using WarOfGalaxiesApi.DTO.Models;
-using WarOfGalaxiesApi.DTO.RequestModels;
 using WarOfGalaxiesApi.DTO.ResponseModels;
 
 namespace WarOfGalaxiesApi.Controllers
@@ -17,7 +16,7 @@ namespace WarOfGalaxiesApi.Controllers
 
         [HttpPost("Login")]
         [Description("Kullanıcının çağıracağı ilk methot login olmak için kullanılacak.")]
-        public ApiResult Login(LoginRequestDTO request)
+        public ApiResult Login()
         {
             // Başarılı sonucunu dönüyoruz.
             return ResponseHelper.GetSuccess(new UserDTO

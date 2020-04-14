@@ -15,19 +15,6 @@ public class ApiService : MonoBehaviour
             API = this;
         else
             Destroy(gameObject);
-    }
-
-    [Header("Bağlantı yolu.")]
-    public Environments Environment;
-
-    [Header("Kullanıcıya ait token.")]
-    public string Token;
-
-    // Bağlantı yolu.
-    private string BaseUrl;
-
-    private void Start()
-    {
 
         switch (Environment)
         {
@@ -41,12 +28,16 @@ public class ApiService : MonoBehaviour
                 BaseUrl = "http://3.122.182.106:8080/";
                 break;
         }
-
-        StartCoroutine(Post("/Values/Post", null, (string[] str) =>
-        {
-            Debug.Log(str);
-        }));
     }
+
+    [Header("Bağlantı yolu.")]
+    public Environments Environment;
+
+    [Header("Kullanıcıya ait token.")]
+    public string Token;
+
+    // Bağlantı yolu.
+    private string BaseUrl;
 
     /// <summary>
     /// Verilen adrese Post işlemi yapar
@@ -59,7 +50,7 @@ public class ApiService : MonoBehaviour
     /// <returns></returns>
     public IEnumerator Post<TResponse>(string url, object data, Action<TResponse> trigger) where TResponse : class
     {
-        using (UnityWebRequest webRequest = UnityWebRequest.Post(BaseUrl + url, GetFormFromData(data, false)))
+        using (UnityWebRequest webRequest = UnityWebRequest.Post(BaseUrl + url, GetFormFromData(data, true)))
         {
             // Sunucuya isteği gönderiyoruz.
             yield return webRequest.SendWebRequest();
@@ -96,7 +87,7 @@ public class ApiService : MonoBehaviour
         }
 
         if (isTokenActive == true)
-            form.AddField("Token", Token);
+            form.AddField("TOKEN", Token);
 
         return form;
     }

@@ -26,7 +26,7 @@ namespace WarOfGalaxiesApi.Controllers.Base
         {
             #region Yetkilendirme
 
-            StringValues token = this.HttpContext.Request.Query[TOKEN_KEY];
+            StringValues token = this.HttpContext.Request.Form[TOKEN_KEY];
 
             // Eğer token yok ise geri dön.
             if (token.Count == 0)
