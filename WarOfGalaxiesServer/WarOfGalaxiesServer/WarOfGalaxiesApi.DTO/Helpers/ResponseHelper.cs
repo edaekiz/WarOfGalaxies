@@ -1,6 +1,6 @@
 ﻿using WarOfGalaxiesApi.DTO.ResponseModels;
 
-namespace WarOfGalaxiesApi.DTO.Extends
+namespace WarOfGalaxiesApi.DTO.Helpers
 {
     public static class ResponseHelper
     {
