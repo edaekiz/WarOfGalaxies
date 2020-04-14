@@ -41,7 +41,7 @@ public class ApiService : MonoBehaviour
 
     /// <summary>
     /// Verilen adrese Post işlemi yapar
-    /// ÖRN URL : Building/GetUserBuildings
+    /// ÖRN URL : GetUserBuildings
     /// </summary>
     /// <typeparam name="TResponse">Her yanıt ApiResult nesnesi ile döner. ApiResult içerisindeki data kaydı barındırır.</typeparam>
     /// <param name="url">Çağrılacak methot.</param>

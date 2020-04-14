@@ -15,11 +15,11 @@ namespace WarOfGalaxiesApi.Controllers.Base
 
         protected TblUsers DBUser;
 
-        protected IUnitOfWork _uow;
+        protected IUnitOfWork UnitOfWork;
 
         public MainController(IUnitOfWork unitOfWork)
         {
-            this._uow = unitOfWork;
+            this.UnitOfWork = unitOfWork;
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)
@@ -36,7 +36,7 @@ namespace WarOfGalaxiesApi.Controllers.Base
             }
 
             // Kullanıcıyı buluyoruz.
-            DBUser = this._uow.GetRepository<TblUsers>().FirstOrDefault(x => x.UserToken == Guid.Parse(token));
+            DBUser = this.UnitOfWork.GetRepository<TblUsers>().FirstOrDefault(x => x.UserToken == Guid.Parse(token));
 
             // Kullanıcı yok ise hata dön.
             if (DBUser == null)

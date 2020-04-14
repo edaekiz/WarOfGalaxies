@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace WarOfGalaxiesApi.DTO.Models
 {
-    [Serializable]
-    public partial class UserDTO
+    public class UserDTO
     {
-        public int UserId;
-        public string Username;
-        public Guid UserToken;
-        public bool IsBanned;
-        public DateTime CreateDate;
-        public string GoogleToken;
-        public string IosToken;
-        public string UserLanguage;
+        public int UserId { get; set; }
+        public string Username { get; set; }
+        public Guid UserToken { get; set; }
+        public bool IsBanned { get; set; }
+        public DateTime CreateDate { get; set; }
+        public string GoogleToken { get; set; }
+        public string IosToken { get; set; }
+        public string UserLanguage { get; set; }
     }
 }

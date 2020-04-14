@@ -83,8 +83,10 @@
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Utility\FPSCounter.cs" />
     <Compile Include="Assets\ExternalAssets\Asteroids Pack\Assets\Scripts\RandomRotator.cs" />
     <Compile Include="Assets\ExternalAssets\Hi-Tech Buttons and Panels\Resources\Scripts\JustRotate.cs" />
+    <Compile Include="Assets\GlobalPlanetController.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ApiResult.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserDTO.cs" />
+    <Compile Include="Assets\Scripts\ApiModels\UserPlanetDTO.cs" />
     <Compile Include="Assets\Scripts\ApiService.cs" />
     <Compile Include="Assets\Scripts\Controllers\BasePanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\BuildingController.cs" />
