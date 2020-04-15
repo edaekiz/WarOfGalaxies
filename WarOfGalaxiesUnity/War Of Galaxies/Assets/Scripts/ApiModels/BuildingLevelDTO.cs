@@ -6,7 +6,7 @@ namespace Assets.Scripts.ApiModels
     [Serializable]
     public class BuildingLevelDTO
     {
-        public Buildings BuildingID;
+        public Buildings BuildingId;
         public int BuildingLevel;
         public long UpgradeTime;
         public int BuildingValue;

@@ -179,7 +179,7 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 
                     if (metalBuilding != null)
                     {
-                        BuildingLevelDTO upgrade = GlobalBuildingController.GBC.BuildingLevels.Find(x => x.BuildingID == Buildings.MetalMadeni && x.BuildingLevel == metalBuilding.BuildingLevel);
+                        BuildingLevelDTO upgrade = GlobalBuildingController.GBC.BuildingLevels.Find(x => x.BuildingId == Buildings.MetalMadeni && x.BuildingLevel == metalBuilding.BuildingLevel);
 
                         if (upgrade != null)
                             metalQuantity = upgrade.BuildingValue;
@@ -195,7 +195,7 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 
                     if (metalBuilding != null)
                     {
-                        BuildingLevelDTO upgrade = GlobalBuildingController.GBC.BuildingLevels.Find(x => x.BuildingID == Buildings.MetalDeposu && x.BuildingLevel == metalBuilding.BuildingLevel);
+                        BuildingLevelDTO upgrade = GlobalBuildingController.GBC.BuildingLevels.Find(x => x.BuildingId == Buildings.MetalDeposu && x.BuildingLevel == metalBuilding.BuildingLevel);
 
                         if (upgrade != null)
                             metalCapacityQuantity = upgrade.BuildingValue;
@@ -205,7 +205,7 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 
                     #region Ekrana basıyoruz.
 
-                    ContentField.text = $"Anlık\n<color=white>{ResourceController.RC.MetalQuantity}</color>\nDepo Kapasitesi\n<color=white>{metalCapacityQuantity}</color>\nSaaatlik Üretim\n<color=white>{metalQuantity}</color>";
+                    ContentField.text = $"Anlık\n<color=white>{GlobalPlanetController.GPC.CurrentPlanet.Metal}</color>\nDepo Kapasitesi\n<color=white>{metalCapacityQuantity}</color>\nSaaatlik Üretim\n<color=white>{metalQuantity}</color>";
 
                     #endregion
 
