@@ -2175,6 +2175,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CurrentSelectedBuilding: {fileID: 0}
+  BuildingLevels: []
+  UserPlanetBuildings: []
+  UserPlanetBuildingsUpgs: []
 --- !u!114 &515747092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2224,7 +2227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoadingCanvas: {fileID: 1299137451}
   IsGameLoaded: 0
-  TotalLoadItemCount: 2
+  TotalLoadItemCount: 5
   CurrentLoadItemCount: 0
 --- !u!114 &515747095
 MonoBehaviour:
@@ -2239,6 +2242,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   UserPlanets: []
+  CurrentPlanet:
+    UserPlanetId: 0
+    UserId: 0
+    PlanetCordinate: 
+    PlanetType: 0
+    PlanetName: 
+    Metal: 0
+    Crystal: 0
+    Boron: 0
 --- !u!1 &525442637
 GameObject:
   m_ObjectHideFlags: 0
@@ -5118,10 +5130,8 @@ MonoBehaviour:
   MetalQuantityText: {fileID: 1974497942}
   CrystalQuantityText: {fileID: 1498060881}
   BoronQuantityText: {fileID: 644186182}
-  MetalQuantity: 0
-  CrystalQuantity: 0
-  BoronQuantity: 0
   MetalDetailPanel: {fileID: 0}
+  IsResourceReadyToExecute: 0
 --- !u!114 &1338479638
 MonoBehaviour:
   m_ObjectHideFlags: 0

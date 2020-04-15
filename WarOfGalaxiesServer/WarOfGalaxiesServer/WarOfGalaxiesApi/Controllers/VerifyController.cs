@@ -75,13 +75,43 @@ namespace WarOfGalaxiesApi.Controllers
                         // Üretilen miktar.
                         double metalProduceQuantity = metalBuildingLevel.BuildingValue * (passedSeconds / 3600);
 
-                        // Üretilen metali kullanıcıya veriyoruz.
-                        userPlanet.Metal += (long)metalProduceQuantity;
+                        // Toplam saklanabilir depo kapasitesi.
+                        long metalCapacity = 0;
 
+                        #region Metal Deposunu kontrol ediyoruz.
+
+                        // Metal binasını buluyoruz.
+                        TblUserPlanetBuildings metalCapacityBuilding = userPlanetBuildings.Find(x => x.BuildingId == (int)Buildings.MetalDeposu);
+
+                        // Metal binası var ise hesaplıyoruz.
+                        if (metalCapacityBuilding != null)
+                        {
+                            // Metal depo binasının seviyesi.
+                            TblBuildingLevels metalCapcityBuildingLevel = buildingLevels.Find(x => x.BuildingId == (int)Buildings.MetalDeposu && x.BuildingLevel == metalCapacityBuilding.BuildingLevel);
+
+                            // Yükseltme bilgisini buluyoruz.
+                            if (metalCapcityBuildingLevel != null)
+                                metalCapacity += metalCapcityBuildingLevel.BuildingValue;
+                        }
+
+                        #endregion
+
+                        // Üretilen metali kullanıcıya veriyoruz ancak kapasitenin yeterli olması lazım.
+                        if (userPlanet.Metal < metalCapacity)
+                        {
+                            // Üretim metalini veriyoruz.
+                            userPlanet.Metal += (long)metalProduceQuantity;
+
+                            // Eğer kapasiteyi aştıysak kapasiteye ayarlıyoruz.
+                            if (userPlanet.Metal > metalCapacity)
+                                userPlanet.Metal = metalCapacity;
+                        }
                     }
                 }
 
                 #endregion
+
+
 
                 // Değişiklikleri kayıt ediyoruz.
                 uow.SaveChanges();

@@ -154,7 +154,7 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
             isOpening = true;
 
             // Load resource Details.
-            LoadResouceData();
+            LoadResourceDetails();
 
         }
         else // Geri dön.
@@ -164,7 +164,7 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
         }
     }
 
-    public void LoadResouceData()
+    public void LoadResourceDetails()
     {
         switch (Resource)
         {

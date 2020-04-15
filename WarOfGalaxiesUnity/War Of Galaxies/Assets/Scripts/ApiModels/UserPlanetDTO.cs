@@ -46,7 +46,7 @@ namespace Assets.Scripts.ApiModels
             if (metalBuilding != null)
             {
                 // Metal binasının seviyesi.
-                var metalBuildingLevel = GlobalBuildingController.GBC.BuildingLevels.Find(x => x.BuildingId == Buildings.MetalMadeni && x.BuildingLevel == metalBuilding.BuildingLevel);
+                BuildingLevelDTO metalBuildingLevel = GlobalBuildingController.GBC.BuildingLevels.Find(x => x.BuildingId == Buildings.MetalMadeni && x.BuildingLevel == metalBuilding.BuildingLevel);
 
                 // Yükseltme bilgisini buluyoruz.
                 if (metalBuildingLevel != null)
@@ -54,8 +54,37 @@ namespace Assets.Scripts.ApiModels
                     // Üretilen miktar.
                     double metalProduceQuantity = metalBuildingLevel.BuildingValue * (passedSeconds / 3600);
 
-                    // Üretilen metali kullanıcıya veriyoruz.
-                    this.Metal += (long)metalProduceQuantity;
+                    // Toplam saklanabilir depo kapasitesi.
+                    long metalCapacity = 0;
+
+                    #region Metal Deposunu kontrol ediyoruz.
+
+                    // Metal binasını buluyoruz.
+                    UserPlanetBuildingDTO metalCapacityBuilding = userPlanetBuildings.Find(x => x.BuildingId == Buildings.MetalDeposu);
+
+                    // Metal binası var ise hesaplıyoruz.
+                    if (metalCapacityBuilding != null)
+                    {
+                        // Metal depo binasının seviyesi.
+                        BuildingLevelDTO metalCapcityBuildingLevel = GlobalBuildingController.GBC.BuildingLevels.Find(x => x.BuildingId == Buildings.MetalDeposu && x.BuildingLevel == metalCapacityBuilding.BuildingLevel);
+
+                        // Yükseltme bilgisini buluyoruz.
+                        if (metalCapcityBuildingLevel != null)
+                            metalCapacity += metalCapcityBuildingLevel.BuildingValue;
+                    }
+
+                    #endregion
+
+                    // Üretilen metali kullanıcıya veriyoruz ancak kapasitenin yeterli olması lazım.
+                    if (this.Metal < metalCapacity)
+                    {
+                        // Üretim metalini veriyoruz.
+                        this.Metal += (long)metalProduceQuantity;
+
+                        // Eğer kapasiteyi aştıysak kapasiteye ayarlıyoruz.
+                        if (this.Metal > metalCapacity)
+                            this.Metal = metalCapacity;
+                    }
 
                 }
             }

@@ -24,10 +24,10 @@ public class BuildingController : MonoBehaviour
 
     private void Start()
     {
-        StartCoroutine(LoadBuildings());
+        StartCoroutine(LoadBuildingDetails());
     }
 
-    private IEnumerator LoadBuildings()
+    private IEnumerator LoadBuildingDetails()
     {
         // Seçim başlangıç da kalkıyor.
         SelectionMesh.SetActive(false);

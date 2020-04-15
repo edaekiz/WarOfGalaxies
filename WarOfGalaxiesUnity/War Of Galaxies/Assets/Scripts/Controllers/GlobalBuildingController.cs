@@ -43,7 +43,13 @@ public class GlobalBuildingController : MonoBehaviour
         StartCoroutine(ApiService.API.Post("GetBuildingLevels", null, (ApiResult response) =>
         {
             if (response.IsSuccess)
+            {
+                // Bina seviyelerini yüklüyoruz.
                 BuildingLevels = response.GetDataList<BuildingLevelDTO>();
+
+                // Yüklemeyi ilerlet.
+                LoadingController.LC.IncreaseLoadCount();
+            }
         }));
     }
 
@@ -52,7 +58,13 @@ public class GlobalBuildingController : MonoBehaviour
         StartCoroutine(ApiService.API.Post("GetUserBuildings", null, (ApiResult response) =>
         {
             if (response.IsSuccess)
+            {
+                // Kullanıcının gezegenlerindeki binlaar
                 UserPlanetBuildings = response.GetDataList<UserPlanetBuildingDTO>();
+
+                // Yüklemeyi ilerlet.
+                LoadingController.LC.IncreaseLoadCount();
+            }
         }));
     }
 
@@ -61,7 +73,13 @@ public class GlobalBuildingController : MonoBehaviour
         StartCoroutine(ApiService.API.Post("GetUserBuildingsProgs", null, (ApiResult response) =>
         {
             if (response.IsSuccess)
+            {
+                // Bina yükseltmeleri.
                 UserPlanetBuildingsUpgs = response.GetDataList<UserPlanetBuildingUpgDTO>();
+
+                // Yüklemeyi ilerlet.
+                LoadingController.LC.IncreaseLoadCount();
+            }
         }));
     }
 
