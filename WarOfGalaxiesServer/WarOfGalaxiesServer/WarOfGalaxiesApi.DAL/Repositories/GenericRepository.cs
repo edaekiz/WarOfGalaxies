@@ -39,6 +39,16 @@ namespace WarOfGalaxiesApi.DAL.Repositories
         /// <summary>
         /// Koşulu verilen dataları döner.
         /// </summary>
+        /// <param name="predicate">Getirilecek olan kayıtların sorgusu.</param>
+        /// <returns></returns>
+        public IEnumerable<T> All()
+        {
+            return _dbContext.Set<T>().AsEnumerable();
+        }
+
+        /// <summary>
+        /// Koşulu verilen dataları döner.
+        /// </summary>
         /// <returns></returns>
         public List<T> ToList()
         {
@@ -109,6 +119,11 @@ namespace WarOfGalaxiesApi.DAL.Repositories
         {
             EntityEntry<T> updatedItem = _dbContext.Set<T>().Update(entity);
             return updatedItem.Entity;
+        }
+
+        public bool Any(Func<T, bool> predicate)
+        {
+            return _dbContext.Set<T>().Any(predicate);
         }
     }
 }

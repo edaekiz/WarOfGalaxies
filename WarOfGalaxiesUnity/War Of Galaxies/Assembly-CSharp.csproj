@@ -85,7 +85,9 @@
     <Compile Include="Assets\ExternalAssets\Hi-Tech Buttons and Panels\Resources\Scripts\JustRotate.cs" />
     <Compile Include="Assets\GlobalPlanetController.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ApiResult.cs" />
+    <Compile Include="Assets\Scripts\ApiModels\BuildingLevelDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserDTO.cs" />
+    <Compile Include="Assets\Scripts\ApiModels\UserPlanetBuildingDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserPlanetDTO.cs" />
     <Compile Include="Assets\Scripts\ApiService.cs" />
     <Compile Include="Assets\Scripts\Controllers\BasePanelController.cs" />
@@ -113,7 +115,6 @@
     <Compile Include="Assets\Scripts\Extends\VectorExtends.cs" />
     <Compile Include="Assets\Scripts\Ignored\IgnoredCodes.cs" />
     <Compile Include="Assets\Scripts\Models\CordinateDTO.cs" />
-    <Compile Include="Assets\Scripts\Models\PlanetBuildingDTO.cs" />
     <Compile Include="Assets\Scripts\Models\SolarSystemDTO.cs" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Ring.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MultiPassHollywoodFlares.shader" />

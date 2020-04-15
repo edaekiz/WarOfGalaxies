@@ -34,6 +34,7 @@ public class LoginController : MonoBehaviour
                 // Kullanıcı adını basıyoruz.
                 UsernameField.text = CurrentUser.Username;
 
+                // Yükleme sayısını 1 arttırıyoruz.
                 LoadingController.LC.IncreaseLoadCount();
             }
             else

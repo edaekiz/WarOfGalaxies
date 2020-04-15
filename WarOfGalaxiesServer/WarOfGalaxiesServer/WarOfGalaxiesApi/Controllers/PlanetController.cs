@@ -4,7 +4,6 @@ using System.Linq;
 using WarOfGalaxiesApi.Controllers.Base;
 using WarOfGalaxiesApi.DAL.Interfaces;
 using WarOfGalaxiesApi.DAL.Models;
-using WarOfGalaxiesApi.DTO.ApiModels;
 using WarOfGalaxiesApi.DTO.Helpers;
 using WarOfGalaxiesApi.DTO.Models;
 

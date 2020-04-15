@@ -1,5 +1,5 @@
-﻿using WarOfGalaxiesApi.DTO.ApiModels;
-using WarOfGalaxiesApi.DTO.Extends;
+﻿using WarOfGalaxiesApi.DTO.Extends;
+using WarOfGalaxiesApi.DTO.Models;
 
 namespace WarOfGalaxiesApi.DTO.Helpers
 {

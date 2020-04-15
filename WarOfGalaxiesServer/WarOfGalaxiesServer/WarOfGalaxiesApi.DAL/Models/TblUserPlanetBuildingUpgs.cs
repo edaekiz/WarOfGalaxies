@@ -5,10 +5,11 @@ namespace WarOfGalaxiesApi.DAL.Models
 {
     public partial class TblUserPlanetBuildingUpgs
     {
-        public int UserPlanetBuildingUpgId { get; set; }
-        public int BuildingLevelId { get; set; }
-        public int PlanetId { get; set; }
-        public DateTime BeginTime { get; set; }
-        public DateTime EndTime { get; set; }
+        public int UserPlanetId { get; set; }
+        public int UserId { get; set; }
+        public int BuildingId { get; set; }
+        public int BuildingLevel { get; set; }
+        public DateTime BeginDate { get; set; }
+        public DateTime EndDate { get; set; }
     }
 }

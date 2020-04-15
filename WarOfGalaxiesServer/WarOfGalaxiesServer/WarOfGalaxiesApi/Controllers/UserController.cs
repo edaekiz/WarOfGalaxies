@@ -2,7 +2,6 @@
 using System.ComponentModel;
 using WarOfGalaxiesApi.Controllers.Base;
 using WarOfGalaxiesApi.DAL.Interfaces;
-using WarOfGalaxiesApi.DTO.ApiModels;
 using WarOfGalaxiesApi.DTO.Helpers;
 using WarOfGalaxiesApi.DTO.Models;
 

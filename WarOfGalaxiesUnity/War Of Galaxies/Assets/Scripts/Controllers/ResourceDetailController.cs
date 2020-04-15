@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Models;
+using Assets.Scripts.ApiModels;
 
 public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 {
@@ -174,11 +175,11 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 
                     int metalQuantity = 0;
 
-                    UserPlanetBuildingDTO metalBuilding = Data.UserPlanetBuidings.Find(x => x.BuildingID == Buildings.MetalMadeni);
+                    UserPlanetBuildingDTO metalBuilding = GlobalBuildingController.GBC.UserPlanetBuildings.Find(x => x.BuildingId == Buildings.MetalMadeni);
 
                     if (metalBuilding != null)
                     {
-                        BuildingLevelDTO upgrade = Data.BuildingLevels.Find(x => x.BuildingID == Buildings.MetalMadeni && x.BuildingLevel == metalBuilding.BuildingLevel);
+                        BuildingLevelDTO upgrade = GlobalBuildingController.GBC.BuildingLevels.Find(x => x.BuildingID == Buildings.MetalMadeni && x.BuildingLevel == metalBuilding.BuildingLevel);
 
                         if (upgrade != null)
                             metalQuantity = upgrade.BuildingValue;
@@ -190,11 +191,11 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 
                     int metalCapacityQuantity = 0;
 
-                    UserPlanetBuildingDTO metalCapacityBuilding = Data.UserPlanetBuidings.Find(x => x.BuildingID == Buildings.MetalDeposu);
+                    UserPlanetBuildingDTO metalCapacityBuilding = GlobalBuildingController.GBC.UserPlanetBuildings.Find(x => x.BuildingId == Buildings.MetalDeposu);
 
                     if (metalBuilding != null)
                     {
-                        BuildingLevelDTO upgrade = Data.BuildingLevels.Find(x => x.BuildingID == Buildings.MetalDeposu && x.BuildingLevel == metalBuilding.BuildingLevel);
+                        BuildingLevelDTO upgrade = GlobalBuildingController.GBC.BuildingLevels.Find(x => x.BuildingID == Buildings.MetalDeposu && x.BuildingLevel == metalBuilding.BuildingLevel);
 
                         if (upgrade != null)
                             metalCapacityQuantity = upgrade.BuildingValue;

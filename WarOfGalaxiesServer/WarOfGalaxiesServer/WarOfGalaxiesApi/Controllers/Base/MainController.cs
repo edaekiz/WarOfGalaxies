@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Primitives;
 using System;
+using System.Collections.Generic;
 using WarOfGalaxiesApi.DAL.Interfaces;
 using WarOfGalaxiesApi.DAL.Models;
 using WarOfGalaxiesApi.DTO.Extends;
@@ -11,10 +12,13 @@ namespace WarOfGalaxiesApi.Controllers.Base
 {
     public class MainController : Controller
     {
+        // Form da gelen token keywordü.
         public const string TOKEN_KEY = "TOKEN";
 
+        // İsteği yapan kullanıcı.
         protected TblUsers DBUser;
 
+        // Kullanıcıya özel veritabanı yöneticisi.
         protected IUnitOfWork UnitOfWork;
 
         public MainController(IUnitOfWork unitOfWork)
@@ -57,5 +61,11 @@ namespace WarOfGalaxiesApi.Controllers.Base
 
             #endregion
         }
+
+        public override void OnActionExecuted(ActionExecutedContext context)
+        {
+            base.OnActionExecuted(context);
+        }
+
     }
 }

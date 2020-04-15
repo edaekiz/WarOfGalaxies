@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using WarOfGalaxiesApi.DAL.Interfaces;
 using WarOfGalaxiesApi.DAL.Models;
-using WarOfGalaxiesApi.DAL.Repositories;
-using WarOfGalaxiesApi.DTO.ApiModels;
 using WarOfGalaxiesApi.DTO.Enums;
+using WarOfGalaxiesApi.DTO.Models;
 
 namespace WarOfGalaxiesApi.Controllers
 {
@@ -15,7 +14,6 @@ namespace WarOfGalaxiesApi.Controllers
         /// Doğrulananların listesi.
         /// </summary>
         public static List<int> Verifies = new List<int>();
-
 
         /// <summary>
         /// Gezegene ait kaynakları kullanmadan önce çağrılması gereken methot.

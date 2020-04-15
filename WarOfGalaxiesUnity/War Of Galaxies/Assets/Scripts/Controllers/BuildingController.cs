@@ -1,5 +1,5 @@
-﻿using Assets.Scripts.Enums;
-using Assets.Scripts.Models;
+﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Enums;
 using System;
 using System.Collections;
 using TMPro;
@@ -22,7 +22,12 @@ public class BuildingController : MonoBehaviour
     [Header("Bina ismini ve seviyesini basacağız.")]
     public TextMeshProUGUI BuildingInfo;
 
-    private IEnumerator Start()
+    private void Start()
+    {
+        StartCoroutine(LoadBuildings());
+    }
+
+    private IEnumerator LoadBuildings()
     {
         // Seçim başlangıç da kalkıyor.
         SelectionMesh.SetActive(false);
@@ -34,10 +39,13 @@ public class BuildingController : MonoBehaviour
         ConstructableMesh.SetActive(true);
 
         // Binalar yüklenene kadar bekliyoruz.
-        yield return new WaitUntil(() => Data.UserPlanetBuidings.Count > 0);
+        yield return new WaitUntil(() => GlobalBuildingController.GBC.UserPlanetBuildings.Count > 0);
+
+        // Ayrıca default gezegen seçilene kadar bekliyoruz.
+        yield return new WaitUntil(() => GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId > 0);
 
         // Kullanıcının binasını buluyoruz.
-        UserPlanetBuildingDTO userBuilding = Data.UserPlanetBuidings.Find(x => x.BuildingID == BuildingType);
+        UserPlanetBuildingDTO userBuilding = GlobalBuildingController.GBC.UserPlanetBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == BuildingType);
 
         // Kullanıcının binası var ise açacağız binayı.
         if (userBuilding != null)

@@ -14,4 +14,9 @@ namespace WarOfGalaxiesApi.DTO.Models
         public long Boron { get; set; }
         public DateTime LastUpdateDate { get; set; }
     }
+
+    public class VerifyResourceDTO
+    {
+        public int UserPlanetID;
+    }
 }

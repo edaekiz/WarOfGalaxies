@@ -59,7 +59,7 @@ public class ResourceController : MonoBehaviour
         SetBoronQuantity(GlobalPlanetController.GPC.CurrentPlanet.Boron);
 
         // Hesaplamalara başlıyoruz.
-        StartCoroutine(ReCalculateResourcesInSeconds());
+        StartCoroutine(UpdateResources());
 
     }
 
@@ -77,39 +77,14 @@ public class ResourceController : MonoBehaviour
 
     #region Üretim Hesaplamaları
 
-    public IEnumerator ReCalculateResourcesInSeconds()
+    public IEnumerator UpdateResources()
     {
-        try
-        {
-            #region Metal Binası Üretimini hesaplıyoruz.
-
-            UserPlanetBuildingDTO metalBuilding = Data.UserPlanetBuidings.Find(x => x.BuildingID == Assets.Scripts.Enums.Buildings.MetalMadeni);
-
-            if (metalBuilding != null)
-            {
-                BuildingLevelDTO upgrade = Data.BuildingLevels.Find(x => x.BuildingID == Assets.Scripts.Enums.Buildings.MetalMadeni && x.BuildingLevel == metalBuilding.BuildingLevel);
-
-                if (upgrade != null)
-                {
-                    int perProduceInSecs = upgrade.BuildingValue / 60 / 60;
-
-                    SetMetalQuantity(perProduceInSecs);
-                }
-            }
-
-            #endregion
-
-        }
-        catch (System.Exception exc)
-        {
-            Debug.LogException(exc);
-        }
 
         // Her saniye tekrar çağıracağız bu methotu. Bu yüzden 1 saniye bekletiyoruz.
         yield return new WaitForSecondsRealtime(1);
 
         // Tekrar kendisin çağırıyoruz.
-        StartCoroutine(ReCalculateResourcesInSeconds());
+        StartCoroutine(UpdateResources());
 
     }
 
