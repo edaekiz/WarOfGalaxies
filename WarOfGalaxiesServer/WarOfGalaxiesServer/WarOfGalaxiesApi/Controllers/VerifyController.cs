@@ -41,52 +41,185 @@ namespace WarOfGalaxiesApi.Controllers
 
             try
             {
-                // Şuanki tarih.
+                // Sistem tarihi.
                 DateTime currentDate = DateTime.UtcNow;
 
-                // Gezegeni buluyoruz.
+                #region Kullanıcının gezegeni ve gezegendeki binalar ve binaların yükseltmeleri
+
+                // Kullanıcının gezegenini buluyoruz.i
                 TblUserPlanets userPlanet = uow.GetRepository<TblUserPlanets>().FirstOrDefault(x => x.UserPlanetId == verifyData.UserPlanetID);
 
-                // Son güncellemesinden bu yana geçen süre.
-                double passedSeconds = (currentDate - userPlanet.LastUpdateDate).TotalSeconds;
-
-                // Kullanıcının gezegenindeki binaları alıyoruz.
+                // Gezegendeki binaları buluyoruz.
                 List<TblUserPlanetBuildings> userPlanetBuildings = uow.GetRepository<TblUserPlanetBuildings>().Where(x => x.UserPlanetId == verifyData.UserPlanetID).ToList();
 
-                // Güncelleme tarihini değiştiriyoruz.
-                userPlanet.LastUpdateDate = currentDate;
+                // Gezegendeki yükseltmeleri buluyoruz.
+                List<TblUserPlanetBuildingUpgs> userPlanetBuildingUpgs = uow.GetRepository<TblUserPlanetBuildingUpgs>().Where(x => x.UserPlanetId == verifyData.UserPlanetID).ToList();
+
+                #endregion
 
                 #region Metal Üretimi
                 {
-                    // Metal binasını buluyoruz.
+                    // En son güncellemeden bu yana geçen süreyi buluyoruz.
+                    double passedSeconds = (currentDate - userPlanet.LastUpdateDate).TotalSeconds;
+
+                    #region Kaynak Binaları
+
+                    // Gezegendeki kaynak deposunu buluyoruz..
+                    TblUserPlanetBuildings metalStorageBuilding = userPlanetBuildings.Find(x => x.BuildingId == (int)Buildings.MetalDeposu);
+
+                    // Gezegendeki kaynak deposunun yükseltmesini buluyoruz.
+                    TblUserPlanetBuildingUpgs metalStorageBuildingUpg = userPlanetBuildingUpgs.Find(x => x.BuildingId == (int)Buildings.MetalDeposu);
+
+                    // Gezegendeki kaynak binasını buluyoruz.
                     TblUserPlanetBuildings metalBuilding = userPlanetBuildings.Find(x => x.BuildingId == (int)Buildings.MetalMadeni);
 
-                    // Metal binası var ise hesaplıyoruz.
+                    // Gezegendeki kaynak binasının yükseltmesini buluyoruz.
+                    TblUserPlanetBuildingUpgs metalBuildingUpg = userPlanetBuildingUpgs.Find(x => x.BuildingId == (int)Buildings.MetalMadeni);
 
-                    // Üretilen miktar.
-                    double metalProduceQuantity = StaticData.GetBuildingProdPerHour(Buildings.MetalMadeni, metalBuilding == null ? 0 : metalBuilding.BuildingLevel) * (passedSeconds / 3600);
+                    #endregion
 
-                    // Metal binasını buluyoruz.
-                    TblUserPlanetBuildings metalCapacityBuilding = userPlanetBuildings.Find(x => x.BuildingId == (int)Buildings.MetalDeposu);
+                    #region Kaynak Hesaplama
 
-                    // Metal binası kapasitesi.
-                    long metalBuildingCapacity = (long)StaticData.GetBuildingStorage(Buildings.MetalDeposu, metalCapacityBuilding == null ? 0 : metalCapacityBuilding.BuildingLevel);
-
-                    // Üretilen metali kullanıcıya veriyoruz ancak kapasitenin yeterli olması lazım.
-                    if (userPlanet.Metal < metalBuildingCapacity)
+                    // Eğer kaynak binası yükseltiliyor ve yükseltme tamamlanmış ise yeni ve eski seviyedeki üretimleri ayrı ayrı hesaplamak gerkeiyor.
+                    if (metalBuildingUpg != null && metalBuildingUpg.EndDate <= currentDate)
                     {
-                        // Üretim metalini veriyoruz.
-                        userPlanet.Metal += (long)metalProduceQuantity;
+                        #region Kaynak binasının yükseltmesi tamamlandıktan sonraki hesaplama
 
-                        // Eğer kapasiteyi aştıysak kapasiteye ayarlıyoruz.
-                        if (userPlanet.Metal > metalBuildingCapacity)
-                            userPlanet.Metal = metalBuildingCapacity;
+                        // Yükseltmeden sonra geçen süreyi hesaplıyoruz.
+                        double passedSecondsInNewLevel = (currentDate - metalBuildingUpg.EndDate).TotalSeconds;
+
+                        // Yükseltmeden önceki geçen süreyi buluyoruz.
+                        double passedSecondsInPrevLevels = passedSeconds - passedSecondsInNewLevel;
+
+                        // Önceki seviyede toplam üretilen kaynak miktarını hesaplıyoruz.
+                        double metalProduceQuantity = StaticData.GetBuildingProdPerHour(Buildings.MetalMadeni, metalBuilding == null ? 0 : metalBuilding.BuildingLevel) * (passedSecondsInPrevLevels / 3600);
+
+                        // Yeni seviyede toplam üretilen kaynak miktarını hesaplıyoruz.
+                        metalProduceQuantity += StaticData.GetBuildingProdPerHour(Buildings.MetalMadeni, metalBuildingUpg.BuildingLevel) * (passedSecondsInNewLevel / 3600);
+
+                        // Kaynak depo kapasitesi.
+                        long metalBuildingCapacity = (long)StaticData.GetBuildingStorage(Buildings.MetalDeposu, metalStorageBuilding == null ? 0 : metalStorageBuilding.BuildingLevel);
+
+                        // Eğer depoda yeterince yer var ise kaynakları depoya koyacağız.
+                        if (userPlanet.Metal < metalBuildingCapacity)
+                        {
+                            // Kaynakları depoya koyuyoruz.
+                            userPlanet.Metal += (long)metalProduceQuantity;
+
+                            // Eğer kaynak depo sınırına ulaştıysak fazlalığı siliyoruz.
+                            if (userPlanet.Metal > metalBuildingCapacity)
+                                userPlanet.Metal = metalBuildingCapacity;
+                        }
+
+                        // Yükseltmeyi siliyoruz.
+                        uow.GetRepository<TblUserPlanetBuildingUpgs>().Delete(metalBuildingUpg);
+
+                        // Kaynak binasının seviyesini güncelliyoruz.
+                        metalBuilding.BuildingLevel = metalBuildingUpg.BuildingLevel;
+
+                        #endregion
                     }
+                    else // Eğer üretim binası yükseltimiyor yada henüz tamamlanmamış ise yükseltmeden önceki seviyeye göre hesaplama yapmamız yeterli.
+                    {
+                        // Metal deposu yükseltiliyor mu?
+                        if (metalStorageBuildingUpg != null)
+                        {
+                            // Yükseltmenin bittiğinden emin oluyoruz.
+                            if (metalStorageBuildingUpg.EndDate < currentDate)
+                            {
+                                #region Deponun yükseltilmesinden önceki hesaplama.
+
+                                // Deponun yükseltmeden önceki geçen süre.
+                                double passedSecondsInPrevStorage = (metalStorageBuildingUpg.EndDate - userPlanet.LastUpdateDate).TotalSeconds;
+
+                                // Deponun yükseltmeden önceki kapasitesi.
+                                long metalBuildingCapacityInPrevStorage = (long)StaticData.GetBuildingStorage(Buildings.MetalDeposu, metalStorageBuilding == null ? 0 : metalStorageBuilding.BuildingLevel);
+
+                                // Metal binasının depo yükseltilene kadar ürettiği toplam miktar.
+                                double metalProduceQuantityInPrevStorage = StaticData.GetBuildingProdPerHour(Buildings.MetalMadeni, metalBuilding == null ? 0 : metalBuilding.BuildingLevel) * (passedSecondsInPrevStorage / 3600);
+
+                                // Üretilen toplam miktarı kontrol ediyoruz depo kapasitesinden fazla mı?
+                                if (userPlanet.Metal < metalBuildingCapacityInPrevStorage)
+                                {
+                                    // Eğer değil ise kaynakları depoya ekliyoruz.
+                                    userPlanet.Metal += (long)metalProduceQuantityInPrevStorage;
+
+                                    // Eğer eklenen kaynaklar depoyu aştıysa fazlalığı atıyoruz.
+                                    if (userPlanet.Metal > metalBuildingCapacityInPrevStorage)
+                                        userPlanet.Metal = metalBuildingCapacityInPrevStorage;
+                                }
+
+                                #endregion
+
+                                #region Depo yükseltme işlemi.
+
+                                // Depoya yeni seviyeyi veriyoruz.
+                                metalStorageBuilding.BuildingLevel = metalStorageBuildingUpg.BuildingLevel;
+
+                                // Yükseltme bilgisini siliyoruz.
+                                uow.GetRepository<TblUserPlanetBuildingUpgs>().Delete(metalStorageBuildingUpg);
+
+                                #endregion
+
+                                #region Deponun yükseltilmesinden sonraki hesaplama.
+
+                                // Deponun yükseltmesinden sonraki geçen süre.
+                                double passedSecondsInNextStorage = (currentDate - metalStorageBuildingUpg.EndDate).TotalSeconds;
+
+                                // Deponun yükseltmeden sonraki kapasitesi.
+                                long metalBuildingCapacityInNextStorage = (long)StaticData.GetBuildingStorage(Buildings.MetalDeposu, metalStorageBuilding == null ? 0 : metalStorageBuilding.BuildingLevel);
+
+                                // Metal binasının yükseltmeden sonraki geçen sürede ürettiği metal miktarı.
+                                double metalProduceQuantityInNextStorage = StaticData.GetBuildingProdPerHour(Buildings.MetalMadeni, metalBuilding == null ? 0 : metalBuilding.BuildingLevel) * (passedSecondsInNextStorage / 3600);
+
+                                // Gezegendeki metal miktarını kontrol ediyoruz. Eğer depo sınırına ulaşmamış ise kaynakları depoya ekleyeceğiz.
+                                if (userPlanet.Metal < metalBuildingCapacityInNextStorage)
+                                {
+                                    // Kaynağı depoya ekliyoruz.
+                                    userPlanet.Metal += (long)metalProduceQuantityInNextStorage;
+
+                                    // Yeni kaynak miktarı depo kapasitesinden büyük ise depo sınırına eşitliyoruz.
+                                    if (userPlanet.Metal > metalBuildingCapacityInNextStorage)
+                                        userPlanet.Metal = metalBuildingCapacityInNextStorage;
+                                }
+
+                                #endregion
+
+                            }
+                        }
+                        else // Yükseltilmiyor ise standart ekleme çıkarma yapacağız.
+                        {
+                            #region Kaynak üretimi (Herhangi bir yükseltme olmadan.)
+
+                            // Toplam geçen sürede kaynak binasının ürettiği toplam üretim.
+                            double metalProduceQuantity = StaticData.GetBuildingProdPerHour(Buildings.MetalMadeni, metalBuilding == null ? 0 : metalBuilding.BuildingLevel) * (passedSeconds / 3600);
+
+                            // Metal binasının kapasitesini hesaplıyoruz.
+                            long metalBuildingCapacity = (long)StaticData.GetBuildingStorage(Buildings.MetalDeposu, metalStorageBuilding == null ? 0 : metalStorageBuilding.BuildingLevel);
+
+                            // Depo da yer var ise depoya kaynağı ekliyoruz.
+                            if (userPlanet.Metal < metalBuildingCapacity)
+                            {
+                                // Kaynağı depoya ekliyoruz.
+                                userPlanet.Metal += (long)metalProduceQuantity;
+
+                                // Eğer eklenen kaynak ile birlikte depo sınırına ulaşıldıysa fazlalığı siliyoruz.
+                                if (userPlanet.Metal > metalBuildingCapacity)
+                                    userPlanet.Metal = metalBuildingCapacity;
+                            }
+
+                            #endregion
+                        }
+                    }
+
+                    #endregion
                 }
                 #endregion
 
                 #region Kristal Üretimi
                 {
+                    // En son güncellemeden bu yana geçen süreyi buluyoruz.
+                    double passedSeconds = (currentDate - userPlanet.LastUpdateDate).TotalSeconds;
 
                     // Kristal binasını buluyoruz.
                     TblUserPlanetBuildings crystalBuilding = userPlanetBuildings.Find(x => x.BuildingId == (int)Buildings.KristalMadeni);
@@ -120,6 +253,8 @@ namespace WarOfGalaxiesApi.Controllers
 
                 #region Boron Üretimi
                 {
+                    // En son güncellemeden bu yana geçen süreyi buluyoruz.
+                    double passedSeconds = (currentDate - userPlanet.LastUpdateDate).TotalSeconds;
 
                     // Boron binasını buluyoruz.
                     TblUserPlanetBuildings boronBuilding = userPlanetBuildings.Find(x => x.BuildingId == (int)Buildings.BoronMadeni);
@@ -150,6 +285,9 @@ namespace WarOfGalaxiesApi.Controllers
                 }
 
                 #endregion
+
+                // Güncelleme tarihini değiştiriyoruz.
+                userPlanet.LastUpdateDate = currentDate;
 
                 // Değişiklikleri kayıt ediyoruz.
                 uow.SaveChanges();

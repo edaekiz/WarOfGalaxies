@@ -67,7 +67,7 @@ namespace WarOfGalaxiesApi.DAL.Models
 
             modelBuilder.Entity<TblUserPlanetBuildingUpgs>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.UserPlanetBuildingUpgId);
 
                 entity.ToTable("tbl_user_planet_building_upgs");
 
@@ -76,6 +76,8 @@ namespace WarOfGalaxiesApi.DAL.Models
                 entity.HasIndex(e => e.UserPlanetId)
                     .HasName("IX_tbl_user_planet_building_upgs")
                     .IsUnique();
+
+                entity.Property(e => e.UserPlanetBuildingUpgId).HasColumnName("UserPlanetBuildingUpgID");
 
                 entity.Property(e => e.BeginDate).HasColumnType("datetime");
 
@@ -90,7 +92,7 @@ namespace WarOfGalaxiesApi.DAL.Models
 
             modelBuilder.Entity<TblUserPlanetBuildings>(entity =>
             {
-                entity.HasNoKey();
+                entity.HasKey(e => e.UserPlanetBuildingId);
 
                 entity.ToTable("tbl_user_planet_buildings");
 
@@ -100,6 +102,8 @@ namespace WarOfGalaxiesApi.DAL.Models
                 entity.HasIndex(e => new { e.UserPlanetId, e.BuildingId })
                     .HasName("IX_tbl_planet_buildings")
                     .IsUnique();
+
+                entity.Property(e => e.UserPlanetBuildingId).HasColumnName("UserPlanetBuildingID");
 
                 entity.Property(e => e.BuildingId).HasColumnName("BuildingID");
 
