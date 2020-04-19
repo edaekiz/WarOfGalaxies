@@ -10,6 +10,7 @@ namespace WarOfGalaxiesApi.Controllers
 {
     public static class VerifyController
     {
+
         /// <summary>
         /// Doğrulananların listesi.
         /// </summary>
@@ -56,21 +57,20 @@ namespace WarOfGalaxiesApi.Controllers
                 userPlanet.LastUpdateDate = currentDate;
 
                 #region Metal Üretimi
-
-                // Metal binasını buluyoruz.
-                TblUserPlanetBuildings metalBuilding = userPlanetBuildings.Find(x => x.BuildingId == (int)Buildings.MetalMadeni);
-
-                // Metal binası var ise hesaplıyoruz.
-                if (metalBuilding != null)
                 {
+                    // Metal binasını buluyoruz.
+                    TblUserPlanetBuildings metalBuilding = userPlanetBuildings.Find(x => x.BuildingId == (int)Buildings.MetalMadeni);
+
+                    // Metal binası var ise hesaplıyoruz.
 
                     // Üretilen miktar.
-                    double metalProduceQuantity = StaticData.GetBuildingProdPerHour(Buildings.MetalMadeni, metalBuilding.BuildingLevel) * (passedSeconds / 3600);
+                    double metalProduceQuantity = StaticData.GetBuildingProdPerHour(Buildings.MetalMadeni, metalBuilding == null ? 0 : metalBuilding.BuildingLevel) * (passedSeconds / 3600);
 
                     // Metal binasını buluyoruz.
                     TblUserPlanetBuildings metalCapacityBuilding = userPlanetBuildings.Find(x => x.BuildingId == (int)Buildings.MetalDeposu);
 
-                    double metalBuildingCapacity = StaticData.GetBuildingStorage(Buildings.MetalDeposu, metalCapacityBuilding == null ? 0 : metalCapacityBuilding.BuildingLevel);
+                    // Metal binası kapasitesi.
+                    long metalBuildingCapacity = (long)StaticData.GetBuildingStorage(Buildings.MetalDeposu, metalCapacityBuilding == null ? 0 : metalCapacityBuilding.BuildingLevel);
 
                     // Üretilen metali kullanıcıya veriyoruz ancak kapasitenin yeterli olması lazım.
                     if (userPlanet.Metal < metalBuildingCapacity)
@@ -80,9 +80,40 @@ namespace WarOfGalaxiesApi.Controllers
 
                         // Eğer kapasiteyi aştıysak kapasiteye ayarlıyoruz.
                         if (userPlanet.Metal > metalBuildingCapacity)
-                            userPlanet.Metal = (long)metalBuildingCapacity;
+                            userPlanet.Metal = metalBuildingCapacity;
                     }
+                }
+                #endregion
 
+                #region Kristal Üretimi
+                {
+
+                    // Kristal binasını buluyoruz.
+                    TblUserPlanetBuildings crystalBuilding = userPlanetBuildings.Find(x => x.BuildingId == (int)Buildings.KristalMadeni);
+
+                    // Üretilen miktar.
+                    double crystalProduceQuantity = StaticData.GetBuildingProdPerHour(Buildings.KristalMadeni, crystalBuilding == null ? 0 : crystalBuilding.BuildingLevel) * (passedSeconds / 3600);
+
+                    #region Metal Deposunu kontrol ediyoruz.
+
+                    // Kristal deposunu buluyoruz.
+                    TblUserPlanetBuildings crystalCapacityBuilding = userPlanetBuildings.Find(x => x.BuildingId == (int)Buildings.KristalDeposu);
+
+                    // Kristal binası kapasitesi.
+                    long crystalBuildingCapacity = (long)StaticData.GetBuildingStorage(Buildings.KristalDeposu, crystalCapacityBuilding == null ? 0 : crystalCapacityBuilding.BuildingLevel);
+
+                    #endregion
+
+                    // Üretilen kristali kullanıcıya veriyoruz ancak kapasitenin yeterli olması lazım.
+                    if (userPlanet.Crystal < crystalBuildingCapacity)
+                    {
+                        // Üretim kristalini veriyoruz.
+                        userPlanet.Crystal += (long)crystalProduceQuantity;
+
+                        // Eğer kapasiteyi aştıysak kapasiteye ayarlıyoruz.
+                        if (userPlanet.Crystal > crystalBuildingCapacity)
+                            userPlanet.Crystal = crystalBuildingCapacity;
+                    }
                 }
 
                 #endregion

@@ -66,7 +66,6 @@ namespace WarOfGalaxiesApi.Controllers
                 UserId = x.UserId,
                 Boron = x.Boron,
                 Crystal = x.Crystal,
-                LastUpdateDate = x.LastUpdateDate,
                 Metal = x.Metal,
                 PlanetCordinate = x.PlanetCordinate,
                 PlanetName = x.PlanetName,

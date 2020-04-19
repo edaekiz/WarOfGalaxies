@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using WarOfGalaxiesApi.Controllers.Base;
 using WarOfGalaxiesApi.DAL.Interfaces;
 using WarOfGalaxiesApi.DAL.Models;

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace WarOfGalaxiesApi.DTO.Models
+﻿namespace WarOfGalaxiesApi.DTO.Models
 {
     public class UserPlanetDTO
     {
@@ -12,7 +10,6 @@ namespace WarOfGalaxiesApi.DTO.Models
         public long Metal { get; set; }
         public long Crystal { get; set; }
         public long Boron { get; set; }
-        public DateTime LastUpdateDate { get; set; }
     }
 
     public class VerifyResourceDTO

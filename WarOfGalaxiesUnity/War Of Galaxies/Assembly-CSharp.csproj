@@ -85,7 +85,6 @@
     <Compile Include="Assets\ExternalAssets\Hi-Tech Buttons and Panels\Resources\Scripts\JustRotate.cs" />
     <Compile Include="Assets\GlobalPlanetController.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ApiResult.cs" />
-    <Compile Include="Assets\Scripts\ApiModels\BuildingLevelDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\LoginStuffDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ResourcesDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserDTO.cs" />
@@ -109,6 +108,7 @@
     <Compile Include="Assets\Scripts\Controllers\StaticValuesController.cs" />
     <Compile Include="Assets\Scripts\Controllers\SunController.cs" />
     <Compile Include="Assets\Scripts\Controllers\ZoomPanController.cs" />
+    <Compile Include="Assets\Scripts\Data\StaticData.cs" />
     <Compile Include="Assets\Scripts\Enums\Buildings.cs" />
     <Compile Include="Assets\Scripts\Enums\PlanetTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\ResourceTypes.cs" />

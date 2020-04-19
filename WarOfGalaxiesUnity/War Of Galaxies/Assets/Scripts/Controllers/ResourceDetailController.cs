@@ -5,6 +5,7 @@ using UnityEngine.EventSystems;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Models;
 using Assets.Scripts.ApiModels;
+using Assets.Scripts.Data;
 
 public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 {
@@ -173,45 +174,62 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 
                     #region Metal Üretim hesaplaması.
 
-                    int metalQuantity = 0;
+                    // Kullanıcının metal binası var mı?
+                    UserPlanetBuildingDTO metalBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.MetalMadeni);
 
-                    UserPlanetBuildingDTO metalBuilding = GlobalBuildingController.GBC.UserPlanetBuildings.Find(x => x.BuildingId == Buildings.MetalMadeni);
-
-                    if (metalBuilding != null)
-                    {
-                        BuildingLevelDTO upgrade = GlobalBuildingController.GBC.BuildingLevels.Find(x => x.BuildingId == Buildings.MetalMadeni && x.BuildingLevel == metalBuilding.BuildingLevel);
-
-                        if (upgrade != null)
-                            metalQuantity = upgrade.BuildingValue;
-                    }
+                    // Saatlik hesaplanmış üretim.
+                    long metalProducePerHour = (long)(StaticData.GetBuildingProdPerHour(Buildings.MetalMadeni, metalBuilding == null ? 0 : metalBuilding.BuildingLevel));
 
                     #endregion
 
                     #region Depo Kapasitesini hesaplıyoruz.
 
-                    int metalCapacityQuantity = 0;
+                    // Kullanıcının metal binası.
+                    UserPlanetBuildingDTO metalStorageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.MetalDeposu);
 
-                    UserPlanetBuildingDTO metalCapacityBuilding = GlobalBuildingController.GBC.UserPlanetBuildings.Find(x => x.BuildingId == Buildings.MetalDeposu);
-
-                    if (metalBuilding != null)
-                    {
-                        BuildingLevelDTO upgrade = GlobalBuildingController.GBC.BuildingLevels.Find(x => x.BuildingId == Buildings.MetalDeposu && x.BuildingLevel == metalBuilding.BuildingLevel);
-
-                        if (upgrade != null)
-                            metalCapacityQuantity = upgrade.BuildingValue;
-                    }
+                    // Kullanıcının metal deposu.
+                    long metalBuildingCapacity = (long)StaticData.GetBuildingStorage(Buildings.MetalDeposu, metalStorageBuilding == null ? 0 : metalStorageBuilding.BuildingLevel);
 
                     #endregion
 
                     #region Ekrana basıyoruz.
 
-                    ContentField.text = $"Anlık\n<color=white>{GlobalPlanetController.GPC.CurrentPlanet.Metal}</color>\nDepo Kapasitesi\n<color=white>{metalCapacityQuantity}</color>\nSaaatlik Üretim\n<color=white>{metalQuantity}</color>";
+                    ContentField.text = $"Anlık\n<color=white>{GlobalPlanetController.GPC.CurrentPlanet.Metal}</color>\nDepo Kapasitesi\n<color=white>{metalBuildingCapacity}</color>\nSaaatlik Üretim\n<color=white>{metalProducePerHour}</color>";
 
                     #endregion
 
                 }
                 break;
             case ResourceTypes.Crystal:
+                {
+
+                    #region Kristal Üretim hesaplaması.
+
+                    // Kullanıcının Kristal binası var mı?
+                    UserPlanetBuildingDTO crystalBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.KristalMadeni);
+
+                    // Saatlik hesaplanmış üretim.
+                    long crystalProducePerHour = (long)(StaticData.GetBuildingProdPerHour(Buildings.KristalMadeni, crystalBuilding == null ? 0 : crystalBuilding.BuildingLevel));
+
+                    #endregion
+
+                    #region Depo Kapasitesini hesaplıyoruz.
+
+                    // Kullanıcının metal binası.
+                    UserPlanetBuildingDTO crystalStorageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.KristalDeposu);
+
+                    // Kullanıcının kristal deposu.
+                    long crystalBuildingCapacity = (long)StaticData.GetBuildingStorage(Buildings.MetalDeposu, crystalStorageBuilding == null ? 0 : crystalStorageBuilding.BuildingLevel);
+
+                    #endregion
+
+                    #region Ekrana basıyoruz.
+
+                    ContentField.text = $"Anlık\n<color=white>{GlobalPlanetController.GPC.CurrentPlanet.Crystal}</color>\nDepo Kapasitesi\n<color=white>{crystalBuildingCapacity}</color>\nSaaatlik Üretim\n<color=white>{crystalProducePerHour}</color>";
+
+                    #endregion
+
+                }
                 break;
             case ResourceTypes.Boron:
                 break;

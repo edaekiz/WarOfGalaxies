@@ -39,13 +39,13 @@ public class BuildingController : MonoBehaviour
         ConstructableMesh.SetActive(true);
 
         // Binalar yüklenene kadar bekliyoruz.
-        yield return new WaitUntil(() => GlobalBuildingController.GBC.UserPlanetBuildings.Count > 0);
+        yield return new WaitUntil(() => LoginController.LC.IsLoggedIn);
 
-        // Ayrıca default gezegen seçilene kadar bekliyoruz.
+        // Default gezegen seçilene kadar bekliyoruz. Yada başka bir gezegen seçilene kadar
         yield return new WaitUntil(() => GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId > 0);
 
         // Kullanıcının binasını buluyoruz.
-        UserPlanetBuildingDTO userBuilding = GlobalBuildingController.GBC.UserPlanetBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == BuildingType);
+        UserPlanetBuildingDTO userBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == BuildingType);
 
         // Kullanıcının binası var ise açacağız binayı.
         if (userBuilding != null)

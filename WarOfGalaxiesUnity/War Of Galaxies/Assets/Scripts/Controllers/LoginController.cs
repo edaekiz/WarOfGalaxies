@@ -6,8 +6,11 @@ public class LoginController : MonoBehaviour
 {
     public static LoginController LC { get; set; }
 
+    [Header("Kullanıcı giri yapı mı?")]
+    public bool IsLoggedIn;
+
     [Header("Giriş yapan kullanıcılar.")]
-    public UserDTO CurrentUser;
+    public LoginStuffDTO CurrentUser;
 
     [Header("Kullanıcı adının basılacağı yer.")]
     public TextMeshProUGUI UsernameField;
@@ -29,13 +32,16 @@ public class LoginController : MonoBehaviour
             if (response.IsSuccess)
             {
                 // Giriş yapan kullanıcı.
-                CurrentUser = response.GetData<UserDTO>();
+                CurrentUser = response.GetData<LoginStuffDTO>();
 
                 // Kullanıcı adını basıyoruz.
-                UsernameField.text = CurrentUser.Username;
+                UsernameField.text = CurrentUser.UserData.Username;
 
                 // Yükleme sayısını 1 arttırıyoruz.
                 LoadingController.LC.IncreaseLoadCount();
+
+                // Evet kullanıcı giriş yaptı.
+                IsLoggedIn = true;
             }
             else
             {
