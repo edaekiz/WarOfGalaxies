@@ -99,6 +99,39 @@ namespace Assets.Scripts.ApiModels
             }
 
             #endregion
+
+            #region Boron Üretimi
+            {
+
+                // Boron binasını buluyoruz.
+                UserPlanetBuildingDTO boronBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == this.UserPlanetId && x.BuildingId == Buildings.BoronMadeni);
+
+                // Üretilen miktar.
+                double boronProduceQuantity = StaticData.GetBuildingProdPerHour(Buildings.BoronMadeni, boronBuilding == null ? 0 : boronBuilding.BuildingLevel) * (passedSeconds / 3600);
+
+                #region Boron Deposunu kontrol ediyoruz.
+
+                // Boron deposunu buluyoruz.
+                UserPlanetBuildingDTO boronCapacityBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == this.UserPlanetId && x.BuildingId == Buildings.BoronDeposu);
+
+                // Boron binası kapasitesi.
+                long boronBuildingCapacity = (long)StaticData.GetBuildingStorage(Buildings.BoronDeposu, boronCapacityBuilding == null ? 0 : boronCapacityBuilding.BuildingLevel);
+
+                #endregion
+
+                // Üretilen boronu kullanıcıya veriyoruz ancak kapasitenin yeterli olması lazım.
+                if (this.Boron < boronBuildingCapacity)
+                {
+                    // Üretim borununu veriyoruz.
+                    this.Boron += (long)boronProduceQuantity;
+
+                    // Eğer kapasiteyi aştıysak kapasiteye ayarlıyoruz.
+                    if (this.Boron > boronBuildingCapacity)
+                        this.Boron = boronBuildingCapacity;
+                }
+            }
+
+            #endregion
         }
 
     }

@@ -232,6 +232,35 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
                 }
                 break;
             case ResourceTypes.Boron:
+                {
+
+                    #region Boron Üretim hesaplaması.
+
+                    // Kullanıcının Boron binası var mı?
+                    UserPlanetBuildingDTO boronBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.BoronMadeni);
+
+                    // Saatlik hesaplanmış üretim.
+                    long boronProducePerHour = (long)(StaticData.GetBuildingProdPerHour(Buildings.BoronMadeni, boronBuilding == null ? 0 : boronBuilding.BuildingLevel));
+
+                    #endregion
+
+                    #region Depo Kapasitesini hesaplıyoruz.
+
+                    // Kullanıcının metal binası.
+                    UserPlanetBuildingDTO boronStorageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.BoronDeposu);
+
+                    // Kullanıcının kristal deposu.
+                    long boronBuildingCapacity = (long)StaticData.GetBuildingStorage(Buildings.BoronDeposu, boronStorageBuilding == null ? 0 : boronStorageBuilding.BuildingLevel);
+
+                    #endregion
+
+                    #region Ekrana basıyoruz.
+
+                    ContentField.text = $"Anlık\n<color=white>{GlobalPlanetController.GPC.CurrentPlanet.Boron}</color>\nDepo Kapasitesi\n<color=white>{boronBuildingCapacity}</color>\nSaaatlik Üretim\n<color=white>{boronProducePerHour}</color>";
+
+                    #endregion
+
+                }
                 break;
             default:
                 break;

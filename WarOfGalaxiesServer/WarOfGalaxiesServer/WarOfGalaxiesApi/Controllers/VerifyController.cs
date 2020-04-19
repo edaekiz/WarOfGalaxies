@@ -118,6 +118,39 @@ namespace WarOfGalaxiesApi.Controllers
 
                 #endregion
 
+                #region Boron Üretimi
+                {
+
+                    // Boron binasını buluyoruz.
+                    TblUserPlanetBuildings boronBuilding = userPlanetBuildings.Find(x => x.BuildingId == (int)Buildings.BoronMadeni);
+
+                    // Üretilen miktar.
+                    double boronProduceQuantity = StaticData.GetBuildingProdPerHour(Buildings.BoronMadeni, boronBuilding == null ? 0 : boronBuilding.BuildingLevel) * (passedSeconds / 3600);
+
+                    #region Boron Deposunu kontrol ediyoruz.
+
+                    // Kristal deposunu buluyoruz.
+                    TblUserPlanetBuildings boronCapacityBuilding = userPlanetBuildings.Find(x => x.BuildingId == (int)Buildings.BoronDeposu);
+
+                    // Boron binası kapasitesi.
+                    long boronBuildingCapacity = (long)StaticData.GetBuildingStorage(Buildings.BoronDeposu, boronCapacityBuilding == null ? 0 : boronCapacityBuilding.BuildingLevel);
+
+                    #endregion
+
+                    // Üretilen boron kullanıcıya veriyoruz ancak kapasitenin yeterli olması lazım.
+                    if (userPlanet.Boron < boronBuildingCapacity)
+                    {
+                        // Üretim boron veriyoruz.
+                        userPlanet.Boron += (long)boronProduceQuantity;
+
+                        // Eğer kapasiteyi aştıysak kapasiteye ayarlıyoruz.
+                        if (userPlanet.Boron > boronBuildingCapacity)
+                            userPlanet.Boron = boronBuildingCapacity;
+                    }
+                }
+
+                #endregion
+
                 // Değişiklikleri kayıt ediyoruz.
                 uow.SaveChanges();
 
