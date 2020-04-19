@@ -1,14 +1,22 @@
 ﻿using Assets.Scripts.Data;
 using Assets.Scripts.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Assets.Scripts.ApiModels
 {
     [Serializable]
     public class UserPlanetDTO
     {
+        // Üretim binaları ve depoları. Önce kaynak sonra depo.
+        public static Buildings[] ResouceBuildings = new Buildings[] {
+                    Buildings.MetalMadeni,
+                    Buildings.MetalDeposu,
+                    Buildings.KristalMadeni,
+                    Buildings.KristalDeposu,
+                    Buildings.BoronMadeni,
+                    Buildings.BoronDeposu
+                };
+
         public int UserPlanetId;
         public int UserId;
         public string PlanetCordinate;
@@ -23,116 +31,115 @@ namespace Assets.Scripts.ApiModels
             LastUpdateDateInClient = DateTime.UtcNow;
         }
 
+        /// <summary>
+        /// Kaynak hesaplamalarını yapar.
+        /// </summary>
         public void VerifyResources()
         {
             // Şuanki tarih.
             DateTime currentDate = DateTime.UtcNow;
 
-            // Son güncellemesinden bu yana geçen süre.
-            double passedSeconds = (currentDate - this.LastUpdateDateInClient).TotalSeconds;
+            #region Üretim hesaplamaları.
+
+            for (int ii = 0; ii < ResouceBuildings.Length; ii += 2)
+            {
+                // Kaynak binası.
+                Buildings resourceBuilding = ResouceBuildings[ii];
+
+                // Kaynak deposu.
+                Buildings resourceStorageBuilding = ResouceBuildings[ii + 1];
+
+                // En son güncellemeden bu yana geçen süreyi buluyoruz.
+                double passedSeconds = (currentDate - this.LastUpdateDateInClient).TotalSeconds;
+
+                #region Kaynak Binaları
+
+                // Gezegendeki kaynak deposunu buluyoruz..
+                UserPlanetBuildingDTO planetStorageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == this.UserPlanetId && x.BuildingId == resourceStorageBuilding);
+
+                // Gezegendeki kaynak deposunun yükseltmesini buluyoruz.
+                UserPlanetBuildingUpgDTO planetStorageBuildingUpg = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Find(x => x.UserPlanetId == this.UserPlanetId && x.BuildingId == resourceStorageBuilding);
+
+                // Gezegendeki kaynak binasını buluyoruz.
+                UserPlanetBuildingDTO planetResourceBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == this.UserPlanetId && x.BuildingId == resourceBuilding);
+
+                // Gezegendeki kaynak binasının yükseltmesini buluyoruz.
+                UserPlanetBuildingUpgDTO planetResourceBuildingUpg = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Find(x => x.UserPlanetId == this.UserPlanetId && x.BuildingId == resourceBuilding);
+
+                #endregion
+
+                #region Kaynak Hesaplama
+
+                // Toplam geçen sürede kaynak binasının ürettiği toplam üretim.
+                double metalProduceQuantity = StaticData.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSeconds / 3600);
+
+                // Metal binasının kapasitesini hesaplıyoruz.
+                long metalBuildingCapacity = (long)StaticData.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
+
+                // Gezegendeki kaynağı yükseltiyoruz.
+                UpdateUserPlanetResources(resourceBuilding, metalBuildingCapacity, (long)metalProduceQuantity);
+
+                #endregion
+            }
 
             // Güncelleme tarihini değiştiriyoruz.
             this.LastUpdateDateInClient = currentDate;
 
-            #region Metal Üretimi
-
-            {
-                // Metal binasını buluyoruz.
-                UserPlanetBuildingDTO metalBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == this.UserPlanetId && x.BuildingId == Buildings.MetalMadeni);
-
-                // Üretilen miktar.
-                double metalProduceQuantity = StaticData.GetBuildingProdPerHour(Buildings.MetalMadeni, metalBuilding == null ? 0 : metalBuilding.BuildingLevel) * (passedSeconds / 3600);
-
-                #region Metal Deposunu kontrol ediyoruz.
-
-                // Metal deposunu buluyoruz.
-                UserPlanetBuildingDTO metalCapacityBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == this.UserPlanetId && x.BuildingId == Buildings.MetalDeposu);
-
-                // Metal binası kapasitesi.
-                long metalBuildingCapacity = (long)StaticData.GetBuildingStorage(Buildings.MetalDeposu, metalCapacityBuilding == null ? 0 : metalCapacityBuilding.BuildingLevel);
-
-                #endregion
-
-                // Üretilen metali kullanıcıya veriyoruz ancak kapasitenin yeterli olması lazım.
-                if (this.Metal < metalBuildingCapacity)
-                {
-                    // Üretim metalini veriyoruz.
-                    this.Metal += (long)metalProduceQuantity;
-
-                    // Eğer kapasiteyi aştıysak kapasiteye ayarlıyoruz.
-                    if (this.Metal > metalBuildingCapacity)
-                        this.Metal = metalBuildingCapacity;
-                }
-            }
-
-            #endregion
-
-            #region Kristal Üretimi
-            {
-
-                // Kristal binasını buluyoruz.
-                UserPlanetBuildingDTO crystalBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == this.UserPlanetId && x.BuildingId == Buildings.KristalMadeni);
-
-                // Üretilen miktar.
-                double crystalProduceQuantity = StaticData.GetBuildingProdPerHour(Buildings.KristalMadeni, crystalBuilding == null ? 0 : crystalBuilding.BuildingLevel) * (passedSeconds / 3600);
-
-                #region Metal Deposunu kontrol ediyoruz.
-
-                // Kristal deposunu buluyoruz.
-                UserPlanetBuildingDTO crystalCapacityBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == this.UserPlanetId && x.BuildingId == Buildings.KristalDeposu);
-
-                // Kristal binası kapasitesi.
-                long crystalBuildingCapacity = (long)StaticData.GetBuildingStorage(Buildings.KristalDeposu, crystalCapacityBuilding == null ? 0 : crystalCapacityBuilding.BuildingLevel);
-
-                #endregion
-
-                // Üretilen kristali kullanıcıya veriyoruz ancak kapasitenin yeterli olması lazım.
-                if (this.Crystal < crystalBuildingCapacity)
-                {
-                    // Üretim kristalini veriyoruz.
-                    this.Crystal += (long)crystalProduceQuantity;
-
-                    // Eğer kapasiteyi aştıysak kapasiteye ayarlıyoruz.
-                    if (this.Crystal > crystalBuildingCapacity)
-                        this.Crystal = crystalBuildingCapacity;
-                }
-            }
-
-            #endregion
-
-            #region Boron Üretimi
-            {
-
-                // Boron binasını buluyoruz.
-                UserPlanetBuildingDTO boronBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == this.UserPlanetId && x.BuildingId == Buildings.BoronMadeni);
-
-                // Üretilen miktar.
-                double boronProduceQuantity = StaticData.GetBuildingProdPerHour(Buildings.BoronMadeni, boronBuilding == null ? 0 : boronBuilding.BuildingLevel) * (passedSeconds / 3600);
-
-                #region Boron Deposunu kontrol ediyoruz.
-
-                // Boron deposunu buluyoruz.
-                UserPlanetBuildingDTO boronCapacityBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == this.UserPlanetId && x.BuildingId == Buildings.BoronDeposu);
-
-                // Boron binası kapasitesi.
-                long boronBuildingCapacity = (long)StaticData.GetBuildingStorage(Buildings.BoronDeposu, boronCapacityBuilding == null ? 0 : boronCapacityBuilding.BuildingLevel);
-
-                #endregion
-
-                // Üretilen boronu kullanıcıya veriyoruz ancak kapasitenin yeterli olması lazım.
-                if (this.Boron < boronBuildingCapacity)
-                {
-                    // Üretim borununu veriyoruz.
-                    this.Boron += (long)boronProduceQuantity;
-
-                    // Eğer kapasiteyi aştıysak kapasiteye ayarlıyoruz.
-                    if (this.Boron > boronBuildingCapacity)
-                        this.Boron = boronBuildingCapacity;
-                }
-            }
-
             #endregion
         }
+
+        /// <summary>
+        /// Verilen türe göre kaynakları günceller.
+        /// </summary>
+        /// <param name="userPlanet">Kullanıcının hangi gezegeninin kaynakları güncellenecek.</param>
+        /// <param name="building">Hangi kaynak için yapılacak.</param>
+        /// <param name="capacity">Kaynak depo kapasitesi.</param>
+        /// <param name="quantity">Kaynak miktarı.</param>
+        public void UpdateUserPlanetResources(Buildings building, long capacity, long quantity)
+        {
+            switch (building)
+            {
+                case Buildings.MetalMadeni:
+                    // Eğer depoda yeterince yer var ise kaynakları depoya koyacağız.
+                    if (this.Metal < capacity)
+                    {
+                        // Kaynakları depoya koyuyoruz.
+                        this.Metal += quantity;
+
+                        // Eğer kaynak depo sınırına ulaştıysak fazlalığı siliyoruz.
+                        if (this.Metal > capacity)
+                            this.Metal = capacity;
+                    }
+                    break;
+                case Buildings.KristalMadeni:
+                    // Eğer depoda yeterince yer var ise kaynakları depoya koyacağız.
+                    if (this.Crystal < capacity)
+                    {
+                        // Kaynakları depoya koyuyoruz.
+                        this.Crystal += quantity;
+
+                        // Eğer kaynak depo sınırına ulaştıysak fazlalığı siliyoruz.
+                        if (this.Crystal > capacity)
+                            this.Crystal = capacity;
+                    }
+                    break;
+                case Buildings.BoronMadeni:
+                    // Eğer depoda yeterince yer var ise kaynakları depoya koyacağız.
+                    if (this.Boron < capacity)
+                    {
+                        // Kaynakları depoya koyuyoruz.
+                        this.Boron += quantity;
+
+                        // Eğer kaynak depo sınırına ulaştıysak fazlalığı siliyoruz.
+                        if (this.Boron > capacity)
+                            this.Boron = capacity;
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
 
     }
 }

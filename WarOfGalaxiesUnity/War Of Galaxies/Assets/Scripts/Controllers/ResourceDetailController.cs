@@ -6,9 +6,12 @@ using Assets.Scripts.Enums;
 using Assets.Scripts.Models;
 using Assets.Scripts.ApiModels;
 using Assets.Scripts.Data;
+using System.Globalization;
 
 public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 {
+    public enum ResourceDetailTypes { ResourceMetal, ResourceCrystal, ResourceBoron, UpgradeResourceMetal, UpgradeResourceCrystal, UpgradeResourceBoron };
+
     [Header("Transparan olma hızı.")]
     [Range(0.1f, 5)]
     public float AnimationSpeed;
@@ -20,7 +23,14 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
     public TextMeshProUGUI ContentField;
 
     [Header("Datalarının basılacağı kaynak.")]
-    public ResourceTypes Resource;
+    public ResourceDetailTypes Resource;
+
+    [Header("Değiştirilecek data.")]
+    [TextArea]
+    public string Template;
+
+    // Bina yükseltme panelindeki detaylı gereksinim miktarını gösterirken , yerine . ile ayırmak için oluşturuldu.
+    private NumberFormatInfo nfi = new NumberFormatInfo { NumberDecimalSeparator = ",", NumberGroupSeparator = "." };
 
     private bool isOpening;
     private Image detailPanelImage;
@@ -138,7 +148,7 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
             detailPanelImage.color = panelColor;
 
             // Eğer yeterince saydam olduysa kapatıyoruz nesneyi.
-            if (ContentField.color.a <= 0 && detailPanelImage.color.a <= 0)
+            if (ContentField.color.a <= 0.0f && detailPanelImage.color.a <= 0.0f)
                 ResourceDetailPanel.SetActive(false);
         }
     }
@@ -169,7 +179,7 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
     {
         switch (Resource)
         {
-            case ResourceTypes.Metal:
+            case ResourceDetailTypes.ResourceMetal:
                 {
 
                     #region Metal Üretim hesaplaması.
@@ -194,13 +204,16 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 
                     #region Ekrana basıyoruz.
 
-                    ContentField.text = $"Anlık\n<color=white>{GlobalPlanetController.GPC.CurrentPlanet.Metal}</color>\nDepo Kapasitesi\n<color=white>{metalBuildingCapacity}</color>\nSaaatlik Üretim\n<color=white>{metalProducePerHour}</color>";
+                    string temp = Template.Replace("{0}", GlobalPlanetController.GPC.CurrentPlanet.Metal.ToString());
+                    temp = temp.Replace("{1}", metalBuildingCapacity.ToString());
+                    temp = temp.Replace("{2}", metalProducePerHour.ToString());
+                    ContentField.text = temp;
 
                     #endregion
 
                 }
                 break;
-            case ResourceTypes.Crystal:
+            case ResourceDetailTypes.ResourceCrystal:
                 {
 
                     #region Kristal Üretim hesaplaması.
@@ -225,13 +238,16 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 
                     #region Ekrana basıyoruz.
 
-                    ContentField.text = $"Anlık\n<color=white>{GlobalPlanetController.GPC.CurrentPlanet.Crystal}</color>\nDepo Kapasitesi\n<color=white>{crystalBuildingCapacity}</color>\nSaaatlik Üretim\n<color=white>{crystalProducePerHour}</color>";
+                    string temp = Template.Replace("{0}", GlobalPlanetController.GPC.CurrentPlanet.Crystal.ToString());
+                    temp = temp.Replace("{1}", crystalBuildingCapacity.ToString());
+                    temp = temp.Replace("{2}", crystalProducePerHour.ToString());
+                    ContentField.text = temp;
 
                     #endregion
 
                 }
                 break;
-            case ResourceTypes.Boron:
+            case ResourceDetailTypes.ResourceBoron:
                 {
 
                     #region Boron Üretim hesaplaması.
@@ -256,10 +272,49 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 
                     #region Ekrana basıyoruz.
 
-                    ContentField.text = $"Anlık\n<color=white>{GlobalPlanetController.GPC.CurrentPlanet.Boron}</color>\nDepo Kapasitesi\n<color=white>{boronBuildingCapacity}</color>\nSaaatlik Üretim\n<color=white>{boronProducePerHour}</color>";
+                    string temp = Template.Replace("{0}", GlobalPlanetController.GPC.CurrentPlanet.Boron.ToString());
+                    temp = temp.Replace("{1}", boronBuildingCapacity.ToString());
+                    temp = temp.Replace("{2}", boronProducePerHour.ToString());
+                    ContentField.text = temp;
 
                     #endregion
 
+                }
+                break;
+            case ResourceDetailTypes.UpgradeResourceMetal:
+                {
+                    int nextLevel = 1;
+                    if (GlobalBuildingController.GBC.CurrentSelectedBuilding.UserPlanetBuilding != null)
+                        nextLevel = GlobalBuildingController.GBC.CurrentSelectedBuilding.UserPlanetBuilding.BuildingLevel + 1;
+                    ResourcesDTO cost = StaticData.CalculateCostBuilding(GlobalBuildingController.GBC.CurrentSelectedBuilding.BuildingType, nextLevel);
+                    if (cost.Metal == 0)
+                        ContentField.text = "0";
+                    else
+                        ContentField.text = cost.Metal.ToString("#,##", nfi);
+                }
+                break;
+            case ResourceDetailTypes.UpgradeResourceCrystal:
+                {
+                    int nextLevel = 1;
+                    if (GlobalBuildingController.GBC.CurrentSelectedBuilding.UserPlanetBuilding != null)
+                        nextLevel = GlobalBuildingController.GBC.CurrentSelectedBuilding.UserPlanetBuilding.BuildingLevel + 1;
+                    ResourcesDTO cost = StaticData.CalculateCostBuilding(GlobalBuildingController.GBC.CurrentSelectedBuilding.BuildingType, nextLevel);
+                    if (cost.Crystal == 0)
+                        ContentField.text = "0";
+                    else
+                        ContentField.text = cost.Crystal.ToString("#,##", nfi);
+                }
+                break;
+            case ResourceDetailTypes.UpgradeResourceBoron:
+                {
+                    int nextLevel = 1;
+                    if (GlobalBuildingController.GBC.CurrentSelectedBuilding.UserPlanetBuilding != null)
+                        nextLevel = GlobalBuildingController.GBC.CurrentSelectedBuilding.UserPlanetBuilding.BuildingLevel + 1;
+                    ResourcesDTO cost = StaticData.CalculateCostBuilding(GlobalBuildingController.GBC.CurrentSelectedBuilding.BuildingType, nextLevel);
+                    if (cost.Boron == 0)
+                        ContentField.text = "0";
+                    else
+                        ContentField.text = cost.Boron.ToString("#,##", nfi);
                 }
                 break;
             default:

@@ -26,6 +26,12 @@ namespace Assets.Scripts.ApiModels
             BeginDate = DateTime.UtcNow;
             EndDate = BeginDate.AddSeconds(LeftTime);
         }
+    }
 
+    [Serializable]
+    public class UserPlanetUpgradeBuildingDTO
+    {
+        public int UserPlanetID;
+        public Buildings BuildingID;
     }
 }

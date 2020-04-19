@@ -147,15 +147,15 @@ namespace WarOfGalaxiesApi.Controllers
         }
 
         /// <summary>
-        /// Binanın yükseltme süresini hesaplar.
+        /// Binanın yükseltme süresini hesaplar. Saniye cinsinden
         /// </summary>
         /// <param name="building">Süresi hesaplanacak bina.</param>
         /// <param name="robotFactoryLevel">Robot fabrikası seviyesi.</param>
         /// <returns></returns>
-        public static double CalculateBuildingUpgradeTime(Buildings building, int robotFactoryLevel)
+        public static double CalculateBuildingUpgradeTime(Buildings building, int buildingLevel, int robotFactoryLevel)
         {
-            ResourcesDTO buildingCost = CalculateCostBuilding(building, robotFactoryLevel);
-            return (buildingCost.Metal + buildingCost.Crystal) / (2500 * (1 + robotFactoryLevel) * UniverseSpeed);
+            ResourcesDTO buildingCost = CalculateCostBuilding(building, buildingLevel);
+            return ((buildingCost.Metal + buildingCost.Crystal) / ((double)2500 * (1 + robotFactoryLevel) * UniverseSpeed)) * 60;
         }
 
         /// <summary>

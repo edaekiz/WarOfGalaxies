@@ -54,13 +54,15 @@ namespace WarOfGalaxiesApi.Controllers
             if (userPlanet.Metal < upgradeInfo.Metal || userPlanet.Crystal < upgradeInfo.Crystal || userPlanet.Boron < upgradeInfo.Boron)
                 return ResponseHelper.GetError("Yetersiz kaynak.");
 
+            int nextLevel = userPlanetBuilding == null ? 1 : userPlanetBuilding.BuildingLevel;
+
             // Gereksinimi düşüyoruz.
             userPlanet.Metal -= upgradeInfo.Metal;
             userPlanet.Crystal -= upgradeInfo.Metal;
             userPlanet.Boron -= upgradeInfo.Metal;
 
             // Yükseltme süresi.
-            double upgradeTime = StaticData.CalculateBuildingUpgradeTime((Buildings)request.BuildingID, 0);
+            double upgradeTime = StaticData.CalculateBuildingUpgradeTime((Buildings)request.BuildingID, nextLevel, 0);
 
             // Yükseltmesini yapıyoruz.
             TblUserPlanetBuildingUpgs userPlanetUpg = base.UnitOfWork.GetRepository<TblUserPlanetBuildingUpgs>().Add(new TblUserPlanetBuildingUpgs
@@ -68,7 +70,7 @@ namespace WarOfGalaxiesApi.Controllers
                 UserPlanetId = request.UserPlanetID,
                 BeginDate = currentDate,
                 BuildingId = request.BuildingID,
-                BuildingLevel = userPlanetBuilding == null ? 1 : userPlanetBuilding.BuildingLevel,
+                BuildingLevel = nextLevel,
                 EndDate = currentDate.AddSeconds(upgradeTime),
                 UserId = base.DBUser.UserId
             });

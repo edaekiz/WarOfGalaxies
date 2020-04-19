@@ -113,7 +113,13 @@ public class BuildingController : MonoBehaviour
         GlobalBuildingController.GBC.SelectBuilding(this);
 
         // Paneli gösteriyoruz.
-        GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.BuildingPanel);
+        GameObject buildingPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.BuildingPanel);
+
+        // Oluşan paneldeki panel kontrol.
+        BuildingPanelController bpc = buildingPanel.GetComponent<BuildingPanelController>();
+
+        // Bina yükseltme bilgisini yüklüyoruz.
+        bpc.StartCoroutine(bpc.LoadData(BuildingType));
     }
 
     public IEnumerator OnUpgrade()
@@ -127,6 +133,31 @@ public class BuildingController : MonoBehaviour
         // Sonra tekrar sayacı aktif ediyoruz.
         if (UserPlanetBuildingUpg != null)
             StartCoroutine(OnUpgrade());
+    }
+
+    public void SendUpgradeRequest()
+    {
+        ApiService.API.Post("UpgradeUserPlanetBuilding", new UserPlanetUpgradeBuildingDTO { BuildingID = this.BuildingType, UserPlanetID = this.UserPlanetBuilding.UserPlanetId }, (ApiResult response) =>
+             {
+                 // Eğer başarılı ise yükseltmeyi başlatacağız.
+                 if (response.IsSuccess)
+                 {
+                     // Gelen paketi açıyoruz.
+                     UserPlanetBuildingUpgDTO upgradeInfo = response.GetData<UserPlanetBuildingUpgDTO>();
+
+                     // Gezegene yükseltmeyi ekliyoruz.
+                     LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Add(upgradeInfo);
+
+                     // Ve set ediyoruz.
+                     UserPlanetBuildingUpg = upgradeInfo;
+
+                     // Sayacı açıyoruz.
+                     StartCoroutine(OnUpgrade());
+
+                     // Bina ismini seviye ile basıyoruz.
+                     updateBuildingNameLevelAndTime();
+                 }
+             });
     }
 
 }
