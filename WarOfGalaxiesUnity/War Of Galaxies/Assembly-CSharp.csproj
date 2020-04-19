@@ -86,6 +86,8 @@
     <Compile Include="Assets\GlobalPlanetController.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ApiResult.cs" />
     <Compile Include="Assets\Scripts\ApiModels\BuildingLevelDTO.cs" />
+    <Compile Include="Assets\Scripts\ApiModels\LoginStuffDTO.cs" />
+    <Compile Include="Assets\Scripts\ApiModels\ResourcesDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserPlanetBuildingDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserPlanetDTO.cs" />

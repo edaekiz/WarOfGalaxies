@@ -5126,7 +5126,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b86396077458f254d8aa185d203ed32c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  QuantityAnimationIncreaseSpeed: 1
+  QuantityAnimationIncreaseSpeed: 20
   MetalQuantityText: {fileID: 1974497942}
   CrystalQuantityText: {fileID: 1498060881}
   BoronQuantityText: {fileID: 644186182}

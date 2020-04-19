@@ -15,7 +15,6 @@ namespace WarOfGalaxiesApi.DAL.Models
         {
         }
 
-        public virtual DbSet<TblBuildingLevels> TblBuildingLevels { get; set; }
         public virtual DbSet<TblBuildings> TblBuildings { get; set; }
         public virtual DbSet<TblParameters> TblParameters { get; set; }
         public virtual DbSet<TblUserPlanetBuildingUpgs> TblUserPlanetBuildingUpgs { get; set; }
@@ -34,19 +33,6 @@ namespace WarOfGalaxiesApi.DAL.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<TblBuildingLevels>(entity =>
-            {
-                entity.HasNoKey();
-
-                entity.ToTable("tbl_building_levels");
-
-                entity.HasIndex(e => new { e.BuildingId, e.BuildingLevel })
-                    .HasName("IX_tbl_building_levels")
-                    .IsUnique();
-
-                entity.Property(e => e.BuildingId).HasColumnName("BuildingID");
-            });
-
             modelBuilder.Entity<TblBuildings>(entity =>
             {
                 entity.HasKey(e => e.BuildingId);

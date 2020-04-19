@@ -5,9 +5,12 @@
         MetalMadeni = 1,
         KristalMadeni = 2,
         BoronMadeni = 3,
-        SolarEnerji = 4,
-        MetalDeposu = 5,
-        KristalDeposu = 6,
-        BoronDeposu = 7
+        MetalDeposu = 4,
+        KristalDeposu = 5,
+        BoronDeposu = 6,
+        RobotFabrikası = 7,
+        Tersane = 8,
+        ArastirmaLab = 9,
+        Radar = 10
     }
 }
