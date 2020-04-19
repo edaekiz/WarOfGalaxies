@@ -18,5 +18,14 @@ namespace Assets.Scripts.ApiModels
         public Buildings BuildingId;
         public int BuildingLevel;
         public double LeftTime;
+        public DateTime BeginDate;
+        public DateTime EndDate;
+
+        public void CalculateDates()
+        {
+            BeginDate = DateTime.UtcNow;
+            EndDate = BeginDate.AddSeconds(LeftTime);
+        }
+
     }
 }

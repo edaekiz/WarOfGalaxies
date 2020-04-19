@@ -686,7 +686,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 336724077}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 16.387995, y: 0.155, z: 7.403544}
+  m_LocalPosition: {x: 16.387995, y: 0.155, z: 8.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5026922954813725286}
@@ -712,7 +712,7 @@ MonoBehaviour:
   BuildingMesh: {fileID: 5026922954813490758}
   ConstructableMesh: {fileID: 881929181}
   BuildingType: 3
-  BuildingInfo: {fileID: 0}
+  BuildingInfo: {fileID: 613043632}
 --- !u!65 &336724080
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1190,7 +1190,7 @@ MonoBehaviour:
   m_fontSizeMin: 1
   m_fontSizeMax: 3
   m_fontStyle: 0
-  m_textAlignment: 514
+  m_textAlignment: 258
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -1221,7 +1221,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: -1.5700753}
   m_textInfo:
     textComponent: {fileID: 387967977}
     characterCount: 18
@@ -1271,7 +1271,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.15, y: 19.999998}
+  m_AnchoredPosition: {x: 0.15, y: 18}
   m_SizeDelta: {x: 25, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &400483608
@@ -2437,18 +2437,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsLoggedIn: 0
-  CurrentUser:
-    UserData:
-      UserId: 0
-      Username: 
-      UserToken: 
-      IsBanned: 0
-      GoogleToken: 
-      IosToken: 
-      UserLanguage: 
-    UserPlanets: []
-    UserPlanetsBuildings: []
-    UserPlanetsBuildingsUpgs: []
   UsernameField: {fileID: 502431383}
 --- !u!114 &515747094
 MonoBehaviour:
@@ -2478,15 +2466,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ffd6000132f7f4387dfdfaee0d10f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentPlanet:
-    UserPlanetId: 0
-    UserId: 0
-    PlanetCordinate: 
-    PlanetType: 0
-    PlanetName: 
-    Metal: 0
-    Crystal: 0
-    Boron: 0
 --- !u!1 &525442637
 GameObject:
   m_ObjectHideFlags: 0
@@ -2798,7 +2777,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 20}
+  m_AnchoredPosition: {x: 0, y: 18}
   m_SizeDelta: {x: 17, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &613043632
@@ -2855,7 +2834,7 @@ MonoBehaviour:
   m_fontSizeMin: 1
   m_fontSizeMax: 2.5
   m_fontStyle: 0
-  m_textAlignment: 514
+  m_textAlignment: 258
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -3600,7 +3579,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 20}
+  m_AnchoredPosition: {x: 0, y: 18}
   m_SizeDelta: {x: 17, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &758135212
@@ -3657,7 +3636,7 @@ MonoBehaviour:
   m_fontSizeMin: 1
   m_fontSizeMax: 2.5
   m_fontStyle: 0
-  m_textAlignment: 514
+  m_textAlignment: 258
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -26455,7 +26434,7 @@ MonoBehaviour:
   BuildingMesh: {fileID: 3944204406772103421}
   ConstructableMesh: {fileID: 442022388}
   BuildingType: 2
-  BuildingInfo: {fileID: 0}
+  BuildingInfo: {fileID: 758135212}
 --- !u!65 &1066720820
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -26503,7 +26482,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 20}
+  m_AnchoredPosition: {x: 0, y: 18}
   m_SizeDelta: {x: 17, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1127894010
@@ -26560,7 +26539,7 @@ MonoBehaviour:
   m_fontSizeMin: 1
   m_fontSizeMax: 2.5
   m_fontStyle: 0
-  m_textAlignment: 514
+  m_textAlignment: 258
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -28050,7 +28029,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.15, y: 19.999998}
+  m_AnchoredPosition: {x: 0.15, y: 18}
   m_SizeDelta: {x: 25, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1512304366
@@ -28107,7 +28086,7 @@ MonoBehaviour:
   m_fontSizeMin: 1
   m_fontSizeMax: 3
   m_fontStyle: 0
-  m_textAlignment: 514
+  m_textAlignment: 258
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -29046,7 +29025,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 20}
+  m_AnchoredPosition: {x: 0, y: 18}
   m_SizeDelta: {x: 17, y: 10}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1845722974
@@ -29103,7 +29082,7 @@ MonoBehaviour:
   m_fontSizeMin: 1
   m_fontSizeMax: 2.5
   m_fontStyle: 0
-  m_textAlignment: 514
+  m_textAlignment: 258
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0

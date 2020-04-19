@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -20,6 +21,9 @@ namespace WarOfGalaxiesApi.Controllers
         [Description("Kullanıcının datalarını döner.")]
         public ApiResult Login()
         {
+            // Şuanki tarih.
+            DateTime currentDate = DateTime.UtcNow;
+
             // Kullanıcının gezegenlerinin idsi.
             int[] userPlanetIds = this.UnitOfWork.GetRepository<TblUserPlanets>().Where(x => x.UserId == base.DBUser.UserId).Select(x => x.UserPlanetId).ToArray();
 
@@ -55,7 +59,7 @@ namespace WarOfGalaxiesApi.Controllers
                 {
                     BuildingId = x.BuildingId,
                     BuildingLevel = x.BuildingLevel,
-                    LeftTime = (x.EndDate - x.BeginDate).TotalSeconds,
+                    LeftTime = (x.EndDate - currentDate).TotalSeconds,
                     UserPlanetId = x.UserPlanetId
                 })
                 .ToList();

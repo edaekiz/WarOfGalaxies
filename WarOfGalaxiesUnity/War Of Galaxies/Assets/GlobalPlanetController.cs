@@ -14,8 +14,10 @@ public class GlobalPlanetController : MonoBehaviour
             Destroy(gameObject);
     }
 
-    [Header("Seçili olan gezegen.")]
-    public UserPlanetDTO CurrentPlanet;
+    /// <summary>
+    /// Aktif seçili olan gezegen.
+    /// </summary>
+    public UserPlanetDTO CurrentPlanet { get; set; }
 
     // Start is called before the first frame update
     IEnumerator Start()

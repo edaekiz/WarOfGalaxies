@@ -9,8 +9,10 @@ public class LoginController : MonoBehaviour
     [Header("Kullanıcı giri yapı mı?")]
     public bool IsLoggedIn;
 
-    [Header("Giriş yapan kullanıcılar.")]
-    public LoginStuffDTO CurrentUser;
+    /// <summary>
+    /// Giriş yapmış olan kullanıcı.
+    /// </summary>
+    public LoginStuffDTO CurrentUser { get; set; }
 
     [Header("Kullanıcı adının basılacağı yer.")]
     public TextMeshProUGUI UsernameField;

@@ -114,6 +114,7 @@
     <Compile Include="Assets\Scripts\Enums\ResourceTypes.cs" />
     <Compile Include="Assets\Scripts\Extends\CordinateExtends.cs" />
     <Compile Include="Assets\Scripts\Extends\JsonHelper.cs" />
+    <Compile Include="Assets\Scripts\Extends\TimeExtends.cs" />
     <Compile Include="Assets\Scripts\Extends\VectorExtends.cs" />
     <Compile Include="Assets\Scripts\Ignored\IgnoredCodes.cs" />
     <Compile Include="Assets\Scripts\Models\CordinateDTO.cs" />

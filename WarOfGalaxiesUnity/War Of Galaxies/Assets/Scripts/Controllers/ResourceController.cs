@@ -38,7 +38,7 @@ public class ResourceController : MonoBehaviour
     {
 
         // Kullanıcının gezegenleri yüklenene kadar bekliyoruz.
-        yield return new WaitUntil(() => GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId > 0);
+        yield return new WaitUntil(() => GlobalPlanetController.GPC.CurrentPlanet != null);
 
         // Hesaplamalara başlıyoruz.
         StartCoroutine(UpdateResources());
@@ -48,7 +48,7 @@ public class ResourceController : MonoBehaviour
     private void Update()
     {
         // Eğer gezegen seçili değil ise geri dön.
-        if (GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId == 0)
+        if (GlobalPlanetController.GPC.CurrentPlanet == null)
             return;
 
         // Metal animasyonu.
