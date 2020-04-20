@@ -1,4 +1,8 @@
-﻿using System.Collections;
+﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Data;
+using Assets.Scripts.Extends;
+using System.Collections;
+using System.Globalization;
 using TMPro;
 using UnityEngine;
 
@@ -82,7 +86,7 @@ public class ResourceController : MonoBehaviour
     private void DoMetalAnimation()
     {
         // Eğer metal animasyonu tamamlandıysa geri dön.
-        if (metalAnimQuantity == GlobalPlanetController.GPC.CurrentPlanet.Metal)
+        if ((long)metalAnimQuantity == (long)GlobalPlanetController.GPC.CurrentPlanet.Metal)
             return;
 
         // Azalacaksa -1 olacak artacaksa 1.
@@ -121,7 +125,26 @@ public class ResourceController : MonoBehaviour
         }
 
         // Metal miktarını güncelliyoruz.
-        MetalQuantityText.text = ((long)metalAnimQuantity).ToString();
+        MetalQuantityText.text = ResourceExtends.ConvertToDottedResource(metalAnimQuantity);
+
+        // Metal deposu seviyesi.
+        int buildingLevel = 0;
+
+        // MEtal deposunu buluyoruz.
+        UserPlanetBuildingDTO storageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Assets.Scripts.Enums.Buildings.MetalDeposu);
+
+        // Eğer deposu var ise kapasiteyi hesaplıyoruz.
+        if (storageBuilding != null)
+            buildingLevel = storageBuilding.BuildingLevel;
+
+        // Kapasitesi.
+        double buildingCapacity = StaticData.GetBuildingStorage(Assets.Scripts.Enums.Buildings.MetalDeposu, buildingLevel);
+
+        // Eğer deposu yeterli ise beyaz değil ise kırmızı olacak.
+        if (metalAnimQuantity < buildingCapacity)
+            MetalQuantityText.color = Color.white;
+        else
+            MetalQuantityText.color = Color.red;
     }
 
     #endregion
@@ -133,7 +156,7 @@ public class ResourceController : MonoBehaviour
     private void DoCrystalAnimation()
     {
         // Eğer metal animasyonu tamamlandıysa geri dön.
-        if (crystalAnimQuantity == GlobalPlanetController.GPC.CurrentPlanet.Crystal)
+        if ((long)crystalAnimQuantity == (long)GlobalPlanetController.GPC.CurrentPlanet.Crystal)
             return;
 
         // Azalacaksa -1 olacak artacaksa 1.
@@ -171,8 +194,27 @@ public class ResourceController : MonoBehaviour
                 crystalAnimQuantity = GlobalPlanetController.GPC.CurrentPlanet.Crystal;
         }
 
-        // Metal miktarını güncelliyoruz.
-        CrystalQuantityText.text = ((long)crystalAnimQuantity).ToString();
+        // Kristal miktarını güncelliyoruz.
+        CrystalQuantityText.text = ResourceExtends.ConvertToDottedResource(crystalAnimQuantity);
+
+        // Kristal deposu seviyesi.
+        int buildingLevel = 0;
+
+        // Kristal deposunu buluyoruz.
+        UserPlanetBuildingDTO storageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Assets.Scripts.Enums.Buildings.KristalDeposu);
+
+        // Eğer deposu var ise kapasiteyi hesaplıyoruz.
+        if (storageBuilding != null)
+            buildingLevel = storageBuilding.BuildingLevel;
+
+        // Kapasitesi.
+        double buildingCapacity = StaticData.GetBuildingStorage(Assets.Scripts.Enums.Buildings.MetalDeposu, buildingLevel);
+
+        // Eğer deposu yeterli ise beyaz değil ise kırmızı olacak.
+        if (crystalAnimQuantity < buildingCapacity)
+            CrystalQuantityText.color = Color.white;
+        else
+            CrystalQuantityText.color = Color.red;
     }
 
     #endregion
@@ -184,7 +226,7 @@ public class ResourceController : MonoBehaviour
     private void DoBoronAnimation()
     {
         // Eğer metal animasyonu tamamlandıysa geri dön.
-        if (boronAnimQuantity == GlobalPlanetController.GPC.CurrentPlanet.Boron)
+        if ((long)boronAnimQuantity == (long)GlobalPlanetController.GPC.CurrentPlanet.Boron)
             return;
 
         // Azalacaksa -1 olacak artacaksa 1.
@@ -222,8 +264,27 @@ public class ResourceController : MonoBehaviour
                 boronAnimQuantity = GlobalPlanetController.GPC.CurrentPlanet.Boron;
         }
 
-        // Metal miktarını güncelliyoruz.
-        BoronQuantityText.text = ((long)boronAnimQuantity).ToString();
+        // Boron miktarını güncelliyoruz.
+        BoronQuantityText.text = ResourceExtends.ConvertToDottedResource(boronAnimQuantity);
+
+        // Kristal deposu seviyesi.
+        int buildingLevel = 0;
+
+        // Boron deposunu buluyoruz.
+        UserPlanetBuildingDTO storageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Assets.Scripts.Enums.Buildings.BoronDeposu);
+
+        // Eğer deposu var ise kapasiteyi hesaplıyoruz.
+        if (storageBuilding != null)
+            buildingLevel = storageBuilding.BuildingLevel;
+
+        // Kapasitesi.
+        double buildingCapacity = StaticData.GetBuildingStorage(Assets.Scripts.Enums.Buildings.BoronDeposu, buildingLevel);
+
+        // Eğer deposu yeterli ise beyaz değil ise kırmızı olacak.
+        if (boronAnimQuantity < buildingCapacity)
+            BoronQuantityText.color = Color.white;
+        else
+            BoronQuantityText.color = Color.red;
     }
 
     #endregion

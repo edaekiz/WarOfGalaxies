@@ -3,10 +3,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Assets.Scripts.Enums;
-using Assets.Scripts.Models;
 using Assets.Scripts.ApiModels;
 using Assets.Scripts.Data;
-using System.Globalization;
+using Assets.Scripts.Extends;
 
 public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 {
@@ -29,14 +28,10 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
     [TextArea]
     public string Template;
 
-    // Bina yükseltme panelindeki detaylı gereksinim miktarını gösterirken , yerine . ile ayırmak için oluşturuldu.
-    private NumberFormatInfo nfi = new NumberFormatInfo { NumberDecimalSeparator = ",", NumberGroupSeparator = "." };
-
     private bool isOpening;
     private Image detailPanelImage;
     private Color detailPanelImageDefaultColor;
     private Color contentFieldDefaultColor;
-
 
     private void Awake()
     {
@@ -88,7 +83,6 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 
                     // Geri dön.
                     return;
-
                 }
             }
 
@@ -204,9 +198,9 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 
                     #region Ekrana basıyoruz.
 
-                    string temp = Template.Replace("{0}", ((long)GlobalPlanetController.GPC.CurrentPlanet.Metal).ToString());
-                    temp = temp.Replace("{1}", ((long)metalBuildingCapacity).ToString());
-                    temp = temp.Replace("{2}", ((long)metalProducePerHour).ToString());
+                    string temp = Template.Replace("{0}", ResourceExtends.ConvertToDottedResource(GlobalPlanetController.GPC.CurrentPlanet.Metal));
+                    temp = temp.Replace("{1}", ResourceExtends.ConvertToDottedResource(metalBuildingCapacity));
+                    temp = temp.Replace("{2}", ResourceExtends.ConvertToDottedResource(metalProducePerHour));
                     ContentField.text = temp;
 
                     #endregion
@@ -238,9 +232,9 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 
                     #region Ekrana basıyoruz.
 
-                    string temp = Template.Replace("{0}", ((long)GlobalPlanetController.GPC.CurrentPlanet.Crystal).ToString());
-                    temp = temp.Replace("{1}", ((long)crystalBuildingCapacity).ToString());
-                    temp = temp.Replace("{2}", ((long)crystalProducePerHour).ToString());
+                    string temp = Template.Replace("{0}", ResourceExtends.ConvertToDottedResource(GlobalPlanetController.GPC.CurrentPlanet.Crystal));
+                    temp = temp.Replace("{1}", ResourceExtends.ConvertToDottedResource(crystalBuildingCapacity));
+                    temp = temp.Replace("{2}", ResourceExtends.ConvertToDottedResource(crystalProducePerHour));
                     ContentField.text = temp;
 
                     #endregion
@@ -272,9 +266,9 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 
                     #region Ekrana basıyoruz.
 
-                    string temp = Template.Replace("{0}", ((long)GlobalPlanetController.GPC.CurrentPlanet.Boron).ToString());
-                    temp = temp.Replace("{1}", ((long)boronBuildingCapacity).ToString());
-                    temp = temp.Replace("{2}", ((long)boronProducePerHour).ToString());
+                    string temp = Template.Replace("{0}", ResourceExtends.ConvertToDottedResource(GlobalPlanetController.GPC.CurrentPlanet.Boron));
+                    temp = temp.Replace("{1}", ResourceExtends.ConvertToDottedResource(boronBuildingCapacity));
+                    temp = temp.Replace("{2}", ResourceExtends.ConvertToDottedResource(boronProducePerHour));
                     ContentField.text = temp;
 
                     #endregion
@@ -287,10 +281,7 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
                     if (GlobalBuildingController.GBC.CurrentSelectedBuilding.UserPlanetBuilding != null)
                         nextLevel = GlobalBuildingController.GBC.CurrentSelectedBuilding.UserPlanetBuilding.BuildingLevel + 1;
                     ResourcesDTO cost = StaticData.CalculateCostBuilding(GlobalBuildingController.GBC.CurrentSelectedBuilding.BuildingType, nextLevel);
-                    if (cost.Metal == 0)
-                        ContentField.text = "0";
-                    else
-                        ContentField.text = cost.Metal.ToString("#,##", nfi);
+                    ContentField.text = ResourceExtends.ConvertToDottedResource(cost.Metal);
                 }
                 break;
             case ResourceDetailTypes.UpgradeResourceCrystal:
@@ -299,10 +290,7 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
                     if (GlobalBuildingController.GBC.CurrentSelectedBuilding.UserPlanetBuilding != null)
                         nextLevel = GlobalBuildingController.GBC.CurrentSelectedBuilding.UserPlanetBuilding.BuildingLevel + 1;
                     ResourcesDTO cost = StaticData.CalculateCostBuilding(GlobalBuildingController.GBC.CurrentSelectedBuilding.BuildingType, nextLevel);
-                    if (cost.Crystal == 0)
-                        ContentField.text = "0";
-                    else
-                        ContentField.text = cost.Crystal.ToString("#,##", nfi);
+                    ContentField.text = ResourceExtends.ConvertToDottedResource(cost.Crystal);
                 }
                 break;
             case ResourceDetailTypes.UpgradeResourceBoron:
@@ -311,10 +299,7 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
                     if (GlobalBuildingController.GBC.CurrentSelectedBuilding.UserPlanetBuilding != null)
                         nextLevel = GlobalBuildingController.GBC.CurrentSelectedBuilding.UserPlanetBuilding.BuildingLevel + 1;
                     ResourcesDTO cost = StaticData.CalculateCostBuilding(GlobalBuildingController.GBC.CurrentSelectedBuilding.BuildingType, nextLevel);
-                    if (cost.Boron == 0)
-                        ContentField.text = "0";
-                    else
-                        ContentField.text = cost.Boron.ToString("#,##", nfi);
+                    ContentField.text = ResourceExtends.ConvertToDottedResource(cost.Boron);
                 }
                 break;
             default:
