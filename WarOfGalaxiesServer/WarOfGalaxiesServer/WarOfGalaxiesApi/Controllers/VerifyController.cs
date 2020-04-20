@@ -118,10 +118,10 @@ namespace WarOfGalaxiesApi.Controllers
                         metalProduceQuantity += StaticData.GetBuildingProdPerHour(resourceBuilding, planetResourceBuildingUpg.BuildingLevel) * (passedSecondsInNewLevel / 3600);
 
                         // Kaynak depo kapasitesi.
-                        long metalBuildingCapacity = (long)StaticData.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
+                        double metalBuildingCapacity = StaticData.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
 
                         // Gezegendeki kaynağı yükseltiyoruz.
-                        UpdateUserPlanetResources(userPlanet, resourceBuilding, metalBuildingCapacity, (long)metalProduceQuantity);
+                        UpdateUserPlanetResources(userPlanet, resourceBuilding, metalBuildingCapacity, metalProduceQuantity);
 
                         // Yükseltmeyi siliyoruz.
                         uow.GetRepository<TblUserPlanetBuildingUpgs>().Delete(planetResourceBuildingUpg);
@@ -157,13 +157,13 @@ namespace WarOfGalaxiesApi.Controllers
                                 double passedSecondsInPrevStorage = (planetStorageBuildingUpg.EndDate - userPlanet.LastUpdateDate).TotalSeconds;
 
                                 // Deponun yükseltmeden önceki kapasitesi.
-                                long metalBuildingCapacityInPrevStorage = (long)StaticData.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
+                                double metalBuildingCapacityInPrevStorage = StaticData.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
 
                                 // Metal binasının depo yükseltilene kadar ürettiği toplam miktar.
                                 double metalProduceQuantityInPrevStorage = StaticData.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSecondsInPrevStorage / 3600);
 
                                 // Gezegendeki kaynağı yükseltiyoruz.
-                                UpdateUserPlanetResources(userPlanet, resourceBuilding, metalBuildingCapacityInPrevStorage, (long)metalProduceQuantityInPrevStorage);
+                                UpdateUserPlanetResources(userPlanet, resourceBuilding, metalBuildingCapacityInPrevStorage, metalProduceQuantityInPrevStorage);
 
                                 #endregion
 
@@ -195,13 +195,13 @@ namespace WarOfGalaxiesApi.Controllers
                                 double passedSecondsInNextStorage = (currentDate - planetStorageBuildingUpg.EndDate).TotalSeconds;
 
                                 // Deponun yükseltmeden sonraki kapasitesi.
-                                long metalBuildingCapacityInNextStorage = (long)StaticData.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
+                                double metalBuildingCapacityInNextStorage = StaticData.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
 
                                 // Metal binasının yükseltmeden sonraki geçen sürede ürettiği metal miktarı.
                                 double metalProduceQuantityInNextStorage = StaticData.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSecondsInNextStorage / 3600);
 
                                 // Gezegendeki kaynağı yükseltiyoruz.
-                                UpdateUserPlanetResources(userPlanet, resourceBuilding, metalBuildingCapacityInNextStorage, (long)metalProduceQuantityInNextStorage);
+                                UpdateUserPlanetResources(userPlanet, resourceBuilding, metalBuildingCapacityInNextStorage,metalProduceQuantityInNextStorage);
 
                                 #endregion
 
@@ -215,10 +215,10 @@ namespace WarOfGalaxiesApi.Controllers
                             double metalProduceQuantity = StaticData.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSeconds / 3600);
 
                             // Metal binasının kapasitesini hesaplıyoruz.
-                            long metalBuildingCapacity = (long)StaticData.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
+                            double metalBuildingCapacity = StaticData.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
 
                             // Gezegendeki kaynağı yükseltiyoruz.
-                            UpdateUserPlanetResources(userPlanet, resourceBuilding, metalBuildingCapacity, (long)metalProduceQuantity);
+                            UpdateUserPlanetResources(userPlanet, resourceBuilding, metalBuildingCapacity, metalProduceQuantity);
 
                             #endregion
                         }
@@ -257,7 +257,7 @@ namespace WarOfGalaxiesApi.Controllers
         /// <param name="building">Hangi kaynak için yapılacak.</param>
         /// <param name="capacity">Kaynak depo kapasitesi.</param>
         /// <param name="quantity">Kaynak miktarı.</param>
-        public static void UpdateUserPlanetResources(TblUserPlanets userPlanet, Buildings building, long capacity, long quantity)
+        public static void UpdateUserPlanetResources(TblUserPlanets userPlanet, Buildings building, double capacity, double quantity)
         {
             switch (building)
             {

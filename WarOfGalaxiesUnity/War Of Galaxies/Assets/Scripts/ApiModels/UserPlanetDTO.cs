@@ -22,9 +22,9 @@ namespace Assets.Scripts.ApiModels
         public string PlanetCordinate;
         public int PlanetType;
         public string PlanetName;
-        public long Metal;
-        public long Crystal;
-        public long Boron;
+        public double Metal;
+        public double Crystal;
+        public double Boron;
         public DateTime LastUpdateDateInClient;
         public UserPlanetDTO()
         {
@@ -74,10 +74,10 @@ namespace Assets.Scripts.ApiModels
                 double metalProduceQuantity = StaticData.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSeconds / 3600);
 
                 // Metal binasının kapasitesini hesaplıyoruz.
-                long metalBuildingCapacity = (long)StaticData.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
+                double metalBuildingCapacity = StaticData.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
 
                 // Gezegendeki kaynağı yükseltiyoruz.
-                UpdateUserPlanetResources(resourceBuilding, metalBuildingCapacity, (long)metalProduceQuantity);
+                UpdateUserPlanetResources(resourceBuilding, metalBuildingCapacity, metalProduceQuantity);
 
                 #endregion
             }
@@ -95,7 +95,7 @@ namespace Assets.Scripts.ApiModels
         /// <param name="building">Hangi kaynak için yapılacak.</param>
         /// <param name="capacity">Kaynak depo kapasitesi.</param>
         /// <param name="quantity">Kaynak miktarı.</param>
-        public void UpdateUserPlanetResources(Buildings building, long capacity, long quantity)
+        public void UpdateUserPlanetResources(Buildings building, double capacity, double quantity)
         {
             switch (building)
             {
@@ -140,6 +140,41 @@ namespace Assets.Scripts.ApiModels
             }
         }
 
+        /// <summary>
+        /// Kaynakları gezegene ekler.
+        /// </summary>
+        /// <param name="resources"></param>
+        public void SetPlanetResources(ResourcesDTO resources)
+        {
+            // Yeni metal değerine set ediyoruz.
+            this.Metal = resources.Metal;
+
+            // Yeni kristal değerine set ediyoruz.
+            this.Crystal = resources.Crystal;
+
+            // Yeni boron değerine set ediyoruz.
+            this.Boron = resources.Boron;
+
+            // Son verify tarihini güncelliyoruz.
+            this.LastUpdateDateInClient = DateTime.UtcNow;
+
+        }
+
+        /// <summary>
+        /// Başka bir gezgenin değerlerini kopyalar.
+        /// </summary>
+        /// <param name="userPlanet"></param>
+        public void CopyTo(UserPlanetDTO userPlanet)
+        {
+            userPlanet.Metal = this.Metal;
+            userPlanet.Crystal = this.Crystal;
+            userPlanet.Boron = this.Boron;
+            userPlanet.PlanetCordinate = this.PlanetCordinate;
+            userPlanet.PlanetName = this.PlanetName;
+            userPlanet.PlanetType = this.PlanetType;
+            userPlanet.LastUpdateDateInClient = DateTime.UtcNow;
+            userPlanet.UserPlanetId = this.UserPlanetId;
+        }
 
     }
 }

@@ -10,9 +10,9 @@ namespace WarOfGalaxiesApi.DAL.Models
         public string PlanetCordinate { get; set; }
         public int PlanetType { get; set; }
         public string PlanetName { get; set; }
-        public long Metal { get; set; }
-        public long Crystal { get; set; }
-        public long Boron { get; set; }
+        public double Metal { get; set; }
+        public double Crystal { get; set; }
+        public double Boron { get; set; }
         public DateTime LastUpdateDate { get; set; }
     }
 }

@@ -1,4 +1,7 @@
 ﻿using Assets.Scripts.ApiModels;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -52,9 +55,33 @@ public class LoginController : MonoBehaviour
         }));
     }
 
-    // Update is called once per frame
-    void Update()
+    public void VerifyUserResources(int[] userPlanetIds, Action<List<UserPlanetDTO>> onSuccess = null, Action<string> onError = null)
     {
+        StartCoroutine(ApiService.API.Post("VerifyUserData", userPlanetIds, (ApiResult result) =>
+          {
+              if (result.IsSuccess)
+              {
+                  List<UserPlanetDTO> data = result.GetDataList<UserPlanetDTO>();
 
+                  // Olan kaynakları da güncelliyoruz.
+                  foreach (UserPlanetDTO exists in data.Where(x => LoginController.LC.CurrentUser.UserPlanets.Exists(y => y.UserPlanetId == x.UserPlanetId)))
+                      LoginController.LC.CurrentUser.UserPlanets.Find(x => x.UserPlanetId == exists.UserPlanetId).CopyTo(exists);
+
+                  // Olmayanları buluyoruz.
+                  IEnumerable<UserPlanetDTO> notInList = data.Where(x => !LoginController.LC.CurrentUser.UserPlanets.Exists(y => y.UserPlanetId == x.UserPlanetId));
+
+                  // Kullanıcının gezegenlerin ekliyoruz.
+                  LoginController.LC.CurrentUser.UserPlanets.AddRange(notInList);
+
+                  // Başarılı methotunu çağırıyoruz.
+                  if (onSuccess != null)
+                      onSuccess.Invoke(data);
+              }
+              else
+              {
+                  if (onError != null)
+                      onError.Invoke(result.Message);
+              }
+          }));
     }
 }

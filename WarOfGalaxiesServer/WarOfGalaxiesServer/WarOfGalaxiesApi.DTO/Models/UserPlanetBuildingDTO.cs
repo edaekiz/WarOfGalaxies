@@ -9,6 +9,7 @@
 
     public class UserPlanetBuildingUpgDTO
     {
+        public ResourcesDTO PlanetResources { get; set; }
         public int UserPlanetId { get; set; }
         public int BuildingId { get; set; }
         public int BuildingLevel { get; set; }

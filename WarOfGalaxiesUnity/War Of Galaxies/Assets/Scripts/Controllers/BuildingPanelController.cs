@@ -29,8 +29,8 @@ public class BuildingPanelController : BasePanelController
     [Header("Binanın yükseltme süresini buraya basacağız.")]
     public TextMeshProUGUI BuildingUpgradeTime;
 
-    [Header("Yükseltmeden sonra gerekecek enerji.")]
-    public TextMeshProUGUI BuildingRequiredEnergy;
+    [Header("Yükseltme sırasındaki geri sayım.")]
+    public TextMeshProUGUI BuildingCountdown;
 
     [Header("Gereken metal miktarını buraya basacağız.")]
     public TextMeshProUGUI RequiredMetalQuantity;
@@ -52,6 +52,15 @@ public class BuildingPanelController : BasePanelController
         // Eğer zatne upgrade ediliyor ise upgrade edilemez.
         if (isAlreadyUpgrading)
             canUpgrade = false;
+
+        // Yükseltilen bina aktif bina ise değer dolu olacak.
+        UserPlanetBuildingUpgDTO upgrade = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == building);
+
+        // Eğer seçili olan bina yükseltiliyor ise ekrana geri sayımı basacağız.
+        if (upgrade == null)
+            BuildingCountdown.text = string.Empty;
+        else
+            BuildingCountdown.text = TimeExtends.GetCountdownText((upgrade.EndDate - DateTime.UtcNow));
 
         // Kullanıcının binassı.
         UserPlanetBuildingDTO userBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == building);
@@ -151,6 +160,35 @@ public class BuildingPanelController : BasePanelController
 
         // Tekrar çağırıyoruz.
         StartCoroutine(LoadData(building));
+    }
+
+    public void UpgradeBuilding()
+    {
+        StartCoroutine(ApiService.API.Post("UpgradeUserPlanetBuilding", new UserPlanetUpgradeBuildingDTO
+        {
+            BuildingID = (int)GlobalBuildingController.GBC.CurrentSelectedBuilding.BuildingType,
+            UserPlanetID = GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId
+        }, (ApiResult response) =>
+        {
+            // Eğer başarılı ise yükseltmeyi başlatacağız.
+            if (response.IsSuccess)
+            {
+                // Gelen paketi açıyoruz.
+                UserPlanetBuildingUpgDTO upgradeInfo = response.GetData<UserPlanetBuildingUpgDTO>();
+
+                // Gezegeni buluyoruz.
+                UserPlanetDTO userPlanet = LoginController.LC.CurrentUser.UserPlanets.Find(x => x.UserPlanetId == upgradeInfo.UserPlanetId);
+
+                // Gezegenin kaynaklarını güncelliyoruz.
+                userPlanet.SetPlanetResources(upgradeInfo.PlanetResources);
+
+                // Gezegene yükseltmeyi ekliyoruz.
+                LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Add(upgradeInfo);
+
+                // Seçilen binanın datalarını yeniler.
+                StartCoroutine(GlobalBuildingController.GBC.CurrentSelectedBuilding.LoadBuildingDetails());
+            }
+        }));
     }
 
     private void OnDestroy()

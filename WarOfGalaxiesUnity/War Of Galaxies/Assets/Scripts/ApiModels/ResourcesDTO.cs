@@ -1,15 +1,26 @@
-﻿namespace Assets.Scripts.ApiModels
+﻿using System;
+
+namespace Assets.Scripts.ApiModels
 {
+    [Serializable]
     public class ResourcesDTO
     {
-        public long Metal { get; set; }
-        public long Crystal { get; set; }
-        public long Boron { get; set; }
+        public int UserPlanetID;
+        public double Metal;
+        public double Crystal;
+        public double Boron;
         public ResourcesDTO()
         {
 
         }
-        public ResourcesDTO(long metal, long crystal, long boron)
+        public ResourcesDTO(int userPlanetId, double metal, double crystal, double boron)
+        {
+            this.UserPlanetID = userPlanetId;
+            this.Metal = metal;
+            this.Crystal = crystal;
+            this.Boron = boron;
+        }
+        public ResourcesDTO(double metal, double crystal, double boron)
         {
             this.Metal = metal;
             this.Crystal = crystal;

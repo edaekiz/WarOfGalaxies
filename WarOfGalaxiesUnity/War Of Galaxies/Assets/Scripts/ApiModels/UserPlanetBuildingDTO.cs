@@ -14,13 +14,13 @@ namespace Assets.Scripts.ApiModels
     [Serializable]
     public class UserPlanetBuildingUpgDTO
     {
+        public ResourcesDTO PlanetResources;
         public int UserPlanetId;
         public Buildings BuildingId;
         public int BuildingLevel;
         public double LeftTime;
         public DateTime BeginDate;
         public DateTime EndDate;
-
         public void CalculateDates()
         {
             BeginDate = DateTime.UtcNow;
@@ -32,6 +32,6 @@ namespace Assets.Scripts.ApiModels
     public class UserPlanetUpgradeBuildingDTO
     {
         public int UserPlanetID;
-        public Buildings BuildingID;
+        public int BuildingID;
     }
 }

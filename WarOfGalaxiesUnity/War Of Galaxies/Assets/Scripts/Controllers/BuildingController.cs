@@ -3,6 +3,8 @@ using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -38,7 +40,7 @@ public class BuildingController : MonoBehaviour
         StartCoroutine(LoadBuildingDetails());
     }
 
-    private IEnumerator LoadBuildingDetails()
+    public IEnumerator LoadBuildingDetails()
     {
         // Seçim başlangıç da kalkıyor.
         SelectionMesh.SetActive(false);
@@ -127,37 +129,52 @@ public class BuildingController : MonoBehaviour
         // 1 saniye bekletiyoruz.
         yield return new WaitForSecondsRealtime(1);
 
+        // Eğer gezegende yükseltme yok ise iptal et.
+        if (UserPlanetBuildingUpg == null)
+            yield break;
+
+        // Tamamlandı mı?
+        bool isCompleted = DateTime.UtcNow >= UserPlanetBuildingUpg.EndDate;
+
+        // Eğer tarih tamamlanma tarihinnden az ise tamamlanmıştır.
+        if (isCompleted)
+        {
+            // Kullanıcının gezegendeki kaynaklarını verify ediyoruz.
+            LoginController.LC.VerifyUserResources(new int[] { GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId }, (List<UserPlanetDTO> onSuccess) =>
+             {
+                 // Var olan binayı buluyoruz.
+                 UserPlanetBuildingDTO userBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == UserPlanetBuildingUpg.UserPlanetId && x.BuildingId == UserPlanetBuildingUpg.BuildingId);
+
+                 // Bina ilk kez kuruluyor.
+                 if (userBuilding == null)
+                 {
+                     // Bina listesine ekliyoruz.
+                     LoginController.LC.CurrentUser.UserPlanetsBuildings.Add(new UserPlanetBuildingDTO
+                     {
+                         BuildingId = UserPlanetBuildingUpg.BuildingId,
+                         BuildingLevel = UserPlanetBuildingUpg.BuildingLevel,
+                         UserPlanetId = UserPlanetBuildingUpg.UserPlanetId
+                     });
+                 }
+                 else // Eğer bina zaten var ise sadece kaynaklarını güncelliyoruz.
+                 {
+                     userBuilding.BuildingLevel = UserPlanetBuildingUpg.BuildingLevel;
+                 }
+
+                 // Yükseltmeyi sistemden siliyoruz.
+                 LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Remove(UserPlanetBuildingUpg);
+
+                 // Bina detaylarını yüklüyoruz.
+                 StartCoroutine(LoadBuildingDetails());
+
+             });
+        }
+
         // State güncelleniyor.
         updateBuildingNameLevelAndTime();
 
         // Sonra tekrar sayacı aktif ediyoruz.
-        if (UserPlanetBuildingUpg != null)
+        if (!isCompleted)
             StartCoroutine(OnUpgrade());
     }
-
-    public void SendUpgradeRequest()
-    {
-        ApiService.API.Post("UpgradeUserPlanetBuilding", new UserPlanetUpgradeBuildingDTO { BuildingID = this.BuildingType, UserPlanetID = this.UserPlanetBuilding.UserPlanetId }, (ApiResult response) =>
-             {
-                 // Eğer başarılı ise yükseltmeyi başlatacağız.
-                 if (response.IsSuccess)
-                 {
-                     // Gelen paketi açıyoruz.
-                     UserPlanetBuildingUpgDTO upgradeInfo = response.GetData<UserPlanetBuildingUpgDTO>();
-
-                     // Gezegene yükseltmeyi ekliyoruz.
-                     LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Add(upgradeInfo);
-
-                     // Ve set ediyoruz.
-                     UserPlanetBuildingUpg = upgradeInfo;
-
-                     // Sayacı açıyoruz.
-                     StartCoroutine(OnUpgrade());
-
-                     // Bina ismini seviye ile basıyoruz.
-                     updateBuildingNameLevelAndTime();
-                 }
-             });
-    }
-
 }

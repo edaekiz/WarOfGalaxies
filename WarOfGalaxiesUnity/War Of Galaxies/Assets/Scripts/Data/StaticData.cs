@@ -98,49 +98,49 @@ namespace Assets.Scripts.Data
             {
                 case Buildings.MetalMadeni:
                     return new ResourcesDTO(
-                        MetalBuildingBaseCost.Metal * (long)Math.Pow(1.5f, buildingLevel - 1),
-                        MetalBuildingBaseCost.Crystal * (long)Math.Pow(1.5f, buildingLevel - 1),
-                        MetalBuildingBaseCost.Boron * (long)Math.Pow(1.5f, buildingLevel - 1));
+                        MetalBuildingBaseCost.Metal * Math.Pow(1.5f, buildingLevel),
+                        MetalBuildingBaseCost.Crystal * Math.Pow(1.5f, buildingLevel),
+                        MetalBuildingBaseCost.Boron * Math.Pow(1.5f, buildingLevel));
                 case Buildings.KristalMadeni:
                     return new ResourcesDTO(
-                        CrystalBuildingBaseCost.Metal * (long)Math.Pow(1.6f, buildingLevel - 1),
-                        CrystalBuildingBaseCost.Crystal * (long)Math.Pow(1.6f, buildingLevel - 1),
-                        CrystalBuildingBaseCost.Boron * (long)Math.Pow(1.6f, buildingLevel - 1));
+                        CrystalBuildingBaseCost.Metal * Math.Pow(1.6f, buildingLevel),
+                        CrystalBuildingBaseCost.Crystal * Math.Pow(1.6f, buildingLevel),
+                        CrystalBuildingBaseCost.Boron * Math.Pow(1.6f, buildingLevel));
                 case Buildings.BoronMadeni:
                     return new ResourcesDTO(
-                        BoronBuildingBaseCost.Metal * (long)Math.Pow(1.5f, buildingLevel - 1),
-                        BoronBuildingBaseCost.Crystal * (long)Math.Pow(1.5f, buildingLevel - 1),
-                        BoronBuildingBaseCost.Boron * (long)Math.Pow(1.5f, buildingLevel - 1));
+                        BoronBuildingBaseCost.Metal * Math.Pow(1.5f, buildingLevel),
+                        BoronBuildingBaseCost.Crystal * Math.Pow(1.5f, buildingLevel),
+                        BoronBuildingBaseCost.Boron * Math.Pow(1.5f, buildingLevel));
                 case Buildings.MetalDeposu:
                     return new ResourcesDTO(
-                        MetalBuildingStorageBaseCost.Metal * (long)Math.Pow(2, buildingLevel - 1),
-                        MetalBuildingStorageBaseCost.Crystal * (long)Math.Pow(2, buildingLevel - 1),
-                        MetalBuildingStorageBaseCost.Boron * (long)Math.Pow(2, buildingLevel - 1));
+                        MetalBuildingStorageBaseCost.Metal * Math.Pow(2, buildingLevel),
+                        MetalBuildingStorageBaseCost.Crystal * Math.Pow(2, buildingLevel),
+                        MetalBuildingStorageBaseCost.Boron * Math.Pow(2, buildingLevel));
                 case Buildings.KristalDeposu:
                     return new ResourcesDTO(
-                        CrystalBuildingStorageBaseCost.Metal * (long)Math.Pow(2, buildingLevel - 1),
-                        CrystalBuildingStorageBaseCost.Crystal * (long)Math.Pow(2, buildingLevel - 1),
-                        CrystalBuildingStorageBaseCost.Boron * (long)Math.Pow(2, buildingLevel - 1));
+                        CrystalBuildingStorageBaseCost.Metal * Math.Pow(2, buildingLevel),
+                        CrystalBuildingStorageBaseCost.Crystal * Math.Pow(2, buildingLevel),
+                        CrystalBuildingStorageBaseCost.Boron * Math.Pow(2, buildingLevel));
                 case Buildings.BoronDeposu:
                     return new ResourcesDTO(
-                        BoronBuildingStorageBaseCost.Metal * (long)Math.Pow(2, buildingLevel - 1),
-                        BoronBuildingStorageBaseCost.Crystal * (long)Math.Pow(2, buildingLevel - 1),
-                        BoronBuildingStorageBaseCost.Boron * (long)Math.Pow(2, buildingLevel - 1));
+                        BoronBuildingStorageBaseCost.Metal * Math.Pow(2, buildingLevel),
+                        BoronBuildingStorageBaseCost.Crystal * Math.Pow(2, buildingLevel),
+                        BoronBuildingStorageBaseCost.Boron * Math.Pow(2, buildingLevel));
                 case Buildings.ArastirmaLab:
                     return new ResourcesDTO(
-                        ArastirmaLabBaseCost.Metal * (long)Math.Pow(2, buildingLevel - 1),
-                        ArastirmaLabBaseCost.Crystal * (long)Math.Pow(2, buildingLevel - 1),
-                        ArastirmaLabBaseCost.Boron * (long)Math.Pow(2, buildingLevel - 1));
+                        ArastirmaLabBaseCost.Metal * Math.Pow(2, buildingLevel),
+                        ArastirmaLabBaseCost.Crystal * Math.Pow(2, buildingLevel),
+                        ArastirmaLabBaseCost.Boron * Math.Pow(2, buildingLevel));
                 case Buildings.RobotFabrikası:
                     return new ResourcesDTO(
-                        RobotFabrikasiBaseCost.Metal * (long)Math.Pow(2, buildingLevel - 1),
-                        RobotFabrikasiBaseCost.Crystal * (long)Math.Pow(2, buildingLevel - 1),
-                        RobotFabrikasiBaseCost.Boron * (long)Math.Pow(2, buildingLevel - 1));
+                        RobotFabrikasiBaseCost.Metal * Math.Pow(2, buildingLevel),
+                        RobotFabrikasiBaseCost.Crystal * Math.Pow(2, buildingLevel),
+                        RobotFabrikasiBaseCost.Boron * Math.Pow(2, buildingLevel));
                 case Buildings.Tersane:
                     return new ResourcesDTO(
-                        TersaneBaseCost.Metal * (long)Math.Pow(2, buildingLevel - 1),
-                        TersaneBaseCost.Crystal * (long)Math.Pow(2, buildingLevel - 1),
-                        TersaneBaseCost.Boron * (long)Math.Pow(2, buildingLevel - 1));
+                        TersaneBaseCost.Metal * Math.Pow(2, buildingLevel),
+                        TersaneBaseCost.Crystal * Math.Pow(2, buildingLevel),
+                        TersaneBaseCost.Boron * Math.Pow(2, buildingLevel));
                 default:
                     return ResourcesDTO.ResourceZero;
             }

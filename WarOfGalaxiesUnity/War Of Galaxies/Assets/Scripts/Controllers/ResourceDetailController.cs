@@ -188,7 +188,7 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
                     UserPlanetBuildingDTO metalBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.MetalMadeni);
 
                     // Saatlik hesaplanmış üretim.
-                    long metalProducePerHour = (long)(StaticData.GetBuildingProdPerHour(Buildings.MetalMadeni, metalBuilding == null ? 0 : metalBuilding.BuildingLevel));
+                    double metalProducePerHour = StaticData.GetBuildingProdPerHour(Buildings.MetalMadeni, metalBuilding == null ? 0 : metalBuilding.BuildingLevel);
 
                     #endregion
 
@@ -198,15 +198,15 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
                     UserPlanetBuildingDTO metalStorageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.MetalDeposu);
 
                     // Kullanıcının metal deposu.
-                    long metalBuildingCapacity = (long)StaticData.GetBuildingStorage(Buildings.MetalDeposu, metalStorageBuilding == null ? 0 : metalStorageBuilding.BuildingLevel);
+                    double metalBuildingCapacity = StaticData.GetBuildingStorage(Buildings.MetalDeposu, metalStorageBuilding == null ? 0 : metalStorageBuilding.BuildingLevel);
 
                     #endregion
 
                     #region Ekrana basıyoruz.
 
-                    string temp = Template.Replace("{0}", GlobalPlanetController.GPC.CurrentPlanet.Metal.ToString());
-                    temp = temp.Replace("{1}", metalBuildingCapacity.ToString());
-                    temp = temp.Replace("{2}", metalProducePerHour.ToString());
+                    string temp = Template.Replace("{0}", ((long)GlobalPlanetController.GPC.CurrentPlanet.Metal).ToString());
+                    temp = temp.Replace("{1}", ((long)metalBuildingCapacity).ToString());
+                    temp = temp.Replace("{2}", ((long)metalProducePerHour).ToString());
                     ContentField.text = temp;
 
                     #endregion
@@ -222,7 +222,7 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
                     UserPlanetBuildingDTO crystalBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.KristalMadeni);
 
                     // Saatlik hesaplanmış üretim.
-                    long crystalProducePerHour = (long)(StaticData.GetBuildingProdPerHour(Buildings.KristalMadeni, crystalBuilding == null ? 0 : crystalBuilding.BuildingLevel));
+                    double crystalProducePerHour = StaticData.GetBuildingProdPerHour(Buildings.KristalMadeni, crystalBuilding == null ? 0 : crystalBuilding.BuildingLevel);
 
                     #endregion
 
@@ -232,15 +232,15 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
                     UserPlanetBuildingDTO crystalStorageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.KristalDeposu);
 
                     // Kullanıcının kristal deposu.
-                    long crystalBuildingCapacity = (long)StaticData.GetBuildingStorage(Buildings.MetalDeposu, crystalStorageBuilding == null ? 0 : crystalStorageBuilding.BuildingLevel);
+                    double crystalBuildingCapacity = StaticData.GetBuildingStorage(Buildings.MetalDeposu, crystalStorageBuilding == null ? 0 : crystalStorageBuilding.BuildingLevel);
 
                     #endregion
 
                     #region Ekrana basıyoruz.
 
-                    string temp = Template.Replace("{0}", GlobalPlanetController.GPC.CurrentPlanet.Crystal.ToString());
-                    temp = temp.Replace("{1}", crystalBuildingCapacity.ToString());
-                    temp = temp.Replace("{2}", crystalProducePerHour.ToString());
+                    string temp = Template.Replace("{0}", ((long)GlobalPlanetController.GPC.CurrentPlanet.Crystal).ToString());
+                    temp = temp.Replace("{1}", ((long)crystalBuildingCapacity).ToString());
+                    temp = temp.Replace("{2}", ((long)crystalProducePerHour).ToString());
                     ContentField.text = temp;
 
                     #endregion
@@ -256,7 +256,7 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
                     UserPlanetBuildingDTO boronBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.BoronMadeni);
 
                     // Saatlik hesaplanmış üretim.
-                    long boronProducePerHour = (long)(StaticData.GetBuildingProdPerHour(Buildings.BoronMadeni, boronBuilding == null ? 0 : boronBuilding.BuildingLevel));
+                    double boronProducePerHour = StaticData.GetBuildingProdPerHour(Buildings.BoronMadeni, boronBuilding == null ? 0 : boronBuilding.BuildingLevel);
 
                     #endregion
 
@@ -266,15 +266,15 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
                     UserPlanetBuildingDTO boronStorageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.BoronDeposu);
 
                     // Kullanıcının kristal deposu.
-                    long boronBuildingCapacity = (long)StaticData.GetBuildingStorage(Buildings.BoronDeposu, boronStorageBuilding == null ? 0 : boronStorageBuilding.BuildingLevel);
+                    double boronBuildingCapacity = StaticData.GetBuildingStorage(Buildings.BoronDeposu, boronStorageBuilding == null ? 0 : boronStorageBuilding.BuildingLevel);
 
                     #endregion
 
                     #region Ekrana basıyoruz.
 
-                    string temp = Template.Replace("{0}", GlobalPlanetController.GPC.CurrentPlanet.Boron.ToString());
-                    temp = temp.Replace("{1}", boronBuildingCapacity.ToString());
-                    temp = temp.Replace("{2}", boronProducePerHour.ToString());
+                    string temp = Template.Replace("{0}", ((long)GlobalPlanetController.GPC.CurrentPlanet.Boron).ToString());
+                    temp = temp.Replace("{1}", ((long)boronBuildingCapacity).ToString());
+                    temp = temp.Replace("{2}", ((long)boronProducePerHour).ToString());
                     ContentField.text = temp;
 
                     #endregion

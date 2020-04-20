@@ -18,7 +18,7 @@ namespace WarOfGalaxiesApi.Controllers
 
         [HttpPost("UpgradeUserPlanetBuilding")]
         [Description("Gezegendeki bina yükseltmesini yapar.")]
-        public ApiResult UpgradeUserPlanetBuilding(UserPlanetUpgradeBuildingDTO request)
+        public ApiResult UpgradeUserPlanetBuilding([FromForm]UserPlanetUpgradeBuildingDTO request)
         {
             // Sistem anlık tarihi.
             DateTime currentDate = DateTime.UtcNow;
@@ -47,22 +47,26 @@ namespace WarOfGalaxiesApi.Controllers
             // Gezegenin sahip olduğu binayı buluyoruz.
             TblUserPlanetBuildings userPlanetBuilding = base.UnitOfWork.GetRepository<TblUserPlanetBuildings>().FirstOrDefault(x => x.UserPlanetId == request.UserPlanetID && x.BuildingId == request.BuildingID);
 
+            // Sonraki seviye.
+            int nextLevel = userPlanetBuilding == null ? 1 : userPlanetBuilding.BuildingLevel + 1;
+
             // Yükseltme bilgisini tutuyoruz.
-            ResourcesDTO upgradeInfo = StaticData.CalculateCostBuilding((Buildings)request.BuildingID, userPlanetBuilding == null ? 1 : userPlanetBuilding.BuildingLevel);
+            ResourcesDTO upgradeInfo = StaticData.CalculateCostBuilding((Buildings)request.BuildingID, nextLevel);
 
             // Kaynak yeterli mi?
             if (userPlanet.Metal < upgradeInfo.Metal || userPlanet.Crystal < upgradeInfo.Crystal || userPlanet.Boron < upgradeInfo.Boron)
                 return ResponseHelper.GetError("Yetersiz kaynak.");
 
-            int nextLevel = userPlanetBuilding == null ? 1 : userPlanetBuilding.BuildingLevel;
-
             // Gereksinimi düşüyoruz.
             userPlanet.Metal -= upgradeInfo.Metal;
-            userPlanet.Crystal -= upgradeInfo.Metal;
-            userPlanet.Boron -= upgradeInfo.Metal;
+            userPlanet.Crystal -= upgradeInfo.Crystal;
+            userPlanet.Boron -= upgradeInfo.Boron;
 
             // Yükseltme süresi.
             double upgradeTime = StaticData.CalculateBuildingUpgradeTime((Buildings)request.BuildingID, nextLevel, 0);
+
+            // Bitiş tarihi.
+            DateTime endDate = currentDate.AddSeconds(upgradeTime);
 
             // Yükseltmesini yapıyoruz.
             TblUserPlanetBuildingUpgs userPlanetUpg = base.UnitOfWork.GetRepository<TblUserPlanetBuildingUpgs>().Add(new TblUserPlanetBuildingUpgs
@@ -71,7 +75,7 @@ namespace WarOfGalaxiesApi.Controllers
                 BeginDate = currentDate,
                 BuildingId = request.BuildingID,
                 BuildingLevel = nextLevel,
-                EndDate = currentDate.AddSeconds(upgradeTime),
+                EndDate = endDate,
                 UserId = base.DBUser.UserId
             });
 
@@ -84,7 +88,8 @@ namespace WarOfGalaxiesApi.Controllers
                 BuildingId = userPlanetUpg.BuildingId,
                 BuildingLevel = userPlanetUpg.BuildingLevel,
                 LeftTime = (userPlanetUpg.EndDate - userPlanetUpg.BeginDate).TotalSeconds,
-                UserPlanetId = userPlanetUpg.UserPlanetId
+                UserPlanetId = userPlanetUpg.UserPlanetId,
+                PlanetResources = new ResourcesDTO(userPlanet.Metal, userPlanet.Crystal, userPlanet.Boron)
             });
         }
 

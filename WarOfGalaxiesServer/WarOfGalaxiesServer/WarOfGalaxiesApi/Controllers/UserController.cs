@@ -87,5 +87,32 @@ namespace WarOfGalaxiesApi.Controllers
             });
         }
 
+        [HttpPost("VerifyUserData")]
+        [Description("Kullanıcının bütün datalarını doğrular.")]
+        public ApiResult VerifyUserData(int[] userPlanetIds)
+        {
+            // Her bir gezegenin Verify işlemini yapıyoruz.
+            foreach (int userPlanetId in userPlanetIds)
+                VerifyController.VerifyPlanetResources(base.UnitOfWork, new VerifyResourceDTO { UserPlanetID = userPlanetId });
+
+            // Kullanıcının gezegenlerini buluyoruz.
+            List<UserPlanetDTO> userPlanets = this.UnitOfWork.GetRepository<TblUserPlanets>().Where(x => x.UserId == base.DBUser.UserId)
+                .Where(x => userPlanetIds.Contains(x.UserPlanetId)).Select(x => new UserPlanetDTO
+                {
+                    UserId = x.UserId,
+                    Boron = x.Boron,
+                    Crystal = x.Crystal,
+                    Metal = x.Metal,
+                    PlanetCordinate = x.PlanetCordinate,
+                    PlanetName = x.PlanetName,
+                    PlanetType = x.PlanetType,
+                    UserPlanetId = x.UserPlanetId
+                }).ToList();
+
+
+            // Eğer tamamlandıysa geri dön.
+            return ResponseHelper.GetSuccess(userPlanets);
+        }
+
     }
 }

@@ -78,7 +78,7 @@ public class ApiService : MonoBehaviour
 
         if (request != null)
         {
-            var properties = request.GetType().GetProperties();
+            var properties = request.GetType().GetFields();
             for (int ii = 0; ii < properties.Length; ii++)
             {
                 var value = properties[ii].GetValue(request);

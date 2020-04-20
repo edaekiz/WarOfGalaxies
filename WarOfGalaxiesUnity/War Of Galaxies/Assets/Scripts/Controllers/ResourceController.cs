@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Models;
-using System.Collections;
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -30,9 +29,6 @@ public class ResourceController : MonoBehaviour
 
     [Header("Kaynağa tıklandığında açılacak detay paneli.")]
     public ResourceDetailController MetalDetailPanel;
-
-    [Header("Kaynaklar yükseltilmeye hazır mı?")]
-    public bool IsResourceReadyToExecute;
 
     IEnumerator Start()
     {
@@ -81,7 +77,7 @@ public class ResourceController : MonoBehaviour
 
     #region Metal ve Animasyon
 
-    private long metalAnimQuantity;
+    private double metalAnimQuantity;
 
     private void DoMetalAnimation()
     {
@@ -90,10 +86,10 @@ public class ResourceController : MonoBehaviour
             return;
 
         // Azalacaksa -1 olacak artacaksa 1.
-        long multiply = metalAnimQuantity > GlobalPlanetController.GPC.CurrentPlanet.Metal ? -1 : 1;
+        double multiply = metalAnimQuantity > GlobalPlanetController.GPC.CurrentPlanet.Metal ? -1 : 1;
 
         // Artış oranını hespalıyoruz.
-        long rate;
+        double rate;
 
         // Eğer azalıyor ise yüksek olan değerle - yönünde çarpıyoruz.
         if (multiply == -1)
@@ -108,7 +104,7 @@ public class ResourceController : MonoBehaviour
         if (multiply == -1)
         {
             // Aradaki farkı alıyoruz.
-            long quantity = metalAnimQuantity - GlobalPlanetController.GPC.CurrentPlanet.Metal;
+            double quantity = metalAnimQuantity - GlobalPlanetController.GPC.CurrentPlanet.Metal;
 
             // Miktarı kontrol ediyoruz.
             if (quantity <= 0)
@@ -117,7 +113,7 @@ public class ResourceController : MonoBehaviour
         else // Eğer miktar artıyor ise.
         {
             // Aradaki farkı alıyoruz.
-            long quantity = GlobalPlanetController.GPC.CurrentPlanet.Metal - metalAnimQuantity;
+            double quantity = GlobalPlanetController.GPC.CurrentPlanet.Metal - metalAnimQuantity;
 
             // Miktarı kontrol ediyoruz.
             if (quantity <= 0)
@@ -125,14 +121,14 @@ public class ResourceController : MonoBehaviour
         }
 
         // Metal miktarını güncelliyoruz.
-        MetalQuantityText.text = metalAnimQuantity.ToString();
+        MetalQuantityText.text = ((long)metalAnimQuantity).ToString();
     }
 
     #endregion
 
     #region Crystal ve Animasyon
 
-    private long crystalAnimQuantity;
+    private double crystalAnimQuantity;
 
     private void DoCrystalAnimation()
     {
@@ -144,7 +140,7 @@ public class ResourceController : MonoBehaviour
         int multiply = crystalAnimQuantity > GlobalPlanetController.GPC.CurrentPlanet.Crystal ? -1 : 1;
 
         // Artış oranını hespalıyoruz.
-        long rate;
+        double rate;
 
         // Eğer azalıyor ise yüksek olan değerle - yönünde çarpıyoruz.
         if (multiply == -1)
@@ -159,7 +155,7 @@ public class ResourceController : MonoBehaviour
         if (multiply == -1)
         {
             // Aradaki farkı alıyoruz.
-            long quantity = crystalAnimQuantity - GlobalPlanetController.GPC.CurrentPlanet.Crystal;
+            double quantity = crystalAnimQuantity - GlobalPlanetController.GPC.CurrentPlanet.Crystal;
 
             // Miktarı kontrol ediyoruz.
             if (quantity <= 0)
@@ -168,7 +164,7 @@ public class ResourceController : MonoBehaviour
         else // Eğer miktar artıyor ise.
         {
             // Aradaki farkı alıyoruz.
-            long quantity = GlobalPlanetController.GPC.CurrentPlanet.Crystal - crystalAnimQuantity;
+            double quantity = GlobalPlanetController.GPC.CurrentPlanet.Crystal - crystalAnimQuantity;
 
             // Miktarı kontrol ediyoruz.
             if (quantity <= 0)
@@ -176,14 +172,14 @@ public class ResourceController : MonoBehaviour
         }
 
         // Metal miktarını güncelliyoruz.
-        CrystalQuantityText.text = crystalAnimQuantity.ToString();
+        CrystalQuantityText.text = ((long)crystalAnimQuantity).ToString();
     }
 
     #endregion
 
     #region Bor ve Animasyon
 
-    private long boronAnimQuantity;
+    private double boronAnimQuantity;
 
     private void DoBoronAnimation()
     {
@@ -192,10 +188,10 @@ public class ResourceController : MonoBehaviour
             return;
 
         // Azalacaksa -1 olacak artacaksa 1.
-        long multiply = boronAnimQuantity > GlobalPlanetController.GPC.CurrentPlanet.Boron ? -1 : 1;
+        double multiply = boronAnimQuantity > GlobalPlanetController.GPC.CurrentPlanet.Boron ? -1 : 1;
 
         // Artış oranını hespalıyoruz.
-        long rate;
+        double rate;
 
         // Eğer azalıyor ise yüksek olan değerle - yönünde çarpıyoruz.
         if (multiply == -1)
@@ -210,7 +206,7 @@ public class ResourceController : MonoBehaviour
         if (multiply == -1)
         {
             // Aradaki farkı alıyoruz.
-            long quantity = boronAnimQuantity - GlobalPlanetController.GPC.CurrentPlanet.Boron;
+            double quantity = boronAnimQuantity - GlobalPlanetController.GPC.CurrentPlanet.Boron;
 
             // Miktarı kontrol ediyoruz.
             if (quantity <= 0)
@@ -219,7 +215,7 @@ public class ResourceController : MonoBehaviour
         else // Eğer miktar artıyor ise.
         {
             // Aradaki farkı alıyoruz.
-            long quantity = GlobalPlanetController.GPC.CurrentPlanet.Boron - boronAnimQuantity;
+            double quantity = GlobalPlanetController.GPC.CurrentPlanet.Boron - boronAnimQuantity;
 
             // Miktarı kontrol ediyoruz.
             if (quantity <= 0)
@@ -227,7 +223,7 @@ public class ResourceController : MonoBehaviour
         }
 
         // Metal miktarını güncelliyoruz.
-        BoronQuantityText.text = boronAnimQuantity.ToString();
+        BoronQuantityText.text = ((long)boronAnimQuantity).ToString();
     }
 
     #endregion

@@ -7,6 +7,16 @@ namespace WarOfGalaxiesApi.DTO.Helpers
     {
         #region Başarılı Mesajları
 
+        public static ApiResult GetSuccess()
+        {
+            return new ApiResult
+            {
+                Data = string.Empty,
+                IsSuccess = true,
+                Message = string.Empty
+            };
+        }
+
         public static ApiResult GetSuccess(object data)
         {
             return new ApiResult

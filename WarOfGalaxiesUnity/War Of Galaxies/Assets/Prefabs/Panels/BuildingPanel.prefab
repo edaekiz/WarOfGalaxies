@@ -1681,12 +1681,12 @@ GameObject:
   - component: {fileID: 8734965622187518231}
   - component: {fileID: 8734965622187518230}
   m_Layer: 5
-  m_Name: BuildingRequiredEnergy
+  m_Name: BuildingUpgradeCountdown
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8734965622187518225
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1703,7 +1703,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 390, y: -280}
+  m_AnchoredPosition: {x: -60, y: -451}
   m_SizeDelta: {x: 640, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8734965622187518231
@@ -1732,7 +1732,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<color=#C4E5FD>Enerji \u0130htiyac\u0131:</color> 0"
+  m_text: '-'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 95563f3213c13b54c9bf8932c51d40c4, type: 2}
   m_sharedMaterial: {fileID: -5341121368119280962, guid: 95563f3213c13b54c9bf8932c51d40c4,
@@ -1768,7 +1768,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 257
+  m_textAlignment: 258
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -1799,13 +1799,13 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -33.688324, y: 0, z: 291.31476, w: 0}
   m_textInfo:
     textComponent: {fileID: 8734965622187518230}
-    characterCount: 18
+    characterCount: 1
     spriteCount: 0
-    spaceCount: 2
-    wordCount: 3
+    spaceCount: 0
+    wordCount: 1
     linkCount: 0
     lineCount: 1
     pageCount: 1
@@ -2798,7 +2798,7 @@ MonoBehaviour:
   BuildingName: {fileID: 8734965622457403889}
   BuildingLevel: {fileID: 8734965623810357258}
   BuildingUpgradeTime: {fileID: 8734965621949071576}
-  BuildingRequiredEnergy: {fileID: 8734965622187518230}
+  BuildingCountdown: {fileID: 8734965622187518230}
   RequiredMetalQuantity: {fileID: 8734965623671618662}
   RequiredCrystalQuantity: {fileID: 8734965622248063061}
   RequiredBoronQuantity: {fileID: 8734965623546662717}
@@ -3681,7 +3681,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8734965623734161165}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7521465048282891769}
+        m_MethodName: UpgradeBuilding
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8734965623764424035
 GameObject:
   m_ObjectHideFlags: 0

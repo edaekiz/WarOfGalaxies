@@ -2,11 +2,24 @@
 {
     public class ResourcesDTO
     {
-        public long Metal { get; set; }
-        public long Crystal { get; set; }
-        public long Boron { get; set; }
-        public ResourcesDTO(long metal, long crystal, long boron)
+        public int UserPlanetID { get; set; }
+        public double Metal { get; set; }
+        public double Crystal { get; set; }
+        public double Boron { get; set; }
+        public ResourcesDTO()
         {
+
+        }
+        public ResourcesDTO(double metal, double crystal, double boron)
+        {
+            this.Metal = metal;
+            this.Crystal = crystal;
+            this.Boron = boron;
+        }
+
+        public ResourcesDTO(int userPlanetId, double metal, double crystal, double boron)
+        {
+            this.UserPlanetID = userPlanetId;
             this.Metal = metal;
             this.Crystal = crystal;
             this.Boron = boron;
