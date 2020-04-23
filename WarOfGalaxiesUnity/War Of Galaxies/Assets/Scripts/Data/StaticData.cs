@@ -10,7 +10,7 @@ namespace Assets.Scripts.Data
         /// <summary>
         /// Evrenin hızı.
         /// </summary>
-        public static int UniverseSpeed = 1;
+        public static int UniverseSpeed = 10;
 
         /// <summary>
         /// Metal deposunun base kapasitesi.
@@ -30,17 +30,17 @@ namespace Assets.Scripts.Data
         /// <summary>
         /// Metal madeninin basee saatlik üretimi
         /// </summary>
-        public static double MetalBuildingBasePerHour = 30;
+        public static double MetalBuildingBasePerHour = 90;
 
         /// <summary>
         /// Kristal madeninin base saatlik üretimi
         /// </summary>
-        public static double CrystalBuildingBasePerHour = 20;
+        public static double CrystalBuildingBasePerHour = 60;
 
         /// <summary>
         /// Boron madeninin base saatlik üretimi
         /// </summary>
-        public static double BoronBuildingBasePerHour = 10;
+        public static double BoronBuildingBasePerHour = 30;
 
         /// <summary>
         /// Metal binasının taban gereksinimleri.
@@ -155,7 +155,7 @@ namespace Assets.Scripts.Data
         public static double CalculateBuildingUpgradeTime(Buildings building, int buildingLevel, int robotFactoryLevel)
         {
             ResourcesDTO buildingCost = CalculateCostBuilding(building, buildingLevel);
-            return ((buildingCost.Metal + buildingCost.Crystal) / ((double)2500 * (1 + robotFactoryLevel) * UniverseSpeed)) * 60;
+            return ((buildingCost.Metal + buildingCost.Crystal) / ((double)2500 * (1 + robotFactoryLevel) * UniverseSpeed)) * 3600;
         }
 
         /// <summary>

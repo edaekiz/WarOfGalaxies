@@ -91,7 +91,7 @@
     <Compile Include="Assets\Scripts\ApiModels\UserPlanetBuildingDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserPlanetDTO.cs" />
     <Compile Include="Assets\Scripts\ApiService.cs" />
-    <Compile Include="Assets\Scripts\Controllers\BasePanelController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Base\BasePanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\BuildingController.cs" />
     <Compile Include="Assets\Scripts\Controllers\BuildingPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\GalaxyController.cs" />
@@ -99,7 +99,6 @@
     <Compile Include="Assets\Scripts\Controllers\GlobalPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\LoadingController.cs" />
     <Compile Include="Assets\Scripts\Controllers\LoginController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\PlanetActionController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlanetController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlanetRotateController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlanetZoomController.cs" />

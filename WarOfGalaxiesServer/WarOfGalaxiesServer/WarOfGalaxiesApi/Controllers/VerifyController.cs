@@ -126,6 +126,9 @@ namespace WarOfGalaxiesApi.Controllers
                         // Yükseltmeyi siliyoruz.
                         uow.GetRepository<TblUserPlanetBuildingUpgs>().Delete(planetResourceBuildingUpg);
 
+                        // Listeden de siliyoruz.
+                        userPlanetBuildingUpgs.Remove(planetResourceBuildingUpg);
+
                         // Eğer bina yok ise ozaman binayı oluşturacağız.
                         if (planetResourceBuilding == null)
                         {
@@ -172,6 +175,9 @@ namespace WarOfGalaxiesApi.Controllers
                                 // Yükseltme bilgisini siliyoruz.
                                 uow.GetRepository<TblUserPlanetBuildingUpgs>().Delete(planetStorageBuildingUpg);
 
+                                // Listeden de siliyoruz.
+                                userPlanetBuildingUpgs.Remove(planetStorageBuildingUpg);
+
                                 // Metal deposunu inşaa etmemiz gerekiyor ise inşaa edeceğiz.
                                 if (planetStorageBuilding == null)
                                 {
@@ -201,7 +207,7 @@ namespace WarOfGalaxiesApi.Controllers
                                 double metalProduceQuantityInNextStorage = StaticData.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSecondsInNextStorage / 3600);
 
                                 // Gezegendeki kaynağı yükseltiyoruz.
-                                UpdateUserPlanetResources(userPlanet, resourceBuilding, metalBuildingCapacityInNextStorage,metalProduceQuantityInNextStorage);
+                                UpdateUserPlanetResources(userPlanet, resourceBuilding, metalBuildingCapacityInNextStorage, metalProduceQuantityInNextStorage);
 
                                 #endregion
 
@@ -225,6 +231,39 @@ namespace WarOfGalaxiesApi.Controllers
                     }
 
                     #endregion
+                }
+
+                #endregion
+
+                #region Diğer tesisler
+
+                // Tesis üretimlerini verify ediyoruz.
+                for (int ii = 0; ii < userPlanetBuildingUpgs.Count; ii++)
+                {
+                    // Yükseltme bilgisi.
+                    TblUserPlanetBuildingUpgs upgrade = userPlanetBuildingUpgs[ii];
+
+                    // Yükseltmeyi siliyoruz.
+                    uow.GetRepository<TblUserPlanetBuildingUpgs>().Delete(upgrade);
+
+                    // Gezegendeki kaynak binasını buluyoruz.
+                    TblUserPlanetBuildings building = userPlanetBuildings.Find(x => x.BuildingId == upgrade.BuildingId);
+
+                    // Eğer bina yok ise ozaman binayı oluşturacağız.
+                    if (building == null)
+                    {
+                        // Ve binayı sisteme ekliyoruz.
+                        uow.GetRepository<TblUserPlanetBuildings>().Add(new TblUserPlanetBuildings
+                        {
+                            BuildingLevel = 1,
+                            BuildingId = upgrade.BuildingId,
+                            UserId = userPlanet.UserId,
+                            UserPlanetId = userPlanet.UserPlanetId
+                        });
+                    }
+                    else // Zaten kaynak binası var ise seviyesini yükseltiyoruz.
+                        building.BuildingLevel = upgrade.BuildingLevel;
+
                 }
 
                 #endregion

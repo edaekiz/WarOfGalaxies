@@ -62,8 +62,11 @@ namespace WarOfGalaxiesApi.Controllers
             userPlanet.Crystal -= upgradeInfo.Crystal;
             userPlanet.Boron -= upgradeInfo.Boron;
 
+            // Robot fabrikasını buluyoruz.
+            TblUserPlanetBuildings robotFactory = base.UnitOfWork.GetRepository<TblUserPlanetBuildings>().FirstOrDefault(x => x.UserPlanetId == request.UserPlanetID && x.BuildingId == (int)Buildings.RobotFabrikası);
+
             // Yükseltme süresi.
-            double upgradeTime = StaticData.CalculateBuildingUpgradeTime((Buildings)request.BuildingID, nextLevel, 0);
+            double upgradeTime = StaticData.CalculateBuildingUpgradeTime((Buildings)request.BuildingID, nextLevel, robotFactory == null ? 0 : robotFactory.BuildingLevel);
 
             // Bitiş tarihi.
             DateTime endDate = currentDate.AddSeconds(upgradeTime);

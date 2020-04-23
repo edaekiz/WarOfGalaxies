@@ -753,6 +753,8 @@ MonoBehaviour:
   AnimationSpeed: 3
   ResourceDetailPanel: {fileID: 1436684451}
   ContentField: {fileID: 668341014}
+  Resource: 0
+  Template: 
 --- !u!114 &276937630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4208,6 +4210,8 @@ MonoBehaviour:
   AnimationSpeed: 3
   ResourceDetailPanel: {fileID: 1188370448}
   ContentField: {fileID: 760485870}
+  Resource: 0
+  Template: 
 --- !u!1 &1436684451
 GameObject:
   m_ObjectHideFlags: 0
@@ -4594,6 +4598,8 @@ MonoBehaviour:
   AnimationSpeed: 3
   ResourceDetailPanel: {fileID: 284696124}
   ContentField: {fileID: 469713273}
+  Resource: 0
+  Template: 
 --- !u!114 &1508971524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5499,9 +5505,6 @@ MonoBehaviour:
   MetalQuantityText: {fileID: 2080045952}
   CrystalQuantityText: {fileID: 891441056}
   BoronQuantityText: {fileID: 222348014}
-  MetalQuantity: 0
-  CrystalQuantity: 0
-  BoronQuantity: 0
   MetalDetailPanel: {fileID: 0}
 --- !u!1 &2080045950
 GameObject:
