@@ -8,11 +8,16 @@ namespace WarOfGalaxiesApi.DTO.Models
         public List<UserPlanetDTO> UserPlanets { get; set; }
         public List<UserPlanetBuildingDTO> UserPlanetsBuildings { get; set; }
         public List<UserPlanetBuildingUpgDTO> UserPlanetsBuildingsUpgs { get; set; }
+        public List<UserResearchesDTO> UserResearches { get; set; }
+        public List<UserResearchProgDTO> UserResearchProgs { get; set; }
+
         public LoginStuffDTO()
         {
             UserPlanets = new List<UserPlanetDTO>();
             UserPlanetsBuildings = new List<UserPlanetBuildingDTO>();
             UserPlanetsBuildingsUpgs = new List<UserPlanetBuildingUpgDTO>();
+            UserResearches = new List<UserResearchesDTO>();
+            UserResearchProgs = new List<UserResearchProgDTO>();
         }
 
     }

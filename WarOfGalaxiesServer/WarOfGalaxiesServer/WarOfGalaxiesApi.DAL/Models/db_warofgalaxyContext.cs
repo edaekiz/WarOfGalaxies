@@ -17,9 +17,12 @@ namespace WarOfGalaxiesApi.DAL.Models
 
         public virtual DbSet<TblBuildings> TblBuildings { get; set; }
         public virtual DbSet<TblParameters> TblParameters { get; set; }
+        public virtual DbSet<TblResearches> TblResearches { get; set; }
         public virtual DbSet<TblUserPlanetBuildingUpgs> TblUserPlanetBuildingUpgs { get; set; }
         public virtual DbSet<TblUserPlanetBuildings> TblUserPlanetBuildings { get; set; }
         public virtual DbSet<TblUserPlanets> TblUserPlanets { get; set; }
+        public virtual DbSet<TblUserResearchUpgs> TblUserResearchUpgs { get; set; }
+        public virtual DbSet<TblUserResearches> TblUserResearches { get; set; }
         public virtual DbSet<TblUsers> TblUsers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -27,7 +30,7 @@ namespace WarOfGalaxiesApi.DAL.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=3.122.182.106;Database=db_warofgalaxy;Trusted_Connection=False;User Id=sa;Password=VB79n7nq.;");
+                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=db_warofgalaxy;Trusted_Connection=False;User Id=sa;Password=VB79n7nq.;");
             }
         }
 
@@ -63,6 +66,21 @@ namespace WarOfGalaxiesApi.DAL.Models
                     .HasMaxLength(100);
 
                 entity.Property(e => e.ParameterDateTimeValue).HasColumnType("datetime");
+            });
+
+            modelBuilder.Entity<TblResearches>(entity =>
+            {
+                entity.HasKey(e => e.ResearchId);
+
+                entity.ToTable("tbl_researches");
+
+                entity.Property(e => e.ResearchId)
+                    .HasColumnName("ResearchID")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.ResearchName)
+                    .IsRequired()
+                    .HasMaxLength(30);
             });
 
             modelBuilder.Entity<TblUserPlanetBuildingUpgs>(entity =>
@@ -133,6 +151,43 @@ namespace WarOfGalaxiesApi.DAL.Models
                 entity.Property(e => e.PlanetName)
                     .IsRequired()
                     .HasMaxLength(18);
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+            });
+
+            modelBuilder.Entity<TblUserResearchUpgs>(entity =>
+            {
+                entity.HasKey(e => e.UserResearchUpgId);
+
+                entity.ToTable("tbl_user_research_upgs");
+
+                entity.HasIndex(e => e.UserId)
+                    .IsUnique();
+
+                entity.HasIndex(e => new { e.UserId, e.ResearchId });
+
+                entity.Property(e => e.UserResearchUpgId).HasColumnName("UserResearchUpgID");
+
+                entity.Property(e => e.BeginDate).HasColumnType("datetime");
+
+                entity.Property(e => e.EndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ResearchId).HasColumnName("ResearchID");
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+            });
+
+            modelBuilder.Entity<TblUserResearches>(entity =>
+            {
+                entity.HasKey(e => e.UserResearchId);
+
+                entity.ToTable("tbl_user_researches");
+
+                entity.HasIndex(e => new { e.UserId, e.ResearchId });
+
+                entity.Property(e => e.UserResearchId).HasColumnName("UserResearchID");
+
+                entity.Property(e => e.ResearchId).HasColumnName("ResearchID");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
             });

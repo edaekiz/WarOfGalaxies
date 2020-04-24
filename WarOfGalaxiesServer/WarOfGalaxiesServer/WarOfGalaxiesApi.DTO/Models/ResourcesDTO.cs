@@ -10,6 +10,13 @@
         {
 
         }
+
+        public ResourcesDTO(double metal, double crystal)
+        {
+            this.Metal = metal;
+            this.Crystal = crystal;
+        }
+
         public ResourcesDTO(double metal, double crystal, double boron)
         {
             this.Metal = metal;

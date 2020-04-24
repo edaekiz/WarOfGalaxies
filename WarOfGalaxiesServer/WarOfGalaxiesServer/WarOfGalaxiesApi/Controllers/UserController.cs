@@ -64,6 +64,21 @@ namespace WarOfGalaxiesApi.Controllers
                 })
                 .ToList();
 
+            // Kullanıcının araştırmaları.
+            List<UserResearchesDTO> userResearches = base.UnitOfWork.GetRepository<TblUserResearches>().Where(x => x.UserId == base.DBUser.UserId).Select(x => new UserResearchesDTO
+            {
+                ResearchID = x.ResearchId,
+                ResearchLevel = x.ResearchLevel
+            }).ToList();
+
+            // Devam eden araştırmaları alıyoruz.
+            List<UserResearchProgDTO> userResearchProgs = base.UnitOfWork.GetRepository<TblUserResearchUpgs>().Where(x => x.UserId == base.DBUser.UserId).Select(x => new UserResearchProgDTO
+            {
+                LeftTime = (x.EndDate - currentDate).TotalSeconds,
+                ResearchID = x.ResearchId,
+                ResearchLevel = x.ResearchTargetLevel,
+            }).ToList();
+
             // Kullanıcının gezegenlerini buluyoruz.
             List<UserPlanetDTO> userPlanets = this.UnitOfWork.GetRepository<TblUserPlanets>().Where(x => x.UserId == base.DBUser.UserId).Select(x => new UserPlanetDTO
             {
@@ -83,7 +98,9 @@ namespace WarOfGalaxiesApi.Controllers
                 UserData = user,
                 UserPlanetsBuildings = userPlanetsBuildings,
                 UserPlanetsBuildingsUpgs = userPlanetBuildingUpgs,
-                UserPlanets = userPlanets
+                UserPlanets = userPlanets,
+                UserResearches = userResearches,
+                UserResearchProgs = userResearchProgs
             });
         }
 

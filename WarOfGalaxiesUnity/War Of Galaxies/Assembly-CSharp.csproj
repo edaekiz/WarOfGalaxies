@@ -102,6 +102,8 @@
     <Compile Include="Assets\Scripts\Controllers\PlanetController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlanetRotateController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlanetZoomController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\ResearchController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\ResearchPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\ResourceController.cs" />
     <Compile Include="Assets\Scripts\Controllers\ResourceDetailController.cs" />
     <Compile Include="Assets\Scripts\Controllers\StaticValuesController.cs" />
@@ -110,6 +112,7 @@
     <Compile Include="Assets\Scripts\Data\StaticData.cs" />
     <Compile Include="Assets\Scripts\Enums\Buildings.cs" />
     <Compile Include="Assets\Scripts\Enums\PlanetTypes.cs" />
+    <Compile Include="Assets\Scripts\Enums\Researches.cs" />
     <Compile Include="Assets\Scripts\Enums\ResourceTypes.cs" />
     <Compile Include="Assets\Scripts\Extends\CordinateExtends.cs" />
     <Compile Include="Assets\Scripts\Extends\JsonHelper.cs" />
@@ -152,6 +155,7 @@
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\SeparableBlurPlus.shader" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Atmosphere.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MobileBlur.shader" />
+    <None Include="Assets\Robo's turret (free)\Shaders\SDR_Structures.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BrightPassFilter2.shader" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Planet.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\PrepareSunShaftsBlur.shader" />
@@ -173,12 +177,6 @@
     </Reference>
     <Reference Include="Unity.VSCode.Editor">
       <HintPath>C:/Users/Furkan/Documents/GitHub/WarOfGalaxies/WarOfGalaxiesUnity/War Of Galaxies/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Polybrush">
-      <HintPath>C:/Users/Furkan/Documents/GitHub/WarOfGalaxies/WarOfGalaxiesUnity/War Of Galaxies/Library/ScriptAssemblies/Unity.Polybrush.dll</HintPath>
-    </Reference>
-    <Reference Include="Unity.Polybrush.Editor">
-      <HintPath>C:/Users/Furkan/Documents/GitHub/WarOfGalaxies/WarOfGalaxiesUnity/War Of Galaxies/Library/ScriptAssemblies/Unity.Polybrush.Editor.dll</HintPath>
     </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>C:/Users/Furkan/Documents/GitHub/WarOfGalaxies/WarOfGalaxiesUnity/War Of Galaxies/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>

@@ -126,6 +126,9 @@ public class BasePanelController : MonoBehaviour
     }
     private void OnOpenTransitionCompleted()
     {
+        // Açıl tamamlandığında.
+        OnTransionCompleted(false);
+
         // Panelin olması gerektiği konumda olduğundan emin oluyoruz.
         MainPanel.anchoredPosition = openDestination;
 
@@ -160,7 +163,7 @@ public class BasePanelController : MonoBehaviour
 
         // Eğer yeterince yaklaştıysa animasyonu durduruyoruz.
         if (MainPanel.anchoredPosition.y > openDestination.y)
-            OnOpenTransitionCompleted(); ;
+            OnOpenTransitionCompleted();
     }
     private void CheckOpeningTopTransition()
     {
@@ -169,7 +172,7 @@ public class BasePanelController : MonoBehaviour
 
         // Eğer yeterince yaklaştıysa animasyonu durduruyoruz.
         if (MainPanel.anchoredPosition.y < openDestination.y)
-            OnOpenTransitionCompleted(); ;
+            OnOpenTransitionCompleted();
     }
 
     #endregion
@@ -206,6 +209,9 @@ public class BasePanelController : MonoBehaviour
     }
     private void OnCloseTransitionCompleted()
     {
+        // Kapandığını söylüyoruz.
+        OnTransionCompleted(true);
+
         // Paneli sistemden kaldırıyoruz.
         GlobalPanelController.GPC.ClosePanel(PanelType);
 
@@ -269,6 +275,11 @@ public class BasePanelController : MonoBehaviour
 
         // Eğer açılmıyor ise kapatılıyor olarak ayarlıyoruz.
         isClosing = true;
+    }
+
+    protected virtual void OnTransionCompleted(bool isClosed)
+    {
+
     }
 
 }

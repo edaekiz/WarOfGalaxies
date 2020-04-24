@@ -198,5 +198,52 @@ namespace WarOfGalaxiesApi.Controllers
                     return 0;
             }
         }
+
+        #region Researches / Araştırmalar
+
+        /// <summary>
+        /// Silah tekniğinin araştırmaı bilgisi.
+        /// </summary>
+        public static ResourcesDTO WeaponTech = new ResourcesDTO(200, 100);
+
+        /// <summary>
+        /// Silah tekniğinin taban katkı oranı.
+        /// </summary>
+        public static double WeaponTechRate = 0.1f;
+
+        /// <summary>
+        /// Araştırmaların maliyetini verilen seviye için hesaplar.
+        /// </summary>
+        /// <param name="research">Hangi araştırma için hesaplanacak.</param>
+        /// <param name="researchLevel">Araştırmanın seviyesi.</param>
+        /// <returns></returns>
+        public static ResourcesDTO CalculateCostResearch(Researches research, int researchLevel)
+        {
+            switch (research)
+            {
+                case Researches.Silahlandırma:
+                    return new ResourcesDTO(WeaponTech.Metal * researchLevel, WeaponTech.Crystal * researchLevel);
+                default:
+                    return ResourcesDTO.ResourceZero;
+            }
+        }
+
+        /// <summary>
+        /// Araştırmaların yükseltme süresini hesaplar.
+        /// </summary>
+        /// <param name="research">Hangi araştırma için hesaplanacak.</param>
+        /// <param name="researchLevel">Araştırmanın seviyesi.</param>
+        /// <returns></returns>
+        public static double CalculateResearchUpgradeTime(Researches research, int researchLevel)
+        {
+            // Maliyetini hesaplıyoruz araştırmanın.
+            ResourcesDTO cost = CalculateCostResearch(research, researchLevel);
+
+            // Metal ve kristal üzerinden araştırm süresini hesaplıyoruz.
+            return (cost.Metal + cost.Crystal) / (UniverseSpeed * 1000 * (1 + researchLevel));
+        }
+
+        #endregion
+
     }
 }

@@ -8,7 +8,7 @@ public class GlobalPanelController : MonoBehaviour
     public static GlobalPanelController GPC { get; set; }
 
     [Serializable]
-    public enum PanelTypes { BuildingPanel }
+    public enum PanelTypes { BuildingPanel,ResearchPanel }
 
     [Serializable]
     public class PanelData
