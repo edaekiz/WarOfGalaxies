@@ -8,14 +8,15 @@ public class GlobalPanelController : MonoBehaviour
     public static GlobalPanelController GPC { get; set; }
 
     [Serializable]
-    public enum PanelTypes { BuildingPanel,ResearchPanel }
+    public enum PanelTypes { BuildingPanel,ResearchPanel,
+        ResearchDetailPanel
+    }
 
     [Serializable]
     public class PanelData
     {
         public PanelTypes PanelType;
         public GameObject Prefab;
-        public bool IsSingle;
     }
 
     private void Awake()
@@ -57,18 +58,18 @@ public class GlobalPanelController : MonoBehaviour
             return null;
         }
 
-        // Eğer bu tek olarak ayarlanmış bir panel ise kontrol et açık panel var mı?
-        if (panelData.IsSingle)
-        {
-            // Herhangi bir tekil açık panel var mı diye kontrol ediyoruz.
-            if (OpenPanels.Any(x => x.Item1.IsSingle))
-            {
-                Debug.LogWarning("Başka bir panel açık. Önce diğer paneli kapat.");
+        //// Eğer bu tek olarak ayarlanmış bir panel ise kontrol et açık panel var mı?
+        //if (panelData.IsSingle)
+        //{
+        //    // Herhangi bir tekil açık panel var mı diye kontrol ediyoruz.
+        //    if (OpenPanels.Any(x => x.Item1.IsSingle))
+        //    {
+        //        Debug.LogWarning("Başka bir panel açık. Önce diğer paneli kapat.");
 
-                // Null dönüyoruz.
-                return null;
-            }
-        }
+        //        // Null dönüyoruz.
+        //        return null;
+        //    }
+        //}
 
         // Paneli açıyoruz.
         GameObject panelObject = Instantiate(panelData.Prefab, Vector3.zero, Quaternion.identity);

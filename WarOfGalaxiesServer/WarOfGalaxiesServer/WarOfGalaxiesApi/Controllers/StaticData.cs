@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using WarOfGalaxiesApi.DTO.Enums;
 using WarOfGalaxiesApi.DTO.Models;
 
@@ -202,14 +203,15 @@ namespace WarOfGalaxiesApi.Controllers
         #region Researches / Araştırmalar
 
         /// <summary>
-        /// Silah tekniğinin araştırmaı bilgisi.
+        /// Araştırmalar ve gereksinimleri ve oranları.
+        /// İlk parametre Araştırma.
+        /// İkinci Parametre Araştırma taban maliyeti.
+        /// Üçüncü Araştırma %lik oranı.
         /// </summary>
-        public static ResourcesDTO WeaponTech = new ResourcesDTO(200, 100);
-
-        /// <summary>
-        /// Silah tekniğinin taban katkı oranı.
-        /// </summary>
-        public static double WeaponTechRate = 0.1f;
+        public static List<Tuple<Researches, ResourcesDTO, double>> ResearchData = new List<Tuple<Researches, ResourcesDTO, double>>()
+        {
+            new Tuple<Researches, ResourcesDTO, double>(Researches.Silahlandırma,new ResourcesDTO(200,100),.1f)
+        };
 
         /// <summary>
         /// Araştırmaların maliyetini verilen seviye için hesaplar.
@@ -219,13 +221,11 @@ namespace WarOfGalaxiesApi.Controllers
         /// <returns></returns>
         public static ResourcesDTO CalculateCostResearch(Researches research, int researchLevel)
         {
-            switch (research)
-            {
-                case Researches.Silahlandırma:
-                    return new ResourcesDTO(WeaponTech.Metal * researchLevel, WeaponTech.Crystal * researchLevel);
-                default:
-                    return ResourcesDTO.ResourceZero;
-            }
+            // Araştırma ve datalarını buluyoruz.
+            Tuple<Researches, ResourcesDTO, double> researchItem = ResearchData.Find(x => x.Item1 == research);
+
+            // Hesaplayıp geri dönüyoruz. Zaten her seviye için kaynakları seviye ile çarpıyoruz.
+            return new ResourcesDTO(Math.Pow(2, researchLevel) * researchItem.Item2.Metal, Math.Pow(2, researchLevel) * researchItem.Item2.Crystal, Math.Pow(2, researchLevel) * researchItem.Item2.Boron);
         }
 
         /// <summary>
@@ -240,7 +240,7 @@ namespace WarOfGalaxiesApi.Controllers
             ResourcesDTO cost = CalculateCostResearch(research, researchLevel);
 
             // Metal ve kristal üzerinden araştırm süresini hesaplıyoruz.
-            return (cost.Metal + cost.Crystal) / (UniverseSpeed * 1000 * (1 + researchLevel));
+            return ((cost.Metal + cost.Crystal) / (UniverseSpeed * 1000 * (1 + researchLevel))) * 3600;
         }
 
         #endregion

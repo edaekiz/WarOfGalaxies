@@ -9,8 +9,6 @@ using Assets.Scripts.Extends;
 
 public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 {
-    public enum ResourceDetailTypes { ResourceMetal, ResourceCrystal, ResourceBoron, UpgradeResourceMetal, UpgradeResourceCrystal, UpgradeResourceBoron };
-
     [Header("Transparan olma hızı.")]
     [Range(0.1f, 5)]
     public float AnimationSpeed;
@@ -20,13 +18,6 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 
     [Header("Detayların basılacağı alan.")]
     public TextMeshProUGUI ContentField;
-
-    [Header("Datalarının basılacağı kaynak.")]
-    public ResourceDetailTypes Resource;
-
-    [Header("Değiştirilecek data.")]
-    [TextArea]
-    public string Template;
 
     private bool isOpening;
     private Image detailPanelImage;
@@ -157,10 +148,6 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 
             // Ve artık panelin açıldığını söylüyoruz.
             isOpening = true;
-
-            // Load resource Details.
-            LoadResourceDetails();
-
         }
         else // Geri dön.
         {
@@ -168,143 +155,4 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
             return;
         }
     }
-
-    public void LoadResourceDetails()
-    {
-        switch (Resource)
-        {
-            case ResourceDetailTypes.ResourceMetal:
-                {
-
-                    #region Metal Üretim hesaplaması.
-
-                    // Kullanıcının metal binası var mı?
-                    UserPlanetBuildingDTO metalBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.MetalMadeni);
-
-                    // Saatlik hesaplanmış üretim.
-                    double metalProducePerHour = StaticData.GetBuildingProdPerHour(Buildings.MetalMadeni, metalBuilding == null ? 0 : metalBuilding.BuildingLevel);
-
-                    #endregion
-
-                    #region Depo Kapasitesini hesaplıyoruz.
-
-                    // Kullanıcının metal binası.
-                    UserPlanetBuildingDTO metalStorageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.MetalDeposu);
-
-                    // Kullanıcının metal deposu.
-                    double metalBuildingCapacity = StaticData.GetBuildingStorage(Buildings.MetalDeposu, metalStorageBuilding == null ? 0 : metalStorageBuilding.BuildingLevel);
-
-                    #endregion
-
-                    #region Ekrana basıyoruz.
-
-                    string temp = Template.Replace("{0}", ResourceExtends.ConvertToDottedResource(GlobalPlanetController.GPC.CurrentPlanet.Metal));
-                    temp = temp.Replace("{1}", ResourceExtends.ConvertToDottedResource(metalBuildingCapacity));
-                    temp = temp.Replace("{2}", ResourceExtends.ConvertToDottedResource(metalProducePerHour));
-                    ContentField.text = temp;
-
-                    #endregion
-
-                }
-                break;
-            case ResourceDetailTypes.ResourceCrystal:
-                {
-
-                    #region Kristal Üretim hesaplaması.
-
-                    // Kullanıcının Kristal binası var mı?
-                    UserPlanetBuildingDTO crystalBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.KristalMadeni);
-
-                    // Saatlik hesaplanmış üretim.
-                    double crystalProducePerHour = StaticData.GetBuildingProdPerHour(Buildings.KristalMadeni, crystalBuilding == null ? 0 : crystalBuilding.BuildingLevel);
-
-                    #endregion
-
-                    #region Depo Kapasitesini hesaplıyoruz.
-
-                    // Kullanıcının metal binası.
-                    UserPlanetBuildingDTO crystalStorageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.KristalDeposu);
-
-                    // Kullanıcının kristal deposu.
-                    double crystalBuildingCapacity = StaticData.GetBuildingStorage(Buildings.MetalDeposu, crystalStorageBuilding == null ? 0 : crystalStorageBuilding.BuildingLevel);
-
-                    #endregion
-
-                    #region Ekrana basıyoruz.
-
-                    string temp = Template.Replace("{0}", ResourceExtends.ConvertToDottedResource(GlobalPlanetController.GPC.CurrentPlanet.Crystal));
-                    temp = temp.Replace("{1}", ResourceExtends.ConvertToDottedResource(crystalBuildingCapacity));
-                    temp = temp.Replace("{2}", ResourceExtends.ConvertToDottedResource(crystalProducePerHour));
-                    ContentField.text = temp;
-
-                    #endregion
-
-                }
-                break;
-            case ResourceDetailTypes.ResourceBoron:
-                {
-
-                    #region Boron Üretim hesaplaması.
-
-                    // Kullanıcının Boron binası var mı?
-                    UserPlanetBuildingDTO boronBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.BoronMadeni);
-
-                    // Saatlik hesaplanmış üretim.
-                    double boronProducePerHour = StaticData.GetBuildingProdPerHour(Buildings.BoronMadeni, boronBuilding == null ? 0 : boronBuilding.BuildingLevel);
-
-                    #endregion
-
-                    #region Depo Kapasitesini hesaplıyoruz.
-
-                    // Kullanıcının metal binası.
-                    UserPlanetBuildingDTO boronStorageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.BoronDeposu);
-
-                    // Kullanıcının kristal deposu.
-                    double boronBuildingCapacity = StaticData.GetBuildingStorage(Buildings.BoronDeposu, boronStorageBuilding == null ? 0 : boronStorageBuilding.BuildingLevel);
-
-                    #endregion
-
-                    #region Ekrana basıyoruz.
-
-                    string temp = Template.Replace("{0}", ResourceExtends.ConvertToDottedResource(GlobalPlanetController.GPC.CurrentPlanet.Boron));
-                    temp = temp.Replace("{1}", ResourceExtends.ConvertToDottedResource(boronBuildingCapacity));
-                    temp = temp.Replace("{2}", ResourceExtends.ConvertToDottedResource(boronProducePerHour));
-                    ContentField.text = temp;
-
-                    #endregion
-
-                }
-                break;
-            case ResourceDetailTypes.UpgradeResourceMetal:
-                {
-                    int nextLevel = 1;
-                    if (GlobalBuildingController.GBC.CurrentSelectedBuilding.UserPlanetBuilding != null)
-                        nextLevel = GlobalBuildingController.GBC.CurrentSelectedBuilding.UserPlanetBuilding.BuildingLevel + 1;
-                    ResourcesDTO cost = StaticData.CalculateCostBuilding(GlobalBuildingController.GBC.CurrentSelectedBuilding.BuildingType, nextLevel);
-                    ContentField.text = ResourceExtends.ConvertToDottedResource(cost.Metal);
-                }
-                break;
-            case ResourceDetailTypes.UpgradeResourceCrystal:
-                {
-                    int nextLevel = 1;
-                    if (GlobalBuildingController.GBC.CurrentSelectedBuilding.UserPlanetBuilding != null)
-                        nextLevel = GlobalBuildingController.GBC.CurrentSelectedBuilding.UserPlanetBuilding.BuildingLevel + 1;
-                    ResourcesDTO cost = StaticData.CalculateCostBuilding(GlobalBuildingController.GBC.CurrentSelectedBuilding.BuildingType, nextLevel);
-                    ContentField.text = ResourceExtends.ConvertToDottedResource(cost.Crystal);
-                }
-                break;
-            case ResourceDetailTypes.UpgradeResourceBoron:
-                {
-                    int nextLevel = 1;
-                    if (GlobalBuildingController.GBC.CurrentSelectedBuilding.UserPlanetBuilding != null)
-                        nextLevel = GlobalBuildingController.GBC.CurrentSelectedBuilding.UserPlanetBuilding.BuildingLevel + 1;
-                    ResourcesDTO cost = StaticData.CalculateCostBuilding(GlobalBuildingController.GBC.CurrentSelectedBuilding.BuildingType, nextLevel);
-                    ContentField.text = ResourceExtends.ConvertToDottedResource(cost.Boron);
-                }
-                break;
-            default:
-                break;
-        }
-    }
-
 }

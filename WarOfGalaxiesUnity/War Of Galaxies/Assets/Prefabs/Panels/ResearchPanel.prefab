@@ -434,12 +434,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PanelType: 0
-  TransitionSpeed: 4
-  OpenTransition: 4
-  CloseTransition: 4
+  TransitionSpeed: 4000
+  OpenTransition: 0
+  CloseTransition: 0
   MainPanel: {fileID: 3286742540875283346}
-  ResearchItem: {fileID: 0}
-  ResearchContent: {fileID: 0}
+  ResearchItem: {fileID: 8088941615349333476, guid: 6bff4920de67d93468815dca1e080a1b,
+    type: 3}
+  ResearchContent: {fileID: 990496957119935142}
 --- !u!1 &990496957882532058
 GameObject:
   m_ObjectHideFlags: 0

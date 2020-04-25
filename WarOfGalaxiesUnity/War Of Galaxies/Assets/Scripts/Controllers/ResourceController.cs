@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.ApiModels;
 using Assets.Scripts.Data;
+using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using System.Collections;
 using System.Globalization;
@@ -31,9 +32,19 @@ public class ResourceController : MonoBehaviour
     [Header("Kullanıcının boron miktarının basılacağı alan.")]
     public TextMeshProUGUI BoronQuantityText;
 
-    [Header("Kaynağa tıklandığında açılacak detay paneli.")]
-    public ResourceDetailController MetalDetailPanel;
+    [Header("Metal kaynağına tıklandığında detayları yazacak.")]
+    public ResourceDetailController MetalResourceDetail;
 
+    [Header("Kristal kaynağına tıklandığında detayları yazacak.")]
+    public ResourceDetailController CrystalResourceDetail;
+
+    [Header("Boron kaynağına tıklandığında detayları yazacak.")]
+    public ResourceDetailController BoronResourceDetail;
+
+    [Header("Değiştirilecek data.")]
+    [Tooltip("ÖRN;{0} Gereken Metal.")]
+    [TextArea]
+    public string Template;
     IEnumerator Start()
     {
 
@@ -59,6 +70,15 @@ public class ResourceController : MonoBehaviour
 
         // Boron animasyonu.
         DoBoronAnimation();
+
+        // Metal detaylarını tazele.
+        RefreshMetalDetails();
+
+        // Kristal detaylarını tazele.
+        RefreshCrystalDetails();
+
+        // Boron detaylarını tazele.
+        RefreshBoronDetails();
     }
 
     #region Üretim Hesaplamaları
@@ -288,5 +308,114 @@ public class ResourceController : MonoBehaviour
     }
 
     #endregion
+
+    public void RefreshMetalDetails()
+    {
+        // Eğer panel açık değil ise geri dön.
+        if (!MetalResourceDetail.ResourceDetailPanel.activeSelf)
+            return;
+
+        #region Metal Üretim hesaplaması.
+
+        // Kullanıcının metal binası var mı?
+        UserPlanetBuildingDTO metalBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.MetalMadeni);
+
+        // Saatlik hesaplanmış üretim.
+        double metalProducePerHour = StaticData.GetBuildingProdPerHour(Buildings.MetalMadeni, metalBuilding == null ? 0 : metalBuilding.BuildingLevel);
+
+        #endregion
+
+        #region Depo Kapasitesini hesaplıyoruz.
+
+        // Kullanıcının metal binası.
+        UserPlanetBuildingDTO metalStorageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.MetalDeposu);
+
+        // Kullanıcının metal deposu.
+        double metalBuildingCapacity = StaticData.GetBuildingStorage(Buildings.MetalDeposu, metalStorageBuilding == null ? 0 : metalStorageBuilding.BuildingLevel);
+
+        #endregion
+
+        #region Ekrana basıyoruz.
+
+        string temp = Template.Replace("{0}", ResourceExtends.ConvertToDottedResource(GlobalPlanetController.GPC.CurrentPlanet.Metal));
+        temp = temp.Replace("{1}", ResourceExtends.ConvertToDottedResource(metalBuildingCapacity));
+        temp = temp.Replace("{2}", ResourceExtends.ConvertToDottedResource(metalProducePerHour));
+        MetalResourceDetail.ContentField.text = temp;
+
+        #endregion
+
+    }
+
+    public void RefreshCrystalDetails()
+    {
+        // Eğer panel açık değil ise geri dön.
+        if (!CrystalResourceDetail.ResourceDetailPanel.activeSelf)
+            return;
+
+        #region Kristal Üretim hesaplaması.
+
+        // Kullanıcının Kristal binası var mı?
+        UserPlanetBuildingDTO crystalBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.KristalMadeni);
+
+        // Saatlik hesaplanmış üretim.
+        double crystalProducePerHour = StaticData.GetBuildingProdPerHour(Buildings.KristalMadeni, crystalBuilding == null ? 0 : crystalBuilding.BuildingLevel);
+
+        #endregion
+
+        #region Depo Kapasitesini hesaplıyoruz.
+
+        // Kullanıcının metal binası.
+        UserPlanetBuildingDTO crystalStorageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.KristalDeposu);
+
+        // Kullanıcının kristal deposu.
+        double crystalBuildingCapacity = StaticData.GetBuildingStorage(Buildings.MetalDeposu, crystalStorageBuilding == null ? 0 : crystalStorageBuilding.BuildingLevel);
+
+        #endregion
+
+        #region Ekrana basıyoruz.
+
+        string temp = Template.Replace("{0}", ResourceExtends.ConvertToDottedResource(GlobalPlanetController.GPC.CurrentPlanet.Crystal));
+        temp = temp.Replace("{1}", ResourceExtends.ConvertToDottedResource(crystalBuildingCapacity));
+        temp = temp.Replace("{2}", ResourceExtends.ConvertToDottedResource(crystalProducePerHour));
+        CrystalResourceDetail.ContentField.text = temp;
+
+        #endregion
+    }
+
+    public void RefreshBoronDetails()
+    {
+        // Eğer panel açık değil ise geri dön.
+        if (!BoronResourceDetail.ResourceDetailPanel.activeSelf)
+            return;
+
+        #region Boron Üretim hesaplaması.
+
+        // Kullanıcının Boron binası var mı?
+        UserPlanetBuildingDTO boronBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.BoronMadeni);
+
+        // Saatlik hesaplanmış üretim.
+        double boronProducePerHour = StaticData.GetBuildingProdPerHour(Buildings.BoronMadeni, boronBuilding == null ? 0 : boronBuilding.BuildingLevel);
+
+        #endregion
+
+        #region Depo Kapasitesini hesaplıyoruz.
+
+        // Kullanıcının metal binası.
+        UserPlanetBuildingDTO boronStorageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.BoronDeposu);
+
+        // Kullanıcının kristal deposu.
+        double boronBuildingCapacity = StaticData.GetBuildingStorage(Buildings.BoronDeposu, boronStorageBuilding == null ? 0 : boronStorageBuilding.BuildingLevel);
+
+        #endregion
+
+        #region Ekrana basıyoruz.
+
+        string temp = Template.Replace("{0}", ResourceExtends.ConvertToDottedResource(GlobalPlanetController.GPC.CurrentPlanet.Boron));
+        temp = temp.Replace("{1}", ResourceExtends.ConvertToDottedResource(boronBuildingCapacity));
+        temp = temp.Replace("{2}", ResourceExtends.ConvertToDottedResource(boronProducePerHour));
+        BoronResourceDetail.ContentField.text = temp;
+
+        #endregion
+    }
 
 }

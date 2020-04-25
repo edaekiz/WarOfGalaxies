@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.ApiModels;
 using Assets.Scripts.Enums;
 using System;
+using System.Collections.Generic;
 
 namespace Assets.Scripts.Data
 {
@@ -198,5 +199,50 @@ namespace Assets.Scripts.Data
                     return 0;
             }
         }
+
+        #region Researches / Araştırmalar
+
+        /// <summary>
+        /// Araştırmalar ve gereksinimleri ve oranları.
+        /// İlk parametre Araştırma.
+        /// İkinci Parametre Araştırma taban maliyeti.
+        /// Üçüncü Araştırma %lik oranı.
+        /// </summary>
+        public static List<Tuple<Researches, ResourcesDTO, double>> ResearchData = new List<Tuple<Researches, ResourcesDTO, double>>()
+        {
+            new Tuple<Researches, ResourcesDTO, double>(Researches.Silahlandırma,new ResourcesDTO(200,100),.1f)
+        };
+
+        /// <summary>
+        /// Araştırmaların maliyetini verilen seviye için hesaplar.
+        /// </summary>
+        /// <param name="research">Hangi araştırma için hesaplanacak.</param>
+        /// <param name="researchLevel">Araştırmanın seviyesi.</param>
+        /// <returns></returns>
+        public static ResourcesDTO CalculateCostResearch(Researches research, int researchLevel)
+        {
+            // Araştırma ve datalarını buluyoruz.
+            Tuple<Researches, ResourcesDTO, double> researchItem = ResearchData.Find(x => x.Item1 == research);
+
+            // Hesaplayıp geri dönüyoruz. Zaten her seviye için kaynakları seviye ile çarpıyoruz.
+            return new ResourcesDTO(Math.Pow(2, researchLevel) * researchItem.Item2.Metal, Math.Pow(2, researchLevel) * researchItem.Item2.Crystal, Math.Pow(2, researchLevel) * researchItem.Item2.Boron);
+        }
+
+        /// <summary>
+        /// Araştırmaların yükseltme süresini hesaplar.
+        /// </summary>
+        /// <param name="research">Hangi araştırma için hesaplanacak.</param>
+        /// <param name="researchLevel">Araştırmanın seviyesi.</param>
+        /// <returns></returns>
+        public static double CalculateResearchUpgradeTime(Researches research, int researchLevel)
+        {
+            // Maliyetini hesaplıyoruz araştırmanın.
+            ResourcesDTO cost = CalculateCostResearch(research, researchLevel);
+
+            // Metal ve kristal üzerinden araştırm süresini hesaplıyoruz.
+            return ((cost.Metal + cost.Crystal) / (UniverseSpeed * 1000 * (1 + researchLevel))) * 3600;
+        }
+
+        #endregion
     }
 }

@@ -517,7 +517,6 @@ GameObject:
   - component: {fileID: 158059461}
   - component: {fileID: 158059460}
   - component: {fileID: 158059459}
-  - component: {fileID: 158059458}
   m_Layer: 0
   m_Name: Barracks_Block
   m_TagString: Untagged
@@ -539,18 +538,6 @@ Transform:
   m_Father: {fileID: 1937584528}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &158059458
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 158059456}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bd5e5ddd242bd64581fb5ed9c0e0507, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &158059459
 Animator:
   serializedVersion: 3
@@ -1401,9 +1388,6 @@ MonoBehaviour:
   AnimationSpeed: 3
   ResourceDetailPanel: {fileID: 500339734}
   ContentField: {fileID: 1505810897}
-  Resource: 0
-  Template: "Anl\u0131k<br><color=white>{0}</color><br>Depo Kapasitesi<br><color=white>{1}</color><br>Saaatlik
-    \xDCretim<br><color=white>{2}</color>"
 --- !u!114 &355289714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1993,9 +1977,6 @@ MonoBehaviour:
   AnimationSpeed: 3
   ResourceDetailPanel: {fileID: 1293499344}
   ContentField: {fileID: 483176013}
-  Resource: 2
-  Template: "Anl\u0131k<br><color=white>{0}</color><br>Depo Kapasitesi<br><color=white>{1}</color><br>Saaatlik
-    \xDCretim<br><color=white>{2}</color>"
 --- !u!114 &442223620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2806,10 +2787,11 @@ MonoBehaviour:
   - PanelType: 0
     Prefab: {fileID: 8734965623041127629, guid: b8b010892966d6f40a320a31378a7a5c,
       type: 3}
-    IsSingle: 1
   - PanelType: 1
     Prefab: {fileID: 990496957505793030, guid: 913cade0a26cba74e8e1651a2a8562a5, type: 3}
-    IsSingle: 1
+  - PanelType: 2
+    Prefab: {fileID: 9169019502093364654, guid: ed8049b863ed19c4288cc9558e141f92,
+      type: 3}
 --- !u!4 &515747090
 Transform:
   m_ObjectHideFlags: 0
@@ -2849,7 +2831,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1935d206958581c49a051bcbe9732c75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Environment: 0
+  Environment: 1
   Token: d26fc6fe-f9a7-4fa9-97ee-22ea219cc5f2
 --- !u!114 &515747093
 MonoBehaviour:
@@ -4423,7 +4405,6 @@ GameObject:
   - component: {fileID: 845636668}
   - component: {fileID: 845636667}
   - component: {fileID: 845636666}
-  - component: {fileID: 845636665}
   m_Layer: 0
   m_Name: Barracks_Block
   m_TagString: Untagged
@@ -4431,18 +4412,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
---- !u!114 &845636665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 845636664}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bd5e5ddd242bd64581fb5ed9c0e0507, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &845636666
 Animator:
   serializedVersion: 3
@@ -5174,9 +5143,6 @@ MonoBehaviour:
   AnimationSpeed: 3
   ResourceDetailPanel: {fileID: 659951285}
   ContentField: {fileID: 472800929}
-  Resource: 1
-  Template: "Anl\u0131k<br><color=white>{0}</color><br>Depo Kapasitesi<br><color=white>{1}</color><br>Saaatlik
-    \xDCretim<br><color=white>{2}</color>"
 --- !u!114 &952155739
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6646,7 +6612,11 @@ MonoBehaviour:
   MetalQuantityText: {fileID: 1974497942}
   CrystalQuantityText: {fileID: 1498060881}
   BoronQuantityText: {fileID: 644186182}
-  MetalDetailPanel: {fileID: 0}
+  MetalResourceDetail: {fileID: 355289713}
+  CrystalResourceDetail: {fileID: 952155738}
+  BoronResourceDetail: {fileID: 442223619}
+  Template: "Anl\u0131k<br><color=white>{0}</color><br>Depo Kapasitesi<br><color=white>{1}</color><br>Saaatlik
+    \xDCretim<br><color=white>{2}</color>"
 --- !u!114 &1338479638
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6765,7 +6735,6 @@ GameObject:
   - component: {fileID: 1386406806}
   - component: {fileID: 1386406805}
   - component: {fileID: 1386406804}
-  - component: {fileID: 1386406803}
   m_Layer: 0
   m_Name: Barracks_Block
   m_TagString: Untagged
@@ -6787,18 +6756,6 @@ Transform:
   m_Father: {fileID: 1896746163}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1386406803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1386406801}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bd5e5ddd242bd64581fb5ed9c0e0507, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &1386406804
 Animator:
   serializedVersion: 3
@@ -10621,7 +10578,6 @@ GameObject:
   - component: {fileID: 840208279879542526}
   - component: {fileID: 840208279880508478}
   - component: {fileID: 840208279873079614}
-  - component: {fileID: 840208279882447615}
   m_Layer: 0
   m_Name: Barracks_Block
   m_TagString: Untagged
@@ -10629,18 +10585,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
---- !u!114 &840208279882447615
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 840208279882447614}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4bd5e5ddd242bd64581fb5ed9c0e0507, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &1256584950676617764
 Animator:
   serializedVersion: 3

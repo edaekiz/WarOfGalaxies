@@ -16,7 +16,11 @@ public class ResearchController : MonoBehaviour
 
     public void ShowResearchPanel()
     {
+        // Araştırma panelini açıyoruz.
         GameObject openPanel = GlobalPanelController.GPC.ShowPanel(PanelTypes.ResearchPanel);
+
+        // Ve bütün araştırmaları yüklüyoruz.
+        openPanel.GetComponent<ResearchPanelController>().LoadAllResearchItems();
     }
 
 }

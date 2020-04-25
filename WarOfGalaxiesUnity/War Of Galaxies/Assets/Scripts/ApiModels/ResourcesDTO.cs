@@ -13,6 +13,13 @@ namespace Assets.Scripts.ApiModels
         {
 
         }
+
+        public ResourcesDTO(double metal, double crystal)
+        {
+            this.Metal = metal;
+            this.Crystal = crystal;
+        }
+
         public ResourcesDTO(int userPlanetId, double metal, double crystal, double boron)
         {
             this.UserPlanetID = userPlanetId;

@@ -22,10 +22,10 @@ public class ApiService : MonoBehaviour
                 BaseUrl = "http://localhost:1317/";
                 break;
             case Environments.Local:
-                BaseUrl = "http://3.122.182.106:8080/";
+                BaseUrl = "http://3.127.186.31:8080/";
                 break;
             case Environments.Real:
-                BaseUrl = "http://3.122.182.106:8080/";
+                BaseUrl = "http://3.127.186.31:8080/";
                 break;
         }
     }

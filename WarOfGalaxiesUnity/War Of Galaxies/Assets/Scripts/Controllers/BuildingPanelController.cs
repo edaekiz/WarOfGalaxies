@@ -41,17 +41,32 @@ public class BuildingPanelController : BasePanelController
     [Header("Gereken boron miktarını buraya basacağız.")]
     public TextMeshProUGUI RequiredBoronQuantity;
 
+    [Header("Gereken metal detayı.")]
+    public ResourceDetailController MetalDetail;
+
+    [Header("Gereken kristal detayı.")]
+    public ResourceDetailController CrystalDetail;
+
+    [Header("Gereken boron detayı.")]
+    public ResourceDetailController BoronDetail;
+
     public IEnumerator LoadData(Buildings building)
     {
+        #region Yükseltme yapılabilir mi? Kaynak kontrolü olmadan.
+
         // Yükseltebilir mi?
         bool canUpgrade = true;
 
         // Eğer bir bina yükseltiliyor ise true olacak.
         bool isAlreadyUpgrading = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Count(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId) > 0;
 
-        // Eğer zatne upgrade ediliyor ise upgrade edilemez.
+        // Eğer zaten upgrade ediliyor ise upgrade edilemez.
         if (isAlreadyUpgrading)
             canUpgrade = false;
+
+        #endregion
+
+        #region Bina detaylarını basıyoruz.
 
         // Yükseltilen bina aktif bina ise değer dolu olacak.
         UserPlanetBuildingUpgDTO upgrade = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == building);
@@ -87,6 +102,50 @@ public class BuildingPanelController : BasePanelController
 
         // Kaynak kontrolü ve koşulları sağlıyor mu kontorlü
         ResourcesDTO resources = StaticData.CalculateCostBuilding(building, nextLevel);
+
+        #endregion
+
+        #region Kaynak ikonları üstüne tıklandığında yazacak olan detaylar.
+
+        // Eğer metal kaynağı 0 dan fazla ise yazabiliriz. Ancak değil ise kapatacağız.
+        if (resources.Metal > 0)
+        {
+            // Metal miktarını basıyoruz.
+            MetalDetail.ContentField.text = ResourceExtends.ConvertToDottedResource(resources.Metal);
+
+            // Açık ise açmaya gerek yok paneli
+            if (!MetalDetail.gameObject.activeSelf)
+                MetalDetail.gameObject.SetActive(true);
+        }
+        else // Aksi durumda kapatıyoruz.
+            MetalDetail.gameObject.SetActive(false);
+
+        // Eğer kristal kaynağı 0 dan fazla ise yazabiliriz. Ancak değil ise kapatacağız.
+        if (resources.Crystal > 0)
+        {
+            CrystalDetail.ContentField.text = ResourceExtends.ConvertToDottedResource(resources.Crystal);
+
+            // Açık değil ise açacağız.
+            if (!CrystalDetail.gameObject.activeSelf)
+                CrystalDetail.gameObject.SetActive(true);
+        }
+        else
+            CrystalDetail.gameObject.SetActive(false);
+
+        if (resources.Boron > 0)
+        {
+            // Boron miktarını basıyoruz.
+            BoronDetail.ContentField.text = ResourceExtends.ConvertToDottedResource(resources.Boron);
+
+            // Açık ise açmaya gerek yok paneli
+            if (!BoronDetail.gameObject.activeSelf)
+                BoronDetail.gameObject.SetActive(true);
+        }else
+            BoronDetail.gameObject.SetActive(false);
+
+        #endregion
+
+        #region Kaynak gereksinimlerini basıyoruz.
 
         // Gereken metal kaynağı.
         RequiredMetalQuantity.text = ResourceExtends.ConvertResource(resources.Metal);
@@ -133,6 +192,9 @@ public class BuildingPanelController : BasePanelController
         else
             RequiredBoronQuantity.color = Color.white;
 
+        #endregion
+
+        #region Yükseltme kontrolü yapılıyor ise zaten yapılıyor yazacak. Aksi durumda butonu açacağız ya da kapatacağız.
 
         // Eğer zaten yükseltiliyor ise butonu kapat ve texti güncelle.
         if (!canUpgrade)
@@ -154,6 +216,8 @@ public class BuildingPanelController : BasePanelController
             // Texti değiştiriyoruz.
             UpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Yükselt";
         }
+
+        #endregion
 
         // 1 saniye bekliyoruz sonra kendisini yeniden çağıracağız.
         yield return new WaitForSecondsRealtime(1);
