@@ -1,16 +1,30 @@
-﻿using Assets.Scripts.ApiModels;
-using Assets.Scripts.Enums;
+﻿using Assets.Scripts.Enums;
 using System;
-using TMPro;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ResearchPanelController : BasePanelController
 {
+    /// <summary>
+    /// Açık olan araştırma paneli
+    /// </summary>
+    public static ResearchPanelController RPC { get; set; }
+
     [Header("Araştırmaları yüklerken kullanılacak prefab")]
     public GameObject ResearchItem;
     [Header("Araştırmaların yükleneceği alan.")]
     public Transform ResearchContent;
+
+    // Oluşturulan araştırmaların listesi.
+    private List<ResearchItemController> _researchItems = new List<ResearchItemController>();
+
+    private void Awake()
+    {
+        if (RPC == null)
+            RPC = this;
+        else
+            Destroy(RPC.gameObject);
+    }
 
     public void LoadAllResearchItems()
     {
@@ -30,35 +44,20 @@ public class ResearchPanelController : BasePanelController
             // Kullanıcının bu araştırma için sahip olduğu seviye.
             GameObject researchItem = Instantiate(ResearchItem, ResearchContent);
 
-            // Kullanıcının araştırmasını buluyoruz.
-            UserResearchesDTO userResearch = LoginController.LC.CurrentUser.UserResearches.Find(x => x.ResearchID == research);
+            // Araştırma datalarını yüklüyoruz.
+            ResearchItemController ric = researchItem.GetComponent<ResearchItemController>();
 
-            // Araştırmanın ismini basıyoruz.
-            researchItem.transform.Find("ResearchName").GetComponent<TextMeshProUGUI>().text = research.ToString();
+            // Araştırma bilgisini yüklüyoruz.
+            ric.LoadResearchData(research);
 
-            int researchLevel = userResearch == null ? 0 : userResearch.ResearchLevel;
-
-            // Araştırma ikonu.
-
-            // Araştırma seviyesi.
-            researchItem.transform.Find("ResearchLevelText").GetComponent<TextMeshProUGUI>().text = researchLevel.ToString();
-
-            researchItem.GetComponent<Button>().onClick.AddListener(() => ShowResearchDetail(researchItem, research, researchLevel));
-
+            // Oluşturulan araştırmayı listeye ekliyoruz.
+            _researchItems.Add(ric);
         }
-
     }
 
-    
-    private void ShowResearchDetail(GameObject sender, Researches research, int researchLevel)
-    {
-        // Paneli açıyoruz.
-        GameObject showedPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.ResearchDetailPanel);
+    /// <summary>
+    /// Bütün araştırmaları yeniliyoruz.
+    /// </summary>
+    public void RefreshAllResearches() => _researchItems.ForEach(e => e.LoadResearchData(e.CurrentResearch));
 
-        // Detaylarını buluyoruz.
-        ResearchDetailItemPanel rdip = showedPanel.GetComponent<ResearchDetailItemPanel>();
-
-        // Ve çağırıyoruz.
-        rdip.StartCoroutine(rdip.LoadReserchDetails(research, researchLevel));
-    }
 }

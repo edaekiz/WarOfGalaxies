@@ -33,6 +33,17 @@ namespace Assets.Scripts.ApiModels
             this.Crystal = crystal;
             this.Boron = boron;
         }
+        
+        /// <summary>
+        /// Kaynakların hepsini çarpıyoruz. verilen değer ile. Yeni bir nesne olarak geri döner.
+        /// </summary>
+        /// <param name="resource"></param>
+        /// <param name="rate"></param>
+        /// <returns></returns>
+        public static ResourcesDTO operator *(ResourcesDTO resource, double rate)
+        {
+            return new ResourcesDTO(resource.Metal * rate, resource.Crystal * rate, resource.Boron * rate);
+        }
 
         public static ResourcesDTO ResourceZero { get => new ResourcesDTO(0, 0, 0); }
     }

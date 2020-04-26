@@ -43,8 +43,17 @@ public class ResearchDetailItemPanel : BasePanelController
     [Header("Gereken boron miktarını buraya basacağız.")]
     public TextMeshProUGUI RequiredBoronQuantity;
 
-    public IEnumerator LoadReserchDetails(Researches research, int researchLevel)
+    [Header("Aktif araştırma bilgisi")]
+    public Researches CurrentResearch;
+
+    public IEnumerator LoadReserchDetails(Researches research)
     {
+        // Kullanıcının araştırması.
+        UserResearchesDTO currentResearchLevel = LoginController.LC.CurrentUser.UserResearches.Find(x => x.ResearchID == research);
+
+        // Aktif araştırmayı değiştiriyoruz.
+        CurrentResearch = research;
+
         #region Yükseltme yapılabilir mi? Kaynak kontrolü olmadan.
 
         // Yükseltebilir mi?
@@ -61,17 +70,23 @@ public class ResearchDetailItemPanel : BasePanelController
 
         #region Araştırma Detayları.
 
-        // Araştırma ismi.
+        // Araştırma seviyesini tutuyoruz.
+        int researchLevel = currentResearchLevel == null ? 0 : currentResearchLevel.ResearchLevel;
+
+        // Araştırma ismi ve seviyesi.
         ResearchName.text = $"{research} <color=orange>({researchLevel}.Seviye)</color>";
 
         // Araştırma resmi.
         ShortDescription.text = research.ToString();
 
-        // Araştırma süresini hesaplıyoruz.
-        double researchUpgradeTime = StaticData.CalculateResearchUpgradeTime(research, researchLevel);
+        // Araştırmayı buluyoruz.
+        UserResearchProgDTO userResearchProg = LoginController.LC.CurrentUser.UserResearchProgs.Find(x => x.ResearchID == research);
 
-        // Ekrana yükseltme süresini basıyoruz.
-        UpgradeTime.text = TimeExtends.GetCountdownText(TimeSpan.FromSeconds(researchUpgradeTime));
+        // Eğer seçilen araştırma yükleniyor ise süre zamanla azalacak.
+        if (userResearchProg == null)
+            UpgradeTime.text = TimeExtends.GetCountdownText(TimeSpan.FromSeconds(StaticData.CalculateResearchUpgradeTime(research, researchLevel)));
+        else // Eğer yükseltiliyor ise kalan süreyi basıyoruz.
+            UpgradeTime.text = TimeExtends.GetCountdownText(userResearchProg.EndDate - DateTime.UtcNow);
 
         // Maliyeti alıyoruz.
         ResourcesDTO resources = StaticData.CalculateCostResearch(research, researchLevel);
@@ -156,7 +171,40 @@ public class ResearchDetailItemPanel : BasePanelController
         yield return new WaitForSecondsRealtime(1);
 
         // Kendisini yeniden çağırıyoruz.
-        StartCoroutine(LoadReserchDetails(research, researchLevel));
-
+        StartCoroutine(LoadReserchDetails(research));
     }
+
+    public void UpgradeResearch()
+    {
+        StartCoroutine(ApiService.API.Post("UpgradeUserResearch", new UserResearchUpgRequest
+        {
+            ResearchID = CurrentResearch,
+            UserPlanetID = GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId
+        }, (ApiResult response) =>
+         {
+
+             // Eğer başarılı ise.
+             if (response.IsSuccess)
+             {
+                 // Yükseltme modelini alıyoruz.
+                 UserResearchProgDTO prog = response.GetData<UserResearchProgDTO>();
+
+                 // Hesaplamasını yapıyoruz.
+                 prog.CalculateDates(prog.LeftTime);
+
+                 // Yükseltme bilgisi.
+                 LoginController.LC.CurrentUser.UserResearchProgs.Add(prog);
+
+                 // Kullanıcının gezegeni.
+                 UserPlanetDTO userPlanet = LoginController.LC.CurrentUser.UserPlanets.Find(x => x.UserPlanetId == prog.UserPlanetID);
+
+                 // Gezegenin kaynaklarını yeniliyoruz.
+                 userPlanet.SetPlanetResources(prog.Resources);
+
+                 // Araştırmaları yeniliyoruz.
+                 ResearchPanelController.RPC.RefreshAllResearches();
+             }
+         }));
+    }
+
 }

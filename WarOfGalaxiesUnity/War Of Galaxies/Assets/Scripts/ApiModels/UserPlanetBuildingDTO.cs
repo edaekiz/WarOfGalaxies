@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Enums;
+﻿using Assets.Scripts.ApiModels.Base;
+using Assets.Scripts.Enums;
 using System;
 
 namespace Assets.Scripts.ApiModels
@@ -12,20 +13,13 @@ namespace Assets.Scripts.ApiModels
     }
 
     [Serializable]
-    public class UserPlanetBuildingUpgDTO
+    public class UserPlanetBuildingUpgDTO : ProgressModel
     {
         public ResourcesDTO PlanetResources;
         public int UserPlanetId;
         public Buildings BuildingId;
         public int BuildingLevel;
         public double LeftTime;
-        public DateTime BeginDate;
-        public DateTime EndDate;
-        public void CalculateDates()
-        {
-            BeginDate = DateTime.UtcNow;
-            EndDate = BeginDate.AddSeconds(LeftTime);
-        }
     }
 
     [Serializable]

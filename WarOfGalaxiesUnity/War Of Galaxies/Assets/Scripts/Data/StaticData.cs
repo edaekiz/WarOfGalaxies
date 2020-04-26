@@ -14,79 +14,24 @@ namespace Assets.Scripts.Data
         public static int UniverseSpeed = 10;
 
         /// <summary>
-        /// Metal deposunun base kapasitesi.
+        /// Üretim binalarının listesi.
+        /// 1-> Bina türü.
+        /// 2-> Bina taban maliyeti.
+        /// 3-> Bina taban değeri (Üretim/ Depolama vb).
+        /// 4-> Binanın seviye başına maliyet artış oranı.
         /// </summary>
-        public static double MetalBuildingStorageCapacity = 100000;
-
-        /// <summary>
-        /// Kristal deposunun base kapasitesi.
-        /// </summary>
-        public static double CrystalBuildingStorageCapacity = 100000;
-
-        /// <summary>
-        /// Boron deposunun base kapasitesi.
-        /// </summary>
-        public static double BoronBuildingStorageCapacity = 100000;
-
-        /// <summary>
-        /// Metal madeninin basee saatlik üretimi
-        /// </summary>
-        public static double MetalBuildingBasePerHour = 90;
-
-        /// <summary>
-        /// Kristal madeninin base saatlik üretimi
-        /// </summary>
-        public static double CrystalBuildingBasePerHour = 60;
-
-        /// <summary>
-        /// Boron madeninin base saatlik üretimi
-        /// </summary>
-        public static double BoronBuildingBasePerHour = 30;
-
-        /// <summary>
-        /// Metal binasının taban gereksinimleri.
-        /// </summary>
-        public static ResourcesDTO MetalBuildingBaseCost = new ResourcesDTO(60, 15, 0);
-
-        /// <summary>
-        /// Kristal binasının taban gereksinimleri.
-        /// </summary>
-        public static ResourcesDTO CrystalBuildingBaseCost = new ResourcesDTO(48, 24, 0);
-
-        /// <summary>
-        /// Boron binasının taban gereksinimleri.
-        /// </summary>
-        public static ResourcesDTO BoronBuildingBaseCost = new ResourcesDTO(225, 75, 0);
-
-        /// <summary>
-        /// Metal binasının temel yükseltme değeri.
-        /// </summary>
-        public static ResourcesDTO MetalBuildingStorageBaseCost = new ResourcesDTO(1000, 0, 0);
-
-        /// <summary>
-        /// Kristal binasının temel yükseltme değeri.
-        /// </summary>
-        public static ResourcesDTO CrystalBuildingStorageBaseCost = new ResourcesDTO(1000, 500, 0);
-
-        /// <summary>
-        /// Boron binasının temel yükseltme değeri.
-        /// </summary>
-        public static ResourcesDTO BoronBuildingStorageBaseCost = new ResourcesDTO(1000, 1000, 0);
-
-        /// <summary>
-        /// Robot fabrikası temel yükseltme değeri.
-        /// </summary>
-        public static ResourcesDTO RobotFabrikasiBaseCost = new ResourcesDTO(400, 120, 200);
-
-        /// <summary>
-        /// Araştırma binası temel yükseltme değeri.
-        /// </summary>
-        public static ResourcesDTO ArastirmaLabBaseCost = new ResourcesDTO(200, 400, 200);
-
-        /// <summary>
-        /// Tersane binası temel yükseltme değeri.
-        /// </summary>
-        public static ResourcesDTO TersaneBaseCost = new ResourcesDTO(400, 200, 100);
+        public static List<Tuple<Buildings, ResourcesDTO, double, double>> ResourceBuildings = new List<Tuple<Buildings, ResourcesDTO, double, double>>()
+        {
+            new Tuple<Buildings, ResourcesDTO, double, double>(Buildings.MetalMadeni,new ResourcesDTO(60, 15, 0),90,1.5f),
+            new Tuple<Buildings, ResourcesDTO, double, double>(Buildings.KristalMadeni,new ResourcesDTO(48, 24, 0),60,1.6f),
+            new Tuple<Buildings, ResourcesDTO, double, double>(Buildings.BoronMadeni,new ResourcesDTO(225, 75, 0),30,1.5f),
+            new Tuple<Buildings, ResourcesDTO, double, double>(Buildings.MetalDeposu, new ResourcesDTO(1000, 0, 0),75000,2),
+            new Tuple<Buildings, ResourcesDTO, double, double>(Buildings.KristalDeposu,new ResourcesDTO(1000, 500, 0),50000,2),
+            new Tuple<Buildings, ResourcesDTO, double, double>(Buildings.BoronDeposu,new ResourcesDTO(1000, 1000, 0),25000,2),
+            new Tuple<Buildings, ResourcesDTO, double, double>(Buildings.RobotFabrikası,new ResourcesDTO(400,120,200),0,2),
+            new Tuple<Buildings, ResourcesDTO, double, double>(Buildings.ArastirmaLab,new ResourcesDTO(200,400,200),0,2),
+            new Tuple<Buildings, ResourcesDTO, double, double>(Buildings.Tersane,new ResourcesDTO(400,200,100),0,2),
+        };
 
         /// <summary>
         /// Binanın seviye bazlı maliyetini hesaplıyoruz.
@@ -95,56 +40,11 @@ namespace Assets.Scripts.Data
         /// <param name="buildingLevel"></param>
         public static ResourcesDTO CalculateCostBuilding(Buildings building, int buildingLevel)
         {
-            switch (building)
-            {
-                case Buildings.MetalMadeni:
-                    return new ResourcesDTO(
-                        MetalBuildingBaseCost.Metal * Math.Pow(1.5f, buildingLevel),
-                        MetalBuildingBaseCost.Crystal * Math.Pow(1.5f, buildingLevel),
-                        MetalBuildingBaseCost.Boron * Math.Pow(1.5f, buildingLevel));
-                case Buildings.KristalMadeni:
-                    return new ResourcesDTO(
-                        CrystalBuildingBaseCost.Metal * Math.Pow(1.6f, buildingLevel),
-                        CrystalBuildingBaseCost.Crystal * Math.Pow(1.6f, buildingLevel),
-                        CrystalBuildingBaseCost.Boron * Math.Pow(1.6f, buildingLevel));
-                case Buildings.BoronMadeni:
-                    return new ResourcesDTO(
-                        BoronBuildingBaseCost.Metal * Math.Pow(1.5f, buildingLevel),
-                        BoronBuildingBaseCost.Crystal * Math.Pow(1.5f, buildingLevel),
-                        BoronBuildingBaseCost.Boron * Math.Pow(1.5f, buildingLevel));
-                case Buildings.MetalDeposu:
-                    return new ResourcesDTO(
-                        MetalBuildingStorageBaseCost.Metal * Math.Pow(2, buildingLevel),
-                        MetalBuildingStorageBaseCost.Crystal * Math.Pow(2, buildingLevel),
-                        MetalBuildingStorageBaseCost.Boron * Math.Pow(2, buildingLevel));
-                case Buildings.KristalDeposu:
-                    return new ResourcesDTO(
-                        CrystalBuildingStorageBaseCost.Metal * Math.Pow(2, buildingLevel),
-                        CrystalBuildingStorageBaseCost.Crystal * Math.Pow(2, buildingLevel),
-                        CrystalBuildingStorageBaseCost.Boron * Math.Pow(2, buildingLevel));
-                case Buildings.BoronDeposu:
-                    return new ResourcesDTO(
-                        BoronBuildingStorageBaseCost.Metal * Math.Pow(2, buildingLevel),
-                        BoronBuildingStorageBaseCost.Crystal * Math.Pow(2, buildingLevel),
-                        BoronBuildingStorageBaseCost.Boron * Math.Pow(2, buildingLevel));
-                case Buildings.ArastirmaLab:
-                    return new ResourcesDTO(
-                        ArastirmaLabBaseCost.Metal * Math.Pow(2, buildingLevel),
-                        ArastirmaLabBaseCost.Crystal * Math.Pow(2, buildingLevel),
-                        ArastirmaLabBaseCost.Boron * Math.Pow(2, buildingLevel));
-                case Buildings.RobotFabrikası:
-                    return new ResourcesDTO(
-                        RobotFabrikasiBaseCost.Metal * Math.Pow(2, buildingLevel),
-                        RobotFabrikasiBaseCost.Crystal * Math.Pow(2, buildingLevel),
-                        RobotFabrikasiBaseCost.Boron * Math.Pow(2, buildingLevel));
-                case Buildings.Tersane:
-                    return new ResourcesDTO(
-                        TersaneBaseCost.Metal * Math.Pow(2, buildingLevel),
-                        TersaneBaseCost.Crystal * Math.Pow(2, buildingLevel),
-                        TersaneBaseCost.Boron * Math.Pow(2, buildingLevel));
-                default:
-                    return ResourcesDTO.ResourceZero;
-            }
+            // Kaynağın temel maliyeti.
+            Tuple<Buildings, ResourcesDTO, double, double> baseCost = ResourceBuildings.Find(x => x.Item1 == building);
+
+            // Hesaplayıp geri dönüyoruz.
+            return baseCost.Item2 * Math.Pow(baseCost.Item4, buildingLevel);
         }
 
         /// <summary>
@@ -167,17 +67,8 @@ namespace Assets.Scripts.Data
         /// <returns></returns>
         public static double GetBuildingProdPerHour(Buildings building, int buildingLevel)
         {
-            switch (building)
-            {
-                case Buildings.MetalMadeni:
-                    return MetalBuildingBasePerHour * UniverseSpeed * buildingLevel * Math.Pow(1.1f, buildingLevel) + MetalBuildingBasePerHour * UniverseSpeed;
-                case Buildings.KristalMadeni:
-                    return CrystalBuildingBasePerHour * UniverseSpeed * buildingLevel * Math.Pow(1.1f, buildingLevel) + CrystalBuildingBasePerHour * UniverseSpeed;
-                case Buildings.BoronMadeni:
-                    return BoronBuildingBasePerHour * UniverseSpeed * buildingLevel * Math.Pow(1.1f, buildingLevel) + BoronBuildingBasePerHour * UniverseSpeed;
-                default:
-                    return 0;
-            }
+            Tuple<Buildings, ResourcesDTO, double, double> buildingInfo = ResourceBuildings.Find(x => x.Item1 == building);
+            return buildingInfo.Item3 * UniverseSpeed * buildingLevel * Math.Pow(1.1f, buildingLevel) + buildingInfo.Item3 * UniverseSpeed;
         }
 
         /// <summary>
@@ -187,17 +78,8 @@ namespace Assets.Scripts.Data
         /// <returns></returns>
         public static double GetBuildingStorage(Buildings building, int buildingLevel)
         {
-            switch (building)
-            {
-                case Buildings.MetalDeposu:
-                    return MetalBuildingStorageCapacity + 50000 * (Math.Pow(1.6f, buildingLevel) - 1);
-                case Buildings.KristalDeposu:
-                    return CrystalBuildingStorageCapacity + 50000 * (Math.Pow(1.6f, buildingLevel) - 1);
-                case Buildings.BoronDeposu:
-                    return BoronBuildingStorageCapacity + 50000 * (Math.Pow(1.6f, buildingLevel) - 1);
-                default:
-                    return 0;
-            }
+            Tuple<Buildings, ResourcesDTO, double, double> buildingInfo = ResourceBuildings.Find(x => x.Item1 == building);
+            return buildingInfo.Item3 + 50000 * (Math.Pow(1.6f, buildingLevel) - 1);
         }
 
         #region Researches / Araştırmalar
@@ -206,10 +88,19 @@ namespace Assets.Scripts.Data
         /// Araştırmalar ve gereksinimleri ve oranları.
         /// İlk parametre Araştırma.
         /// İkinci Parametre Araştırma taban maliyeti.
-        /// Üçüncü Araştırma %lik oranı.
+        /// Üçüncü Araştırma değeri.
         /// </summary>
         public static List<Tuple<Researches, ResourcesDTO, double>> ResearchData = new List<Tuple<Researches, ResourcesDTO, double>>()
         {
+            new Tuple<Researches, ResourcesDTO, double>(Researches.Casusluk,new ResourcesDTO(100,200,100),.1f),
+            new Tuple<Researches, ResourcesDTO, double>(Researches.FiloYönetimi,new ResourcesDTO(0,400,200),1),
+            new Tuple<Researches, ResourcesDTO, double>(Researches.KalkanTekniği,new ResourcesDTO(120,30),.1f),
+            new Tuple<Researches, ResourcesDTO, double>(Researches.Kaşiflik,new ResourcesDTO(400,200,100),.1f),
+            new Tuple<Researches, ResourcesDTO, double>(Researches.LazerSilahları,new ResourcesDTO(200,100),.1f),
+            new Tuple<Researches, ResourcesDTO, double>(Researches.MotorTekniği,new ResourcesDTO(1600,800,400),.1f),
+            new Tuple<Researches, ResourcesDTO, double>(Researches.UzayGemisiZırhı,new ResourcesDTO(400,200),.1f),
+            new Tuple<Researches, ResourcesDTO, double>(Researches.YükKapasitesi,new ResourcesDTO(1200,600,600),.05f),
+            new Tuple<Researches, ResourcesDTO, double>(Researches.İticiler,new ResourcesDTO(200,800,600),.3f),
             new Tuple<Researches, ResourcesDTO, double>(Researches.Silahlandırma,new ResourcesDTO(200,100),.1f)
         };
 

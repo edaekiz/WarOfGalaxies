@@ -106,15 +106,14 @@ namespace WarOfGalaxiesApi.Controllers
 
         [HttpPost("VerifyUserData")]
         [Description("Kullanıcının bütün datalarını doğrular.")]
-        public ApiResult VerifyUserData(int[] userPlanetIds)
+        public ApiResult VerifyUserData(VerifyResourceDTO verify)
         {
             // Her bir gezegenin Verify işlemini yapıyoruz.
-            foreach (int userPlanetId in userPlanetIds)
-                VerifyController.VerifyPlanetResources(base.UnitOfWork, new VerifyResourceDTO { UserPlanetID = userPlanetId });
+            VerifyController.VerifyPlanetResources(base.UnitOfWork, new VerifyResourceDTO { UserPlanetID = verify.UserPlanetID });
 
             // Kullanıcının gezegenlerini buluyoruz.
-            List<UserPlanetDTO> userPlanets = this.UnitOfWork.GetRepository<TblUserPlanets>().Where(x => x.UserId == base.DBUser.UserId)
-                .Where(x => userPlanetIds.Contains(x.UserPlanetId)).Select(x => new UserPlanetDTO
+            UserPlanetDTO userPlanet = this.UnitOfWork.GetRepository<TblUserPlanets>().Where(x => x.UserId == base.DBUser.UserId)
+                .Select(x => new UserPlanetDTO
                 {
                     UserId = x.UserId,
                     Boron = x.Boron,
@@ -124,11 +123,11 @@ namespace WarOfGalaxiesApi.Controllers
                     PlanetName = x.PlanetName,
                     PlanetType = x.PlanetType,
                     UserPlanetId = x.UserPlanetId
-                }).ToList();
+                }).FirstOrDefault(x => x.UserPlanetId == verify.UserPlanetID);
 
 
             // Eğer tamamlandıysa geri dön.
-            return ResponseHelper.GetSuccess(userPlanets);
+            return ResponseHelper.GetSuccess(userPlanet);
         }
 
     }

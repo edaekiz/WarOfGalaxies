@@ -76,9 +76,6 @@ public class BuildingController : MonoBehaviour
         // Eğer yükseltme var ise yükseltmeyi başlatıyoruz. 
         if (UserPlanetBuildingUpg != null)
         {
-            // Başlangıç ve bitiş tarihini ayarlıyoruz.
-            UserPlanetBuildingUpg.CalculateDates();
-
             // Sayacı açıyoruz.
             StartCoroutine(OnUpgrade());
         }
@@ -140,7 +137,7 @@ public class BuildingController : MonoBehaviour
         if (isCompleted)
         {
             // Kullanıcının gezegendeki kaynaklarını verify ediyoruz.
-            LoginController.LC.VerifyUserResources(new int[] { GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId }, (List<UserPlanetDTO> onSuccess) =>
+            LoginController.LC.VerifyUserResources(GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId, (UserPlanetDTO onSuccess) =>
              {
                  // Var olan binayı buluyoruz.
                  UserPlanetBuildingDTO userBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == UserPlanetBuildingUpg.UserPlanetId && x.BuildingId == UserPlanetBuildingUpg.BuildingId);

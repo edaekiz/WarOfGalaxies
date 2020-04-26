@@ -7,6 +7,7 @@ namespace WarOfGalaxiesApi.DAL.Models
     {
         public int UserResearchUpgId { get; set; }
         public int UserId { get; set; }
+        public int UserPlanetId { get; set; }
         public int ResearchId { get; set; }
         public int ResearchTargetLevel { get; set; }
         public DateTime BeginDate { get; set; }

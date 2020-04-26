@@ -30,7 +30,7 @@ namespace WarOfGalaxiesApi.DAL.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. See http://go.microsoft.com/fwlink/?LinkId=723263 for guidance on storing connection strings.
-                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=db_warofgalaxy;Trusted_Connection=False;User Id=sa;Password=VB79n7nq.;");
+                optionsBuilder.UseSqlServer("Server=3.127.186.31;Database=db_warofgalaxy;Trusted_Connection=False;User Id=sa;Password=VB79n7nq.;");
             }
         }
 

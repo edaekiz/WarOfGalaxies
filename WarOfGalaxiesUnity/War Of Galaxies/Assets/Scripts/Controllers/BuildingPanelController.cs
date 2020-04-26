@@ -240,6 +240,9 @@ public class BuildingPanelController : BasePanelController
                 // Gelen paketi açıyoruz.
                 UserPlanetBuildingUpgDTO upgradeInfo = response.GetData<UserPlanetBuildingUpgDTO>();
 
+                // Hesaplamasını yapıyoruz.
+                upgradeInfo.CalculateDates(upgradeInfo.LeftTime);
+
                 // Gezegeni buluyoruz.
                 UserPlanetDTO userPlanet = LoginController.LC.CurrentUser.UserPlanets.Find(x => x.UserPlanetId == upgradeInfo.UserPlanetId);
 

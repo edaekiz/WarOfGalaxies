@@ -67,6 +67,9 @@ namespace WarOfGalaxiesApi.Controllers
                 // Gezegendeki yükseltmeleri buluyoruz.
                 List<TblUserPlanetBuildingUpgs> userPlanetBuildingUpgs = uow.GetRepository<TblUserPlanetBuildingUpgs>().Where(x => x.UserPlanetId == verifyData.UserPlanetID).ToList();
 
+                // Kullanıcının devam eden araştırmaları.
+                List<TblUserResearchUpgs> userResearchProgs = uow.GetRepository<TblUserResearchUpgs>().Where(x => x.UserId == userPlanet.UserId).ToList();
+
                 #endregion
 
                 #region Üretim hesaplamaları.
@@ -264,6 +267,43 @@ namespace WarOfGalaxiesApi.Controllers
                     else // Zaten kaynak binası var ise seviyesini yükseltiyoruz.
                         building.BuildingLevel = upgrade.BuildingLevel;
 
+                }
+
+                #endregion
+
+                #region Araştırmalar
+
+                // Devam eden araştırmaları kontrol ediyoruz biten var ise bitiriyoruz.
+                foreach (TblUserResearchUpgs prog in userResearchProgs)
+                {
+                    // Eğer tamamlanmış ise yükseltmeyi tamamlıyoruz.
+                    bool isCompleted = prog.EndDate <= currentDate;
+
+                    // Tamamlanmış ise araştırmalara ekliyoruz yada güncelliyoruz.
+                    if (isCompleted)
+                    {
+                        // Eğer 1.seviye ise ilk defa eklenecek.
+                        if (prog.ResearchTargetLevel == 1)
+                        {
+                            uow.GetRepository<TblUserResearches>().Add(new TblUserResearches
+                            {
+                                ResearchId = prog.ResearchId,
+                                ResearchLevel = prog.ResearchTargetLevel,
+                                UserId = userPlanet.UserId
+                            });
+                        }
+                        else
+                        {
+                            // Var olan yükseltme.
+                            TblUserResearches existsUpgrade = uow.GetRepository<TblUserResearches>().FirstOrDefault(x => x.ResearchId == prog.ResearchId && x.UserId == prog.UserId);
+
+                            // Araştırmaların seviyesini yükseltiyoruz.
+                            existsUpgrade.ResearchLevel = prog.ResearchTargetLevel;
+                        }
+
+                        // Yükseltmeyi siliyoruz.
+                        uow.GetRepository<TblUserResearchUpgs>().Delete(prog);
+                    }
                 }
 
                 #endregion

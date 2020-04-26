@@ -14,6 +14,6 @@
 
     public class VerifyResourceDTO
     {
-        public int UserPlanetID;
+        public int UserPlanetID { get; set; }
     }
 }

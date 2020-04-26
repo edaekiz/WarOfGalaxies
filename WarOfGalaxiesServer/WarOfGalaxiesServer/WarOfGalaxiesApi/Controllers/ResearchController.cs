@@ -66,6 +66,7 @@ namespace WarOfGalaxiesApi.Controllers
                 ResearchId = (int)request.ResearchID,
                 ResearchTargetLevel = nextResearchLevel,
                 UserId = base.DBUser.UserId,
+                UserPlanetId = request.UserPlanetID
             });
 
             // Kullanıcıdan kaynakları düşüyoruz.
@@ -81,7 +82,9 @@ namespace WarOfGalaxiesApi.Controllers
             {
                 LeftTime = (upgradeData.EndDate - upgradeData.BeginDate).TotalSeconds,
                 ResearchID = (int)request.ResearchID,
-                ResearchLevel = nextResearchLevel
+                ResearchLevel = nextResearchLevel,
+                UserPlanetID = upgradeData.UserPlanetId,
+                Resources = new ResourcesDTO(userPlanet.Metal, userPlanet.Crystal, userPlanet.Boron)
             });
         }
 

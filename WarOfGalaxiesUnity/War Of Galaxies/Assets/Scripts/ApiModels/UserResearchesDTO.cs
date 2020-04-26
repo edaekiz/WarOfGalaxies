@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Enums;
+﻿using Assets.Scripts.ApiModels.Base;
+using Assets.Scripts.Enums;
 using System;
 
 namespace Assets.Scripts.ApiModels
@@ -10,10 +11,12 @@ namespace Assets.Scripts.ApiModels
         public int ResearchLevel;
     }
     [Serializable]
-    public class UserResearchProgDTO
+    public class UserResearchProgDTO : ProgressModel
     {
         public Researches ResearchID;
         public int ResearchLevel;
+        public int UserPlanetID;
+        public ResourcesDTO Resources;
         public double LeftTime;
     }
     [Serializable]

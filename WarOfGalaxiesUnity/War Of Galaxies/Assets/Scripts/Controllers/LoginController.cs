@@ -39,6 +39,12 @@ public class LoginController : MonoBehaviour
                 // Giriş yapan kullanıcı.
                 CurrentUser = response.GetData<LoginStuffDTO>();
 
+                // Başlangıç ve bitiş tarihini ayarlıyoruz.
+                CurrentUser.UserPlanetsBuildingsUpgs.ForEach(e => e.CalculateDates(e.LeftTime));
+
+                // Araştırmanın başlangıç ve bitiş tarihlerini de ayarlıyoruz.
+                CurrentUser.UserResearchProgs.ForEach(e => e.CalculateDates(e.LeftTime));
+
                 // Kullanıcı adını basıyoruz.
                 UsernameField.text = CurrentUser.UserData.Username;
 
@@ -55,33 +61,33 @@ public class LoginController : MonoBehaviour
         }));
     }
 
-    public void VerifyUserResources(int[] userPlanetIds, Action<List<UserPlanetDTO>> onSuccess = null, Action<string> onError = null)
+    public void VerifyUserResources(int userPlanetId, Action<UserPlanetDTO> onSuccess = null, Action<string> onError = null)
     {
-        StartCoroutine(ApiService.API.Post("VerifyUserData", userPlanetIds, (ApiResult result) =>
-          {
-              if (result.IsSuccess)
-              {
-                  List<UserPlanetDTO> data = result.GetDataList<UserPlanetDTO>();
+        StartCoroutine(ApiService.API.Post("VerifyUserData", new VerifyResourceDTO { UserPlanetID = userPlanetId }, (ApiResult result) =>
+           {
+               if (result.IsSuccess)
+               {
+                   // Gelen gezegen kaynaklarını alıyoruz.
+                   UserPlanetDTO data = result.GetData<UserPlanetDTO>();
 
-                  // Olan kaynakları da güncelliyoruz.
-                  foreach (UserPlanetDTO exists in data.Where(x => LoginController.LC.CurrentUser.UserPlanets.Exists(y => y.UserPlanetId == x.UserPlanetId)))
-                      LoginController.LC.CurrentUser.UserPlanets.Find(x => x.UserPlanetId == exists.UserPlanetId).CopyTo(exists);
+                   // Eski gezegen bilgisini buluyoruz.
+                   UserPlanetDTO existsPlanet = LoginController.LC.CurrentUser.UserPlanets.Find(x => x.UserPlanetId == data.UserPlanetId);
 
-                  // Olmayanları buluyoruz.
-                  IEnumerable<UserPlanetDTO> notInList = data.Where(x => !LoginController.LC.CurrentUser.UserPlanets.Exists(y => y.UserPlanetId == x.UserPlanetId));
-
-                  // Kullanıcının gezegenlerin ekliyoruz.
-                  LoginController.LC.CurrentUser.UserPlanets.AddRange(notInList);
-
-                  // Başarılı methotunu çağırıyoruz.
-                  if (onSuccess != null)
-                      onSuccess.Invoke(data);
-              }
-              else
-              {
-                  if (onError != null)
-                      onError.Invoke(result.Message);
-              }
-          }));
+                   // Eğer sistemde var ise güncelliyoruz yok ise ekliyoruz.
+                   if (existsPlanet != null)
+                       data.CopyTo(existsPlanet);
+                   else
+                       LoginController.LC.CurrentUser.UserPlanets.Add(data);
+                   
+                   // Başarılı methotunu çağırıyoruz.
+                   if (onSuccess != null)
+                       onSuccess.Invoke(data);
+               }
+               else
+               {
+                   if (onError != null)
+                       onError.Invoke(result.Message);
+               }
+           }));
     }
 }
