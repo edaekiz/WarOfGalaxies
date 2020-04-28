@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Extends;
+using System;
 using UnityEngine;
 using static GlobalPanelController;
 
@@ -22,6 +24,15 @@ public class BasePanelController : MonoBehaviour
 
     [Header("Bütün nesnelerin içinde bulunduğu panel.")]
     public RectTransform MainPanel;
+
+    [Header("Gereken metal detayı.")]
+    public ResourceDetailController MetalDetail;
+
+    [Header("Gereken kristal detayı.")]
+    public ResourceDetailController CrystalDetail;
+
+    [Header("Gereken boron detayı.")]
+    public ResourceDetailController BoronDetail;
 
     // Panel kapanıyorsa bu değer true olacak..
     private bool isClosing;
@@ -280,6 +291,90 @@ public class BasePanelController : MonoBehaviour
     protected virtual void OnTransionCompleted(bool isClosed)
     {
 
+    }
+
+    public void SetResources(ResourcesDTO resources)
+    {
+        #region Kaynak ikonları üstüne tıklandığında yazacak olan detaylar.
+
+        // Eğer metal kaynağı 0 dan fazla ise yazabiliriz. Ancak değil ise kapatacağız.
+        if (resources.Metal > 0)
+        {
+            // Metal miktarını basıyoruz.
+            MetalDetail.ContentField.text = ResourceExtends.ConvertToDottedResource(resources.Metal);
+
+            // Açık ise açmaya gerek yok paneli
+            if (!MetalDetail.gameObject.activeSelf)
+                MetalDetail.gameObject.SetActive(true);
+        }
+        else // Aksi durumda kapatıyoruz.
+            MetalDetail.gameObject.SetActive(false);
+
+        // Eğer kristal kaynağı 0 dan fazla ise yazabiliriz. Ancak değil ise kapatacağız.
+        if (resources.Crystal > 0)
+        {
+            CrystalDetail.ContentField.text = ResourceExtends.ConvertToDottedResource(resources.Crystal);
+
+            // Açık değil ise açacağız.
+            if (!CrystalDetail.gameObject.activeSelf)
+                CrystalDetail.gameObject.SetActive(true);
+        }
+        else
+            CrystalDetail.gameObject.SetActive(false);
+
+        if (resources.Boron > 0)
+        {
+            // Boron miktarını basıyoruz.
+            BoronDetail.ContentField.text = ResourceExtends.ConvertToDottedResource(resources.Boron);
+
+            // Açık ise açmaya gerek yok paneli
+            if (!BoronDetail.gameObject.activeSelf)
+                BoronDetail.gameObject.SetActive(true);
+        }
+        else
+            BoronDetail.gameObject.SetActive(false);
+
+        #endregion
+
+        #region Kaynak gereksinimlerini basıyoruz.
+
+        // Gereken metal kaynağı.
+        MetalDetail.QuantityText.text = ResourceExtends.ConvertResource(resources.Metal);
+
+        // Eğer gereken kaynak kadar kaynağı yok ise gezegenin kırmızı yanacak.
+        if (resources.Metal > GlobalPlanetController.GPC.CurrentPlanet.Metal)
+        {
+            // Metal madenini kırmzııya boyuyoruz.
+            MetalDetail.QuantityText.color = Color.red;
+        }
+        else
+            MetalDetail.QuantityText.color = Color.white;
+
+        // Gereken kristal kaynağı.
+        CrystalDetail.QuantityText.text = ResourceExtends.ConvertResource(resources.Crystal);
+
+        // Eğer gereken kaynak kadar kaynağı yok ise gezegenin kırmızı yanacak.
+        if (resources.Crystal > GlobalPlanetController.GPC.CurrentPlanet.Crystal)
+        {
+            // Kristal madenini kırmzııya boyuyoruz.
+            CrystalDetail.QuantityText.color = Color.red;
+        }
+        else
+            CrystalDetail.QuantityText.color = Color.white;
+
+        // Gereken boron kaynağı.
+        BoronDetail.QuantityText.text = ResourceExtends.ConvertResource(resources.Boron);
+
+        // Eğer gereken kaynak kadar kaynağı yok ise gezegenin kırmızı yanacak.
+        if (resources.Boron > GlobalPlanetController.GPC.CurrentPlanet.Boron)
+        {
+            // Bor madenini kırmzııya boyuyoruz.
+            BoronDetail.QuantityText.color = Color.red;
+        }
+        else
+            BoronDetail.QuantityText.color = Color.white;
+
+        #endregion
     }
 
 }

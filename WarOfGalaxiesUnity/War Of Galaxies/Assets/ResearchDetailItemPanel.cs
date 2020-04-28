@@ -25,24 +25,6 @@ public class ResearchDetailItemPanel : BasePanelController
     [Header("Yükseltme butonu.")]
     public Button UpgradeButton;
 
-    [Header("Gereken kristal miktarı nesnesini eğer kaynak 0 ise göstermeyeceğiz.")]
-    public GameObject ReqMetal;
-
-    [Header("Gereken kristal miktarı nesnesini eğer kaynak 0 ise göstermeyeceğiz.")]
-    public GameObject ReqCrystal;
-
-    [Header("Gereken boron miktarı nesnesini eğer kaynak 0 ise göstermeyeceğiz.")]
-    public GameObject ReqBoron;
-
-    [Header("Gereken metal miktarını buraya basacağız.")]
-    public TextMeshProUGUI RequiredMetalQuantity;
-
-    [Header("Gereken kristal miktarını buraya basacağız.")]
-    public TextMeshProUGUI RequiredCrystalQuantity;
-
-    [Header("Gereken boron miktarını buraya basacağız.")]
-    public TextMeshProUGUI RequiredBoronQuantity;
-
     [Header("Aktif araştırma bilgisi")]
     public Researches CurrentResearch;
 
@@ -93,54 +75,8 @@ public class ResearchDetailItemPanel : BasePanelController
 
         #endregion
 
-        #region Kaynak gereksinimlerini basıyoruz.
-
-        // Gereken metal kaynağı.
-        RequiredMetalQuantity.text = ResourceExtends.ConvertResource(resources.Metal);
-
-        // Eğer gereken kaynak kadar kaynağı yok ise gezegenin kırmızı yanacak.
-        if (resources.Metal > GlobalPlanetController.GPC.CurrentPlanet.Metal)
-        {
-            // Metal madenini kırmzııya boyuyoruz.
-            RequiredMetalQuantity.color = Color.red;
-
-            // Eğer yetersiz ise bu bina yükseltilemez.
-            canUpgrade = false;
-        }
-        else
-            RequiredMetalQuantity.color = Color.white;
-
-        // Gereken kristal kaynağı.
-        RequiredCrystalQuantity.text = ResourceExtends.ConvertResource(resources.Crystal);
-
-        // Eğer gereken kaynak kadar kaynağı yok ise gezegenin kırmızı yanacak.
-        if (resources.Crystal > GlobalPlanetController.GPC.CurrentPlanet.Crystal)
-        {
-            // Kristal madenini kırmzııya boyuyoruz.
-            RequiredCrystalQuantity.color = Color.red;
-
-            // Eğer yetersiz ise bu bina yükseltilemez.
-            canUpgrade = false;
-        }
-        else
-            RequiredCrystalQuantity.color = Color.white;
-
-        // Gereken boron kaynağı.
-        RequiredBoronQuantity.text = ResourceExtends.ConvertResource(resources.Boron);
-
-        // Eğer gereken kaynak kadar kaynağı yok ise gezegenin kırmızı yanacak.
-        if (resources.Boron > GlobalPlanetController.GPC.CurrentPlanet.Boron)
-        {
-            // Bor madenini kırmzııya boyuyoruz.
-            RequiredBoronQuantity.color = Color.red;
-
-            // Eğer yetersiz ise bu bina yükseltilemez.
-            canUpgrade = false;
-        }
-        else
-            RequiredBoronQuantity.color = Color.white;
-
-        #endregion
+        // Kaynakları set ediyoruz.
+        base.SetResources(resources);
 
         #region Yükseltme kontrolü yapılıyor ise zaten yapılıyor yazacak. Aksi durumda butonu açacağız ya da kapatacağız.
 

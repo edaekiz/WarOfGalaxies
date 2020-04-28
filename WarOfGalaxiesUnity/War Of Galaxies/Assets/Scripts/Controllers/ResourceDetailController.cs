@@ -19,6 +19,9 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
     [Header("Detayların basılacağı alan.")]
     public TextMeshProUGUI ContentField;
 
+    [Header("Gereken metal miktarını buraya basacağız.")]
+    public TextMeshProUGUI QuantityText;
+
     private bool isOpening;
     private Image detailPanelImage;
     private Color detailPanelImageDefaultColor;

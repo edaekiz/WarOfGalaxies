@@ -93,6 +93,7 @@ MonoBehaviour:
   AnimationSpeed: 3
   ResourceDetailPanel: {fileID: 535589301}
   ContentField: {fileID: 83567570}
+  QuantityText: {fileID: 1254073329}
 --- !u!114 &13321981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2977,6 +2978,7 @@ MonoBehaviour:
   AnimationSpeed: 3
   ResourceDetailPanel: {fileID: 835345166}
   ContentField: {fileID: 487751727}
+  QuantityText: {fileID: 1490143233}
 --- !u!114 &1313874635
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3185,6 +3187,7 @@ MonoBehaviour:
   AnimationSpeed: 3
   ResourceDetailPanel: {fileID: 659863086}
   ContentField: {fileID: 886015248}
+  QuantityText: {fileID: 566612939}
 --- !u!114 &1409243575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4425,14 +4428,12 @@ MonoBehaviour:
   OpenTransition: 0
   CloseTransition: 0
   MainPanel: {fileID: 797639136814999318}
+  MetalDetail: {fileID: 1409243576}
+  CrystalDetail: {fileID: 1313874636}
+  BoronDetail: {fileID: 13321982}
   Icon: {fileID: 78235064}
   ResearchName: {fileID: 137332613}
   ShortDescription: {fileID: 768503062}
   UpgradeTime: {fileID: 7481870196589237515}
   UpgradeButton: {fileID: 312884514}
-  ReqMetal: {fileID: 0}
-  ReqCrystal: {fileID: 0}
-  ReqBoron: {fileID: 0}
-  RequiredMetalQuantity: {fileID: 566612939}
-  RequiredCrystalQuantity: {fileID: 1490143233}
-  RequiredBoronQuantity: {fileID: 1254073329}
+  CurrentResearch: 0

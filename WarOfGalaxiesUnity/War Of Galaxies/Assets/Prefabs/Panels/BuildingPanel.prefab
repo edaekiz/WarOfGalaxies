@@ -1174,6 +1174,7 @@ MonoBehaviour:
   AnimationSpeed: 3
   ResourceDetailPanel: {fileID: 791456035896284559}
   ContentField: {fileID: 2897718383004539297}
+  QuantityText: {fileID: 8734965622248063061}
 --- !u!114 &504212497747136588
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1622,6 +1623,7 @@ MonoBehaviour:
   AnimationSpeed: 3
   ResourceDetailPanel: {fileID: 6405623780226801241}
   ContentField: {fileID: 5075581135077451594}
+  QuantityText: {fileID: 8734965623671618662}
 --- !u!114 &4443921101443338288
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2788,6 +2790,9 @@ MonoBehaviour:
   OpenTransition: 0
   CloseTransition: 0
   MainPanel: {fileID: 2732144399068031673}
+  MetalDetail: {fileID: 7255382268444012327}
+  CrystalDetail: {fileID: 2440650696016876432}
+  BoronDetail: {fileID: 9091988705473706007}
   UpgradeButton: {fileID: 8734965623734161164}
   DowngradeButton: {fileID: 8734965623764424033}
   BuildingImage: {fileID: 8734965622544850264}
@@ -2795,12 +2800,6 @@ MonoBehaviour:
   BuildingLevel: {fileID: 8734965623810357258}
   BuildingUpgradeTime: {fileID: 8734965621949071576}
   BuildingCountdown: {fileID: 8734965622187518230}
-  RequiredMetalQuantity: {fileID: 8734965623671618662}
-  RequiredCrystalQuantity: {fileID: 8734965622248063061}
-  RequiredBoronQuantity: {fileID: 8734965623546662717}
-  MetalDetail: {fileID: 7255382268444012327}
-  CrystalDetail: {fileID: 2440650696016876432}
-  BoronDetail: {fileID: 9091988705473706007}
 --- !u!1 &8734965623188823528
 GameObject:
   m_ObjectHideFlags: 0
@@ -3206,6 +3205,7 @@ MonoBehaviour:
   AnimationSpeed: 3
   ResourceDetailPanel: {fileID: 3880403398272932686}
   ContentField: {fileID: 6732422886770644044}
+  QuantityText: {fileID: 8734965623546662717}
 --- !u!114 &5663587870420392889
 MonoBehaviour:
   m_ObjectHideFlags: 0
