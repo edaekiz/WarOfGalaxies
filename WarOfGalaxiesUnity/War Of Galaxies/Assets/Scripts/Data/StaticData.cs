@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.ApiModels;
 using Assets.Scripts.Enums;
+using Assets.Scripts.Models;
 using System;
 using System.Collections.Generic;
 
@@ -135,5 +136,31 @@ namespace Assets.Scripts.Data
         }
 
         #endregion
+
+        #region Shipyard Ships
+
+        public static List<ShipDTO> ShipData = new List<ShipDTO>()
+        {
+            new ShipDTO
+            {
+                Cost = new ResourcesDTO(3000,1000),
+                ShipID = Ships.HafifAvci
+            }
+        };
+
+        /// <summary>
+        /// Gemilerin üretim süresini hesaplar.
+        /// </summary>
+        /// <param name="ship">Hesaplanacak gemi.</param>
+        /// <param name="shipyardLevel">Hesaplanacak liman seviyesi.</param>
+        /// <returns></returns>
+        public static double CalculateShipCountdown(Ships ship,int shipyardLevel)
+        {
+            ShipDTO shipInfo = ShipData.Find(x => x.ShipID == ship);
+            return (shipInfo.Cost.Metal + shipInfo.Cost.Crystal) / (2500 * (1 + shipyardLevel));
+        }
+
+        #endregion
+
     }
 }

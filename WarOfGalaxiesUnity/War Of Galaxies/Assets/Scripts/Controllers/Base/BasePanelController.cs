@@ -52,7 +52,7 @@ public class BasePanelController : MonoBehaviour
     private float maxOutY = 1000;
     private float maxOutX = 1920;
 
-    private void Awake()
+    protected virtual void Start()
     {
         isOpening = true;
 
@@ -85,7 +85,7 @@ public class BasePanelController : MonoBehaviour
         }
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         // Kapanış animasyonları.
         CheckOpening();

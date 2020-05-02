@@ -12,6 +12,8 @@ namespace Assets.Scripts.ApiModels
         public List<UserPlanetBuildingUpgDTO> UserPlanetsBuildingsUpgs;
         public List<UserResearchesDTO> UserResearches;
         public List<UserResearchProgDTO> UserResearchProgs;
+        public List<UserPlanetShipProgDTO> UserPlanetShipProgs;
+        public List<UserPlanetShipDTO> UserPlanetShips;
         public LoginStuffDTO()
         {
             UserPlanets = new List<UserPlanetDTO>();
@@ -19,6 +21,8 @@ namespace Assets.Scripts.ApiModels
             UserPlanetsBuildingsUpgs = new List<UserPlanetBuildingUpgDTO>();
             UserResearches = new List<UserResearchesDTO>();
             UserResearchProgs = new List<UserResearchProgDTO>();
+            UserPlanetShipProgs = new List<UserPlanetShipProgDTO>();
+            UserPlanetShips = new List<UserPlanetShipDTO>();
         }
     }
 }

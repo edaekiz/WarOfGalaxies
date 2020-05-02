@@ -62,10 +62,5 @@ namespace WarOfGalaxiesApi.Controllers.Base
             #endregion
         }
 
-        public override void OnActionExecuted(ActionExecutedContext context)
-        {
-            base.OnActionExecuted(context);
-        }
-
     }
 }

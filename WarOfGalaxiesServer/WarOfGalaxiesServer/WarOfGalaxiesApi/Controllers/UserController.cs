@@ -92,6 +92,27 @@ namespace WarOfGalaxiesApi.Controllers
                 UserPlanetId = x.UserPlanetId
             }).ToList();
 
+            // Kullanıcının gemilerini buluyoruz.
+            List<UserPlanetShipDTO> userPlanetShips = this.UnitOfWork.GetRepository<TblUserPlanetShips>()
+                .Where(x => x.UserId == base.DBUser.UserId)
+                .Select(x => new UserPlanetShipDTO
+                {
+                    ShipCount = x.ShipCount,
+                    ShipId = x.ShipId,
+                    UserPlanetId = x.UserPlanetId
+                }).ToList();
+
+            // Kullanıcının gemi üretimlerini buluyoruz.
+            List<UserPlanetShipProgDTO> userPlanetShipProgs = this.UnitOfWork.GetRepository<TblUserPlanetShipProgs>()
+                .Where(x => x.UserId == base.DBUser.UserId)
+                .Select(x => new UserPlanetShipProgDTO
+                {
+                    ShipCount = x.ShipCount,
+                    ShipId = x.ShipId,
+                    UserPlanetId = x.UserPlanetId,
+                    OrderIndex = x.OrderIndex
+                }).ToList();
+
             // Sonucu dönüyoruz.
             return ResponseHelper.GetSuccess(new LoginStuffDTO
             {
@@ -100,7 +121,9 @@ namespace WarOfGalaxiesApi.Controllers
                 UserPlanetsBuildingsUpgs = userPlanetBuildingUpgs,
                 UserPlanets = userPlanets,
                 UserResearches = userResearches,
-                UserResearchProgs = userResearchProgs
+                UserResearchProgs = userResearchProgs,
+                UserPlanetShips = userPlanetShips,
+                UserPlanetShipProgs = userPlanetShipProgs
             });
         }
 

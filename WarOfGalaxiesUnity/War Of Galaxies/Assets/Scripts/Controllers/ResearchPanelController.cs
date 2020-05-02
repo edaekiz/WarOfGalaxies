@@ -23,7 +23,7 @@ public class ResearchPanelController : BasePanelController
         if (RPC == null)
             RPC = this;
         else
-            Destroy(RPC.gameObject);
+            Destroy(gameObject);
     }
 
     public void LoadAllResearchItems()

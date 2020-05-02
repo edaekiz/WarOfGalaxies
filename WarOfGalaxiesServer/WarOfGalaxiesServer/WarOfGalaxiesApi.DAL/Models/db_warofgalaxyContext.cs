@@ -20,6 +20,8 @@ namespace WarOfGalaxiesApi.DAL.Models
         public virtual DbSet<TblResearches> TblResearches { get; set; }
         public virtual DbSet<TblUserPlanetBuildingUpgs> TblUserPlanetBuildingUpgs { get; set; }
         public virtual DbSet<TblUserPlanetBuildings> TblUserPlanetBuildings { get; set; }
+        public virtual DbSet<TblUserPlanetShipProgs> TblUserPlanetShipProgs { get; set; }
+        public virtual DbSet<TblUserPlanetShips> TblUserPlanetShips { get; set; }
         public virtual DbSet<TblUserPlanets> TblUserPlanets { get; set; }
         public virtual DbSet<TblUserResearchUpgs> TblUserResearchUpgs { get; set; }
         public virtual DbSet<TblUserResearches> TblUserResearches { get; set; }
@@ -89,12 +91,6 @@ namespace WarOfGalaxiesApi.DAL.Models
 
                 entity.ToTable("tbl_user_planet_building_upgs");
 
-                entity.HasIndex(e => e.UserId);
-
-                entity.HasIndex(e => e.UserPlanetId)
-                    .HasName("IX_tbl_user_planet_building_upgs")
-                    .IsUnique();
-
                 entity.Property(e => e.UserPlanetBuildingUpgId).HasColumnName("UserPlanetBuildingUpgID");
 
                 entity.Property(e => e.BeginDate).HasColumnType("datetime");
@@ -114,16 +110,52 @@ namespace WarOfGalaxiesApi.DAL.Models
 
                 entity.ToTable("tbl_user_planet_buildings");
 
-                entity.HasIndex(e => e.UserId)
-                    .HasName("IX_tbl_user_planet_buildings");
-
-                entity.HasIndex(e => new { e.UserPlanetId, e.BuildingId })
-                    .HasName("IX_tbl_planet_buildings")
-                    .IsUnique();
-
                 entity.Property(e => e.UserPlanetBuildingId).HasColumnName("UserPlanetBuildingID");
 
                 entity.Property(e => e.BuildingId).HasColumnName("BuildingID");
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.Property(e => e.UserPlanetId).HasColumnName("UserPlanetID");
+            });
+
+            modelBuilder.Entity<TblUserPlanetShipProgs>(entity =>
+            {
+                entity.HasKey(e => e.UserPlanetShipProgId);
+
+                entity.ToTable("tbl_user_planet_ship_progs");
+
+                entity.HasIndex(e => e.UserId);
+
+                entity.HasIndex(e => e.UserPlanetId);
+
+                entity.Property(e => e.UserPlanetShipProgId).HasColumnName("UserPlanetShipProgID");
+
+                entity.Property(e => e.LastVerifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.ShipId).HasColumnName("ShipID");
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.Property(e => e.UserPlanetId).HasColumnName("UserPlanetID");
+            });
+
+            modelBuilder.Entity<TblUserPlanetShips>(entity =>
+            {
+                entity.HasKey(e => e.UserPlanetShipId);
+
+                entity.ToTable("tbl_user_planet_ships");
+
+                entity.HasIndex(e => e.UserId);
+
+                entity.HasIndex(e => e.UserPlanetId);
+
+                entity.HasIndex(e => new { e.UserPlanetId, e.ShipId })
+                    .IsUnique();
+
+                entity.Property(e => e.UserPlanetShipId).HasColumnName("UserPlanetShipID");
+
+                entity.Property(e => e.ShipId).HasColumnName("ShipID");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
@@ -135,10 +167,6 @@ namespace WarOfGalaxiesApi.DAL.Models
                 entity.HasKey(e => e.UserPlanetId);
 
                 entity.ToTable("tbl_user_planets");
-
-                entity.HasIndex(e => e.PlanetCordinate)
-                    .HasName("IX_tbl_user_planets")
-                    .IsUnique();
 
                 entity.Property(e => e.UserPlanetId).HasColumnName("UserPlanetID");
 
@@ -161,11 +189,6 @@ namespace WarOfGalaxiesApi.DAL.Models
 
                 entity.ToTable("tbl_user_research_upgs");
 
-                entity.HasIndex(e => e.UserId)
-                    .IsUnique();
-
-                entity.HasIndex(e => new { e.UserId, e.ResearchId });
-
                 entity.Property(e => e.UserResearchUpgId).HasColumnName("UserResearchUpgID");
 
                 entity.Property(e => e.BeginDate).HasColumnType("datetime");
@@ -175,6 +198,8 @@ namespace WarOfGalaxiesApi.DAL.Models
                 entity.Property(e => e.ResearchId).HasColumnName("ResearchID");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.Property(e => e.UserPlanetId).HasColumnName("UserPlanetID");
             });
 
             modelBuilder.Entity<TblUserResearches>(entity =>
@@ -182,8 +207,6 @@ namespace WarOfGalaxiesApi.DAL.Models
                 entity.HasKey(e => e.UserResearchId);
 
                 entity.ToTable("tbl_user_researches");
-
-                entity.HasIndex(e => new { e.UserId, e.ResearchId });
 
                 entity.Property(e => e.UserResearchId).HasColumnName("UserResearchID");
 

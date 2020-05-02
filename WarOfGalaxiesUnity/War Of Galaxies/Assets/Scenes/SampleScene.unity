@@ -293,7 +293,6 @@ MonoBehaviour:
   - PanelType: 0
     Prefab: {fileID: 8734965623041127629, guid: b8b010892966d6f40a320a31378a7a5c,
       type: 3}
-    IsSingle: 1
 --- !u!4 &78451503
 Transform:
   m_ObjectHideFlags: 0
@@ -753,8 +752,7 @@ MonoBehaviour:
   AnimationSpeed: 3
   ResourceDetailPanel: {fileID: 1436684451}
   ContentField: {fileID: 668341014}
-  Resource: 0
-  Template: 
+  QuantityText: {fileID: 0}
 --- !u!114 &276937630
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4210,8 +4208,7 @@ MonoBehaviour:
   AnimationSpeed: 3
   ResourceDetailPanel: {fileID: 1188370448}
   ContentField: {fileID: 760485870}
-  Resource: 0
-  Template: 
+  QuantityText: {fileID: 0}
 --- !u!1 &1436684451
 GameObject:
   m_ObjectHideFlags: 0
@@ -4598,8 +4595,7 @@ MonoBehaviour:
   AnimationSpeed: 3
   ResourceDetailPanel: {fileID: 284696124}
   ContentField: {fileID: 469713273}
-  Resource: 0
-  Template: 
+  QuantityText: {fileID: 0}
 --- !u!114 &1508971524
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5505,7 +5501,10 @@ MonoBehaviour:
   MetalQuantityText: {fileID: 2080045952}
   CrystalQuantityText: {fileID: 891441056}
   BoronQuantityText: {fileID: 222348014}
-  MetalDetailPanel: {fileID: 0}
+  MetalResourceDetail: {fileID: 0}
+  CrystalResourceDetail: {fileID: 0}
+  BoronResourceDetail: {fileID: 0}
+  Template: 
 --- !u!1 &2080045950
 GameObject:
   m_ObjectHideFlags: 0

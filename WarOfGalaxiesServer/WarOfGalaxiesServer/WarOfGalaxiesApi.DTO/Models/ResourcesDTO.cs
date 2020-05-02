@@ -45,6 +45,37 @@ namespace WarOfGalaxiesApi.DTO.Models
             return new ResourcesDTO(resource.Metal * rate, resource.Crystal * rate, resource.Boron * rate);
         }
 
+
+        public static bool operator !=(ResourcesDTO resource, ResourcesDTO target)
+        {
+            return resource.Metal != target.Metal || resource.Crystal != target.Crystal && resource.Boron != target.Boron;
+        }
+
+        public static bool operator ==(ResourcesDTO resource, ResourcesDTO target)
+        {
+            return resource.Metal == target.Metal && resource.Crystal == target.Crystal && resource.Boron == target.Boron;
+        }
+
+        public static bool operator >=(ResourcesDTO resource, ResourcesDTO target)
+        {
+            return resource.Metal >= target.Metal && resource.Crystal >= target.Crystal && resource.Boron >= target.Boron;
+        }
+
+        public static bool operator <=(ResourcesDTO resource, ResourcesDTO target)
+        {
+            return resource.Metal <= target.Metal && resource.Crystal <= target.Crystal && resource.Boron <= target.Boron;
+        }
+
+        public static bool operator >(ResourcesDTO resource, ResourcesDTO target)
+        {
+            return resource.Metal > target.Metal && resource.Crystal > target.Crystal && resource.Boron > target.Boron;
+        }
+
+        public static bool operator <(ResourcesDTO resource, ResourcesDTO target)
+        {
+            return resource.Metal < target.Metal && resource.Crystal < target.Crystal && resource.Boron < target.Boron;
+        }
+
         public static ResourcesDTO ResourceZero { get => new ResourcesDTO(0, 0, 0); }
     }
 }

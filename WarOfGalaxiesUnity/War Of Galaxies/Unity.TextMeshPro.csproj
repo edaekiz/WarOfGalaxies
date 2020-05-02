@@ -16,7 +16,7 @@
     <CompilerResponseFile></CompilerResponseFile>
     <UnityProjectGenerator>VSTU</UnityProjectGenerator>
     <UnityProjectType>Game:1</UnityProjectType>
-    <UnityBuildTarget>Android:13</UnityBuildTarget>
+    <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
     <UnityVersion>2019.3.0f6</UnityVersion>
     <RootNamespace></RootNamespace>
     <LangVersion>6</LangVersion>
@@ -33,7 +33,7 @@
     <IntermediateOutputPath>Temp\UnityVS_obj\Debug\</IntermediateOutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DefineConstants>DEBUG;TRACE;UNITY_2019_3_0;UNITY_2019_3;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_RUNTIME_PERMISSIONS;ENABLE_ENGINE_CODE_STRIPPING;ENABLE_ONSCREEN_KEYBOARD;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;ENABLE_VIDEO;PLATFORM_ANDROID;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;PLATFORM_SUPPORTS_ADS_ID;UNITY_CAN_SHOW_SPLASH_SCREEN;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO;ENABLE_SPATIALTRACKING;UNITY_ASTC_ONLY_DECOMPRESS;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_VSTU;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;UNITY_POST_PROCESSING_STACK_V2;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_2019_3_0;UNITY_2019_3;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_VSTU;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;UNITY_POST_PROCESSING_STACK_V2;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -43,7 +43,7 @@
     <IntermediateOutputPath>Temp\UnityVS_obj\Release\</IntermediateOutputPath>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DefineConstants>TRACE;UNITY_2019_3_0;UNITY_2019_3;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_RUNTIME_PERMISSIONS;ENABLE_ENGINE_CODE_STRIPPING;ENABLE_ONSCREEN_KEYBOARD;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;ENABLE_VIDEO;PLATFORM_ANDROID;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;PLATFORM_SUPPORTS_ADS_ID;UNITY_CAN_SHOW_SPLASH_SCREEN;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO;ENABLE_SPATIALTRACKING;UNITY_ASTC_ONLY_DECOMPRESS;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_VSTU;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;UNITY_POST_PROCESSING_STACK_V2;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>TRACE;UNITY_2019_3_0;UNITY_2019_3;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;DEBUG;TRACE;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_VSTU;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;UNITY_POST_PROCESSING_STACK_V2;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <ItemGroup>
@@ -79,6 +79,12 @@
     </Reference>
     <Reference Include="Managed/UnityEngine/UnityEngine.ClothModule">
       <HintPath>C:\Program Files\Unity\2019.3.0f6\Editor\Data\Managed/UnityEngine/UnityEngine.ClothModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Managed/UnityEngine/UnityEngine.ClusterInputModule">
+      <HintPath>C:\Program Files\Unity\2019.3.0f6\Editor\Data\Managed/UnityEngine/UnityEngine.ClusterInputModule.dll</HintPath>
+    </Reference>
+    <Reference Include="Managed/UnityEngine/UnityEngine.ClusterRendererModule">
+      <HintPath>C:\Program Files\Unity\2019.3.0f6\Editor\Data\Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll</HintPath>
     </Reference>
     <Reference Include="Managed/UnityEngine/UnityEngine.CoreModule">
       <HintPath>C:\Program Files\Unity\2019.3.0f6\Editor\Data\Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>
@@ -238,6 +244,9 @@
     </Reference>
     <Reference Include="UnityEditor.WindowsStandalone.Extensions">
       <HintPath>C:/Program Files/Unity/2019.3.0f6/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEditor.WebGL.Extensions">
+      <HintPath>C:/Program Files/Unity/2019.3.0f6/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll</HintPath>
     </Reference>
     <Reference Include="UnityEditor.Android.Extensions">
       <HintPath>C:/Program Files/Unity/2019.3.0f6/Editor/Data/PlaybackEngines/AndroidPlayer/UnityEditor.Android.Extensions.dll</HintPath>
@@ -650,11 +659,71 @@
     <Compile Include="Packages\com.unity.textmeshpro\Scripts\Runtime\TextMeshProUGUI.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Lean\Common\Examples\Fonts\OFL.txt" />
-    <None Include="Assets\Lean\Common\Examples\Shaders\Alpha.shader" />
-    <None Include="Assets\Lean\Common\Examples\Shaders\Object.shader" />
-    <None Include="Assets\Lean\Common\Examples\Shaders\Skybox.shader" />
-    <None Include="Assets\Lean\READ ME.txt" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\FXAA\Resources\FXAA.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\FXAA\Resources\FXAA3.cginc" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\SMAA\Resources\SMAA.cginc" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\SMAA\Resources\SMAA.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\BlurEffectConeTaps.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Adaptation.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Apply.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Luminance.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\MinMaxReduction.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\ContrastComposite.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\ConvertDepth.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\PrepareSunShaftsBlur.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\ScreenSpaceRaytrace.cginc" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\ShowAlphaChannel.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\SimpleClear.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\SunShaftsComposite.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\Blend.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendForBloom.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlurAndFlares.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BrightPassFilter.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BrightPassFilter2.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\LensFlareCreate.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MobileBloom.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MobileBlur.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MultiPassHollywoodFlares.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\SeparableBlurPlus.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\VignetteShader.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Textures\README - Copyright.txt" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\Shader\PlanetRingShader.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\Shader\PlanetShaderHi.shader" />
+    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\Shader\PlanetShaderMobile.shader" />
+    <None Include="Assets\ExternalAssets\Exo planets\READ ME.txt" />
+    <None Include="Assets\ExternalAssets\Exo planets\Shaders\Atmosphere ASE.shader" />
+    <None Include="Assets\ExternalAssets\Exo planets\Shaders\Atmosphere sun.shader" />
+    <None Include="Assets\ExternalAssets\Exo planets\Shaders\Planet lava.shader" />
+    <None Include="Assets\ExternalAssets\Exo planets\Shaders\Sun.shader" />
+    <None Include="Assets\ExternalAssets\Exo planets\Shaders\corona.shader" />
+    <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Atmosphere - Copy.shader" />
+    <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Atmosphere.shader" />
+    <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Planet - Transparency.shader" />
+    <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Planet.shader" />
+    <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Ring.shader" />
+    <None Include="Assets\ExternalAssets\Exo planets\Shaders\planet shader NO reflection.shader" />
+    <None Include="Assets\ExternalAssets\Exo planets\Shaders\planet shader.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\Plugins\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\Robo&apos;s turret (free)\Shaders\SDR_Structures.shader" />
     <None Include="Packages\com.unity.collab-proxy\Editor\Resources\Styles\CollabHistoryCommon.uss" />
     <None Include="Packages\com.unity.collab-proxy\Editor\Resources\Styles\CollabHistoryDark.uss" />
     <None Include="Packages\com.unity.collab-proxy\Editor\Resources\Styles\CollabHistoryLight.uss" />
@@ -733,6 +802,101 @@
     <None Include="Packages\com.unity.postprocessing\PostProcessing\Shaders\xRLib.hlsl" />
     <None Include="Packages\com.unity.postprocessing\Tests\Editor\Unity.Postprocessing.Editor.Tests.asmdef" />
     <None Include="Packages\com.unity.postprocessing\Tests\Runtime\Unity.Postprocessing.Runtime.Tests.asmdef" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\Resources\NoiseHeightHistory.txt" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\Resources\PaintHeightHistory.txt" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\Resources\PaintHeightHistoryW.txt" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\Resources\PaintHeightHistory_Null.txt" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\Resources\PaintHistory_Null.txt" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\Resources\PaintTextureHistory.txt" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\Resources\SculptToolHistory.txt" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\Resources\SetHeightHistory.txt" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\Resources\SmileHistory.txt" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\Resources\StampHistory.txt" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\Resources\StampToolHistory.txt" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\Resources\VerticalZigzag.txt" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\Resources\VerticalZigzagHistory.txt" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\TerrainTools\FilterStack\Shaders\BlendModes.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\TerrainTools\FilterStack\Shaders\Filters.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\TerrainTools\NoiseLib\Resources\Styles\Noise.uss" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\TerrainTools\Resources\Advection.compute" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\TerrainTools\Resources\Aeolian.compute" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\TerrainTools\Resources\Aspect.compute" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\TerrainTools\Resources\Concavity.compute" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\TerrainTools\Resources\Diffusion.compute" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\TerrainTools\Resources\Height.compute" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\TerrainTools\Resources\Hydraulic.compute" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\TerrainTools\Resources\ImageUtility.compute" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\TerrainTools\Resources\Projection.compute" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\TerrainTools\Resources\Slope.compute" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\TerrainTools\Resources\Thermal.compute" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\Tests\NoiseTests.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Editor\Unity.TerrainTools.Editor.asmdef" />
+    <None Include="Packages\com.unity.terrain-tools\Runtime\Unity.TerrainTools.asmdef" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\CloneBrush.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\ContrastHeight.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\Generated\NoiseBlitFBM.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\Generated\NoiseBlitNone.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\Generated\NoiseBlitStrata.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\Generated\NoiseFillFbm.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\Generated\NoiseFillNone.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\Generated\NoiseFillStrata.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\MeshStamp.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\MeshStamp2.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\MeshUtility.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseFill.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseHeightTool.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\FBM\Billow.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\FBM\Perlin.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\FBM\Ridge.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\FBM\Value.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\FBM\Voronoi.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\Implementation\BillowImpl.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\Implementation\PerlinImpl.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\Implementation\RidgeImpl.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\Implementation\ValueImpl.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\Implementation\VoronoiImpl.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\Noise.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\NoiseCommon.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\NoiseImpl.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\NoisePreview.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\None\Billow.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\None\Perlin.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\None\Ridge.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\None\Value.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\None\Voronoi.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\Preview.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\Strata\Billow.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\Strata\Perlin.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\Strata\Ridge.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\Strata\Value.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\NoiseLib\Strata\Voronoi.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\PaintAspect.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\PaintConcavity.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\PaintHeight.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\PaintMaterialBrushPreview.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\PaintTexture.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\PinchHeight.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\SedimentSplat.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\SetExactHeight.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\SharpenPeaks.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\SimpleHeightBlend.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\SlopeFlatten.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\SmoothHeight.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\SmudgeHeight.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\TerraceErosion.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\TwistHeight.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\Visualization\Builtin\BLT_TerrainVisualization.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\Visualization\Builtin\BLT_TerrainVisualizationCommon.cginc" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\Visualization\HDRP\HDRP_TerrainVisualization.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\Visualization\HDRP\HDRP_TerrainVisualizationData.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\Visualization\HDRP\HDRP_TerrainVisualizationTemplate.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\Visualization\LWRP\LWRP_TerrainVisualizationInput.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\Visualization\LWRP\LWRP_TerrainVisualizationLit.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\Visualization\LWRP\LWRP_TerrainVisualizationLitPass.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\Visualization\URP\URP_TerrainVisualizationInput.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\Visualization\URP\URP_TerrainVisualizationLit.shader" />
+    <None Include="Packages\com.unity.terrain-tools\Shaders\Visualization\URP\URP_TerrainVisualizationLitPass.hlsl" />
+    <None Include="Packages\com.unity.terrain-tools\Tests\EditModeTests.asmdef" />
     <None Include="Packages\com.unity.test-framework\UnityEditor.TestRunner\UnityEditor.TestRunner.asmdef" />
     <None Include="Packages\com.unity.test-framework\UnityEngine.TestRunner\UnityEngine.TestRunner.asmdef" />
     <None Include="Packages\com.unity.textmeshpro\Editor Resources\Shaders\TMP_Properties.cginc" />

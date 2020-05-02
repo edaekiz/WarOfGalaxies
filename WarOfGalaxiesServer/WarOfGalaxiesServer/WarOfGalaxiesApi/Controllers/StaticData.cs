@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using WarOfGalaxiesApi.DAL.Interfaces;
 using WarOfGalaxiesApi.DTO.Enums;
 using WarOfGalaxiesApi.DTO.Models;
 
@@ -132,6 +133,31 @@ namespace WarOfGalaxiesApi.Controllers
 
             // Metal ve kristal üzerinden araştırm süresini hesaplıyoruz.
             return ((cost.Metal + cost.Crystal) / (UniverseSpeed * 1000 * (1 + researchLevel))) * 3600;
+        }
+
+        #endregion
+
+        #region Shipyard Ships
+
+        public static List<ShipDTO> ShipData = new List<ShipDTO>()
+        {
+            new ShipDTO
+            {
+                Cost = new ResourcesDTO(3000,1000),
+                ShipID = Ships.HafifAvci
+            }
+        };
+
+        /// <summary>
+        /// Gemilerin üretim süresini hesaplar.
+        /// </summary>
+        /// <param name="ship">Hesaplanacak gemi.</param>
+        /// <param name="shipyardLevel">Hesaplanacak liman seviyesi.</param>
+        /// <returns></returns>
+        public static double CalculateShipCountdown(Ships ship, int shipyardLevel)
+        {
+            ShipDTO shipInfo = ShipData.Find(x => x.ShipID == ship);
+            return (shipInfo.Cost.Metal + shipInfo.Cost.Crystal) / (2500 * (1 + shipyardLevel));
         }
 
         #endregion
