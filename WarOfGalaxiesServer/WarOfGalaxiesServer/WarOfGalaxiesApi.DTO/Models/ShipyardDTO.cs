@@ -23,7 +23,8 @@ namespace WarOfGalaxiesApi.DTO.Models
         public int UserPlanetId { get; set; }
         public int ShipId { get; set; }
         public int ShipCount { get; set; }
-        public int OrderIndex { get; set; }
+        public double OffsetTime { get; set; }
+        public DateTime? LastVerifyDate { get; set; }
     }
 
     public class UserPlanetShipDTO

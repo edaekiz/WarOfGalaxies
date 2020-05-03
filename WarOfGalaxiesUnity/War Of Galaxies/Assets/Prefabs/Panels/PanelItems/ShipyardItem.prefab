@@ -608,6 +608,8 @@ MonoBehaviour:
   ShipName: {fileID: 8088941615914423771}
   ShipCount: {fileID: 8088941614293285871}
   ShipImage: {fileID: 8088941614323295947}
+  CountdownImage: {fileID: 1584108162}
+  CountdownText: {fileID: 1964133276}
 --- !u!1 &8088941615914423769
 GameObject:
   m_ObjectHideFlags: 0

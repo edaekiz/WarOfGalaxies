@@ -2,10 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using Assets.Scripts.Enums;
-using Assets.Scripts.ApiModels;
-using Assets.Scripts.Data;
-using Assets.Scripts.Extends;
 
 public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
 {

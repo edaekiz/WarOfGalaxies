@@ -11,6 +11,5 @@ namespace WarOfGalaxiesApi.DAL.Models
         public int ShipId { get; set; }
         public int ShipCount { get; set; }
         public DateTime? LastVerifyDate { get; set; }
-        public int OrderIndex { get; set; }
     }
 }

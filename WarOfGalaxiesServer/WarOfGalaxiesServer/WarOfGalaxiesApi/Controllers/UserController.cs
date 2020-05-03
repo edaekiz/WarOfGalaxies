@@ -6,6 +6,7 @@ using System.Linq;
 using WarOfGalaxiesApi.Controllers.Base;
 using WarOfGalaxiesApi.DAL.Interfaces;
 using WarOfGalaxiesApi.DAL.Models;
+using WarOfGalaxiesApi.DTO.Enums;
 using WarOfGalaxiesApi.DTO.Helpers;
 using WarOfGalaxiesApi.DTO.Models;
 
@@ -110,8 +111,17 @@ namespace WarOfGalaxiesApi.Controllers
                     ShipCount = x.ShipCount,
                     ShipId = x.ShipId,
                     UserPlanetId = x.UserPlanetId,
-                    OrderIndex = x.OrderIndex
+                    LastVerifyDate = x.LastVerifyDate
                 }).ToList();
+
+            foreach (UserPlanetShipProgDTO shipProg in userPlanetShipProgs)
+            {
+                if (shipProg.LastVerifyDate.HasValue)
+                {
+                    double passedSeconds = (currentDate - shipProg.LastVerifyDate.Value).TotalSeconds;
+                    shipProg.OffsetTime = passedSeconds;
+                }
+            }
 
             // Sonucu dönüyoruz.
             return ResponseHelper.GetSuccess(new LoginStuffDTO

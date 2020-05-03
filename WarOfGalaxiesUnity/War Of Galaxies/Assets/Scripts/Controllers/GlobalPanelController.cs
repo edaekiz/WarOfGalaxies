@@ -114,7 +114,7 @@ public class GlobalPanelController : MonoBehaviour
 
         // Eğer panel yok ise hata dön.
         if (panel == null)
-            Debug.LogError("Panel bulunamadı!");
+            return;
 
         // Ancak yinede listeden siliyoruz.
         OpenPanels.Remove(panel);

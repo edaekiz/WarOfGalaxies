@@ -35,6 +35,8 @@ public class ResearchPanelController : BasePanelController
         foreach (Transform child in ResearchContent)
             Destroy(child.gameObject);
 
+        _researchItems.Clear();
+
         // Araştırmaları döneceğiz.
         for (int ii = 0; ii < researches.Length; ii++)
         {

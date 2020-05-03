@@ -308,6 +308,93 @@ namespace WarOfGalaxiesApi.Controllers
 
                 #endregion
 
+                #region Gemiler
+
+                // Gezegendeki gemi üretimleri.
+                List<TblUserPlanetShipProgs> userPlanetShipProgs = uow.GetRepository<TblUserPlanetShipProgs>().Where(x => x.UserPlanetId == verifyData.UserPlanetID).ToList();
+
+                // Gezegendeki gemiler.
+                List<TblUserPlanetShips> userPlanetShips = uow.GetRepository<TblUserPlanetShips>().Where(x => x.UserPlanetId == verifyData.UserPlanetID).ToList();
+
+                // Tersaneyi buluyoruz.
+                TblUserPlanetBuildings shipyard = userPlanetBuildings.Find(x => x.BuildingId == (int)Buildings.Tersane);
+
+                // Tersane seviyesini buluyoruz.
+                int shipyardLevel = shipyard == null ? 0 : shipyard.BuildingLevel;
+
+                // İlk geminin üretiminin hepsi beklenen süreden önce tamamlandı. Ve bizim bir sonraki üretime başlamamız lazım.
+                // Bir sonraki üretimi hesaplarken kaç sanie olacağını belirtiyoruz.
+                DateTime? lastVerifyDateInShipyard = null;
+
+                // Her bir üretimi dönüyoruz.
+                foreach (TblUserPlanetShipProgs userPlanetShipProg in userPlanetShipProgs)
+                {
+                    // Bir geminin üretim süresi.
+                    double shipBuildTime = StaticData.CalculateShipCountdown((Ships)userPlanetShipProg.ShipId, shipyardLevel);
+
+                    // Son onaylanma tarihi bir öncekinin bitiş tarihi.
+                    if (!userPlanetShipProg.LastVerifyDate.HasValue)
+                        userPlanetShipProg.LastVerifyDate = lastVerifyDateInShipyard;
+
+                    // Son doğrulamadan bu yana geçen süre.
+                    double passedSeconds = (currentDate - userPlanetShipProg.LastVerifyDate.Value).TotalSeconds;
+
+                    // Toplam üretilen gemi sayısı.
+                    int producedCount = (int)(passedSeconds / shipBuildTime);
+
+                    // Eğer üretim yok ise güncel üretimdeyiz.
+                    if (producedCount == 0)
+                        break;
+
+                    // Eğer olandan fazla ürettiysek üretebileceğimiz sınıra getiriyoruz.
+                    if (producedCount > userPlanetShipProg.ShipCount)
+                        producedCount = userPlanetShipProg.ShipCount;
+
+                    // Üretilmesi için geçen süreyi buluyoruz.
+                    passedSeconds = shipBuildTime * producedCount;
+
+                    // Son doğrulama tarihini güncelliyoruz.
+                    userPlanetShipProg.LastVerifyDate = userPlanetShipProg.LastVerifyDate.Value.AddSeconds(passedSeconds);
+
+                    // Son doğrulama süresini veriyoruz bunun üzerinden hesaplayacağız.
+                    lastVerifyDateInShipyard = userPlanetShipProg.LastVerifyDate;
+
+                    // Gezegende bulunan benzer gemi.
+                    TblUserPlanetShips userPlanetShip = userPlanetShips.Find(x => x.ShipId == userPlanetShipProg.ShipId);
+
+                    // Eğer gezegende bu gemiden yok ise ekliyoruz.
+                    if (userPlanetShip == null)
+                    {
+                        // Veritabanına gemiyi ekliyoruz.
+                        TblUserPlanetShips userPlanetNewShip = uow.GetRepository<TblUserPlanetShips>().Add(new TblUserPlanetShips
+                        {
+                            ShipId = userPlanetShipProg.ShipId,
+                            ShipCount = producedCount,
+                            UserPlanetId = verifyData.UserPlanetID,
+                            UserId = userPlanet.UserId,
+                        });
+
+                        // Kaydı listeye de ekliyoruz ki aynı gemiden tekrar üretim gelirse listeye basalım.
+                        userPlanetShips.Add(userPlanetNewShip);
+                    }
+                    else
+                    {
+                        // Sadece miktarı güncelliyoruz.
+                        userPlanetShip.ShipCount += producedCount;
+                    }
+
+                    // Üretim miktarını azaltıyoruz.
+                    userPlanetShipProg.ShipCount -= producedCount;
+
+                    // Eğer üretilebilecek gemi kalmamış ise veritabanından siliyoruz.
+                    if (userPlanetShipProg.ShipCount <= 0)
+                        uow.GetRepository<TblUserPlanetShipProgs>().Delete(userPlanetShipProg);
+                    else // Eğer hala üretim  var ise diğerlerine geçmemize gerek yok.
+                        break;
+                }
+
+                #endregion
+
                 // Güncelleme tarihini değiştiriyoruz.
                 userPlanet.LastUpdateDate = currentDate;
 

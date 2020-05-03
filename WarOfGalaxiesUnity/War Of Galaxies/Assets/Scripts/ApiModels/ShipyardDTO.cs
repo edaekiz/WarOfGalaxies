@@ -26,7 +26,13 @@ namespace Assets.Scripts.ApiModels
         public int UserPlanetId;
         public Ships ShipId;
         public int ShipCount;
-        public int OrderIndex;
+        public DateTime LastVerifyDate;
+        public double OffsetTime;
+        public UserPlanetShipProgDTO()
+        {
+            LastVerifyDate = DateTime.UtcNow;
+        }
+
     }
 
     [Serializable]

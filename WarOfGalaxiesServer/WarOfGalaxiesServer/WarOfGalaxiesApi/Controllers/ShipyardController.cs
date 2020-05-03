@@ -31,10 +31,6 @@ namespace WarOfGalaxiesApi.Controllers
             if (!isVerified)
                 return ResponseHelper.GetError("Kaynaklar doğrulanırken hata oluştu");
 
-            // Gezegendeki gemi üretimlerini buluyoruz.
-            List<TblUserPlanetShipProgs> userPlanetShipProgs = base.UnitOfWork.GetRepository<TblUserPlanetShipProgs>()
-                .Where(x => x.UserPlanetId == request.UserPlanetID && x.UserId == base.DBUser.UserId).ToList();
-
             // Gemi bilgisini buluyoruz.
             ShipDTO shipInfo = StaticData.ShipData.Find(x => x.ShipID == request.ShipID);
 
@@ -100,14 +96,13 @@ namespace WarOfGalaxiesApi.Controllers
             userPlanet.Crystal -= calculatedCost.Crystal;
             userPlanet.Boron -= calculatedCost.Boron;
 
-            // Sıraya ekliyoruz.
-            int nextOrderIndex = userPlanetShipProgs.Select(x => x.OrderIndex).DefaultIfEmpty(0).Max() + 1;
+            // Bu gezegende başka bir üretim var mı?
+            bool isThereQueueInShipyard = base.UnitOfWork.GetRepository<TblUserPlanetShipProgs>().Any(x => x.UserPlanetId == request.UserPlanetID);
 
             // Üretim sırasına eklemek.
             base.UnitOfWork.GetRepository<TblUserPlanetShipProgs>().Add(new TblUserPlanetShipProgs
             {
-                LastVerifyDate = currentDate,
-                OrderIndex = nextOrderIndex,
+                LastVerifyDate = isThereQueueInShipyard ? null : (DateTime?)currentDate,
                 ShipCount = request.Quantity,
                 ShipId = (int)request.ShipID,
                 UserId = base.DBUser.UserId,

@@ -293,8 +293,16 @@ public class BasePanelController : MonoBehaviour
 
     }
 
-    public void SetResources(ResourcesDTO resources)
+    /// <summary>
+    /// Eğer yeterli material var ise true döner.
+    /// </summary>
+    /// <param name="resources"></param>
+    /// <returns></returns>
+    public bool SetResources(ResourcesDTO resources)
     {
+        // Yeterli material var mı?
+        bool isEnoughMat = true;
+
         #region Kaynak ikonları üstüne tıklandığında yazacak olan detaylar.
 
         // Eğer metal kaynağı 0 dan fazla ise yazabiliriz. Ancak değil ise kapatacağız.
@@ -346,6 +354,9 @@ public class BasePanelController : MonoBehaviour
         {
             // Metal madenini kırmzııya boyuyoruz.
             MetalDetail.QuantityText.color = Color.red;
+
+            // Yeterli kaynak yok.
+            isEnoughMat = false;
         }
         else
             MetalDetail.QuantityText.color = Color.white;
@@ -358,6 +369,9 @@ public class BasePanelController : MonoBehaviour
         {
             // Kristal madenini kırmzııya boyuyoruz.
             CrystalDetail.QuantityText.color = Color.red;
+
+            // Yeterli kaynak yok.
+            isEnoughMat = false;
         }
         else
             CrystalDetail.QuantityText.color = Color.white;
@@ -370,11 +384,17 @@ public class BasePanelController : MonoBehaviour
         {
             // Bor madenini kırmzııya boyuyoruz.
             BoronDetail.QuantityText.color = Color.red;
+
+            // Yeterli kaynak yok.
+            isEnoughMat = false;
         }
         else
             BoronDetail.QuantityText.color = Color.white;
 
         #endregion
+
+        // Eğer materyal yeterli ise true döner.
+        return isEnoughMat;
     }
 
 }

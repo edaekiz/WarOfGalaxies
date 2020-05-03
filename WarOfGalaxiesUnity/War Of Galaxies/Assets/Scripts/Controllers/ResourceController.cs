@@ -228,7 +228,7 @@ public class ResourceController : MonoBehaviour
             buildingLevel = storageBuilding.BuildingLevel;
 
         // Kapasitesi.
-        double buildingCapacity = StaticData.GetBuildingStorage(Assets.Scripts.Enums.Buildings.MetalDeposu, buildingLevel);
+        double buildingCapacity = StaticData.GetBuildingStorage(Assets.Scripts.Enums.Buildings.KristalDeposu, buildingLevel);
 
         // Eğer deposu yeterli ise beyaz değil ise kırmızı olacak.
         if (crystalAnimQuantity < buildingCapacity)
@@ -368,7 +368,7 @@ public class ResourceController : MonoBehaviour
         UserPlanetBuildingDTO crystalStorageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.KristalDeposu);
 
         // Kullanıcının kristal deposu.
-        double crystalBuildingCapacity = StaticData.GetBuildingStorage(Buildings.MetalDeposu, crystalStorageBuilding == null ? 0 : crystalStorageBuilding.BuildingLevel);
+        double crystalBuildingCapacity = StaticData.GetBuildingStorage(Buildings.KristalDeposu, crystalStorageBuilding == null ? 0 : crystalStorageBuilding.BuildingLevel);
 
         #endregion
 

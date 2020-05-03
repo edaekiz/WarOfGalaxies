@@ -2,6 +2,7 @@
 using Assets.Scripts.Enums;
 using System;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 namespace Assets.Scripts.Models
 {

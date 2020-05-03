@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.Models;
+using System.Collections.Generic;
+using UnityEngine;
 
 public class ShipyardController : MonoBehaviour
 {
     public static ShipyardController SC { get; set; }
-
+    public List<ShipImageDTO> ShipWithImages;
     private void Awake()
     {
         if (SC == null)

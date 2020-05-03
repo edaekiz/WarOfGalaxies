@@ -143,7 +143,7 @@ namespace Assets.Scripts.Data
         {
             new ShipDTO
             {
-                Cost = new ResourcesDTO(3000,1000),
+                Cost = new ResourcesDTO(1500,750),
                 ShipID = Ships.HafifAvci
             }
         };
@@ -157,7 +157,7 @@ namespace Assets.Scripts.Data
         public static double CalculateShipCountdown(Ships ship,int shipyardLevel)
         {
             ShipDTO shipInfo = ShipData.Find(x => x.ShipID == ship);
-            return (shipInfo.Cost.Metal + shipInfo.Cost.Crystal) / (2500 * (1 + shipyardLevel));
+            return ((shipInfo.Cost.Metal + shipInfo.Cost.Crystal) / (2500 * (10 + shipyardLevel))) * 3600;
         }
 
         #endregion
