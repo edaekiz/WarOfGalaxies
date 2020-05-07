@@ -58,6 +58,9 @@ public class ShipyardPanelController : BasePanelController
             _shipyardItems.Add(sic);
         }
 
+        // Hepsini kurduktan sonra kuyruğu yeniliyoruz.
+        ShipyardQueueController.SQC.RefreshShipyardQueue();
+
     }
 
 }

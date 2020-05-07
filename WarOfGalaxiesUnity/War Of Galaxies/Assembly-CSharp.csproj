@@ -116,6 +116,7 @@
     <Compile Include="Assets\Scripts\Controllers\ShipyardDetailItemPanel.cs" />
     <Compile Include="Assets\Scripts\Controllers\ShipyardItemController.cs" />
     <Compile Include="Assets\Scripts\Controllers\ShipyardPanelController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\ShipyardQueueController.cs" />
     <Compile Include="Assets\Scripts\Controllers\StaticValuesController.cs" />
     <Compile Include="Assets\Scripts\Controllers\SunController.cs" />
     <Compile Include="Assets\Scripts\Controllers\ZoomPanController.cs" />

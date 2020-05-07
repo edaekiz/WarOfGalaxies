@@ -101,6 +101,9 @@ public class ShipyardItemController : MonoBehaviour
                     // Eğer daha yok ise listeden siliyoruz.
                     LoginController.LC.CurrentUser.UserPlanetShipProgs.Remove(prog);
                 }
+
+                // Kuyruğu yeniliyoruz.
+                ShipyardQueueController.SQC.RefreshShipyardQueue();
             }
 
             // Eğer yok ise gemisi 0 var ise miktarı basıyoruz.
