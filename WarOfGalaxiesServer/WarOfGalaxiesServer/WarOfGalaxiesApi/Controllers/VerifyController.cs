@@ -395,6 +395,93 @@ namespace WarOfGalaxiesApi.Controllers
 
                 #endregion
 
+                #region Savunmalar
+
+                // Gezegendeki savunma üretimleri.
+                List<TblUserPlanetDefenseProgs> userPlanetDefenseProgs = uow.GetRepository<TblUserPlanetDefenseProgs>().Where(x => x.UserPlanetId == verifyData.UserPlanetID).ToList();
+
+                // Gezegendeki savunmalar.
+                List<TblUserPlanetDefenses> userPlanetDefenses = uow.GetRepository<TblUserPlanetDefenses>().Where(x => x.UserPlanetId == verifyData.UserPlanetID).ToList();
+
+                // Robot fabrikasını buluyoruz.
+                TblUserPlanetBuildings robotFac = userPlanetBuildings.Find(x => x.BuildingId == (int)Buildings.RobotFabrikası);
+
+                // Robot seviyesini buluyoruz.
+                int robotFacLevel = robotFac == null ? 0 : robotFac.BuildingLevel;
+
+                // İlk savunmanın üretiminin hepsi beklenen süreden önce tamamlandı. Ve bizim bir sonraki üretime başlamamız lazım.
+                // Bir sonraki üretimi hesaplarken kaç saniye olacağını belirtiyoruz.
+                DateTime? lastVerifyDateInDefense = null;
+
+                // Her bir üretimi dönüyoruz.
+                foreach (TblUserPlanetDefenseProgs userPlanetDefenseProg in userPlanetDefenseProgs)
+                {
+                    // Bir savunmanın üretim süresi.
+                    double defenseBuildTime = StaticData.CalculateDefenseCountdown((Defenses)userPlanetDefenseProg.DefenseId, robotFacLevel);
+
+                    // Son onaylanma tarihi bir öncekinin bitiş tarihi.
+                    if (!userPlanetDefenseProg.LastVerifyDate.HasValue)
+                        userPlanetDefenseProg.LastVerifyDate = lastVerifyDateInDefense;
+
+                    // Son doğrulamadan bu yana geçen süre.
+                    double passedSeconds = (currentDate - userPlanetDefenseProg.LastVerifyDate.Value).TotalSeconds;
+
+                    // Toplam üretilen gemi sayısı.
+                    int producedCount = (int)(passedSeconds / defenseBuildTime);
+
+                    // Eğer üretim yok ise güncel üretimdeyiz.
+                    if (producedCount == 0)
+                        break;
+
+                    // Eğer olandan fazla ürettiysek üretebileceğimiz sınıra getiriyoruz.
+                    if (producedCount > userPlanetDefenseProg.DefenseCount)
+                        producedCount = userPlanetDefenseProg.DefenseCount;
+
+                    // Üretilmesi için geçen süreyi buluyoruz.
+                    passedSeconds = defenseBuildTime * producedCount;
+
+                    // Son doğrulama tarihini güncelliyoruz.
+                    userPlanetDefenseProg.LastVerifyDate = userPlanetDefenseProg.LastVerifyDate.Value.AddSeconds(passedSeconds);
+
+                    // Son doğrulama süresini veriyoruz bunun üzerinden hesaplayacağız.
+                    lastVerifyDateInDefense = userPlanetDefenseProg.LastVerifyDate;
+
+                    // Gezegende bulunan benzer savunmalar.
+                    TblUserPlanetDefenses userPlanetDefense = userPlanetDefenses.Find(x => x.DefenseId == userPlanetDefenseProg.DefenseId);
+
+                    // Eğer gezegende bu savunmadan yok ise ekliyoruz.
+                    if (userPlanetDefense == null)
+                    {
+                        // Veritabanına savunma ekliyoruz.
+                        TblUserPlanetDefenses userPlanetNewDefense = uow.GetRepository<TblUserPlanetDefenses>().Add(new TblUserPlanetDefenses
+                        {
+                            DefenseId = userPlanetDefenseProg.DefenseId,
+                            DefenseCount = producedCount,
+                            UserPlanetId = verifyData.UserPlanetID,
+                            UserId = userPlanet.UserId,
+                        });
+
+                        // Kaydı listeye de ekliyoruz ki aynı savunmadan tekrar üretim gelirse listeye basalım.
+                        userPlanetDefenses.Add(userPlanetNewDefense);
+                    }
+                    else
+                    {
+                        // Sadece miktarı güncelliyoruz.
+                        userPlanetDefense.DefenseCount += producedCount;
+                    }
+
+                    // Üretim miktarını azaltıyoruz.
+                    userPlanetDefenseProg.DefenseCount -= producedCount;
+
+                    // Eğer üretilebilecek savunma kalmamış ise veritabanından siliyoruz.
+                    if (userPlanetDefenseProg.DefenseCount <= 0)
+                        uow.GetRepository<TblUserPlanetDefenseProgs>().Delete(userPlanetDefenseProg);
+                    else // Eğer hala üretim  var ise diğerlerine geçmemize gerek yok.
+                        break;
+                }
+
+                #endregion
+
                 // Güncelleme tarihini değiştiriyoruz.
                 userPlanet.LastUpdateDate = currentDate;
 

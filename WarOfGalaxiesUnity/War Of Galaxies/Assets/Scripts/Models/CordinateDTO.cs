@@ -1,5 +1,8 @@
-﻿namespace Assets.Scripts.Models
+﻿using System;
+
+namespace Assets.Scripts.Models
 {
+    [Serializable]
     public class CordinateDTO
     {
         /// <summary>

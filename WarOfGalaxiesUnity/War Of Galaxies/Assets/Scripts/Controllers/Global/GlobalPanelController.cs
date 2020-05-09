@@ -13,7 +13,9 @@ public class GlobalPanelController : MonoBehaviour
         ResearchPanel,
         ResearchDetailPanel,
         ShipyardPanel,
-        ShipyardDetailPanel
+        ShipyardDetailPanel,
+        DefensePanel,
+        DefenseDetailPanel
     }
 
     [Serializable]

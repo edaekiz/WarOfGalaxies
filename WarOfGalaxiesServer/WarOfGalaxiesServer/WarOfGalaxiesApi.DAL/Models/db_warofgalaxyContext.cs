@@ -20,6 +20,8 @@ namespace WarOfGalaxiesApi.DAL.Models
         public virtual DbSet<TblResearches> TblResearches { get; set; }
         public virtual DbSet<TblUserPlanetBuildingUpgs> TblUserPlanetBuildingUpgs { get; set; }
         public virtual DbSet<TblUserPlanetBuildings> TblUserPlanetBuildings { get; set; }
+        public virtual DbSet<TblUserPlanetDefenseProgs> TblUserPlanetDefenseProgs { get; set; }
+        public virtual DbSet<TblUserPlanetDefenses> TblUserPlanetDefenses { get; set; }
         public virtual DbSet<TblUserPlanetShipProgs> TblUserPlanetShipProgs { get; set; }
         public virtual DbSet<TblUserPlanetShips> TblUserPlanetShips { get; set; }
         public virtual DbSet<TblUserPlanets> TblUserPlanets { get; set; }
@@ -113,6 +115,38 @@ namespace WarOfGalaxiesApi.DAL.Models
                 entity.Property(e => e.UserPlanetBuildingId).HasColumnName("UserPlanetBuildingID");
 
                 entity.Property(e => e.BuildingId).HasColumnName("BuildingID");
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.Property(e => e.UserPlanetId).HasColumnName("UserPlanetID");
+            });
+
+            modelBuilder.Entity<TblUserPlanetDefenseProgs>(entity =>
+            {
+                entity.HasKey(e => e.UserPlanetDefenseProgId);
+
+                entity.ToTable("tbl_user_planet_defense_progs");
+
+                entity.Property(e => e.UserPlanetDefenseProgId).HasColumnName("UserPlanetDefenseProgID");
+
+                entity.Property(e => e.DefenseId).HasColumnName("DefenseID");
+
+                entity.Property(e => e.LastVerifyDate).HasColumnType("datetime");
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.Property(e => e.UserPlanetId).HasColumnName("UserPlanetID");
+            });
+
+            modelBuilder.Entity<TblUserPlanetDefenses>(entity =>
+            {
+                entity.HasKey(e => e.UserPlanetDefenseId);
+
+                entity.ToTable("tbl_user_planet_defenses");
+
+                entity.Property(e => e.UserPlanetDefenseId).HasColumnName("UserPlanetDefenseID");
+
+                entity.Property(e => e.DefenseId).HasColumnName("DefenseID");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 

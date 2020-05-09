@@ -114,12 +114,44 @@ namespace WarOfGalaxiesApi.Controllers
                     LastVerifyDate = x.LastVerifyDate
                 }).ToList();
 
+            // Farkı hesaplıyoruz.
             foreach (UserPlanetShipProgDTO shipProg in userPlanetShipProgs)
             {
                 if (shipProg.LastVerifyDate.HasValue)
                 {
                     double passedSeconds = (currentDate - shipProg.LastVerifyDate.Value).TotalSeconds;
                     shipProg.OffsetTime = passedSeconds;
+                }
+            }
+
+            // Kullanıcının savunmalarını buluyoruz.
+            List<UserPlanetDefenseDTO> userPlanetDefenses = this.UnitOfWork.GetRepository<TblUserPlanetDefenses>()
+                .Where(x => x.UserId == base.DBUser.UserId)
+                .Select(x => new UserPlanetDefenseDTO
+                {
+                    DefenseCount = x.DefenseCount,
+                    DefenseId = x.DefenseId,
+                    UserPlanetId = x.UserPlanetId
+                }).ToList();
+
+            // Kullanıcının savunma üretimlerini buluyoruz.
+            List<UserPlanetDefenseProgDTO> userPlanetDefenseProgs = this.UnitOfWork.GetRepository<TblUserPlanetDefenseProgs>()
+                .Where(x => x.UserId == base.DBUser.UserId)
+                .Select(x => new UserPlanetDefenseProgDTO
+                {
+                    DefenseCount = x.DefenseCount,
+                    DefenseId = x.DefenseId,
+                    UserPlanetId = x.UserPlanetId,
+                    LastVerifyDate = x.LastVerifyDate
+                }).ToList();
+
+            // Farkı hesaplıyoruz.
+            foreach (UserPlanetDefenseProgDTO defenseProg in userPlanetDefenseProgs)
+            {
+                if (defenseProg.LastVerifyDate.HasValue)
+                {
+                    double passedSeconds = (currentDate - defenseProg.LastVerifyDate.Value).TotalSeconds;
+                    defenseProg.OffsetTime = passedSeconds;
                 }
             }
 
@@ -133,7 +165,9 @@ namespace WarOfGalaxiesApi.Controllers
                 UserResearches = userResearches,
                 UserResearchProgs = userResearchProgs,
                 UserPlanetShips = userPlanetShips,
-                UserPlanetShipProgs = userPlanetShipProgs
+                UserPlanetShipProgs = userPlanetShipProgs,
+                UserPlanetDefenseProgs = userPlanetDefenseProgs,
+                UserPlanetDefenses = userPlanetDefenses
             });
         }
 

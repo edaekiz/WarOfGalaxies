@@ -162,5 +162,30 @@ namespace Assets.Scripts.Data
 
         #endregion
 
+        #region Defenses
+
+        public static List<DefenseDTO> DefenseData = new List<DefenseDTO>()
+        {
+            new DefenseDTO
+            {
+                Cost = new ResourcesDTO(2000,0),
+                DefenseID = Defenses.Roketatar
+            }
+        };
+
+        /// <summary>
+        /// Defans üretim süresini hesaplar.
+        /// </summary>
+        /// <param name="defense">Hesaplanacak savunma.</param>
+        /// <param name="robotLevel">Hesaplanacak robot fabrikası seviyesi.</param>
+        /// <returns></returns>
+        public static double CalculateDefenseCountdown(Defenses defense, int robotLevel)
+        {
+            DefenseDTO defenseInfo = DefenseData.Find(x => x.DefenseID == defense);
+            return ((defenseInfo.Cost.Metal + defenseInfo.Cost.Crystal) / (2500 * (10 + robotLevel))) * 3600;
+        }
+
+        #endregion
+
     }
 }

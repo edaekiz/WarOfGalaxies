@@ -9,12 +9,12 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShipyardDetailItemPanel : BasePanelController
+public class DefenseDetailItemPanel : BasePanelController
 {
-    [Header("Geminin ismi ile miktarı.")]
+    [Header("Savunmanın ismi ile miktarı.")]
     public TextMeshProUGUI ItemNameWithQuantity;
 
-    [Header("Geminin kısa açıklaması.")]
+    [Header("Savunmanın kısa açıklaması.")]
     public TextMeshProUGUI ItemDescription;
 
     [Header("Üretim süresi.")]
@@ -23,11 +23,11 @@ public class ShipyardDetailItemPanel : BasePanelController
     [Header("Üretim butonu")]
     public Button ProduceButton;
 
-    [Header("Geminin ikonu.")]
+    [Header("Savunma ikonu.")]
     public Image ItemImage;
 
-    [Header("Aktif gemi bilgisi")]
-    public Ships CurrentShip;
+    [Header("Aktif savunma bilgisi")]
+    public Defenses CurrentDefense;
 
     [Header("Üretilecek miktar")]
     public InputField QuantityField;
@@ -45,28 +45,28 @@ public class ShipyardDetailItemPanel : BasePanelController
         base.Update();
     }
 
-    public IEnumerator LoadShipDetals(Ships ship)
+    public IEnumerator LoadDefenseDetails(Defenses defense)
     {
         // Gemi bilgisi.
-        CurrentShip = ship;
+        CurrentDefense = defense;
 
         // Aktif gemi miktarı.
-        UserPlanetShipDTO currentShipCount = LoginController.LC.CurrentUser.UserPlanetShips.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.ShipId == ship);
+        UserPlanetDefenseDTO currentDefenseCount = LoginController.LC.CurrentUser.UserPlanetDefenses.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.DefenseId == defense);
 
-        // Gemiye sahip ise miktarı değil ise 0.
-        string quantity = currentShipCount == null ? "0" : currentShipCount.ShipCount.ToString();
+        // Savunmaya sahip ise miktarı değil ise 0.
+        string quantity = currentDefenseCount == null ? "0" : currentDefenseCount.DefenseCount.ToString();
 
         // Eğer yok ise gemisi 0 var ise miktarı basıyoruz.
-        ItemNameWithQuantity.text = $"{ship} <color=orange>({quantity})</color>";
+        ItemNameWithQuantity.text = $"{defense} <color=orange>({quantity})</color>";
 
-        // Geminin resmini basıyoruz.
-        ItemImage.sprite = ShipyardController.SC.ShipWithImages.Find(x => x.Ship == ship).ShipImage;
+        // Savunma resmini basıyoruz.
+        ItemImage.sprite = DefenseController.DC.DefenseWithImages.Find(x => x.Defense == defense).DefenseImage;
 
         // Maliyeti.
-        ShipDTO shipInfo = StaticData.ShipData.Find(x => x.ShipID == ship);
+        DefenseDTO defenseInfo = StaticData.DefenseData.Find(x => x.DefenseID == defense);
 
         // Maliyeti set ediyoruz.
-        bool isMathEnough = base.SetResources(shipInfo.Cost);
+        bool isMathEnough = base.SetResources(defenseInfo.Cost);
 
         // Eğer materyal yeterli ise butonu açıyoruz değil ise kapatıyoruz.
         if (isMathEnough && !IsSending)
@@ -74,11 +74,11 @@ public class ShipyardDetailItemPanel : BasePanelController
         else
             ProduceButton.interactable = false;
 
-        // Tersaneyi buluyoruz.
-        UserPlanetBuildingDTO shipyard = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.BuildingId == Buildings.Tersane && x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
+        // Robot fab buluyoruz.
+        UserPlanetBuildingDTO robotFac = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.BuildingId == Buildings.RobotFabrikası && x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
 
         // Üretim süresini basıyoruz.
-        double countdown = StaticData.CalculateShipCountdown(ship, shipyard == null ? 0 : shipyard.BuildingLevel);
+        double countdown = StaticData.CalculateDefenseCountdown(defense, robotFac == null ? 0 : robotFac.BuildingLevel);
 
         // Üretim süresini basıyoruz.
         ItemCountdown.text = TimeExtends.GetCountdownText(TimeSpan.FromSeconds(countdown));
@@ -87,7 +87,7 @@ public class ShipyardDetailItemPanel : BasePanelController
         yield return new WaitForSecondsRealtime(1);
 
         // Gemi bilgisini yüklüyoruz.
-        StartCoroutine(LoadShipDetals(ship));
+        StartCoroutine(LoadDefenseDetails(defense));
     }
 
     public void AddToQueue()
@@ -103,10 +103,10 @@ public class ShipyardDetailItemPanel : BasePanelController
             // Butonu kapatıyoruz.
             ProduceButton.interactable = false;
 
-            StartCoroutine(ApiService.API.Post("AddShipToShipyardQueue", new ShipyardAddQueueRequestDTO
+            StartCoroutine(ApiService.API.Post("AddDefenseToDefenseQueue", new DefenseAddQueueRequestDTO
             {
                 Quantity = quantity,
-                ShipID = CurrentShip,
+                DefenseID = CurrentDefense,
                 UserPlanetID = GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId
             }, (ApiResult response) =>
             {
@@ -114,18 +114,21 @@ public class ShipyardDetailItemPanel : BasePanelController
                 if (response.IsSuccess)
                 {
                     // Gelen datayı alıyoruz.
-                    ShipyardAddQueueResponseDTO responseData = response.GetData<ShipyardAddQueueResponseDTO>();
+                    DefenseAddQueueResponseDTO responseData = response.GetData<DefenseAddQueueResponseDTO>();
 
                     // Üretime ekliyoruz.
-                    LoginController.LC.CurrentUser.UserPlanetShipProgs.Add(new UserPlanetShipProgDTO
+                    LoginController.LC.CurrentUser.UserPlanetDefenseProgs.Add(new UserPlanetDefenseProgDTO
                     {
-                        ShipCount = responseData.Quantity,
-                        ShipId = responseData.ShipID,
+                        DefenseCount = responseData.Quantity,
+                        DefenseId = responseData.DefenseID,
                         UserPlanetId = responseData.UserPlanetID
                     });
 
                     // Kaynakları güncelliyoruz.
                     LoginController.LC.CurrentUser.UserPlanets.Find(x => x.UserPlanetId == responseData.UserPlanetID).SetPlanetResources(responseData.PlanetResources);
+
+                    // Paneli yeniliyoruz.
+                    DefenseQueueController.DQC.RefreshDefenseQueue();
 
                     // Detay panelini kapatıyoruz.
                     base.ClosePanel();

@@ -12,6 +12,8 @@ namespace WarOfGalaxiesApi.DTO.Models
         public List<UserResearchProgDTO> UserResearchProgs { get; set; }
         public List<UserPlanetShipProgDTO> UserPlanetShipProgs { get; set; }
         public List<UserPlanetShipDTO> UserPlanetShips { get; set; }
+        public List<UserPlanetDefenseProgDTO> UserPlanetDefenseProgs { get; set; }
+        public List<UserPlanetDefenseDTO> UserPlanetDefenses { get; set; }
         public LoginStuffDTO()
         {
             UserPlanets = new List<UserPlanetDTO>();
@@ -21,6 +23,8 @@ namespace WarOfGalaxiesApi.DTO.Models
             UserResearchProgs = new List<UserResearchProgDTO>();
             UserPlanetShipProgs = new List<UserPlanetShipProgDTO>(); 
             UserPlanetShips = new List<UserPlanetShipDTO>();
+            UserPlanetDefenseProgs = new List<UserPlanetDefenseProgDTO>();
+            UserPlanetDefenses = new List<UserPlanetDefenseDTO>();
         }
 
     }
