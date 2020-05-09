@@ -4,6 +4,7 @@ using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using System;
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,11 +29,6 @@ public class DefenseItemController : MonoBehaviour
     [Header("Geri sayım süresi.")]
     public TextMeshProUGUI CountdownText;
 
-    /// <summary>
-    /// Aktif gemi üretimi
-    /// </summary>
-    public UserPlanetDefenseProgDTO CurrentProg { get; set; }
-
     public IEnumerator LoadDefenseDetails(Defenses defense)
     {
         // Savunma bilgisi.
@@ -50,9 +46,6 @@ public class DefenseItemController : MonoBehaviour
         // Eğer üretim var ise süreyi basıyoruz.
         if (prog != null)
         {
-            // Eğer üretim var ise basıyoruz.
-            CurrentProg = prog;
-
             // İkonu ve kalan süreyi basıyoruz.
             CountdownImage.gameObject.SetActive(true);
 
@@ -74,11 +67,11 @@ public class DefenseItemController : MonoBehaviour
             // Eğer üretim süresi bittiyse.
             if (leftTime.TotalSeconds <= 0)
             {
-                // Ve yeni üretimlere başlıyoruz.
-                prog.LastVerifyDate = DateTime.UtcNow;
-
                 // Yarım üretimi 0lıyoruz.
                 prog.OffsetTime = 0;
+
+                // Ve yeni üretimlere başlıyoruz.
+                prog.LastVerifyDate = DateTime.UtcNow;
 
                 // Üretilecek gemi miktarını 1 azaltıyoruz
                 prog.DefenseCount--;
@@ -100,6 +93,13 @@ public class DefenseItemController : MonoBehaviour
                 {
                     // Eğer daha yok ise listeden siliyoruz.
                     LoginController.LC.CurrentUser.UserPlanetDefenseProgs.Remove(prog);
+
+                    // Sonrakinin başlangıç tarihini güncelliyoruz.
+                    UserPlanetDefenseProgDTO nextProg = LoginController.LC.CurrentUser.UserPlanetDefenseProgs.FirstOrDefault();
+
+                    // Sonraki üretim.
+                    if (nextProg != null)
+                        nextProg.LastVerifyDate = DateTime.UtcNow;
                 }
 
                 // Kuyruğu yeniliyoruz.

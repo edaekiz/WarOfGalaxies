@@ -168,7 +168,7 @@ namespace Assets.Scripts.Data
         {
             new DefenseDTO
             {
-                Cost = new ResourcesDTO(2000,0),
+                Cost = new ResourcesDTO(500,0),
                 DefenseID = Defenses.Roketatar
             }
         };

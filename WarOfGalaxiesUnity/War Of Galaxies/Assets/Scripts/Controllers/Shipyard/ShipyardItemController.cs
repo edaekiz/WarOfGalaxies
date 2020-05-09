@@ -4,6 +4,7 @@ using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using System;
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -100,6 +101,13 @@ public class ShipyardItemController : MonoBehaviour
                 {
                     // Eğer daha yok ise listeden siliyoruz.
                     LoginController.LC.CurrentUser.UserPlanetShipProgs.Remove(prog);
+
+                    // Sonrakinin başlangıç tarihini güncelliyoruz.
+                    UserPlanetShipProgDTO nextProg = LoginController.LC.CurrentUser.UserPlanetShipProgs.FirstOrDefault();
+
+                    // Sonraki üretim.
+                    if (nextProg != null)
+                        nextProg.LastVerifyDate = DateTime.UtcNow;
                 }
 
                 // Kuyruğu yeniliyoruz.
