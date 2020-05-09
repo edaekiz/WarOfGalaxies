@@ -19,9 +19,6 @@ namespace WarOfGalaxiesApi.Controllers
         [Description("Kullanıcının tersaneye gemi üretim görevi eklemesini sağlar.")]
         public ApiResult AddShipToShipyardQueue(ShipyardAddQueueRequestDTO request)
         {
-            // Şuan.
-            DateTime currentDate = DateTime.UtcNow;
-
             // Kaynakları doğruluyoruz.
             bool isVerified = VerifyController.VerifyPlanetResources(base.UnitOfWork, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
 
@@ -100,7 +97,7 @@ namespace WarOfGalaxiesApi.Controllers
             // Üretim sırasına eklemek.
             base.UnitOfWork.GetRepository<TblUserPlanetShipProgs>().Add(new TblUserPlanetShipProgs
             {
-                LastVerifyDate = isThereQueueInShipyard ? null : (DateTime?)currentDate,
+                LastVerifyDate = isThereQueueInShipyard ? null : (DateTime?)base.RequestDate,
                 ShipCount = request.Quantity,
                 ShipId = (int)request.ShipID,
                 UserId = base.DBUser.UserId,

@@ -12,6 +12,9 @@ namespace WarOfGalaxiesApi.Controllers.Base
 {
     public class MainController : Controller
     {
+        // İstek tarihi.
+        protected DateTime RequestDate;
+
         // Form da gelen token keywordü.
         public const string TOKEN_KEY = "TOKEN";
 
@@ -24,6 +27,7 @@ namespace WarOfGalaxiesApi.Controllers.Base
         public MainController(IUnitOfWork unitOfWork)
         {
             this.UnitOfWork = unitOfWork;
+            RequestDate = DateTime.UtcNow;
         }
 
         public override void OnActionExecuting(ActionExecutingContext context)

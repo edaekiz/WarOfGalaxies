@@ -19,9 +19,6 @@ namespace WarOfGalaxiesApi.Controllers
         [Description("Kullanıcının robot fabrikasına savunma üretim görevi eklemesini sağlar.")]
         public ApiResult AddDefenseToDefenseQueue(DefenseAddQueueRequestDTO request)
         {
-            // Şuan.
-            DateTime currentDate = DateTime.UtcNow;
-
             // Kaynakları doğruluyoruz.
             bool isVerified = VerifyController.VerifyPlanetResources(base.UnitOfWork, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
 
@@ -100,7 +97,7 @@ namespace WarOfGalaxiesApi.Controllers
             // Üretim sırasına eklemek.
             base.UnitOfWork.GetRepository<TblUserPlanetDefenseProgs>().Add(new TblUserPlanetDefenseProgs
             {
-                LastVerifyDate = isThereQueueInShipyard ? null : (DateTime?)currentDate,
+                LastVerifyDate = isThereQueueInShipyard ? null : (DateTime?)base.RequestDate,
                 DefenseCount = request.Quantity,
                 DefenseId = (int)request.DefenseID,
                 UserId = base.DBUser.UserId,

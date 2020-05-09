@@ -20,9 +20,6 @@ namespace WarOfGalaxiesApi.Controllers
         [Description("Gezegendeki bina yükseltmesini yapar.")]
         public ApiResult UpgradeUserPlanetBuilding([FromForm]UserPlanetUpgradeBuildingDTO request)
         {
-            // Sistem anlık tarihi.
-            DateTime currentDate = DateTime.UtcNow;
-
             // Verify İşlemini gerçekleştiriyoruz.
             bool isVerifySucceed = VerifyController.VerifyPlanetResources(base.UnitOfWork, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
 
@@ -69,13 +66,13 @@ namespace WarOfGalaxiesApi.Controllers
             double upgradeTime = StaticData.CalculateBuildingUpgradeTime((Buildings)request.BuildingID, nextLevel, robotFactory == null ? 0 : robotFactory.BuildingLevel);
 
             // Bitiş tarihi.
-            DateTime endDate = currentDate.AddSeconds(upgradeTime);
+            DateTime endDate = base.RequestDate.AddSeconds(upgradeTime);
 
             // Yükseltmesini yapıyoruz.
             TblUserPlanetBuildingUpgs userPlanetUpg = base.UnitOfWork.GetRepository<TblUserPlanetBuildingUpgs>().Add(new TblUserPlanetBuildingUpgs
             {
                 UserPlanetId = request.UserPlanetID,
-                BeginDate = currentDate,
+                BeginDate = base.RequestDate,
                 BuildingId = request.BuildingID,
                 BuildingLevel = nextLevel,
                 EndDate = endDate,

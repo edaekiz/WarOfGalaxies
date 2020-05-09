@@ -22,9 +22,6 @@ namespace WarOfGalaxiesApi.Controllers
         [Description("Kullanıcının datalarını döner.")]
         public ApiResult Login()
         {
-            // Şuanki tarih.
-            DateTime currentDate = DateTime.UtcNow;
-
             // Kullanıcının gezegenlerinin idsi.
             int[] userPlanetIds = this.UnitOfWork.GetRepository<TblUserPlanets>().Where(x => x.UserId == base.DBUser.UserId).Select(x => x.UserPlanetId).ToArray();
 
@@ -60,7 +57,7 @@ namespace WarOfGalaxiesApi.Controllers
                 {
                     BuildingId = x.BuildingId,
                     BuildingLevel = x.BuildingLevel,
-                    LeftTime = (x.EndDate - currentDate).TotalSeconds,
+                    LeftTime = (x.EndDate - base.RequestDate).TotalSeconds,
                     UserPlanetId = x.UserPlanetId
                 })
                 .ToList();
@@ -75,7 +72,7 @@ namespace WarOfGalaxiesApi.Controllers
             // Devam eden araştırmaları alıyoruz.
             List<UserResearchProgDTO> userResearchProgs = base.UnitOfWork.GetRepository<TblUserResearchUpgs>().Where(x => x.UserId == base.DBUser.UserId).Select(x => new UserResearchProgDTO
             {
-                LeftTime = (x.EndDate - currentDate).TotalSeconds,
+                LeftTime = (x.EndDate - base.RequestDate).TotalSeconds,
                 ResearchID = x.ResearchId,
                 ResearchLevel = x.ResearchTargetLevel,
             }).ToList();
@@ -119,7 +116,7 @@ namespace WarOfGalaxiesApi.Controllers
             {
                 if (shipProg.LastVerifyDate.HasValue)
                 {
-                    double passedSeconds = (currentDate - shipProg.LastVerifyDate.Value).TotalSeconds;
+                    double passedSeconds = (base.RequestDate - shipProg.LastVerifyDate.Value).TotalSeconds;
                     shipProg.OffsetTime = passedSeconds;
                 }
             }
@@ -150,7 +147,7 @@ namespace WarOfGalaxiesApi.Controllers
             {
                 if (defenseProg.LastVerifyDate.HasValue)
                 {
-                    double passedSeconds = (currentDate - defenseProg.LastVerifyDate.Value).TotalSeconds;
+                    double passedSeconds = (base.RequestDate - defenseProg.LastVerifyDate.Value).TotalSeconds;
                     defenseProg.OffsetTime = passedSeconds;
                 }
             }

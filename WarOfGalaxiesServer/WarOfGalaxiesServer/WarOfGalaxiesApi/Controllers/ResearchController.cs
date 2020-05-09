@@ -19,9 +19,6 @@ namespace WarOfGalaxiesApi.Controllers
         [Description("Kullanıcının verilen araştırmasını yükseltir.")]
         public ApiResult UpgradeUserResearch(UserResearchUpgRequest request)
         {
-            // Sistem tarihi.
-            DateTime currentDate = DateTime.UtcNow;
-
             // Yapılacak ilk iş kaynakları doğrulamak.
             bool isVerified = VerifyController.VerifyPlanetResources(base.UnitOfWork, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
 
@@ -61,8 +58,8 @@ namespace WarOfGalaxiesApi.Controllers
             // Eğer var ise yükseltmeyi başlatabiliriz.
             TblUserResearchUpgs upgradeData = base.UnitOfWork.GetRepository<TblUserResearchUpgs>().Add(new TblUserResearchUpgs
             {
-                BeginDate = currentDate,
-                EndDate = currentDate.AddSeconds(researchUpgTime),
+                BeginDate = base.RequestDate,
+                EndDate = base.RequestDate.AddSeconds(researchUpgTime),
                 ResearchId = (int)request.ResearchID,
                 ResearchTargetLevel = nextResearchLevel,
                 UserId = base.DBUser.UserId,
