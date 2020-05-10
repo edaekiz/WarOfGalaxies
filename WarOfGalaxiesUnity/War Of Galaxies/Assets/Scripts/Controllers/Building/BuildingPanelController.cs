@@ -190,6 +190,9 @@ public class BuildingPanelController : BasePanelController
 
                 // Seçilen binanın datalarını yeniler.
                 StartCoroutine(GlobalBuildingController.GBC.CurrentSelectedBuilding.LoadBuildingDetails());
+
+                // Paneli kapatıyoruz.
+                base.ClosePanel();
             }
         }));
     }

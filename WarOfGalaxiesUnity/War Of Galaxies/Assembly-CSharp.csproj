@@ -113,6 +113,7 @@
     <Compile Include="Assets\Scripts\Controllers\Global\GlobalPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Global\GlobalPlanetController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Planet\PlanetPickerController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetRotateController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetZoomController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Research\ResearchController.cs" />
@@ -230,6 +231,9 @@
     </Reference>
     <Reference Include="UnityEditor.UI">
       <HintPath>C:/Users/Furkan/Documents/GitHub/WarOfGalaxies/WarOfGalaxiesUnity/War Of Galaxies/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.2D.Sprite.Editor">
+      <HintPath>C:/Users/Furkan/Documents/GitHub/WarOfGalaxies/WarOfGalaxiesUnity/War Of Galaxies/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/2019.3.0f6/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
