@@ -69,7 +69,7 @@ namespace Assets.Scripts.Controllers.Planet
 
             // Gezegendeki binaları tekrar yüklüyoruz.
             foreach (BuildingController bc in FindObjectsOfType<BuildingController>())
-                bc.StartCoroutine(bc.LoadBuildingDetails());
+                bc.LoadBuildingDetails();
 
             // Son aşama seçili olanın değişmesi için butonları tekrar yüklüyoruz.
             ReLoadPlanets();

@@ -3,8 +3,6 @@ using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using System;
 using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using TMPro;
 using UnityEngine;
 
@@ -25,6 +23,9 @@ public class BuildingController : MonoBehaviour
     [Header("Bina ismini ve seviyesini basacağız.")]
     public TextMeshProUGUI BuildingInfo;
 
+    [Header("Binanın ismi burada tutulacak sürekli aramak yerine.")]
+    private string buildingName;
+
     /// <summary>
     /// Kullanıcının gezegen üzerindeki bina.
     /// </summary>
@@ -35,12 +36,21 @@ public class BuildingController : MonoBehaviour
     /// </summary>
     public UserPlanetBuildingUpgDTO UserPlanetBuildingUpg { get; set; }
 
-    private void Start()
+    IEnumerator Start()
     {
-        StartCoroutine(LoadBuildingDetails());
+        // Binalar yüklenene kadar bekliyoruz.
+        yield return new WaitUntil(() => LoginController.LC.IsLoggedIn);
+
+        // Default gezegen seçilene kadar bekliyoruz. Yada başka bir gezegen seçilene kadar
+        yield return new WaitUntil(() => GlobalPlanetController.GPC.CurrentPlanet != null);
+
+        // Binanın ismi
+        buildingName = LanguageController.LC.GetText($"B{(int)BuildingType}");
+
+        LoadBuildingDetails();
     }
 
-    public IEnumerator LoadBuildingDetails()
+    public void LoadBuildingDetails()
     {
         // Seçim başlangıç da kalkıyor.
         SelectionMesh.SetActive(false);
@@ -50,12 +60,6 @@ public class BuildingController : MonoBehaviour
 
         // İnşaa edilebilir olduğunu söylüyoruz.
         ConstructableMesh.SetActive(true);
-
-        // Binalar yüklenene kadar bekliyoruz.
-        yield return new WaitUntil(() => LoginController.LC.IsLoggedIn);
-
-        // Default gezegen seçilene kadar bekliyoruz. Yada başka bir gezegen seçilene kadar
-        yield return new WaitUntil(() => GlobalPlanetController.GPC.CurrentPlanet != null);
 
         // Kullanıcının binasını buluyoruz.
         UserPlanetBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == BuildingType);
@@ -92,9 +96,9 @@ public class BuildingController : MonoBehaviour
         {
             // Texti güncelliyoruz. Bina seviyesini felan basmak üzere.     
             if (UserPlanetBuilding == null)
-                BuildingInfo.text = $"{BuildingType.ToString()}{Environment.NewLine}<size=2.2><color=orange>Seviye 0</color></size>";
+                BuildingInfo.text = $"{buildingName}{Environment.NewLine}<size=2.2><color=orange>Seviye 0</color></size>";
             else
-                BuildingInfo.text = $"{BuildingType.ToString()}{Environment.NewLine}<size=2.2><color=orange>Seviye {UserPlanetBuilding.BuildingLevel}</color></size>";
+                BuildingInfo.text = $"{buildingName}{Environment.NewLine}<size=2.2><color=orange>Seviye {UserPlanetBuilding.BuildingLevel}</color></size>";
 
             // Yükseltme var texti güncelliyoruz..
             if (UserPlanetBuildingUpg != null)
@@ -162,7 +166,7 @@ public class BuildingController : MonoBehaviour
                  LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Remove(UserPlanetBuildingUpg);
 
                  // Bina detaylarını yüklüyoruz.
-                 StartCoroutine(LoadBuildingDetails());
+                 LoadBuildingDetails();
 
              });
         }

@@ -189,7 +189,7 @@ public class BuildingPanelController : BasePanelController
                 LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Add(upgradeInfo);
 
                 // Seçilen binanın datalarını yeniler.
-                StartCoroutine(GlobalBuildingController.GBC.CurrentSelectedBuilding.LoadBuildingDetails());
+                GlobalBuildingController.GBC.CurrentSelectedBuilding.LoadBuildingDetails();
 
                 // Paneli kapatıyoruz.
                 base.ClosePanel();

@@ -3420,6 +3420,7 @@ GameObject:
   - component: {fileID: 515747096}
   - component: {fileID: 515747097}
   - component: {fileID: 515747098}
+  - component: {fileID: 515747099}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -3583,6 +3584,32 @@ MonoBehaviour:
   DefenseWithImages:
   - Defense: 1
     DefenseImage: {fileID: 21300000, guid: 8a0b3cd76d2fb6f45b5ed6d3a9be28d5, type: 3}
+--- !u!114 &515747099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 515747088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff9cb12eccf50b4408fcb94f8a57d3cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LanguageItems:
+    Version: 
+    Culture: 
+    Items: []
+  Cultures:
+  - tr
+  DefaultCulture: tr
+  CurrentCulture: tr
+  LanguageVersion: 1.0.0
+  IsInitialized: 0
+  SHORT_DAY: 
+  SHORT_HOUR: 
+  SHORT_MINUTE: 
+  SHORT_SECONDS: 
 --- !u!1 &525442637
 GameObject:
   m_ObjectHideFlags: 0

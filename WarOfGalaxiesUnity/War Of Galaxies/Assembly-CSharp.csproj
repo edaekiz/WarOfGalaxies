@@ -83,6 +83,7 @@
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Utility\FPSCounter.cs" />
     <Compile Include="Assets\ExternalAssets\Asteroids Pack\Assets\Scripts\RandomRotator.cs" />
     <Compile Include="Assets\ExternalAssets\Hi-Tech Buttons and Panels\Resources\Scripts\JustRotate.cs" />
+    <Compile Include="Assets\Languages\Language.Designer.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ApiResult.cs" />
     <Compile Include="Assets\Scripts\ApiModels\Base\ProgressModel.cs" />
     <Compile Include="Assets\Scripts\ApiModels\DefenseDTO.cs" />
@@ -112,6 +113,8 @@
     <Compile Include="Assets\Scripts\Controllers\Game\StaticValuesController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Global\GlobalPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Global\GlobalPlanetController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Language\LanguageController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Language\LanguageItemController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetPickerController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetRotateController.cs" />
@@ -143,6 +146,7 @@
     <Compile Include="Assets\Scripts\Models\CordinateDTO.cs" />
     <Compile Include="Assets\Scripts\Models\DefenseDTO.cs" />
     <Compile Include="Assets\Scripts\Models\DefenseImageDTO.cs" />
+    <Compile Include="Assets\Scripts\Models\LanguageItem.cs" />
     <Compile Include="Assets\Scripts\Models\ShipDTO.cs" />
     <Compile Include="Assets\Scripts\Models\ShipImageDTO.cs" />
     <Compile Include="Assets\Scripts\Models\SolarSystemDTO.cs" />
@@ -159,6 +163,7 @@
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Adaptation.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\SMAA\Resources\SMAA.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\LensFlareCreate.shader" />
+    <None Include="Assets\Languages\Language.tr.resx" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\ScreenSpaceRaytrace.cginc" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\VignetteShader.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\SimpleClear.shader" />
@@ -179,7 +184,7 @@
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\SeparableBlurPlus.shader" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Atmosphere.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MobileBlur.shader" />
-    <None Include="Assets\Robo's turret (free)\Shaders\SDR_Structures.shader" />
+    <None Include="Assets\ExternalAssets\Robo's turret (free)\Shaders\SDR_Structures.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BrightPassFilter2.shader" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Planet.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\PrepareSunShaftsBlur.shader" />
@@ -193,6 +198,7 @@
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\FXAA\Resources\FXAA.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Luminance.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlurAndFlares.shader" />
+    <None Include="Assets\Languages\Language.resx" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Furkan/Documents/GitHub/WarOfGalaxies/WarOfGalaxiesUnity/War Of Galaxies/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
