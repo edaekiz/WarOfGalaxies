@@ -116,13 +116,19 @@ public class ShipyardDetailItemPanel : BasePanelController
                     // Gelen datayı alıyoruz.
                     ShipyardAddQueueResponseDTO responseData = response.GetData<ShipyardAddQueueResponseDTO>();
 
-                    // Üretime ekliyoruz.
-                    LoginController.LC.CurrentUser.UserPlanetShipProgs.Add(new UserPlanetShipProgDTO
+                    UserPlanetShipProgDTO progress = new UserPlanetShipProgDTO
                     {
                         ShipCount = responseData.Quantity,
                         ShipId = responseData.ShipID,
                         UserPlanetId = responseData.UserPlanetID
-                    });
+                    };
+
+                    // Eğer üretim yok ise tarih veriyoruz.
+                    if (LoginController.LC.CurrentUser.UserPlanetShipProgs.Count == 0)
+                        progress.LastVerifyDate = DateTime.UtcNow;
+
+                    // Üretime ekliyoruz.
+                    LoginController.LC.CurrentUser.UserPlanetShipProgs.Add(progress);
 
                     // Kaynakları güncelliyoruz.
                     LoginController.LC.CurrentUser.UserPlanets.Find(x => x.UserPlanetId == responseData.UserPlanetID).SetPlanetResources(responseData.PlanetResources);

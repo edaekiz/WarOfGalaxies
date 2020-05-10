@@ -27,10 +27,9 @@ namespace Assets.Scripts.ApiModels
         public Defenses DefenseId;
         public int DefenseCount;
         public double OffsetTime;
-        public DateTime LastVerifyDate;
+        public DateTime? LastVerifyDate;
         public UserPlanetDefenseProgDTO()
         {
-            LastVerifyDate = DateTime.UtcNow;
         }
     }
 

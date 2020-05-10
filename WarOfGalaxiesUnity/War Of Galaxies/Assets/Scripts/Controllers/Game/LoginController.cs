@@ -39,6 +39,20 @@ public class LoginController : MonoBehaviour
                 // Giriş yapan kullanıcı.
                 CurrentUser = response.GetData<LoginStuffDTO>();
 
+                // Şuanki üretilen savunmayı bulup tarihine şuanı ekliyoruz.
+                UserPlanetDefenseProgDTO currentDefenseProg = CurrentUser.UserPlanetDefenseProgs.FirstOrDefault();
+
+                // Eğer var ise üretim ilk üretime tarihini veriyoruz. Ki kapalı olduğunda süreyi hesaplıyabilelim.
+                if (currentDefenseProg != null)
+                    currentDefenseProg.LastVerifyDate = DateTime.UtcNow;
+
+                // Şuanki üretilen gemiyi bulup tarihine şuanı ekliyoruz.
+                UserPlanetShipProgDTO currentShipProg = CurrentUser.UserPlanetShipProgs.FirstOrDefault();
+
+                // Eğer var ise üretim ilk üretime tarihini veriyoruz. Ki kapalı olduğunda süreyi hesaplıyabilelim.
+                if (currentShipProg != null)
+                    currentShipProg.LastVerifyDate = DateTime.UtcNow;
+
                 // Başlangıç ve bitiş tarihini ayarlıyoruz.
                 CurrentUser.UserPlanetsBuildingsUpgs.ForEach(e => e.CalculateDates(e.LeftTime));
 

@@ -26,11 +26,10 @@ namespace Assets.Scripts.ApiModels
         public int UserPlanetId;
         public Ships ShipId;
         public int ShipCount;
-        public DateTime LastVerifyDate;
+        public DateTime? LastVerifyDate;
         public double OffsetTime;
         public UserPlanetShipProgDTO()
         {
-            LastVerifyDate = DateTime.UtcNow;
         }
 
     }

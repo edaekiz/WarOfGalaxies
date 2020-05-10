@@ -64,7 +64,7 @@ public class ShipyardItemController : MonoBehaviour
             double countdownOneItem = StaticData.CalculateShipCountdown(ship, shipyard == null ? 0 : shipyard.BuildingLevel);
 
             // Birim başına baktıktan sonra tamamlanmasına kalan süreye bakıyoruz.
-            DateTime completeTime = prog.LastVerifyDate.AddSeconds(-prog.OffsetTime).AddSeconds(countdownOneItem);
+            DateTime completeTime = prog.LastVerifyDate.Value.AddSeconds(-prog.OffsetTime).AddSeconds(countdownOneItem);
 
             // Tamamlanmasına kalan süre.
             TimeSpan leftTime = completeTime - DateTime.UtcNow;

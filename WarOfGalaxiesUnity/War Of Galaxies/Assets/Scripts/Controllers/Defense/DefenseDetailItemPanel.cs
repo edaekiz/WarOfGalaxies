@@ -116,13 +116,19 @@ public class DefenseDetailItemPanel : BasePanelController
                     // Gelen datayı alıyoruz.
                     DefenseAddQueueResponseDTO responseData = response.GetData<DefenseAddQueueResponseDTO>();
 
-                    // Üretime ekliyoruz.
-                    LoginController.LC.CurrentUser.UserPlanetDefenseProgs.Add(new UserPlanetDefenseProgDTO
+                    UserPlanetDefenseProgDTO progress = new UserPlanetDefenseProgDTO
                     {
                         DefenseCount = responseData.Quantity,
                         DefenseId = responseData.DefenseID,
                         UserPlanetId = responseData.UserPlanetID
-                    });
+                    };
+                    
+                    // Eğer üretim yok ise tarih veriyoruz.
+                    if (LoginController.LC.CurrentUser.UserPlanetDefenseProgs.Count == 0)
+                        progress.LastVerifyDate = DateTime.UtcNow;
+
+                    // Üretime ekliyoruz.
+                    LoginController.LC.CurrentUser.UserPlanetDefenseProgs.Add(progress);
 
                     // Kaynakları güncelliyoruz.
                     LoginController.LC.CurrentUser.UserPlanets.Find(x => x.UserPlanetId == responseData.UserPlanetID).SetPlanetResources(responseData.PlanetResources);
