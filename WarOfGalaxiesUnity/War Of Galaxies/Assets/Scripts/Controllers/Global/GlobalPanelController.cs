@@ -64,6 +64,7 @@ public class GlobalPanelController : MonoBehaviour
             return null;
         }
 
+        #region Disabled
         //// Eğer bu tek olarak ayarlanmış bir panel ise kontrol et açık panel var mı?
         //if (panelData.IsSingle)
         //{
@@ -76,6 +77,7 @@ public class GlobalPanelController : MonoBehaviour
         //        return null;
         //    }
         //}
+        #endregion
 
         // Paneli açıyoruz.
         GameObject panelObject = Instantiate(panelData.Prefab, Vector3.zero, Quaternion.identity);

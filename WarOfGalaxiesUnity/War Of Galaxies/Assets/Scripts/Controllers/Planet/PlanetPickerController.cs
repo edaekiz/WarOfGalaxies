@@ -51,7 +51,7 @@ namespace Assets.Scripts.Controllers.Planet
                 string planetName = $"{e.PlanetName}{Environment.NewLine}<size=24><color=orange>({e.PlanetCordinate})</color></size>";
 
                 // Gezegen ismini basıyoruz.
-                planet.transform.Find("PlanetName").GetComponent<TextMeshProUGUI>().text = planetName;
+                planet.transform.Find("PlanetName").GetComponent<TMP_Text>().text = planetName;
 
                 // Eğer seçili olan gezegen ise outline açılıyor
                 if (e.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId)

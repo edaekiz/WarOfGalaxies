@@ -1,10 +1,11 @@
 ﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Controllers.Base;
 using Assets.Scripts.Extends;
 using System;
 using UnityEngine;
 using static GlobalPanelController;
 
-public class BasePanelController : MonoBehaviour
+public class BasePanelController : BaseLanguageBehaviour
 {
     [Serializable]
     public enum Transitions { Bottom, Left, Right, Top, Shrink }

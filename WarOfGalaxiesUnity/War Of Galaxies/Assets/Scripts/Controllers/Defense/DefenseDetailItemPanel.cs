@@ -12,13 +12,13 @@ using UnityEngine.UI;
 public class DefenseDetailItemPanel : BasePanelController
 {
     [Header("Savunmanın ismi ile miktarı.")]
-    public TextMeshProUGUI ItemNameWithQuantity;
+    public TMP_Text ItemNameWithQuantity;
 
     [Header("Savunmanın kısa açıklaması.")]
-    public TextMeshProUGUI ItemDescription;
+    public TMP_Text ItemDescription;
 
     [Header("Üretim süresi.")]
-    public TextMeshProUGUI ItemCountdown;
+    public TMP_Text ItemCountdown;
 
     [Header("Üretim butonu")]
     public Button ProduceButton;
@@ -30,7 +30,7 @@ public class DefenseDetailItemPanel : BasePanelController
     public Defenses CurrentDefense;
 
     [Header("Üretilecek miktar")]
-    public InputField QuantityField;
+    public TMP_InputField QuantityField;
 
     [Header("Sunucuya istek gönderiliyor mu?")]
     public bool IsSending;
@@ -50,6 +50,9 @@ public class DefenseDetailItemPanel : BasePanelController
         // Gemi bilgisi.
         CurrentDefense = defense;
 
+        // Savunma açıklaması.
+        ItemDescription.text = base.GetLanguageText($"DD{(int)defense}");
+
         // Aktif gemi miktarı.
         UserPlanetDefenseDTO currentDefenseCount = LoginController.LC.CurrentUser.UserPlanetDefenses.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.DefenseId == defense);
 
@@ -57,7 +60,7 @@ public class DefenseDetailItemPanel : BasePanelController
         string quantity = currentDefenseCount == null ? "0" : currentDefenseCount.DefenseCount.ToString();
 
         // Eğer yok ise gemisi 0 var ise miktarı basıyoruz.
-        ItemNameWithQuantity.text = $"{defense} <color=orange>({quantity})</color>";
+        ItemNameWithQuantity.text = $"{base.GetLanguageText($"D{(int)defense}")} <color=orange>({quantity})</color>";
 
         // Savunma resmini basıyoruz.
         ItemImage.sprite = DefenseController.DC.DefenseWithImages.Find(x => x.Defense == defense).DefenseImage;
@@ -122,7 +125,7 @@ public class DefenseDetailItemPanel : BasePanelController
                         DefenseId = responseData.DefenseID,
                         UserPlanetId = responseData.UserPlanetID
                     };
-                    
+
                     // Eğer üretim yok ise tarih veriyoruz.
                     if (LoginController.LC.CurrentUser.UserPlanetDefenseProgs.Count == 0)
                         progress.LastVerifyDate = DateTime.UtcNow;

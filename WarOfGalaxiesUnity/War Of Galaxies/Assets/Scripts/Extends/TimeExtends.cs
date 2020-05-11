@@ -4,10 +4,6 @@ namespace Assets.Scripts.Extends
 {
     public static class TimeExtends
     {
-        public static string SHORT_DAY = "g";
-        public static string SHORT_HOUR = "s";
-        public static string SHORT_MINUTE = "d";
-        public static string SHORT_SECONDS = "s";
         public static string GetCountdownText(TimeSpan totalDays)
         {
             string hours = totalDays.Hours >= 10 ? totalDays.Hours.ToString() : "0" + totalDays.Hours;
@@ -16,14 +12,14 @@ namespace Assets.Scripts.Extends
 
             // Ekrana tarihi basıyoruz.
             if (totalDays.TotalDays >= 1)
-                return $"{(int)totalDays.TotalDays}{SHORT_DAY} {hours}{SHORT_HOUR} {minutes}{SHORT_MINUTE} {seconds}{SHORT_SECONDS}";
+                return $"{(int)totalDays.TotalDays}{LanguageController.LC.SHORT_DAY} {hours}{LanguageController.LC.SHORT_HOUR} {minutes}{LanguageController.LC.SHORT_MINUTE} {seconds}{LanguageController.LC.SHORT_SECONDS}";
             if (totalDays.Hours > 0)
-                return $"{hours}{SHORT_HOUR} {minutes}{SHORT_MINUTE} {seconds}{SHORT_SECONDS}";
+                return $"{hours}{LanguageController.LC.SHORT_HOUR} {minutes}{LanguageController.LC.SHORT_MINUTE} {seconds}{LanguageController.LC.SHORT_SECONDS}";
             if (totalDays.Minutes > 0)
-                return $"{minutes}{SHORT_MINUTE} {seconds}{SHORT_SECONDS}";
+                return $"{minutes}{LanguageController.LC.SHORT_MINUTE} {seconds}{LanguageController.LC.SHORT_SECONDS}";
             if (totalDays.Seconds > 0)
-                return $"{seconds}{SHORT_SECONDS}";
-            return $"0{SHORT_SECONDS}";
+                return $"{seconds}{LanguageController.LC.SHORT_SECONDS}";
+            return $"0{LanguageController.LC.SHORT_SECONDS}";
         }
     }
 }

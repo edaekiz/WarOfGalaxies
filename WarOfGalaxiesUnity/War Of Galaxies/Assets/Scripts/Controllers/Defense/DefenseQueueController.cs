@@ -1,9 +1,10 @@
 ﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Controllers.Base;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DefenseQueueController : MonoBehaviour
+public class DefenseQueueController : BaseLanguageBehaviour
 {
     public static DefenseQueueController DQC { get; set; }
 
@@ -37,10 +38,10 @@ public class DefenseQueueController : MonoBehaviour
             go.transform.Find("ItemImage").GetComponent<Image>().sprite = DefenseController.DC.DefenseWithImages.Find(x => x.Defense == queue.DefenseId).DefenseImage;
 
             // İsmini basıyoruz.
-            go.transform.Find("ItemName").GetComponent<TextMeshProUGUI>().text = queue.DefenseId.ToString();
+            go.transform.Find("ItemName").GetComponent<TMP_Text>().text = base.GetLanguageText($"D{queue.DefenseId}");
 
             // Miktarı basıyoruz.
-            go.transform.Find("ItemCount").GetComponent<TextMeshProUGUI>().text = queue.DefenseCount.ToString();
+            go.transform.Find("ItemCount").GetComponent<TMP_Text>().text = queue.DefenseCount.ToString();
         }
     }
 

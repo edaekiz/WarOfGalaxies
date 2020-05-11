@@ -4,26 +4,15 @@ using UnityEngine;
 
 public class LanguageItemController : MonoBehaviour
 {
-    private TextMeshProUGUI text;
+    private TMP_Text text;
 
     [Header("Eşleşen dil metnini bulmak için kullanılır.")]
     public string KEYWORD;
 
-    private void Awake()
+    IEnumerator Start()
     {
-        text = GetComponent<TextMeshProUGUI>();
-        StartCoroutine(RefreshText());
-    }
-
-    /// <summary>
-    /// Textini günceller.
-    /// </summary>
-    public IEnumerator RefreshText()
-    {
-        // Dilin yüklenmesini bekliyoruz.
-        if (!LanguageController.LC.IsInitialized)
-            yield return new WaitUntil(() => LanguageController.LC.IsInitialized == true);
-
+        text = GetComponent<TMP_Text>();
+        yield return new WaitUntil(() => LanguageController.LC.IsInitialized == true);
         text.text = LanguageController.LC.GetText(KEYWORD);
     }
 
@@ -34,7 +23,7 @@ public class LanguageItemController : MonoBehaviour
     public string GetCurrentText()
     {
         if (text == null)
-            text = GetComponent<TextMeshProUGUI>();
+            text = GetComponent<TMP_Text>();
         return text.text;
     }
 }

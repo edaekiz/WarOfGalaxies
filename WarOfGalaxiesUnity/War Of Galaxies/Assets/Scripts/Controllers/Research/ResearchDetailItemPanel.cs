@@ -14,13 +14,13 @@ public class ResearchDetailItemPanel : BasePanelController
     public Image Icon;
 
     [Header("Araştırmanın ismi.")]
-    public TextMeshProUGUI ResearchName;
+    public TMP_Text ResearchName;
 
     [Header("Araştırmanın kısa açıklaması.")]
-    public TextMeshProUGUI ShortDescription;
+    public TMP_Text ShortDescription;
 
     [Header("Araştırmanın süresi.")]
-    public TextMeshProUGUI UpgradeTime;
+    public TMP_Text UpgradeTime;
 
     [Header("Yükseltme butonu.")]
     public Button UpgradeButton;
@@ -56,10 +56,10 @@ public class ResearchDetailItemPanel : BasePanelController
         int researchLevel = currentResearchLevel == null ? 0 : currentResearchLevel.ResearchLevel;
 
         // Araştırma ismi ve seviyesi.
-        ResearchName.text = $"{research} <color=orange>({researchLevel}.Seviye)</color>";
+        ResearchName.text = $"{base.GetLanguageText($"R{(int)research}")}<color=orange>({base.GetLanguageText("InciSeviye", researchLevel.ToString())})</color>";
 
         // Araştırma resmi.
-        ShortDescription.text = research.ToString();
+        ShortDescription.text = base.GetLanguageText($"RD{(int)research}");
 
         // Araştırmayı buluyoruz.
         UserResearchProgDTO userResearchProg = LoginController.LC.CurrentUser.UserResearchProgs.Find(x => x.ResearchID == research);
@@ -88,9 +88,9 @@ public class ResearchDetailItemPanel : BasePanelController
 
             // Texti değiştiriyoruz.
             if (isAlreadyUpgrading)
-                UpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Araştırılıyor";
+                UpgradeButton.GetComponentInChildren<TMP_Text>().text = base.GetLanguageText("Araştırılıyor");
             else
-                UpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Araştır";
+                UpgradeButton.GetComponentInChildren<TMP_Text>().text = base.GetLanguageText("Araştır");
         }
         else // Eğer aksi durumdaysa yükseltme butonunu açıyoruz.
         {
@@ -98,7 +98,7 @@ public class ResearchDetailItemPanel : BasePanelController
             UpgradeButton.interactable = true;
 
             // Texti değiştiriyoruz.
-            UpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Araştır";
+            UpgradeButton.GetComponentInChildren<TMP_Text>().text = base.GetLanguageText("Araştır");
         }
 
         #endregion

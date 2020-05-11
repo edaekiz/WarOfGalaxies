@@ -3603,7 +3603,7 @@ MonoBehaviour:
   Cultures:
   - tr
   DefaultCulture: tr
-  CurrentCulture: tr
+  CurrentCulture: en
   LanguageVersion: 1.0.0
   IsInitialized: 0
   SHORT_DAY: 
@@ -7339,8 +7339,6 @@ MonoBehaviour:
   MetalResourceDetail: {fileID: 355289713}
   CrystalResourceDetail: {fileID: 952155738}
   BoronResourceDetail: {fileID: 442223619}
-  Template: "Anl\u0131k<br><color=white>{0}</color><br>Depo Kapasitesi<br><color=white>{1}</color><br>Saaatlik
-    \xDCretim<br><color=white>{2}</color>"
 --- !u!114 &1338479638
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Controllers.Base;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using System;
@@ -6,22 +7,22 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ResearchItemController : MonoBehaviour
+public class ResearchItemController : BaseLanguageBehaviour
 {
     // Yükseltme bilgisi.
     public UserResearchProgDTO ResearchUpgradeData { get; set; }
 
     [Header("Araştırma ismi buraya basılacak.")]
-    public TextMeshProUGUI ResearchName;
+    public TMP_Text ResearchName;
 
     [Header("Araştırma ikonu buraya basılacak.")]
     public Image ResearchIcon;
 
     [Header("Araştırma seviyesi.")]
-    public TextMeshProUGUI ResearchLevel;
+    public TMP_Text ResearchLevel;
 
     [Header("Araştırma kalan süre.")]
-    public TextMeshProUGUI ResearchCountdown;
+    public TMP_Text ResearchCountdown;
 
     [Header("Araştırmayı progress bar olarak göstermek için kullanacağız.")]
     public Image ResearchCountdownImage;
@@ -45,10 +46,10 @@ public class ResearchItemController : MonoBehaviour
         int researchLevel = userResearch == null ? 0 : userResearch.ResearchLevel;
 
         // Araştırmanın ismini basıyoruz.
-        ResearchName.text = research.ToString();
+        ResearchName.text = base.GetLanguageText($"R{(int)research}");
 
         // Araştırma seviyesi.
-        ResearchLevel.text = researchLevel.ToString();
+        ResearchLevel.text = $"{researchLevel}";
 
         // Araştırma ikonu.
 
@@ -65,8 +66,9 @@ public class ResearchItemController : MonoBehaviour
             ResearchCountdownImage.gameObject.SetActive(true);
 
             // Araştırma geri sayımını aktif ediyoruz.
-            ResearchCountdown.text = $"Seviye({upg.ResearchLevel}){Environment.NewLine}{TimeExtends.GetCountdownText(DateTime.UtcNow - upg.EndDate)}";
-        }else
+            ResearchCountdown.text = $"{base.GetLanguageText("SeviyeParantez", upg.ResearchLevel.ToString())}{Environment.NewLine}{TimeExtends.GetCountdownText(DateTime.UtcNow - upg.EndDate)}";
+        }
+        else
         {
             // İkonu kapatıyoruz.
             ResearchCountdownImage.gameObject.SetActive(false);
@@ -124,7 +126,7 @@ public class ResearchItemController : MonoBehaviour
             return;
 
         // Araştırma geri sayımını güncelliyoruz.
-        ResearchCountdown.text = $"Seviye({ResearchUpgradeData.ResearchLevel}){Environment.NewLine}{TimeExtends.GetCountdownText(ResearchUpgradeData.EndDate - DateTime.UtcNow)}";
+        ResearchCountdown.text = $"{base.GetLanguageText("SeviyeParantez", ResearchUpgradeData.ResearchLevel.ToString())}{Environment.NewLine}{TimeExtends.GetCountdownText(ResearchUpgradeData.EndDate - DateTime.UtcNow)}";
 
         // Araştırma biter ise doğrulaman gönderiyoruz.
         if (DateTime.UtcNow >= ResearchUpgradeData.EndDate)
@@ -135,6 +137,7 @@ public class ResearchItemController : MonoBehaviour
                  // Yükseltme tamalandığında.
                  OnResearchCompleted();
              });
+
             // Siliyoruz ki tekrar girmesin.
             ResearchUpgradeData = null;
         }

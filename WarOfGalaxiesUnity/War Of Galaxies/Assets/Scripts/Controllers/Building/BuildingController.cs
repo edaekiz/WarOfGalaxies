@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Controllers.Base;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using System;
@@ -6,7 +7,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class BuildingController : MonoBehaviour
+public class BuildingController : BaseLanguageBehaviour
 {
     [Header("Seçim yapıldığında açılacak olan mesh.")]
     public GameObject SelectionMesh;
@@ -21,10 +22,7 @@ public class BuildingController : MonoBehaviour
     public Buildings BuildingType;
 
     [Header("Bina ismini ve seviyesini basacağız.")]
-    public TextMeshProUGUI BuildingInfo;
-
-    [Header("Binanın ismi burada tutulacak sürekli aramak yerine.")]
-    private string buildingName;
+    public TMP_Text BuildingInfo;
 
     /// <summary>
     /// Kullanıcının gezegen üzerindeki bina.
@@ -44,9 +42,7 @@ public class BuildingController : MonoBehaviour
         // Default gezegen seçilene kadar bekliyoruz. Yada başka bir gezegen seçilene kadar
         yield return new WaitUntil(() => GlobalPlanetController.GPC.CurrentPlanet != null);
 
-        // Binanın ismi
-        buildingName = LanguageController.LC.GetText($"B{(int)BuildingType}");
-
+        // Bina detaylarını yükler.
         LoadBuildingDetails();
     }
 
@@ -96,9 +92,9 @@ public class BuildingController : MonoBehaviour
         {
             // Texti güncelliyoruz. Bina seviyesini felan basmak üzere.     
             if (UserPlanetBuilding == null)
-                BuildingInfo.text = $"{buildingName}{Environment.NewLine}<size=2.2><color=orange>Seviye 0</color></size>";
+                BuildingInfo.text = base.GetLanguageText("BinaVeSeviye", base.GetLanguageText($"B{(int)BuildingType}"), Environment.NewLine, "0");
             else
-                BuildingInfo.text = $"{buildingName}{Environment.NewLine}<size=2.2><color=orange>Seviye {UserPlanetBuilding.BuildingLevel}</color></size>";
+                BuildingInfo.text = base.GetLanguageText("BinaVeSeviye", base.GetLanguageText($"B{(int)BuildingType}"), Environment.NewLine, UserPlanetBuilding.BuildingLevel.ToString());
 
             // Yükseltme var texti güncelliyoruz..
             if (UserPlanetBuildingUpg != null)

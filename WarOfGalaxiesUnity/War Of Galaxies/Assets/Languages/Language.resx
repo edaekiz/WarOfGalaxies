@@ -127,4 +127,91 @@
   <data name="B10" xml:space="preserve">
     <value></value>
   </data>
+  <data name="Kademe" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="BinaVeSeviye" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="KISA_GUN" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="KISA_SAAT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="KISA_DAKIKA" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="KISA_SANIYE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="YapımSüresi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Yükseltiliyor" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Yükselt" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="D1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="DD1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="R1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="InciSeviye" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Araştır" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Araştırılıyor" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SeviyeParantez" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="G1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GD1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="KaynakDetay" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="YükseltmeGereksinim" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Savunma" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Araştırmalar" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="RD1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ÜretimSüresi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ÜretimGereksinimleri" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Bilgi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Koşullar" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Üret" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Tersane" xml:space="preserve">
+    <value></value>
+  </data>
 </root>

@@ -18,7 +18,7 @@ public class LoginController : MonoBehaviour
     public LoginStuffDTO CurrentUser { get; set; }
 
     [Header("Kullanıcı adının basılacağı yer.")]
-    public TextMeshProUGUI UsernameField;
+    public TMP_Text UsernameField;
 
     private void Awake()
     {

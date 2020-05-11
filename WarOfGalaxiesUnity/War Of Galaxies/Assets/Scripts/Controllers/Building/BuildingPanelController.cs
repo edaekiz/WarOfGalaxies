@@ -21,16 +21,16 @@ public class BuildingPanelController : BasePanelController
     public Image BuildingImage;
 
     [Header("Binanın ismini tutuyoruz.")]
-    public TextMeshProUGUI BuildingName;
+    public TMP_Text BuildingName;
 
     [Header("Binanın seviyesini basıyoruz.")]
-    public TextMeshProUGUI BuildingLevel;
+    public TMP_Text BuildingLevel;
 
     [Header("Binanın yükseltme süresini buraya basacağız.")]
-    public TextMeshProUGUI BuildingUpgradeTime;
+    public TMP_Text BuildingUpgradeTime;
 
     [Header("Yükseltme sırasındaki geri sayım.")]
-    public TextMeshProUGUI BuildingCountdown;
+    public TMP_Text BuildingCountdown;
 
     public IEnumerator LoadData(Buildings building)
     {
@@ -64,14 +64,14 @@ public class BuildingPanelController : BasePanelController
 
         // Kullanıcının binası yok ise 0. kademe yazacak var ise tesisin seviyesini yazacak.
         if (userBuilding == null)
-            BuildingLevel.text = $"Kademe <color=#C4E5FD>{0}</color>";
+            BuildingLevel.text = base.GetLanguageText("Kademe", "0");
         else
-            BuildingLevel.text = $"Kademe <color=#C4E5FD>{userBuilding.BuildingLevel}</color>";
+            BuildingLevel.text = base.GetLanguageText("Kademe", userBuilding.BuildingLevel.ToString());
 
         int nextLevel = userBuilding == null ? 1 : userBuilding.BuildingLevel + 1;
 
         // Binanın ismini basıyoruz.
-        BuildingName.text = building.ToString();
+        BuildingName.text = base.GetLanguageText($"B{(int)building}");
 
         // Robot fabrikasını buluyoruz.
         UserPlanetBuildingDTO robotBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.RobotFabrikası);
@@ -80,7 +80,7 @@ public class BuildingPanelController : BasePanelController
         double upgradeTime = StaticData.CalculateBuildingUpgradeTime(building, nextLevel, robotBuilding == null ? 0 : robotBuilding.BuildingLevel);
 
         // Ekrana basıyoruz.
-        BuildingUpgradeTime.text = $"<color=#C4E5FD>Yapım Süresi :</color> {TimeExtends.GetCountdownText(TimeSpan.FromSeconds(upgradeTime))}";
+        BuildingUpgradeTime.text = $"<color=#C4E5FD>{base.GetLanguageText("YapımSüresi")}:</color> {TimeExtends.GetCountdownText(TimeSpan.FromSeconds(upgradeTime))}";
 
         // Kaynak kontrolü ve koşulları sağlıyor mu kontorlü
         ResourcesDTO resources = StaticData.CalculateCostBuilding(building, nextLevel);
@@ -122,7 +122,8 @@ public class BuildingPanelController : BasePanelController
             // Açık ise açmaya gerek yok paneli
             if (!BoronDetail.gameObject.activeSelf)
                 BoronDetail.gameObject.SetActive(true);
-        }else
+        }
+        else
             BoronDetail.gameObject.SetActive(false);
 
         #endregion
@@ -140,9 +141,9 @@ public class BuildingPanelController : BasePanelController
 
             // Texti değiştiriyoruz.
             if (isAlreadyUpgrading)
-                UpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Yükseltiliyor";
+                UpgradeButton.GetComponentInChildren<TMP_Text>().text = base.GetLanguageText("Yükseltiliyor");
             else
-                UpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Yükselt";
+                UpgradeButton.GetComponentInChildren<TMP_Text>().text = base.GetLanguageText("Yükselt");
         }
         else // Eğer aksi durumdaysa yükseltme butonunu açıyoruz.
         {
@@ -150,7 +151,7 @@ public class BuildingPanelController : BasePanelController
             UpgradeButton.interactable = true;
 
             // Texti değiştiriyoruz.
-            UpgradeButton.GetComponentInChildren<TextMeshProUGUI>().text = "Yükselt";
+            UpgradeButton.GetComponentInChildren<TMP_Text>().text = base.GetLanguageText("Yükselt");
         }
 
         #endregion

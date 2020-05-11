@@ -1,13 +1,13 @@
 ﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Controllers.Base;
 using Assets.Scripts.Data;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using System.Collections;
-using System.Globalization;
 using TMPro;
 using UnityEngine;
 
-public class ResourceController : MonoBehaviour
+public class ResourceController : BaseLanguageBehaviour
 {
     public static ResourceController RC { get; set; }
 
@@ -24,13 +24,13 @@ public class ResourceController : MonoBehaviour
     public int QuantityAnimationIncreaseSpeed;
 
     [Header("Kullanıcının metal miktarının basılacağı alan.")]
-    public TextMeshProUGUI MetalQuantityText;
+    public TMP_Text MetalQuantityText;
 
     [Header("Kullanıcının kristal miktarının basılacağı alan.")]
-    public TextMeshProUGUI CrystalQuantityText;
+    public TMP_Text CrystalQuantityText;
 
     [Header("Kullanıcının boron miktarının basılacağı alan.")]
-    public TextMeshProUGUI BoronQuantityText;
+    public TMP_Text BoronQuantityText;
 
     [Header("Metal kaynağına tıklandığında detayları yazacak.")]
     public ResourceDetailController MetalResourceDetail;
@@ -41,10 +41,6 @@ public class ResourceController : MonoBehaviour
     [Header("Boron kaynağına tıklandığında detayları yazacak.")]
     public ResourceDetailController BoronResourceDetail;
 
-    [Header("Değiştirilecek data.")]
-    [Tooltip("ÖRN;{0} Gereken Metal.")]
-    [TextArea]
-    public string Template;
     IEnumerator Start()
     {
 
@@ -298,7 +294,7 @@ public class ResourceController : MonoBehaviour
             buildingLevel = storageBuilding.BuildingLevel;
 
         // Kapasitesi.
-        double buildingCapacity = StaticData.GetBuildingStorage(Assets.Scripts.Enums.Buildings.BoronDeposu, buildingLevel);
+        double buildingCapacity = StaticData.GetBuildingStorage(Buildings.BoronDeposu, buildingLevel);
 
         // Eğer deposu yeterli ise beyaz değil ise kırmızı olacak.
         if (boronAnimQuantity < buildingCapacity)
@@ -337,10 +333,7 @@ public class ResourceController : MonoBehaviour
 
         #region Ekrana basıyoruz.
 
-        string temp = Template.Replace("{0}", ResourceExtends.ConvertToDottedResource(GlobalPlanetController.GPC.CurrentPlanet.Metal));
-        temp = temp.Replace("{1}", ResourceExtends.ConvertToDottedResource(metalBuildingCapacity));
-        temp = temp.Replace("{2}", ResourceExtends.ConvertToDottedResource(metalProducePerHour));
-        MetalResourceDetail.ContentField.text = temp;
+        MetalResourceDetail.ContentField.text = base.GetLanguageText("KaynakDetay", ResourceExtends.ConvertToDottedResource(GlobalPlanetController.GPC.CurrentPlanet.Metal), ResourceExtends.ConvertToDottedResource(metalBuildingCapacity), ResourceExtends.ConvertToDottedResource(metalProducePerHour));
 
         #endregion
 
@@ -374,10 +367,7 @@ public class ResourceController : MonoBehaviour
 
         #region Ekrana basıyoruz.
 
-        string temp = Template.Replace("{0}", ResourceExtends.ConvertToDottedResource(GlobalPlanetController.GPC.CurrentPlanet.Crystal));
-        temp = temp.Replace("{1}", ResourceExtends.ConvertToDottedResource(crystalBuildingCapacity));
-        temp = temp.Replace("{2}", ResourceExtends.ConvertToDottedResource(crystalProducePerHour));
-        CrystalResourceDetail.ContentField.text = temp;
+        CrystalResourceDetail.ContentField.text = base.GetLanguageText("KaynakDetay", ResourceExtends.ConvertToDottedResource(GlobalPlanetController.GPC.CurrentPlanet.Crystal), ResourceExtends.ConvertToDottedResource(crystalBuildingCapacity), ResourceExtends.ConvertToDottedResource(crystalProducePerHour));
 
         #endregion
     }
@@ -410,10 +400,7 @@ public class ResourceController : MonoBehaviour
 
         #region Ekrana basıyoruz.
 
-        string temp = Template.Replace("{0}", ResourceExtends.ConvertToDottedResource(GlobalPlanetController.GPC.CurrentPlanet.Boron));
-        temp = temp.Replace("{1}", ResourceExtends.ConvertToDottedResource(boronBuildingCapacity));
-        temp = temp.Replace("{2}", ResourceExtends.ConvertToDottedResource(boronProducePerHour));
-        BoronResourceDetail.ContentField.text = temp;
+        BoronResourceDetail.ContentField.text = base.GetLanguageText("KaynakDetay", ResourceExtends.ConvertToDottedResource(GlobalPlanetController.GPC.CurrentPlanet.Boron), ResourceExtends.ConvertToDottedResource(boronBuildingCapacity), ResourceExtends.ConvertToDottedResource(boronProducePerHour));
 
         #endregion
     }

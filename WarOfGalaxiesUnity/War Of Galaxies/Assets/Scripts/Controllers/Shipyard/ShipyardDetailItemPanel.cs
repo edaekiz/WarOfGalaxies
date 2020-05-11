@@ -12,13 +12,13 @@ using UnityEngine.UI;
 public class ShipyardDetailItemPanel : BasePanelController
 {
     [Header("Geminin ismi ile miktarı.")]
-    public TextMeshProUGUI ItemNameWithQuantity;
+    public TMP_Text ItemNameWithQuantity;
 
     [Header("Geminin kısa açıklaması.")]
-    public TextMeshProUGUI ItemDescription;
+    public TMP_Text ItemDescription;
 
     [Header("Üretim süresi.")]
-    public TextMeshProUGUI ItemCountdown;
+    public TMP_Text ItemCountdown;
 
     [Header("Üretim butonu")]
     public Button ProduceButton;
@@ -30,7 +30,7 @@ public class ShipyardDetailItemPanel : BasePanelController
     public Ships CurrentShip;
 
     [Header("Üretilecek miktar")]
-    public InputField QuantityField;
+    public TMP_InputField QuantityField;
 
     [Header("Sunucuya istek gönderiliyor mu?")]
     public bool IsSending;
@@ -57,7 +57,10 @@ public class ShipyardDetailItemPanel : BasePanelController
         string quantity = currentShipCount == null ? "0" : currentShipCount.ShipCount.ToString();
 
         // Eğer yok ise gemisi 0 var ise miktarı basıyoruz.
-        ItemNameWithQuantity.text = $"{ship} <color=orange>({quantity})</color>";
+        ItemNameWithQuantity.text = $"{base.GetLanguageText($"G{(int)ship}")} <color=orange>({quantity})</color>";
+
+        // Açıklamasını basıyoruz.
+        ItemDescription.text = base.GetLanguageText($"GD{(int)ship}");
 
         // Geminin resmini basıyoruz.
         ItemImage.sprite = ShipyardController.SC.ShipWithImages.Find(x => x.Ship == ship).ShipImage;

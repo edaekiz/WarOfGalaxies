@@ -1,9 +1,10 @@
 ﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Controllers.Base;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShipyardQueueController : MonoBehaviour
+public class ShipyardQueueController : BaseLanguageBehaviour
 {
     public static ShipyardQueueController SQC { get; set; }
 
@@ -31,16 +32,16 @@ public class ShipyardQueueController : MonoBehaviour
         foreach (UserPlanetShipProgDTO queue in LoginController.LC.CurrentUser.UserPlanetShipProgs)
         {
             // Kuyruk eşyası.
-            GameObject go = Instantiate(ShipyardQueueItem,ContentField);
+            GameObject go = Instantiate(ShipyardQueueItem, ContentField);
 
             // Resmi yüklüyoruz.
             go.transform.Find("ItemImage").GetComponent<Image>().sprite = ShipyardController.SC.ShipWithImages.Find(x => x.Ship == queue.ShipId).ShipImage;
 
             // İsmini basıyoruz.
-            go.transform.Find("ItemName").GetComponent<TextMeshProUGUI>().text = queue.ShipId.ToString();
+            go.transform.Find("ItemName").GetComponent<TMP_Text>().text = base.GetLanguageText($"G{queue.ShipId}");
 
             // Miktarı basıyoruz.
-            go.transform.Find("ItemCount").GetComponent<TextMeshProUGUI>().text = queue.ShipCount.ToString();
+            go.transform.Find("ItemCount").GetComponent<TMP_Text>().text = queue.ShipCount.ToString();
         }
     }
 

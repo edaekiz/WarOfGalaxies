@@ -970,6 +970,7 @@ GameObject:
   - component: {fileID: 990496958645458573}
   - component: {fileID: 990496958645458571}
   - component: {fileID: 990496958645458572}
+  - component: {fileID: 4959208187340356663}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -1116,6 +1117,19 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &4959208187340356663
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 990496958645458574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88dd0c5c693a9004aab6916a54bef9f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KEYWORD: "Ara\u015Ft\u0131rmalar"
 --- !u!1 &990496958895897538
 GameObject:
   m_ObjectHideFlags: 0

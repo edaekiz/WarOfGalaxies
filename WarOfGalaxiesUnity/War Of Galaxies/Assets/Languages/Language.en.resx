@@ -117,121 +117,121 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Araştır" xml:space="preserve">
+    <value>Research</value>
+  </data>
+  <data name="Araştırılıyor" xml:space="preserve">
+    <value>Researching</value>
+  </data>
   <data name="B1" xml:space="preserve">
-    <value>Metal Madeni</value>
-  </data>
-  <data name="B2" xml:space="preserve">
-    <value>Kristal Madeni</value>
-  </data>
-  <data name="B3" xml:space="preserve">
-    <value>Bor Madeni</value>
-  </data>
-  <data name="B4" xml:space="preserve">
-    <value>Metal Deposu</value>
-  </data>
-  <data name="B5" xml:space="preserve">
-    <value>Kristal Deposu</value>
-  </data>
-  <data name="B6" xml:space="preserve">
-    <value>Bor Deposu</value>
-  </data>
-  <data name="B7" xml:space="preserve">
-    <value>Robot Fabrikası</value>
-  </data>
-  <data name="B8" xml:space="preserve">
-    <value>Tersane</value>
-  </data>
-  <data name="B9" xml:space="preserve">
-    <value>Araştırma Laboratuvarı</value>
+    <value>Metal Mine</value>
   </data>
   <data name="B10" xml:space="preserve">
     <value>Radar</value>
   </data>
-  <data name="Kademe" xml:space="preserve">
-    <value>Kademe &lt;color=#C4E5FD&gt;{0}&lt;/color&gt;</value>
+  <data name="B2" xml:space="preserve">
+    <value>Crystal Mine</value>
+  </data>
+  <data name="B3" xml:space="preserve">
+    <value>Boron Mine</value>
+  </data>
+  <data name="B4" xml:space="preserve">
+    <value>Metal Storage</value>
+  </data>
+  <data name="B5" xml:space="preserve">
+    <value>Crystal Storage</value>
+  </data>
+  <data name="B6" xml:space="preserve">
+    <value>Boron Storage</value>
+  </data>
+  <data name="B7" xml:space="preserve">
+    <value>Robot Factory</value>
+  </data>
+  <data name="B8" xml:space="preserve">
+    <value>Shipyard</value>
+  </data>
+  <data name="B9" xml:space="preserve">
+    <value>Research Lab</value>
   </data>
   <data name="BinaVeSeviye" xml:space="preserve">
-    <value>{0} {1}&lt;size=2.2&gt;&lt;color=orange&gt;Seviye {2}&lt;/color&gt;&lt;/size&gt;</value>
+    <value>{0} {1}&lt;size=2.2&gt;&lt;color=orange&gt;Level {2}&lt;/color&gt;&lt;/size&gt;</value>
   </data>
-  <data name="KISA_GUN" xml:space="preserve">
-    <value>g</value>
+  <data name="D1" xml:space="preserve">
+    <value>Rocket Launcher</value>
   </data>
-  <data name="KISA_SAAT" xml:space="preserve">
-    <value>s</value>
+  <data name="DD1" xml:space="preserve">
+    <value>Rocket Launcher short description</value>
+  </data>
+  <data name="G1" xml:space="preserve">
+    <value>Light Hunter</value>
+  </data>
+  <data name="GD1" xml:space="preserve">
+    <value>Light Hunter description</value>
+  </data>
+  <data name="InciSeviye" xml:space="preserve">
+    <value>{0}. Level</value>
+  </data>
+  <data name="Kademe" xml:space="preserve">
+    <value>Level &lt;color=#C4E5FD&gt;{0}&lt;/color&gt;</value>
+  </data>
+  <data name="KaynakDetay" xml:space="preserve">
+    <value>Current&lt;br&gt;&lt;color=white&gt;{0}&lt;/color&gt;&lt;br&gt;Storage Capacity&lt;br&gt;&lt;color=white&gt;{1}&lt;/color&gt;&lt;br&gt;Per Hour&lt;br&gt;&lt;color=white&gt;{2}&lt;/color&gt;</value>
   </data>
   <data name="KISA_DAKIKA" xml:space="preserve">
+    <value>m</value>
+  </data>
+  <data name="KISA_GUN" xml:space="preserve">
     <value>d</value>
+  </data>
+  <data name="KISA_SAAT" xml:space="preserve">
+    <value>h</value>
   </data>
   <data name="KISA_SANIYE" xml:space="preserve">
     <value>s</value>
   </data>
-  <data name="YapımSüresi" xml:space="preserve">
-    <value>Yapım Süresi</value>
-  </data>
-  <data name="Yükseltiliyor" xml:space="preserve">
-    <value>Yükseltiliyor</value>
-  </data>
-  <data name="Yükselt" xml:space="preserve">
-    <value>Yükselt</value>
-  </data>
-  <data name="D1" xml:space="preserve">
-    <value>Roketatar</value>
-  </data>
-  <data name="DD1" xml:space="preserve">
-    <value>Roketatar kısa açıklaması</value>
-  </data>
   <data name="R1" xml:space="preserve">
-    <value>Silah Tekniği</value>
-  </data>
-  <data name="InciSeviye" xml:space="preserve">
-    <value>{0}. Seviye</value>
-  </data>
-  <data name="Araştır" xml:space="preserve">
-    <value>Araştır</value>
-  </data>
-  <data name="Araştırılıyor" xml:space="preserve">
-    <value>Araştırılıyor</value>
+    <value>Weapon Technique</value>
   </data>
   <data name="SeviyeParantez" xml:space="preserve">
-    <value>Seviye({0})</value>
+    <value>Level({0})</value>
   </data>
-  <data name="G1" xml:space="preserve">
-    <value>Hafif Avcı</value>
+  <data name="YapımSüresi" xml:space="preserve">
+    <value>Build Time</value>
   </data>
-  <data name="GD1" xml:space="preserve">
-    <value>Hafif Avcı açıklaması</value>
+  <data name="Yükselt" xml:space="preserve">
+    <value>Upgrade</value>
   </data>
-  <data name="KaynakDetay" xml:space="preserve">
-    <value>Şu anda&lt;br&gt;&lt;color=white&gt;{0}&lt;/color&gt;&lt;br&gt;Depo Kapasitesi&lt;br&gt;&lt;color=white&gt;{1}&lt;/color&gt;&lt;br&gt;Saaatlik Üretim&lt;br&gt;&lt;color=white&gt;{2}&lt;/color&gt;</value>
+  <data name="Yükseltiliyor" xml:space="preserve">
+    <value>Upgrading</value>
   </data>
   <data name="YükseltmeGereksinim" xml:space="preserve">
-    <value>Yükseltme Gereksinimleri</value>
+    <value>Upgrade Requirements</value>
   </data>
   <data name="Savunma" xml:space="preserve">
-    <value>Savunma</value>
+    <value>Defense</value>
   </data>
   <data name="Araştırmalar" xml:space="preserve">
-    <value>Araştırmalar</value>
+    <value>Researches</value>
   </data>
   <data name="RD1" xml:space="preserve">
-    <value>Silah Tekniği açıklaması.</value>
+    <value>Weapoon Technique description.</value>
   </data>
   <data name="ÜretimSüresi" xml:space="preserve">
-    <value>Üretim Süresi</value>
+    <value>Produce Time</value>
   </data>
   <data name="ÜretimGereksinimleri" xml:space="preserve">
-    <value>Üretim Gereksinimleri</value>
+    <value>Produce Requirements</value>
   </data>
   <data name="Bilgi" xml:space="preserve">
-    <value>Bilgi</value>
+    <value>Info</value>
   </data>
   <data name="Koşullar" xml:space="preserve">
-    <value>Koşullar</value>
+    <value>Conditions</value>
   </data>
   <data name="Üret" xml:space="preserve">
-    <value>Üret</value>
+    <value>Produce</value>
   </data>
   <data name="Tersane" xml:space="preserve">
-    <value>Tersane</value>
+    <value>Shipyard</value>
   </data>
 </root>

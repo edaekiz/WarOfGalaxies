@@ -13,10 +13,10 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
     public GameObject ResourceDetailPanel;
 
     [Header("Detayların basılacağı alan.")]
-    public TextMeshProUGUI ContentField;
+    public TMP_Text ContentField;
 
     [Header("Gereken metal miktarını buraya basacağız.")]
-    public TextMeshProUGUI QuantityText;
+    public TMP_Text QuantityText;
 
     private bool isOpening;
     private Image detailPanelImage;

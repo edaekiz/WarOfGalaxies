@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Controllers.Base;
 using Assets.Scripts.Data;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
@@ -9,16 +10,16 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShipyardItemController : MonoBehaviour
+public class ShipyardItemController : BaseLanguageBehaviour
 {
     [Header("Aktif tuttuğu gemi.")]
     public Ships CurrentShip;
 
     [Header("Geminin ismini basıyoruz.")]
-    public TextMeshProUGUI ShipName;
+    public TMP_Text ShipName;
 
     [Header("Kullanıcının sahip olduğu miktar.")]
-    public TextMeshProUGUI ShipCount;
+    public TMP_Text ShipCount;
 
     [Header("Geminin resmi.")]
     public Image ShipImage;
@@ -27,7 +28,7 @@ public class ShipyardItemController : MonoBehaviour
     public Image CountdownImage;
 
     [Header("Geri sayım süresi.")]
-    public TextMeshProUGUI CountdownText;
+    public TMP_Text CountdownText;
 
     /// <summary>
     /// Aktif gemi üretimi
@@ -38,6 +39,9 @@ public class ShipyardItemController : MonoBehaviour
     {
         // Gemi bilgisi.
         CurrentShip = ship;
+
+        // Gemi ismi.
+        ShipName.text = base.GetLanguageText($"G{(int)ship}");
 
         // Aktif gemi miktarı.
         UserPlanetShipDTO currentShipCount = LoginController.LC.CurrentUser.UserPlanetShips.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.ShipId == ship);

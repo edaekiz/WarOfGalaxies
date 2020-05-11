@@ -66,7 +66,7 @@ public class LanguageController : MonoBehaviour
 #if UNITY_IOS
         LoadLanguageiOS();
 #endif
-
+        LoadTimeLetters();
     }
 
     /// <summary>
@@ -89,11 +89,32 @@ public class LanguageController : MonoBehaviour
 
         // Her bir data için dönüyoruz.
         for (int ii = 0; ii < replaceData.Length; ii++)
-            value = languageItem.Value.Replace($"{ii}", replaceData[ii]);
+            value = value.Replace($"{ii}", replaceData[ii]);
 
         // Var ise karşılık gelen değeri.
         return value;
     }
+
+    /// <summary>
+    /// Datası verilen keywordü replace edilmiş olarak döner.
+    /// </summary>
+    /// <param name="languageItem">Bulunmuş olan data</param>
+    /// <param name="replaceData">Eğer keyword value içerisinde {0} var ise bu replacedata daki ilk iteme denk gelir.</param>
+    /// <returns></returns>
+    public string GetText(LanguageItem languageItem, params string[] replaceData)
+    {
+        // Var ise bu değeri replace data kadar değiştireceğiz.
+        string value = languageItem.Value;
+
+        // Her bir data için dönüyoruz.
+        for (int ii = 0; ii < replaceData.Length; ii++)
+            value = value.Replace($"{{{ii}}}", replaceData[ii]);
+
+        // Var ise karşılık gelen değeri.
+        return value;
+    }
+
+    public LanguageItem GetTextItem(string keyword) => LanguageItems.Items.Find(x => x.Keyword == keyword);
 
     /// <summary>
     /// Android işletim sistemi için dilleri pars eder.
