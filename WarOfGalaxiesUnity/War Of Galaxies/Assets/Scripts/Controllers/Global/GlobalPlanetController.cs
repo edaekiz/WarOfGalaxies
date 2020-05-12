@@ -27,4 +27,11 @@ public class GlobalPlanetController : MonoBehaviour
         // Default gezegeni seçiyoruz.
         CurrentPlanet = LoginController.LC.CurrentUser.UserPlanets.FirstOrDefault();
     }
+
+    public void ShowPlanetPickerPanel()
+    {
+        GameObject panel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.PlanetPickerPanel);
+        panel.GetComponent<PlanetPickerController>().ReLoadPlanets();
+    }
+
 }

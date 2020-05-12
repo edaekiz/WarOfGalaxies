@@ -100,12 +100,9 @@ public class GalaxyChangePanelController : MonoBehaviour
         }
         else if (currentSolarIndex < 1)
         {
-            currentSolarIndex = 1;
+            currentSolarIndex = 500;
             isDecrased = true;
         }
-
-        // Güneş sistemini değiştiriyoruz.
-        SolarIndexField.text = $"{currentSolarIndex}";
 
         // Galaksi değeri string olarak.
         string galaxyIndexText = GalaxyIndexField.text;
@@ -127,6 +124,9 @@ public class GalaxyChangePanelController : MonoBehaviour
             currentGalaxyIndex = 5;
         else if (currentGalaxyIndex < 1)
             currentGalaxyIndex = 1;
+
+        // Güneş sistemini değiştiriyoruz.
+        SolarIndexField.text = $"{currentSolarIndex}";
 
         // Galaksi değerini güncelliyoruz.
         GalaxyIndexField.text = $"{currentGalaxyIndex}";

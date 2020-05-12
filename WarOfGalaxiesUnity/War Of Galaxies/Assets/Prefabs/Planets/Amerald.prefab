@@ -27,8 +27,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1080416150210118}
-  m_LocalRotation: {x: -0.68887806, y: 0.1636518, z: 0.5201773, w: 0.47757804}
-  m_LocalPosition: {x: 0.00015008195, y: -0.000009727144, z: -0.0000072118382}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.76843154, y: 0.7684317, z: 0.7684317}
   m_Children: []
   m_Father: {fileID: 4598692641295204}
@@ -174,12 +174,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sun: {fileID: 0}
   SolarPlanetInfo:
-    UserPlanetID: 0
-    UserName: 
-    PlanetName: 
+    UserPlanetId: 0
+    UserId: 0
     PlanetCordinate: 
     PlanetType: 0
+    PlanetName: 
+    Metal: 0
+    Crystal: 0
+    Boron: 0
+  CordinateInfo:
+    GalaxyIndex: 0
+    SolarIndex: 0
+    OrderIndex: 0
   RotateSunsAroundSpeed: 5
+  UserPlanetInfo: {fileID: 0}
 --- !u!96 &5808969907028653308
 TrailRenderer:
   serializedVersion: 2

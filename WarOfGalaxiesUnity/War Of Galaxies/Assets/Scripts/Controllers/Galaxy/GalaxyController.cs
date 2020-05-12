@@ -11,19 +11,25 @@ public class GalaxyController : MonoBehaviour
     [Header("Gezegenlerin bilgisini tutuyoruz.")]
     public List<SolarPanetDataDTO> SolarPanetData;
 
-    /// <summary>
-    /// Gösterilen güneş sistemi.
-    /// </summary>
-    public GalaxyInfoResponseDTO SolarSystem { get; set; }
-
     [Header("Her bir gezegen arasındaki mesafe.")]
     public float PlanetsDistancePer;
 
     [Header("Güneş modeli")]
     public GameObject SunObject;
 
+    [Header("Galakside her bir gezegen için gösterilecek olan gezegen bilgisi.")]
+    public GameObject UserPlanetInfo;
+
     [Header("Galaksinin dönüş hızı.")]
     public float GalaxyRotationSpeed;
+
+    [Header("Boş gezegen")]
+    public GameObject EmptyPlanetSign;
+
+    /// <summary>
+    /// Gösterilen güneş sistemi.
+    /// </summary>
+    public GalaxyInfoResponseDTO SolarSystem { get; set; }
 
     // Güneş bilgisi.
     private SunController currentSun;
@@ -82,13 +88,14 @@ public class GalaxyController : MonoBehaviour
             currentSun = sun.GetComponent<SunController>();
 
             // Gezegenleri yüklüyoruz.
-            for (int ii = 0; ii < SolarSystem.SolarPlanets.Count; ii++)
+            for (int ii = 1; ii <= 8; ii++)
             {
+
                 // Gezegen bilgisi.
-                SolarPlanetDTO solarPlanet = SolarSystem.SolarPlanets[ii];
+                SolarPlanetDTO solarPlanet = SolarSystem.SolarPlanets.Find(x => x.OrderIndex == ii);
 
                 // Stringi kordinata çeviriyoruz.
-                CordinateDTO cordinate = new CordinateDTO(SolarSystem.GalaxyIndex, SolarSystem.SolarIndex, solarPlanet.OrderIndex);
+                CordinateDTO cordinate = new CordinateDTO(SolarSystem.GalaxyIndex, SolarSystem.SolarIndex, ii);
 
                 // Her gezegen arasında 100 birim fark olacak.
                 float offsetX = PlanetsDistancePer * cordinate.OrderIndex;
@@ -96,26 +103,50 @@ public class GalaxyController : MonoBehaviour
                 // Gezegenin konumu.
                 Vector3 planetPosition = new Vector3(offsetX, 0, 0);
 
-                // Gezegen bilgisini buluyoruz.
-                SolarPanetDataDTO planetData = SolarPanetData.Find(x => x.PlanetType == (PlanetTypes)solarPlanet.UserPlanet.PlanetType);
+                // Sahiplenilmemiş gezegen.
+                if (solarPlanet == null)
+                {
+                    // Gezegeni oluşturuyoruz.
+                    GameObject planet = Instantiate(EmptyPlanetSign, planetPosition, Quaternion.identity, transform);
 
-                // Gezegeni oluşturuyoruz.
-                GameObject planet = Instantiate(planetData.SolarPlanet, planetPosition, Quaternion.identity, transform);
+                    // İzini buluyoruz.
+                    TrailRenderer trail = planet.GetComponent<TrailRenderer>();
 
-                // İzini buluyoruz.
-                TrailRenderer trail = planet.GetComponent<TrailRenderer>();
+                    // İzin rengini değiştiriyoruz.
+                    trail.endColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
 
-                // İzin rengini değiştiriyoruz.
-                trail.endColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+                    // Gezegeni yönetmek için bilgileri aktarmamız lazım. Componentini alıyoruz.
+                    PlanetController planetController = planet.GetComponent<PlanetController>();
 
-                // Gezegeni yönetmek için bilgileri aktarmamız lazım. Componentini alıyoruz.
-                PlanetController planetController = planet.GetComponent<PlanetController>();
+                    // Gezegen bilgisini yüklüyoruz.
+                    planetController.LoadPlanetInfo(currentSun, null, cordinate);
 
-                // Gezegen bilgisini yüklüyoruz.
-                planetController.LoadPlanetInfo(currentSun, solarPlanet.UserPlanet, cordinate);
+                    // Oluşan gezegeni ekliyoruz.
+                    currentSun.AddPlanet(planetController);
+                }
+                else
+                {
+                    // Gezegen bilgisini buluyoruz.
+                    SolarPanetDataDTO planetData = SolarPanetData.Find(x => x.PlanetType == (PlanetTypes)solarPlanet.UserPlanet.PlanetType);
 
-                // Oluşan gezegeni ekliyoruz.
-                currentSun.AddPlanet(planetController);
+                    // Gezegeni oluşturuyoruz.
+                    GameObject planet = Instantiate(planetData.SolarPlanet, planetPosition, Quaternion.identity, transform);
+
+                    // İzini buluyoruz.
+                    TrailRenderer trail = planet.GetComponent<TrailRenderer>();
+
+                    // İzin rengini değiştiriyoruz.
+                    trail.endColor = new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f));
+
+                    // Gezegeni yönetmek için bilgileri aktarmamız lazım. Componentini alıyoruz.
+                    PlanetController planetController = planet.GetComponent<PlanetController>();
+
+                    // Gezegen bilgisini yüklüyoruz.
+                    planetController.LoadPlanetInfo(currentSun, solarPlanet.UserPlanet, cordinate);
+
+                    // Oluşan gezegeni ekliyoruz.
+                    currentSun.AddPlanet(planetController);
+                }
             }
         }));
     }

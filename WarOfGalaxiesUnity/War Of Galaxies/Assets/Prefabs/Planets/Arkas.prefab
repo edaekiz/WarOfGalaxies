@@ -240,12 +240,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Sun: {fileID: 0}
   SolarPlanetInfo:
-    UserPlanetID: 0
-    UserName: 
-    PlanetName: 
+    UserPlanetId: 0
+    UserId: 0
     PlanetCordinate: 
     PlanetType: 0
+    PlanetName: 
+    Metal: 0
+    Crystal: 0
+    Boron: 0
+  CordinateInfo:
+    GalaxyIndex: 0
+    SolarIndex: 0
+    OrderIndex: 0
   RotateSunsAroundSpeed: 6
+  UserPlanetInfo: {fileID: 0}
 --- !u!96 &-6795982831908316810
 TrailRenderer:
   serializedVersion: 2

@@ -33,6 +33,10 @@ public class SunController : MonoBehaviour
                 e.gameObject.SetActive(false);
         });
 
+        // Gezegen bilgisi panelini kapatıyoruz.
+        if (selectedPlanet.UserPlanetInfo != null)
+            selectedPlanet.UserPlanetInfo.SetActive(false);
+
         // Güneşi de kapatıyoruz.
         gameObject.SetActive(false);
     }
@@ -40,7 +44,12 @@ public class SunController : MonoBehaviour
     public void EnableAllPlanets()
     {
         // Gezegenleri açıyoruz.
-        Planets.ForEach(e => e.gameObject.SetActive(true));
+        Planets.ForEach(e =>
+        {
+            e.gameObject.SetActive(true);
+            if (!e.UserPlanetInfo.activeSelf)
+                e.UserPlanetInfo.SetActive(true);
+        });
 
         // Güneşi de açıyoruz.
         gameObject.SetActive(true);

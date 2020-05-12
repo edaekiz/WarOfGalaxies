@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4fbf1713e572b344c86a19757ffaba02, type: 2}
+  - {fileID: 2100000, guid: d01559d82b74c5b4ab70b5f6b4573cde, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: -4848031299598825390}
   - component: {fileID: -6481436238563813835}
   m_Layer: 9
-  m_Name: Atawi
+  m_Name: EmptyAtawi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

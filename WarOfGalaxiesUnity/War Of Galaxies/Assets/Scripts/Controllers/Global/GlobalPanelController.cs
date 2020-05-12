@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class GlobalPanelController : MonoBehaviour
@@ -15,7 +14,8 @@ public class GlobalPanelController : MonoBehaviour
         ShipyardPanel,
         ShipyardDetailPanel,
         DefensePanel,
-        DefenseDetailPanel
+        DefenseDetailPanel,
+        PlanetPickerPanel
     }
 
     [Serializable]

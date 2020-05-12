@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.ApiModels;
 using Assets.Scripts.Models;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -17,6 +18,9 @@ public class PlanetController : MonoBehaviour
     [Header("Güneşin etrafındaki dönüş hızı.")]
     public float RotateSunsAroundSpeed = 5;
 
+    [Header("Gezegenin kullanıcı bilgisi.")]
+    public GameObject UserPlanetInfo;
+
     public void LoadPlanetInfo(SunController sun, UserPlanetDTO solarPlanet, CordinateDTO cordinate)
     {
         // Güneşi atıyoruz.
@@ -30,21 +34,30 @@ public class PlanetController : MonoBehaviour
 
         // Güneşin etrafında rastgele bir konuma atıyoruz.
         transform.RotateAround(Sun.transform.position, transform.up, Random.Range(1, 360));
+
+        // Eğer gezegen bilgisi var ise yüklüyoruz.
+        if (solarPlanet != null)
+        {
+            UserPlanetInfo = Instantiate(GalaxyController.GC.UserPlanetInfo, transform);
+            UserPlanetInfo.transform.Find("TXT_Username").GetComponent<TMP_Text>().text = solarPlanet.PlanetName;
+            UserPlanetInfo.transform.Find("TXT_OrderIndex").GetComponent<TMP_Text>().text = cordinate.OrderIndex.ToString();
+            UserPlanetInfo.transform.Find("TXT_UserOrder").GetComponent<TMP_Text>().text = "-";
+        }
     }
 
     private void Update()
     {
-        // Eğer gezegen bilgisi tanımlı değil ise geri dön.
-        if (SolarPlanetInfo == null)
-            return;
-
         // Kendi etrafında döndürüyoruz.
         if (!PlanetZoomController.PZC.IsPlanetSelected(this))
             transform.RotateAround(transform.position, transform.up, CordinateInfo.OrderIndex * Time.deltaTime);
 
         // Güneşin etrafında çeviriyoruz.
         if (PlanetZoomController.PZC.ZoomState == PlanetZoomController.ZoomStates.ZoomedOut)
+        {
             transform.RotateAround(Sun.transform.position, transform.up, RotateSunsAroundSpeed * Time.deltaTime);
+            if (UserPlanetInfo != null)
+                UserPlanetInfo.transform.LookAt(ZoomPanController.ZPC.MainCamera.transform);
+        }
     }
 
     public void OnMouseDown()
