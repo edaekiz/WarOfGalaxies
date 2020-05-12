@@ -16,6 +16,7 @@ namespace WarOfGalaxiesApi.DAL.Models
         }
 
         public virtual DbSet<TblBuildings> TblBuildings { get; set; }
+        public virtual DbSet<TblCordinates> TblCordinates { get; set; }
         public virtual DbSet<TblParameters> TblParameters { get; set; }
         public virtual DbSet<TblResearches> TblResearches { get; set; }
         public virtual DbSet<TblUserPlanetBuildingUpgs> TblUserPlanetBuildingUpgs { get; set; }
@@ -53,6 +54,21 @@ namespace WarOfGalaxiesApi.DAL.Models
                 entity.Property(e => e.BuildingName)
                     .IsRequired()
                     .HasMaxLength(20);
+            });
+
+            modelBuilder.Entity<TblCordinates>(entity =>
+            {
+                entity.HasKey(e => e.CordinateId);
+
+                entity.ToTable("tbl_cordinates");
+
+                entity.HasIndex(e => new { e.GalaxyIndex, e.SolarIndex, e.OrderIndex })
+                    .HasName("IX_tbl_cordinates")
+                    .IsUnique();
+
+                entity.Property(e => e.CordinateId).HasColumnName("CordinateID");
+
+                entity.Property(e => e.UserPlanetId).HasColumnName("UserPlanetID");
             });
 
             modelBuilder.Entity<TblParameters>(entity =>
@@ -205,10 +221,6 @@ namespace WarOfGalaxiesApi.DAL.Models
                 entity.Property(e => e.UserPlanetId).HasColumnName("UserPlanetID");
 
                 entity.Property(e => e.LastUpdateDate).HasColumnType("datetime");
-
-                entity.Property(e => e.PlanetCordinate)
-                    .IsRequired()
-                    .HasMaxLength(10);
 
                 entity.Property(e => e.PlanetName)
                     .IsRequired()

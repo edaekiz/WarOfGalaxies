@@ -13,11 +13,24 @@ namespace Assets.Scripts.Models
         /// <summary>
         /// Galaksideki güneş sistemi sırası.
         /// </summary>
-        public int SolarySystemIndex;
+        public int SolarIndex;
 
         /// <summary>
         /// Gezegennin güneş sistemindeki sırası.
         /// </summary>
-        public int SolarSystemOrderIndex;
+        public int OrderIndex;
+
+        public CordinateDTO()
+        {
+
+        }
+
+        public CordinateDTO(int _galaxyIndex,int _solarIndex,int _orderIndex)
+        {
+            this.GalaxyIndex = _galaxyIndex;
+            this.SolarIndex = _solarIndex;
+            this.OrderIndex = _orderIndex;
+        }
+
     }
 }

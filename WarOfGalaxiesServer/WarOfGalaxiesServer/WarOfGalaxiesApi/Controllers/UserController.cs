@@ -84,7 +84,6 @@ namespace WarOfGalaxiesApi.Controllers
                 Boron = x.Boron,
                 Crystal = x.Crystal,
                 Metal = x.Metal,
-                PlanetCordinate = x.PlanetCordinate,
                 PlanetName = x.PlanetName,
                 PlanetType = x.PlanetType,
                 UserPlanetId = x.UserPlanetId
@@ -183,7 +182,6 @@ namespace WarOfGalaxiesApi.Controllers
                     Boron = x.Boron,
                     Crystal = x.Crystal,
                     Metal = x.Metal,
-                    PlanetCordinate = x.PlanetCordinate,
                     PlanetName = x.PlanetName,
                     PlanetType = x.PlanetType,
                     UserPlanetId = x.UserPlanetId

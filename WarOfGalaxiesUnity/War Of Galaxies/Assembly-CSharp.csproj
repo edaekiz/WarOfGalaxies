@@ -83,10 +83,12 @@
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Utility\FPSCounter.cs" />
     <Compile Include="Assets\ExternalAssets\Asteroids Pack\Assets\Scripts\RandomRotator.cs" />
     <Compile Include="Assets\ExternalAssets\Hi-Tech Buttons and Panels\Resources\Scripts\JustRotate.cs" />
+    <Compile Include="Assets\GalaxyChangePanelController.cs" />
     <Compile Include="Assets\Languages\Language.Designer.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ApiResult.cs" />
     <Compile Include="Assets\Scripts\ApiModels\Base\ProgressModel.cs" />
     <Compile Include="Assets\Scripts\ApiModels\DefenseDTO.cs" />
+    <Compile Include="Assets\Scripts\ApiModels\GalaxyInfoDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\LoginStuffDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ResourcesDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ShipyardDTO.cs" />
@@ -112,6 +114,7 @@
     <Compile Include="Assets\Scripts\Controllers\Game\LoadingController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Game\LoginController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Game\StaticValuesController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Global\GlobalGalaxyController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Global\GlobalPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Global\GlobalPlanetController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Language\LanguageController.cs" />

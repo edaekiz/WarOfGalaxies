@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Models;
+﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Models;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -8,7 +9,7 @@ public class PlanetController : MonoBehaviour
     public SunController Sun;
 
     [Header("Gösterdiği gezegen bilgisi.")]
-    public SolarPlanetDTO SolarPlanetInfo;
+    public UserPlanetDTO SolarPlanetInfo;
 
     [Header("Gezegenin sistemdeki kordinatları.")]
     public CordinateDTO CordinateInfo;
@@ -16,7 +17,7 @@ public class PlanetController : MonoBehaviour
     [Header("Güneşin etrafındaki dönüş hızı.")]
     public float RotateSunsAroundSpeed = 5;
 
-    public void LoadPlanetInfo(SunController sun, SolarPlanetDTO solarPlanet, CordinateDTO cordinate)
+    public void LoadPlanetInfo(SunController sun, UserPlanetDTO solarPlanet, CordinateDTO cordinate)
     {
         // Güneşi atıyoruz.
         Sun = sun;
@@ -39,7 +40,7 @@ public class PlanetController : MonoBehaviour
 
         // Kendi etrafında döndürüyoruz.
         if (!PlanetZoomController.PZC.IsPlanetSelected(this))
-            transform.RotateAround(transform.position, transform.up, CordinateInfo.SolarSystemOrderIndex * Time.deltaTime);
+            transform.RotateAround(transform.position, transform.up, CordinateInfo.OrderIndex * Time.deltaTime);
 
         // Güneşin etrafında çeviriyoruz.
         if (PlanetZoomController.PZC.ZoomState == PlanetZoomController.ZoomStates.ZoomedOut)

@@ -40,9 +40,19 @@ public class LoadingController : MonoBehaviour
 
         // Eğer tüm yüklemeler tamamlandıysa yükleniyor paneli kapanıyor.
         if (CurrentLoadItemCount == TotalLoadItemCount)
-            Destroy(LoadingCanvas);
+            LoadingCanvas.SetActive(false);
         else if (CurrentLoadItemCount > TotalLoadItemCount)
             Debug.LogWarning("Beklenenden fazla yükleme oldu!");
+    }
+
+    public void ShowLoading()
+    {
+        LoadingCanvas.SetActive(true);
+    }
+
+    public void HideLoading()
+    {
+        LoadingCanvas.SetActive(false);
     }
 
 }

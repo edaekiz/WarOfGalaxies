@@ -23,14 +23,14 @@ namespace Assets.Scripts.Extends
             return new CordinateDTO
             {
                 GalaxyIndex = int.Parse(strs[0]),
-                SolarSystemOrderIndex = int.Parse(strs[2]),
-                SolarySystemIndex = int.Parse(strs[1])
+                OrderIndex = int.Parse(strs[2]),
+                SolarIndex = int.Parse(strs[1])
             };
         }
 
         public static string ToString(CordinateDTO cordinate)
         {
-            return $"{cordinate.GalaxyIndex}:{cordinate.SolarySystemIndex}:{cordinate.SolarSystemOrderIndex}";
+            return $"{cordinate.GalaxyIndex}:{cordinate.SolarIndex}:{cordinate.OrderIndex}";
         }
 
     }
