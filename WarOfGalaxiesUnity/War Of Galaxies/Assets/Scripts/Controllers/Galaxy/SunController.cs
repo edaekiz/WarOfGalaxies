@@ -47,8 +47,13 @@ public class SunController : MonoBehaviour
         Planets.ForEach(e =>
         {
             e.gameObject.SetActive(true);
-            if (!e.UserPlanetInfo.activeSelf)
-                e.UserPlanetInfo.SetActive(true);
+
+            // Var ise gezegen bilgisi.
+            if (e.UserPlanetInfo != null)
+            {
+                if (!e.UserPlanetInfo.activeSelf)
+                    e.UserPlanetInfo.SetActive(true);
+            }
         });
 
         // Güneşi de açıyoruz.

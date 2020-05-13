@@ -151,6 +151,17 @@ namespace WarOfGalaxiesApi.Controllers
                 }
             }
 
+            // Kordinatları alıyoruz.
+            List<UserPlanetCordinatesDTO> cordinates = base.UnitOfWork.GetRepository<TblCordinates>()
+                .Where(x => userPlanets.Select(y => y.UserPlanetId).Contains(x.UserPlanetId.Value))
+                .Select(x => new UserPlanetCordinatesDTO
+                {
+                    GalaxyIndex = x.GalaxyIndex,
+                    OrderIndex = x.OrderIndex,
+                    SolarIndex = x.SolarIndex,
+                    UserPlanetId = x.UserPlanetId.Value
+                }).ToList();
+
             // Sonucu dönüyoruz.
             return ResponseHelper.GetSuccess(new LoginStuffDTO
             {
@@ -163,7 +174,8 @@ namespace WarOfGalaxiesApi.Controllers
                 UserPlanetShips = userPlanetShips,
                 UserPlanetShipProgs = userPlanetShipProgs,
                 UserPlanetDefenseProgs = userPlanetDefenseProgs,
-                UserPlanetDefenses = userPlanetDefenses
+                UserPlanetDefenses = userPlanetDefenses,
+                UserPlanetCordinates = cordinates
             });
         }
 

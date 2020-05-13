@@ -19,7 +19,6 @@ namespace Assets.Scripts.ApiModels
 
         public int UserPlanetId;
         public int UserId;
-        public string PlanetCordinate;
         public int PlanetType;
         public string PlanetName;
         public double Metal;
@@ -169,7 +168,6 @@ namespace Assets.Scripts.ApiModels
             userPlanet.Metal = this.Metal;
             userPlanet.Crystal = this.Crystal;
             userPlanet.Boron = this.Boron;
-            userPlanet.PlanetCordinate = this.PlanetCordinate;
             userPlanet.PlanetName = this.PlanetName;
             userPlanet.PlanetType = this.PlanetType;
             userPlanet.LastUpdateDateInClient = DateTime.UtcNow;

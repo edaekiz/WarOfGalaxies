@@ -14,8 +14,10 @@ namespace WarOfGalaxiesApi.DTO.Models
         public List<UserPlanetShipDTO> UserPlanetShips { get; set; }
         public List<UserPlanetDefenseProgDTO> UserPlanetDefenseProgs { get; set; }
         public List<UserPlanetDefenseDTO> UserPlanetDefenses { get; set; }
+        public List<UserPlanetCordinatesDTO> UserPlanetCordinates { get; set; }
         public LoginStuffDTO()
         {
+            UserPlanetCordinates = new List<UserPlanetCordinatesDTO>();
             UserPlanets = new List<UserPlanetDTO>();
             UserPlanetsBuildings = new List<UserPlanetBuildingDTO>();
             UserPlanetsBuildingsUpgs = new List<UserPlanetBuildingUpgDTO>();

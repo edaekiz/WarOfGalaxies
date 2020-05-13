@@ -1,11 +1,21 @@
 ﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Extends;
+using Assets.Scripts.Models;
 using System.Collections;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 
 public class GlobalPlanetController : MonoBehaviour
 {
     public static GlobalPlanetController GPC { get; set; }
+
+    [Header("Gezegenin ismi.")]
+    public TMP_Text UserPlanetName;
+
+    [Header("Gezegenin kordinatı.")]
+    public TMP_Text UserPlanetCordinate;
+
     private void Awake()
     {
         if (GPC == null)
@@ -25,7 +35,15 @@ public class GlobalPlanetController : MonoBehaviour
         yield return new WaitUntil(() => LoginController.LC.IsLoggedIn);
 
         // Default gezegeni seçiyoruz.
-        CurrentPlanet = LoginController.LC.CurrentUser.UserPlanets.FirstOrDefault();
+        SelectPlanet(LoginController.LC.CurrentUser.UserPlanets.FirstOrDefault());
+    }
+
+    public void SelectPlanet(UserPlanetDTO selectedPlanet)
+    {
+        CurrentPlanet = selectedPlanet;
+        UserPlanetName.text = CurrentPlanet.PlanetName;
+        UserPlanetCordinatesDTO cordinateInfo = LoginController.LC.CurrentUser.UserPlanetCordinates.Find(x => x.UserPlanetId == selectedPlanet.UserPlanetId);
+        UserPlanetCordinate.text = CordinateExtends.ToString(new CordinateDTO(cordinateInfo.GalaxyIndex, cordinateInfo.SolarIndex, cordinateInfo.OrderIndex));
     }
 
     public void ShowPlanetPickerPanel()

@@ -1005,6 +1005,7 @@ GameObject:
   - component: {fileID: 167413719}
   - component: {fileID: 167413721}
   - component: {fileID: 167413720}
+  - component: {fileID: 167413722}
   m_Layer: 0
   m_Name: TXT_SolarLabel
   m_TagString: Untagged
@@ -1060,7 +1061,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4281318399
-  m_fontColor: {r: 1, g: 0.73333335, b: 0.18431373, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1150,6 +1151,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 167413718}
   m_CullTransparentMesh: 0
+--- !u!114 &167413722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 167413718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88dd0c5c693a9004aab6916a54bef9f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KEYWORD: GSistemi
 --- !u!1 &176010338
 GameObject:
   m_ObjectHideFlags: 0
@@ -1661,6 +1675,7 @@ GameObject:
   - component: {fileID: 305083886}
   - component: {fileID: 305083888}
   - component: {fileID: 305083887}
+  - component: {fileID: 305083889}
   m_Layer: 0
   m_Name: TXT_GalaxyLabel
   m_TagString: Untagged
@@ -1716,7 +1731,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4281318399
-  m_fontColor: {r: 1, g: 0.73333335, b: 0.18431373, a: 1}
+  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1806,6 +1821,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 305083885}
   m_CullTransparentMesh: 0
+--- !u!114 &305083889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 305083885}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88dd0c5c693a9004aab6916a54bef9f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KEYWORD: Galaksi
 --- !u!1 &326281633
 GameObject:
   m_ObjectHideFlags: 0
@@ -2921,6 +2949,7 @@ GameObject:
   - component: {fileID: 426974456}
   - component: {fileID: 426974458}
   - component: {fileID: 426974457}
+  - component: {fileID: 426974459}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -3066,6 +3095,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 426974455}
   m_CullTransparentMesh: 0
+--- !u!114 &426974459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 426974455}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88dd0c5c693a9004aab6916a54bef9f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KEYWORD: "\xD6nceki"
 --- !u!1 &442022388
 GameObject:
   m_ObjectHideFlags: 0
@@ -4181,6 +4223,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 87ffd6000132f7f4387dfdfaee0d10f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UserPlanetName: {fileID: 502431383}
+  UserPlanetCordinate: {fileID: 340855842}
 --- !u!114 &515747096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5163,6 +5207,7 @@ GameObject:
   - component: {fileID: 660190195}
   - component: {fileID: 660190197}
   - component: {fileID: 660190196}
+  - component: {fileID: 660190198}
   m_Layer: 0
   m_Name: PanelTitle
   m_TagString: Untagged
@@ -5186,7 +5231,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -250, y: -47.1}
+  m_AnchoredPosition: {x: -240, y: -47.1}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &660190196
@@ -5243,7 +5288,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 258
+  m_textAlignment: 257
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -5308,6 +5353,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 660190194}
   m_CullTransparentMesh: 0
+--- !u!114 &660190198
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 660190194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88dd0c5c693a9004aab6916a54bef9f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KEYWORD: "GalaksiY\xF6netimi"
 --- !u!1 &681327555
 GameObject:
   m_ObjectHideFlags: 0
@@ -6574,7 +6632,7 @@ GameObject:
   - component: {fileID: 853667567}
   - component: {fileID: 853667566}
   m_Layer: 5
-  m_Name: PlayerPlanet
+  m_Name: PlanetCordinate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7537,6 +7595,7 @@ GameObject:
   - component: {fileID: 1108037022}
   - component: {fileID: 1108037024}
   - component: {fileID: 1108037023}
+  - component: {fileID: 1108037025}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -7682,6 +7741,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108037021}
   m_CullTransparentMesh: 0
+--- !u!114 &1108037025
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1108037021}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88dd0c5c693a9004aab6916a54bef9f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KEYWORD: Sonraki
 --- !u!1 &1127894008
 GameObject:
   m_ObjectHideFlags: 0
@@ -9298,6 +9370,7 @@ GameObject:
   - component: {fileID: 1397338478}
   - component: {fileID: 1397338480}
   - component: {fileID: 1397338479}
+  - component: {fileID: 1397338481}
   m_Layer: 0
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -9443,6 +9516,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1397338477}
   m_CullTransparentMesh: 0
+--- !u!114 &1397338481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1397338477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88dd0c5c693a9004aab6916a54bef9f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KEYWORD: Git
 --- !u!1 &1437988460
 GameObject:
   m_ObjectHideFlags: 0
@@ -13602,7 +13688,7 @@ GameObject:
   - component: {fileID: 2095260435}
   - component: {fileID: 2095260434}
   m_Layer: 5
-  m_Name: PlayerName
+  m_Name: PlanetName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

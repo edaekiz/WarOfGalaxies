@@ -59,9 +59,6 @@ public class LoginController : MonoBehaviour
                 // Araştırmanın başlangıç ve bitiş tarihlerini de ayarlıyoruz.
                 CurrentUser.UserResearchProgs.ForEach(e => e.CalculateDates(e.LeftTime));
 
-                // Kullanıcı adını basıyoruz.
-                UsernameField.text = CurrentUser.UserData.Username;
-
                 // Yükleme sayısını 1 arttırıyoruz.
                 LoadingController.LC.IncreaseLoadCount();
 

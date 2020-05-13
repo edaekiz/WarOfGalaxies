@@ -94,6 +94,7 @@
     <Compile Include="Assets\Scripts\ApiModels\ShipyardDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserPlanetBuildingDTO.cs" />
+    <Compile Include="Assets\Scripts\ApiModels\UserPlanetCordinateDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserPlanetDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserResearchesDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\VerifyResourceDTO.cs" />

@@ -214,4 +214,22 @@
   <data name="Tersane" xml:space="preserve">
     <value></value>
   </data>
+  <data name="GalaksiYönetimi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Git" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Galaksi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GSistemi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Önceki" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Sonraki" xml:space="preserve">
+    <value></value>
+  </data>
 </root>

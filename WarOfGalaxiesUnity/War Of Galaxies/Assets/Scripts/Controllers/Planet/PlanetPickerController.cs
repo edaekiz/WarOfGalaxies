@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Extends;
+using Assets.Scripts.Models;
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,8 +40,14 @@ public class PlanetPickerController : BasePanelController
         {
             GameObject planet = Instantiate(PlanetPickerItem, PlanetPickerContent);
 
+            // Kordinat bilgisini alıyoruz.
+            UserPlanetCordinatesDTO cordinateInfo = LoginController.LC.CurrentUser.UserPlanetCordinates.Find(x => x.UserPlanetId == e.UserPlanetId);
+
+            // Kordinata çeviriyoruz.
+            CordinateDTO cordinate = new CordinateDTO(cordinateInfo.GalaxyIndex, cordinateInfo.SolarIndex, cordinateInfo.OrderIndex);
+
             // Gezegen ismini hazırlıyoruz.
-            string planetName = $"{e.PlanetName}{Environment.NewLine}<size=24><color=orange>({e.PlanetCordinate})</color></size>";
+            string planetName = $"{e.PlanetName}{Environment.NewLine}<size=24><color=orange>({CordinateExtends.ToString(cordinate)}) </color></size>";
 
             // Gezegen ismini basıyoruz.
             planet.transform.Find("PlanetName").GetComponent<TMP_Text>().text = planetName;
@@ -55,7 +64,7 @@ public class PlanetPickerController : BasePanelController
     public void LoadSelectedPlanet(int userPlanetId)
     {
         // Tıklanılan gezegeni seçiyoruz.
-        GlobalPlanetController.GPC.CurrentPlanet = LoginController.LC.CurrentUser.UserPlanets.Find(x => x.UserPlanetId == userPlanetId);
+        GlobalPlanetController.GPC.SelectPlanet(LoginController.LC.CurrentUser.UserPlanets.Find(x => x.UserPlanetId == userPlanetId));
 
         // Gezegendeki binaları tekrar yüklüyoruz.
         foreach (BuildingController bc in FindObjectsOfType<BuildingController>())

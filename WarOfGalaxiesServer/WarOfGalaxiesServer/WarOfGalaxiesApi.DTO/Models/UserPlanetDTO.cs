@@ -11,6 +11,14 @@
         public double Boron { get; set; }
     }
 
+    public class UserPlanetCordinatesDTO
+    {
+        public int UserPlanetId { get; set; }
+        public int GalaxyIndex { get; set; }
+        public int SolarIndex { get; set; }
+        public int OrderIndex { get; set; }
+    }
+
     public class VerifyResourceDTO
     {
         public int UserPlanetID { get; set; }

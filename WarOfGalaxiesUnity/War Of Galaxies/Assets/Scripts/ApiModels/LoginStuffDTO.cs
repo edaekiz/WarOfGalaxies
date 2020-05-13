@@ -16,8 +16,10 @@ namespace Assets.Scripts.ApiModels
         public List<UserPlanetShipDTO> UserPlanetShips;
         public List<UserPlanetDefenseProgDTO> UserPlanetDefenseProgs;
         public List<UserPlanetDefenseDTO> UserPlanetDefenses;
+        public List<UserPlanetCordinatesDTO> UserPlanetCordinates;
         public LoginStuffDTO()
         {
+            UserPlanetCordinates = new List<UserPlanetCordinatesDTO>();
             UserPlanets = new List<UserPlanetDTO>();
             UserPlanetsBuildings = new List<UserPlanetBuildingDTO>();
             UserPlanetsBuildingsUpgs = new List<UserPlanetBuildingUpgDTO>();
