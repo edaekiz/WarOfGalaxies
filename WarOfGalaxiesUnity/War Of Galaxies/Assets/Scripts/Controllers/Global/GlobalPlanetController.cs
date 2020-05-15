@@ -43,7 +43,7 @@ public class GlobalPlanetController : MonoBehaviour
         CurrentPlanet = selectedPlanet;
         UserPlanetName.text = CurrentPlanet.PlanetName;
         UserPlanetCordinatesDTO cordinateInfo = LoginController.LC.CurrentUser.UserPlanetCordinates.Find(x => x.UserPlanetId == selectedPlanet.UserPlanetId);
-        UserPlanetCordinate.text = CordinateExtends.ToString(new CordinateDTO(cordinateInfo.GalaxyIndex, cordinateInfo.SolarIndex, cordinateInfo.OrderIndex));
+        UserPlanetCordinate.text = CordinateExtends.ToCordinateString(new CordinateDTO(cordinateInfo.GalaxyIndex, cordinateInfo.SolarIndex, cordinateInfo.OrderIndex));
     }
 
     public void ShowPlanetPickerPanel()

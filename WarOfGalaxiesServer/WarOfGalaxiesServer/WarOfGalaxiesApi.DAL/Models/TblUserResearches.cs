@@ -9,5 +9,8 @@ namespace WarOfGalaxiesApi.DAL.Models
         public int UserId { get; set; }
         public int ResearchId { get; set; }
         public int ResearchLevel { get; set; }
+
+        public virtual TblResearches Research { get; set; }
+        public virtual TblUsers User { get; set; }
     }
 }

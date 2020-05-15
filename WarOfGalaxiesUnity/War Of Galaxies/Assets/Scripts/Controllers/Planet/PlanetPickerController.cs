@@ -47,7 +47,7 @@ public class PlanetPickerController : BasePanelController
             CordinateDTO cordinate = new CordinateDTO(cordinateInfo.GalaxyIndex, cordinateInfo.SolarIndex, cordinateInfo.OrderIndex);
 
             // Gezegen ismini hazırlıyoruz.
-            string planetName = $"{e.PlanetName}{Environment.NewLine}<size=24><color=orange>({CordinateExtends.ToString(cordinate)}) </color></size>";
+            string planetName = $"{e.PlanetName}{Environment.NewLine}<size=24><color=orange>({CordinateExtends.ToCordinateString(cordinate)}) </color></size>";
 
             // Gezegen ismini basıyoruz.
             planet.transform.Find("PlanetName").GetComponent<TMP_Text>().text = planetName;

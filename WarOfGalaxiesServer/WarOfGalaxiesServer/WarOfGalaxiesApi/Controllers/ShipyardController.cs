@@ -100,7 +100,6 @@ namespace WarOfGalaxiesApi.Controllers
                 LastVerifyDate = isThereQueueInShipyard ? null : (DateTime?)base.RequestDate,
                 ShipCount = request.Quantity,
                 ShipId = (int)request.ShipID,
-                UserId = base.DBUser.UserId,
                 UserPlanetId = request.UserPlanetID
             });
 

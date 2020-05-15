@@ -75,8 +75,7 @@ namespace WarOfGalaxiesApi.Controllers
                 BeginDate = base.RequestDate,
                 BuildingId = request.BuildingID,
                 BuildingLevel = nextLevel,
-                EndDate = endDate,
-                UserId = base.DBUser.UserId
+                EndDate = endDate
             });
 
             // Değişiklikleri kayıt ediyoruz.

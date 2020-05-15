@@ -31,6 +31,11 @@ namespace WarOfGalaxiesApi.DTO.Models
         /// </summary>
         public int ShipFuel { get; set; }
 
+        /// <summary>
+        /// Gemi hızı. 1000 demek 1 sonraki sıradaki gezegene 10dk da gidiyor demek.
+        /// </summary>
+        public int ShipSpeed { get; set; }
+
         public ShipDTO()
         {
             KillInOneShot = new List<Tuple<Ships, int>>();

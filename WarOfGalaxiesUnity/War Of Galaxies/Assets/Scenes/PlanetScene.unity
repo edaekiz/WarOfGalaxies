@@ -1060,7 +1060,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281318399
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -1730,7 +1730,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4281318399
+    rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -2920,7 +2920,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &409939489
 Transform:
   m_ObjectHideFlags: 0
@@ -4136,6 +4136,9 @@ MonoBehaviour:
     Prefab: {fileID: 990496957505793030, guid: 3d87754be4190434c9ae6b861e5ca4fb, type: 3}
   - PanelType: 6
     Prefab: {fileID: 9169019502093364654, guid: 117dd970b2ec948439851770e7215ca9,
+      type: 3}
+  - PanelType: 8
+    Prefab: {fileID: 7715971045841992211, guid: ead4a45c120c5d24eb0075b0cc78d512,
       type: 3}
   - PanelType: 7
     Prefab: {fileID: 1898201824284612136, guid: e01a65f56f11dec43a72deb81d18b397,
@@ -6274,7 +6277,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &813495003
 Transform:
   m_ObjectHideFlags: 0

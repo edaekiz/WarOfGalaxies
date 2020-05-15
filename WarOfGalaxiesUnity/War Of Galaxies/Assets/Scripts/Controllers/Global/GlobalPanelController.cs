@@ -15,7 +15,9 @@ public class GlobalPanelController : MonoBehaviour
         ShipyardDetailPanel,
         DefensePanel,
         DefenseDetailPanel,
-        PlanetPickerPanel
+        PlanetPickerPanel,
+        GalaxyPlanetActionPanel,
+        PlanetActionShipSelectionStep
     }
 
     [Serializable]

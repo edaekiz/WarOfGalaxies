@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 
 namespace WarOfGalaxiesApi.DAL.Interfaces
 {
     public interface IGenericRepository<T> where T : class
     {
-        IEnumerable<T> Where(Func<T, bool> predicate);
+        IQueryable<T> Where(Expression<Func<T, bool>> predicate);
         List<T> ToList();
         IEnumerable<T> All();
         T Find(int id);

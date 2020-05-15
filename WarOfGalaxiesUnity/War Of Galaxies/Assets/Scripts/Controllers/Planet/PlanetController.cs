@@ -71,7 +71,8 @@ public class PlanetController : MonoBehaviour
             return;
 
         // Üzerine tıklandığında fokuslanıyoruz.
-        if (PlanetZoomController.PZC.ZoomState != PlanetZoomController.ZoomStates.Zoomed)
-            PlanetZoomController.PZC.BeginZoom(this);
+        //if (PlanetZoomController.PZC.ZoomState != PlanetZoomController.ZoomStates.Zoomed)
+        //    PlanetZoomController.PZC.BeginZoom(this);
+        GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.GalaxyPlanetActionPanel);
     }
 }

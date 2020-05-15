@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using WarOfGalaxiesApi.DAL.Interfaces;
 using WarOfGalaxiesApi.DAL.Models;
 using WarOfGalaxiesApi.DTO.Extends;
@@ -13,16 +15,16 @@ namespace WarOfGalaxiesApi.Controllers.Base
     public class MainController : Controller
     {
         // İstek tarihi.
-        protected DateTime RequestDate;
+        public DateTime RequestDate;
 
         // Form da gelen token keywordü.
         public const string TOKEN_KEY = "TOKEN";
 
         // İsteği yapan kullanıcı.
-        protected TblUsers DBUser;
+        public TblUsers DBUser;
 
         // Kullanıcıya özel veritabanı yöneticisi.
-        protected IUnitOfWork UnitOfWork;
+        public IUnitOfWork UnitOfWork;
 
         public MainController(IUnitOfWork unitOfWork)
         {
@@ -34,7 +36,13 @@ namespace WarOfGalaxiesApi.Controllers.Base
         {
             #region Yetkilendirme
 
-            StringValues token = this.HttpContext.Request.Form[TOKEN_KEY];
+            StringValues token = string.Empty;
+
+#if DEBUG
+            token = "D26FC6FE-F9A7-4FA9-97EE-22EA219CC5F2";
+#else
+                token = this.HttpContext.Request.Form[TOKEN_KEY];
+#endif
 
             // Eğer token yok ise geri dön.
             if (token.Count == 0)
@@ -44,7 +52,7 @@ namespace WarOfGalaxiesApi.Controllers.Base
             }
 
             // Kullanıcıyı buluyoruz.
-            DBUser = this.UnitOfWork.GetRepository<TblUsers>().FirstOrDefault(x => x.UserToken == Guid.Parse(token));
+            DBUser = this.UnitOfWork.GetRepository<TblUsers>().Where(x => x.UserToken == Guid.Parse(token)).FirstOrDefault();
 
             // Kullanıcı yok ise hata dön.
             if (DBUser == null)

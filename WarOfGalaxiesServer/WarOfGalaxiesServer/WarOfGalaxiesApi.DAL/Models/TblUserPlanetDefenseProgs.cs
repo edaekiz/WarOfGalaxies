@@ -7,9 +7,11 @@ namespace WarOfGalaxiesApi.DAL.Models
     {
         public int UserPlanetDefenseProgId { get; set; }
         public int UserPlanetId { get; set; }
-        public int UserId { get; set; }
         public int DefenseId { get; set; }
         public int DefenseCount { get; set; }
         public DateTime? LastVerifyDate { get; set; }
+
+        public virtual TblDefenses Defense { get; set; }
+        public virtual TblUserPlanets UserPlanet { get; set; }
     }
 }

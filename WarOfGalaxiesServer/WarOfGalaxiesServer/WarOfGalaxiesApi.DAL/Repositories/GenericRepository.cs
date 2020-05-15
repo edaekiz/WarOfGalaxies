@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using WarOfGalaxiesApi.DAL.Interfaces;
 using WarOfGalaxiesApi.DAL.Models;
 
@@ -31,7 +32,7 @@ namespace WarOfGalaxiesApi.DAL.Repositories
         /// </summary>
         /// <param name="predicate">Getirilecek olan kayıtların sorgusu.</param>
         /// <returns></returns>
-        public IEnumerable<T> Where(Func<T, bool> predicate)
+        public IQueryable<T> Where(Expression<Func<T, bool>> predicate)
         {
             return _dbContext.Set<T>().Where(predicate);
         }
@@ -43,7 +44,7 @@ namespace WarOfGalaxiesApi.DAL.Repositories
         /// <returns></returns>
         public IEnumerable<T> All()
         {
-            return _dbContext.Set<T>().AsEnumerable();
+            return _dbContext.Set<T>().AsQueryable();
         }
 
         /// <summary>

@@ -68,7 +68,7 @@ namespace WarOfGalaxiesApi.Controllers
                 List<TblUserPlanetBuildingUpgs> userPlanetBuildingUpgs = uow.GetRepository<TblUserPlanetBuildingUpgs>().Where(x => x.UserPlanetId == verifyData.UserPlanetID).ToList();
 
                 // Kullanıcının devam eden araştırmaları.
-                List<TblUserResearchUpgs> userResearchProgs = uow.GetRepository<TblUserResearchUpgs>().Where(x => x.UserId == userPlanet.UserId).ToList();
+                List<TblUserResearchUpgs> userResearchProgs = uow.GetRepository<TblUserResearchUpgs>().Where(x => x.UserPlanetId == userPlanet.UserId).ToList();
 
                 #endregion
 
@@ -140,7 +140,6 @@ namespace WarOfGalaxiesApi.Controllers
                             {
                                 BuildingLevel = 1,
                                 BuildingId = (int)resourceBuilding,
-                                UserId = userPlanet.UserId,
                                 UserPlanetId = userPlanet.UserPlanetId
                             });
                         }
@@ -189,7 +188,6 @@ namespace WarOfGalaxiesApi.Controllers
                                     {
                                         BuildingLevel = 1,
                                         BuildingId = (int)resourceStorageBuilding,
-                                        UserId = userPlanet.UserId,
                                         UserPlanetId = userPlanet.UserPlanetId
                                     });
                                 }
@@ -260,7 +258,6 @@ namespace WarOfGalaxiesApi.Controllers
                         {
                             BuildingLevel = 1,
                             BuildingId = upgrade.BuildingId,
-                            UserId = userPlanet.UserId,
                             UserPlanetId = userPlanet.UserPlanetId
                         });
                     }
@@ -371,7 +368,6 @@ namespace WarOfGalaxiesApi.Controllers
                             ShipId = userPlanetShipProg.ShipId,
                             ShipCount = producedCount,
                             UserPlanetId = verifyData.UserPlanetID,
-                            UserId = userPlanet.UserId,
                         });
 
                         // Kaydı listeye de ekliyoruz ki aynı gemiden tekrar üretim gelirse listeye basalım.
@@ -458,7 +454,6 @@ namespace WarOfGalaxiesApi.Controllers
                             DefenseId = userPlanetDefenseProg.DefenseId,
                             DefenseCount = producedCount,
                             UserPlanetId = verifyData.UserPlanetID,
-                            UserId = userPlanet.UserId,
                         });
 
                         // Kaydı listeye de ekliyoruz ki aynı savunmadan tekrar üretim gelirse listeye basalım.

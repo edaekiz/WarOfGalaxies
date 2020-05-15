@@ -9,6 +9,7 @@ using WarOfGalaxiesApi.DAL.Models;
 using WarOfGalaxiesApi.DTO.Enums;
 using WarOfGalaxiesApi.DTO.Helpers;
 using WarOfGalaxiesApi.DTO.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace WarOfGalaxiesApi.Controllers
 {
@@ -22,12 +23,25 @@ namespace WarOfGalaxiesApi.Controllers
         [Description("Kullanıcının datalarını döner.")]
         public ApiResult Login()
         {
-            // Kullanıcının gezegenlerinin idsi.
-            int[] userPlanetIds = this.UnitOfWork.GetRepository<TblUserPlanets>().Where(x => x.UserId == base.DBUser.UserId).Select(x => x.UserPlanetId).ToArray();
+            TblUsers userAndHisPlanets = base.UnitOfWork.GetRepository<TblUsers>().Where(x => x.UserId == DBUser.UserId)
+                .Include(x => x.TblUserResearches)
+                .Include(x=> x.TblUserResearchUpgs)
+                .Include(x => x.TblUserPlanets)
+                .ThenInclude(x => x.TblUserPlanetBuildings)
+                .Include(x => x.TblUserPlanets)
+                .ThenInclude(x => x.TblUserPlanetBuildingUpgs)
+                .Include(x => x.TblUserPlanets)
+                .ThenInclude(x => x.TblUserPlanetDefenses)
+                .Include(x => x.TblUserPlanets)
+                .ThenInclude(x => x.TblUserPlanetDefenseProgs)
+                .Include(x => x.TblUserPlanets)
+                .ThenInclude(x => x.TblUserPlanetShips)
+                .Include(x => x.TblUserPlanets)
+                .ThenInclude(x => x.TblUserPlanetShipProgs).FirstOrDefault();
 
             // Her bir gezegenin Verify işlemini yapıyoruz.
-            foreach (int userPlanetId in userPlanetIds)
-                VerifyController.VerifyPlanetResources(base.UnitOfWork, new VerifyResourceDTO { UserPlanetID = userPlanetId });
+            foreach (TblUserPlanets userPlanet in userAndHisPlanets.TblUserPlanets)
+                VerifyController.VerifyPlanetResources(base.UnitOfWork, new VerifyResourceDTO { UserPlanetID = userPlanet.UserPlanetId });
 
             // Kullanıcıyı dönüyoruz.
             UserDTO user = new UserDTO
@@ -43,7 +57,7 @@ namespace WarOfGalaxiesApi.Controllers
             };
 
             // Kullanıcının gezegenlerine ait binalar.
-            List<UserPlanetBuildingDTO> userPlanetsBuildings = base.UnitOfWork.GetRepository<TblUserPlanetBuildings>().Where(x => x.UserId == base.DBUser.UserId)
+            List<UserPlanetBuildingDTO> userPlanetsBuildings = userAndHisPlanets.TblUserPlanets.SelectMany(y => y.TblUserPlanetBuildings)
                 .Select(x => new UserPlanetBuildingDTO
                 {
                     BuildingId = x.BuildingId,
@@ -52,7 +66,7 @@ namespace WarOfGalaxiesApi.Controllers
                 }).ToList();
 
             // Kullanıcıya ait bütün yükseltmeler.
-            List<UserPlanetBuildingUpgDTO> userPlanetBuildingUpgs = base.UnitOfWork.GetRepository<TblUserPlanetBuildingUpgs>().Where(x => x.UserId == base.DBUser.UserId)
+            List<UserPlanetBuildingUpgDTO> userPlanetBuildingUpgs = userAndHisPlanets.TblUserPlanets.SelectMany(y => y.TblUserPlanetBuildingUpgs)
                 .Select(x => new UserPlanetBuildingUpgDTO
                 {
                     BuildingId = x.BuildingId,
@@ -63,14 +77,14 @@ namespace WarOfGalaxiesApi.Controllers
                 .ToList();
 
             // Kullanıcının araştırmaları.
-            List<UserResearchesDTO> userResearches = base.UnitOfWork.GetRepository<TblUserResearches>().Where(x => x.UserId == base.DBUser.UserId).Select(x => new UserResearchesDTO
+            List<UserResearchesDTO> userResearches = userAndHisPlanets.TblUserResearches.Select(x => new UserResearchesDTO
             {
                 ResearchID = x.ResearchId,
                 ResearchLevel = x.ResearchLevel
             }).ToList();
 
             // Devam eden araştırmaları alıyoruz.
-            List<UserResearchProgDTO> userResearchProgs = base.UnitOfWork.GetRepository<TblUserResearchUpgs>().Where(x => x.UserId == base.DBUser.UserId).Select(x => new UserResearchProgDTO
+            List<UserResearchProgDTO> userResearchProgs = userAndHisPlanets.TblUserResearchUpgs.Select(x => new UserResearchProgDTO
             {
                 LeftTime = (x.EndDate - base.RequestDate).TotalSeconds,
                 ResearchID = x.ResearchId,
@@ -78,7 +92,7 @@ namespace WarOfGalaxiesApi.Controllers
             }).ToList();
 
             // Kullanıcının gezegenlerini buluyoruz.
-            List<UserPlanetDTO> userPlanets = this.UnitOfWork.GetRepository<TblUserPlanets>().Where(x => x.UserId == base.DBUser.UserId).Select(x => new UserPlanetDTO
+            List<UserPlanetDTO> userPlanets = userAndHisPlanets.TblUserPlanets.Select(x => new UserPlanetDTO
             {
                 UserId = x.UserId,
                 Boron = x.Boron,
@@ -90,8 +104,7 @@ namespace WarOfGalaxiesApi.Controllers
             }).ToList();
 
             // Kullanıcının gemilerini buluyoruz.
-            List<UserPlanetShipDTO> userPlanetShips = this.UnitOfWork.GetRepository<TblUserPlanetShips>()
-                .Where(x => x.UserId == base.DBUser.UserId)
+            List<UserPlanetShipDTO> userPlanetShips = userAndHisPlanets.TblUserPlanets.SelectMany(x => x.TblUserPlanetShips)
                 .Select(x => new UserPlanetShipDTO
                 {
                     ShipCount = x.ShipCount,
@@ -100,8 +113,7 @@ namespace WarOfGalaxiesApi.Controllers
                 }).ToList();
 
             // Kullanıcının gemi üretimlerini buluyoruz.
-            List<UserPlanetShipProgDTO> userPlanetShipProgs = this.UnitOfWork.GetRepository<TblUserPlanetShipProgs>()
-                .Where(x => x.UserId == base.DBUser.UserId)
+            List<UserPlanetShipProgDTO> userPlanetShipProgs = userAndHisPlanets.TblUserPlanets.SelectMany(x => x.TblUserPlanetShipProgs)
                 .Select(x => new UserPlanetShipProgDTO
                 {
                     ShipCount = x.ShipCount,
@@ -121,8 +133,7 @@ namespace WarOfGalaxiesApi.Controllers
             }
 
             // Kullanıcının savunmalarını buluyoruz.
-            List<UserPlanetDefenseDTO> userPlanetDefenses = this.UnitOfWork.GetRepository<TblUserPlanetDefenses>()
-                .Where(x => x.UserId == base.DBUser.UserId)
+            List<UserPlanetDefenseDTO> userPlanetDefenses = userAndHisPlanets.TblUserPlanets.SelectMany(x => x.TblUserPlanetDefenses)
                 .Select(x => new UserPlanetDefenseDTO
                 {
                     DefenseCount = x.DefenseCount,
@@ -131,8 +142,7 @@ namespace WarOfGalaxiesApi.Controllers
                 }).ToList();
 
             // Kullanıcının savunma üretimlerini buluyoruz.
-            List<UserPlanetDefenseProgDTO> userPlanetDefenseProgs = this.UnitOfWork.GetRepository<TblUserPlanetDefenseProgs>()
-                .Where(x => x.UserId == base.DBUser.UserId)
+            List<UserPlanetDefenseProgDTO> userPlanetDefenseProgs = userAndHisPlanets.TblUserPlanets.SelectMany(x => x.TblUserPlanetDefenseProgs)
                 .Select(x => new UserPlanetDefenseProgDTO
                 {
                     DefenseCount = x.DefenseCount,
@@ -187,7 +197,7 @@ namespace WarOfGalaxiesApi.Controllers
             VerifyController.VerifyPlanetResources(base.UnitOfWork, new VerifyResourceDTO { UserPlanetID = verify.UserPlanetID });
 
             // Kullanıcının gezegenlerini buluyoruz.
-            UserPlanetDTO userPlanet = this.UnitOfWork.GetRepository<TblUserPlanets>().Where(x => x.UserId == base.DBUser.UserId)
+            UserPlanetDTO userPlanet = this.UnitOfWork.GetRepository<TblUserPlanets>().Where(x => x.UserId == DBUser.UserId)
                 .Select(x => new UserPlanetDTO
                 {
                     UserId = x.UserId,

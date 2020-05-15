@@ -16,9 +16,14 @@ namespace WarOfGalaxiesApi.DAL.Models
         }
 
         public virtual DbSet<TblBuildings> TblBuildings { get; set; }
+        public virtual DbSet<TblCordinateTypes> TblCordinateTypes { get; set; }
         public virtual DbSet<TblCordinates> TblCordinates { get; set; }
+        public virtual DbSet<TblDefenses> TblDefenses { get; set; }
+        public virtual DbSet<TblFleetActionTypes> TblFleetActionTypes { get; set; }
+        public virtual DbSet<TblFleets> TblFleets { get; set; }
         public virtual DbSet<TblParameters> TblParameters { get; set; }
         public virtual DbSet<TblResearches> TblResearches { get; set; }
+        public virtual DbSet<TblShips> TblShips { get; set; }
         public virtual DbSet<TblUserPlanetBuildingUpgs> TblUserPlanetBuildingUpgs { get; set; }
         public virtual DbSet<TblUserPlanetBuildings> TblUserPlanetBuildings { get; set; }
         public virtual DbSet<TblUserPlanetDefenseProgs> TblUserPlanetDefenseProgs { get; set; }
@@ -56,19 +61,127 @@ namespace WarOfGalaxiesApi.DAL.Models
                     .HasMaxLength(20);
             });
 
+            modelBuilder.Entity<TblCordinateTypes>(entity =>
+            {
+                entity.HasKey(e => e.CordinateTypeId);
+
+                entity.ToTable("tbl_cordinate_types");
+
+                entity.Property(e => e.CordinateTypeId)
+                    .HasColumnName("CordinateTypeID")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.CordinateTypeName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
             modelBuilder.Entity<TblCordinates>(entity =>
             {
                 entity.HasKey(e => e.CordinateId);
 
                 entity.ToTable("tbl_cordinates");
 
+                entity.HasIndex(e => e.UserPlanetId)
+                    .IsUnique();
+
                 entity.HasIndex(e => new { e.GalaxyIndex, e.SolarIndex, e.OrderIndex })
-                    .HasName("IX_tbl_cordinates")
                     .IsUnique();
 
                 entity.Property(e => e.CordinateId).HasColumnName("CordinateID");
 
+                entity.Property(e => e.CordinateTypeId).HasColumnName("CordinateTypeID");
+
                 entity.Property(e => e.UserPlanetId).HasColumnName("UserPlanetID");
+
+                entity.HasOne(d => d.CordinateType)
+                    .WithMany(p => p.TblCordinates)
+                    .HasForeignKey(d => d.CordinateTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_cordinates_tbl_cordinate_types");
+
+                entity.HasOne(d => d.UserPlanet)
+                    .WithOne(p => p.TblCordinates)
+                    .HasForeignKey<TblCordinates>(d => d.UserPlanetId)
+                    .HasConstraintName("FK_tbl_cordinates_tbl_user_planets");
+            });
+
+            modelBuilder.Entity<TblDefenses>(entity =>
+            {
+                entity.HasKey(e => e.DefenseId);
+
+                entity.ToTable("tbl_defenses");
+
+                entity.Property(e => e.DefenseId)
+                    .HasColumnName("DefenseID")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.DefenseName).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TblFleetActionTypes>(entity =>
+            {
+                entity.HasKey(e => e.FleetActionTypeId);
+
+                entity.ToTable("tbl_fleet_action_types");
+
+                entity.Property(e => e.FleetActionTypeId)
+                    .HasColumnName("FleetActionTypeID")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.FleetActionTypeName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TblFleets>(entity =>
+            {
+                entity.HasKey(e => e.FleetId);
+
+                entity.ToTable("tbl_fleets");
+
+                entity.HasIndex(e => e.DestinationUserPlanetId);
+
+                entity.HasIndex(e => e.SenderUserPlanetId);
+
+                entity.Property(e => e.FleetId).HasColumnName("FleetID");
+
+                entity.Property(e => e.BeginDate).HasColumnType("datetime");
+
+                entity.Property(e => e.DestinationCordinate)
+                    .IsRequired()
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.DestinationUserPlanetId).HasColumnName("DestinationUserPlanetID");
+
+                entity.Property(e => e.EndDate).HasColumnType("datetime");
+
+                entity.Property(e => e.FleetActionTypeId).HasColumnName("FleetActionTypeID");
+
+                entity.Property(e => e.FleetData).IsRequired();
+
+                entity.Property(e => e.SenderCordinate)
+                    .IsRequired()
+                    .HasMaxLength(10);
+
+                entity.Property(e => e.SenderUserPlanetId).HasColumnName("SenderUserPlanetID");
+
+                entity.HasOne(d => d.DestinationUserPlanet)
+                    .WithMany(p => p.TblFleetsDestinationUserPlanet)
+                    .HasForeignKey(d => d.DestinationUserPlanetId)
+                    .HasConstraintName("FK_tbl_fleets_tbl_user_planets_destination");
+
+                entity.HasOne(d => d.FleetActionType)
+                    .WithMany(p => p.TblFleets)
+                    .HasForeignKey(d => d.FleetActionTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_fleets_tbl_fleet_action_types");
+
+                entity.HasOne(d => d.SenderUserPlanet)
+                    .WithMany(p => p.TblFleetsSenderUserPlanet)
+                    .HasForeignKey(d => d.SenderUserPlanetId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_fleets_tbl_user_planets_sender");
             });
 
             modelBuilder.Entity<TblParameters>(entity =>
@@ -103,11 +216,31 @@ namespace WarOfGalaxiesApi.DAL.Models
                     .HasMaxLength(30);
             });
 
+            modelBuilder.Entity<TblShips>(entity =>
+            {
+                entity.HasKey(e => e.ShipId);
+
+                entity.ToTable("tbl_ships");
+
+                entity.Property(e => e.ShipId)
+                    .HasColumnName("ShipID")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.ShipName)
+                    .IsRequired()
+                    .HasMaxLength(30);
+            });
+
             modelBuilder.Entity<TblUserPlanetBuildingUpgs>(entity =>
             {
                 entity.HasKey(e => e.UserPlanetBuildingUpgId);
 
                 entity.ToTable("tbl_user_planet_building_upgs");
+
+                entity.HasIndex(e => e.UserPlanetId);
+
+                entity.HasIndex(e => new { e.UserPlanetId, e.BuildingId })
+                    .IsUnique();
 
                 entity.Property(e => e.UserPlanetBuildingUpgId).HasColumnName("UserPlanetBuildingUpgID");
 
@@ -117,9 +250,19 @@ namespace WarOfGalaxiesApi.DAL.Models
 
                 entity.Property(e => e.EndDate).HasColumnType("datetime");
 
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-
                 entity.Property(e => e.UserPlanetId).HasColumnName("UserPlanetID");
+
+                entity.HasOne(d => d.Building)
+                    .WithMany(p => p.TblUserPlanetBuildingUpgs)
+                    .HasForeignKey(d => d.BuildingId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_planet_building_upgs_tbl_buildings");
+
+                entity.HasOne(d => d.UserPlanet)
+                    .WithMany(p => p.TblUserPlanetBuildingUpgs)
+                    .HasForeignKey(d => d.UserPlanetId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_planet_building_upgs_tbl_user_planets");
             });
 
             modelBuilder.Entity<TblUserPlanetBuildings>(entity =>
@@ -128,13 +271,28 @@ namespace WarOfGalaxiesApi.DAL.Models
 
                 entity.ToTable("tbl_user_planet_buildings");
 
+                entity.HasIndex(e => e.UserPlanetId);
+
+                entity.HasIndex(e => new { e.UserPlanetId, e.BuildingId })
+                    .IsUnique();
+
                 entity.Property(e => e.UserPlanetBuildingId).HasColumnName("UserPlanetBuildingID");
 
                 entity.Property(e => e.BuildingId).HasColumnName("BuildingID");
 
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-
                 entity.Property(e => e.UserPlanetId).HasColumnName("UserPlanetID");
+
+                entity.HasOne(d => d.Building)
+                    .WithMany(p => p.TblUserPlanetBuildings)
+                    .HasForeignKey(d => d.BuildingId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_planet_buildings_tbl_buildings");
+
+                entity.HasOne(d => d.UserPlanet)
+                    .WithMany(p => p.TblUserPlanetBuildings)
+                    .HasForeignKey(d => d.UserPlanetId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_planet_buildings_tbl_user_planets");
             });
 
             modelBuilder.Entity<TblUserPlanetDefenseProgs>(entity =>
@@ -143,15 +301,27 @@ namespace WarOfGalaxiesApi.DAL.Models
 
                 entity.ToTable("tbl_user_planet_defense_progs");
 
+                entity.HasIndex(e => e.UserPlanetId);
+
                 entity.Property(e => e.UserPlanetDefenseProgId).HasColumnName("UserPlanetDefenseProgID");
 
                 entity.Property(e => e.DefenseId).HasColumnName("DefenseID");
 
                 entity.Property(e => e.LastVerifyDate).HasColumnType("datetime");
 
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-
                 entity.Property(e => e.UserPlanetId).HasColumnName("UserPlanetID");
+
+                entity.HasOne(d => d.Defense)
+                    .WithMany(p => p.TblUserPlanetDefenseProgs)
+                    .HasForeignKey(d => d.DefenseId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_planet_defense_progs_tbl_defenses");
+
+                entity.HasOne(d => d.UserPlanet)
+                    .WithMany(p => p.TblUserPlanetDefenseProgs)
+                    .HasForeignKey(d => d.UserPlanetId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_planet_defense_progs_tbl_user_planets");
             });
 
             modelBuilder.Entity<TblUserPlanetDefenses>(entity =>
@@ -160,13 +330,28 @@ namespace WarOfGalaxiesApi.DAL.Models
 
                 entity.ToTable("tbl_user_planet_defenses");
 
+                entity.HasIndex(e => e.UserPlanetId);
+
+                entity.HasIndex(e => new { e.UserPlanetId, e.DefenseId })
+                    .IsUnique();
+
                 entity.Property(e => e.UserPlanetDefenseId).HasColumnName("UserPlanetDefenseID");
 
                 entity.Property(e => e.DefenseId).HasColumnName("DefenseID");
 
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-
                 entity.Property(e => e.UserPlanetId).HasColumnName("UserPlanetID");
+
+                entity.HasOne(d => d.Defense)
+                    .WithMany(p => p.TblUserPlanetDefenses)
+                    .HasForeignKey(d => d.DefenseId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_planet_defenses_tbl_defenses");
+
+                entity.HasOne(d => d.UserPlanet)
+                    .WithMany(p => p.TblUserPlanetDefenses)
+                    .HasForeignKey(d => d.UserPlanetId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_planet_defenses_tbl_user_planets");
             });
 
             modelBuilder.Entity<TblUserPlanetShipProgs>(entity =>
@@ -174,8 +359,6 @@ namespace WarOfGalaxiesApi.DAL.Models
                 entity.HasKey(e => e.UserPlanetShipProgId);
 
                 entity.ToTable("tbl_user_planet_ship_progs");
-
-                entity.HasIndex(e => e.UserId);
 
                 entity.HasIndex(e => e.UserPlanetId);
 
@@ -185,9 +368,19 @@ namespace WarOfGalaxiesApi.DAL.Models
 
                 entity.Property(e => e.ShipId).HasColumnName("ShipID");
 
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-
                 entity.Property(e => e.UserPlanetId).HasColumnName("UserPlanetID");
+
+                entity.HasOne(d => d.Ship)
+                    .WithMany(p => p.TblUserPlanetShipProgs)
+                    .HasForeignKey(d => d.ShipId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_planet_ship_progs_tbl_ships");
+
+                entity.HasOne(d => d.UserPlanet)
+                    .WithMany(p => p.TblUserPlanetShipProgs)
+                    .HasForeignKey(d => d.UserPlanetId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_planet_ship_progs_tbl_user_planets");
             });
 
             modelBuilder.Entity<TblUserPlanetShips>(entity =>
@@ -195,8 +388,6 @@ namespace WarOfGalaxiesApi.DAL.Models
                 entity.HasKey(e => e.UserPlanetShipId);
 
                 entity.ToTable("tbl_user_planet_ships");
-
-                entity.HasIndex(e => e.UserId);
 
                 entity.HasIndex(e => e.UserPlanetId);
 
@@ -207,9 +398,19 @@ namespace WarOfGalaxiesApi.DAL.Models
 
                 entity.Property(e => e.ShipId).HasColumnName("ShipID");
 
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-
                 entity.Property(e => e.UserPlanetId).HasColumnName("UserPlanetID");
+
+                entity.HasOne(d => d.Ship)
+                    .WithMany(p => p.TblUserPlanetShips)
+                    .HasForeignKey(d => d.ShipId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_planet_ships_tbl_ships");
+
+                entity.HasOne(d => d.UserPlanet)
+                    .WithMany(p => p.TblUserPlanetShips)
+                    .HasForeignKey(d => d.UserPlanetId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_planet_ships_tbl_user_planets");
             });
 
             modelBuilder.Entity<TblUserPlanets>(entity =>
@@ -227,6 +428,12 @@ namespace WarOfGalaxiesApi.DAL.Models
                     .HasMaxLength(18);
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TblUserPlanets)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_planets_tbl_users");
             });
 
             modelBuilder.Entity<TblUserResearchUpgs>(entity =>
@@ -246,6 +453,24 @@ namespace WarOfGalaxiesApi.DAL.Models
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
                 entity.Property(e => e.UserPlanetId).HasColumnName("UserPlanetID");
+
+                entity.HasOne(d => d.Research)
+                    .WithMany(p => p.TblUserResearchUpgs)
+                    .HasForeignKey(d => d.ResearchId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_research_upgs_tbl_researches");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TblUserResearchUpgs)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_research_upgs_tbl_users");
+
+                entity.HasOne(d => d.UserPlanet)
+                    .WithMany(p => p.TblUserResearchUpgs)
+                    .HasForeignKey(d => d.UserPlanetId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_research_upgs_tbl_user_planets");
             });
 
             modelBuilder.Entity<TblUserResearches>(entity =>
@@ -254,11 +479,25 @@ namespace WarOfGalaxiesApi.DAL.Models
 
                 entity.ToTable("tbl_user_researches");
 
+                entity.HasIndex(e => e.UserId);
+
                 entity.Property(e => e.UserResearchId).HasColumnName("UserResearchID");
 
                 entity.Property(e => e.ResearchId).HasColumnName("ResearchID");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.HasOne(d => d.Research)
+                    .WithMany(p => p.TblUserResearches)
+                    .HasForeignKey(d => d.ResearchId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_researches_tbl_researches");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TblUserResearches)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_researches_tbl_users");
             });
 
             modelBuilder.Entity<TblUsers>(entity =>
@@ -266,6 +505,8 @@ namespace WarOfGalaxiesApi.DAL.Models
                 entity.HasKey(e => e.UserId);
 
                 entity.ToTable("tbl_users");
+
+                entity.HasIndex(e => e.UserToken);
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 

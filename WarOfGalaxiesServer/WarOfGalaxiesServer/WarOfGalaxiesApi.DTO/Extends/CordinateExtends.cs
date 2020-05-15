@@ -1,7 +1,7 @@
-﻿using Assets.Scripts.Models;
-using UnityEngine;
+﻿using System;
+using WarOfGalaxiesApi.DTO.Models;
 
-namespace Assets.Scripts.Extends
+namespace WarOfGalaxiesApi.DTO.Extends
 {
     public static class CordinateExtends
     {
@@ -12,9 +12,6 @@ namespace Assets.Scripts.Extends
             // Kordinat beklediğimiz formatta değil ise hata dön.
             if (strs.Length != 3)
             {
-                // Hatayı basıyoruz ekrana.
-                Debug.LogError("Kordinat parse edilemedi.");
-
                 // Kordinatı boş dönüyoruz.
                 return null;
             }
@@ -33,9 +30,12 @@ namespace Assets.Scripts.Extends
             return $"{cordinate.GalaxyIndex}:{cordinate.SolarIndex}:{cordinate.OrderIndex}";
         }
 
-        public static string ToCordinateString(int galaxyIndex,int solarIndex,int orderIndex)
+        public static string ToCordinateString(int galaxyIndex, int solarIndex, int orderIndex)
         {
             return $"{galaxyIndex}:{solarIndex}:{orderIndex}";
         }
+
+        
+        
     }
 }

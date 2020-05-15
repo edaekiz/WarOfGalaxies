@@ -144,7 +144,8 @@ namespace WarOfGalaxiesApi.Controllers
             new ShipDTO
             {
                 Cost = new ResourcesDTO(1500,750),
-                ShipID = Ships.HafifAvci
+                ShipID = Ships.HafifAvci,
+                ShipSpeed = 10000
             }
         };
 
