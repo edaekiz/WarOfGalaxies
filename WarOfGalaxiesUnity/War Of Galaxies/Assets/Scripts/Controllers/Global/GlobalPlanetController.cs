@@ -29,6 +29,8 @@ public class GlobalPlanetController : MonoBehaviour
     /// </summary>
     public UserPlanetDTO CurrentPlanet { get; set; }
 
+    public CordinateDTO CurrentPlanetCordinate { get; set; }
+
     // Start is called before the first frame update
     IEnumerator Start()
     {
@@ -43,7 +45,8 @@ public class GlobalPlanetController : MonoBehaviour
         CurrentPlanet = selectedPlanet;
         UserPlanetName.text = CurrentPlanet.PlanetName;
         UserPlanetCordinatesDTO cordinateInfo = LoginController.LC.CurrentUser.UserPlanetCordinates.Find(x => x.UserPlanetId == selectedPlanet.UserPlanetId);
-        UserPlanetCordinate.text = CordinateExtends.ToCordinateString(new CordinateDTO(cordinateInfo.GalaxyIndex, cordinateInfo.SolarIndex, cordinateInfo.OrderIndex));
+        CurrentPlanetCordinate = new CordinateDTO(cordinateInfo.GalaxyIndex, cordinateInfo.SolarIndex, cordinateInfo.OrderIndex);
+        UserPlanetCordinate.text = CordinateExtends.ToCordinateString(CurrentPlanetCordinate);
     }
 
     public void ShowPlanetPickerPanel()

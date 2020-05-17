@@ -9,17 +9,21 @@ public class PlanetController : MonoBehaviour
     [Header("Yörüngesindeki güneş.")]
     public SunController Sun;
 
-    [Header("Gösterdiği gezegen bilgisi.")]
-    public UserPlanetDTO SolarPlanetInfo;
-
-    [Header("Gezegenin sistemdeki kordinatları.")]
-    public CordinateDTO CordinateInfo;
-
     [Header("Güneşin etrafındaki dönüş hızı.")]
     public float RotateSunsAroundSpeed = 5;
 
     [Header("Gezegenin kullanıcı bilgisi.")]
     public GameObject UserPlanetInfo;
+
+    /// <summary>
+    /// Tutulan gezegene ait bilgiler. Var ise.
+    /// </summary>
+    public UserPlanetDTO SolarPlanetInfo { get; set; }
+
+    /// <summary>
+    /// Kordinat bilgisi.
+    /// </summary>
+    public CordinateDTO CordinateInfo { get; set; }
 
     public void LoadPlanetInfo(SunController sun, UserPlanetDTO solarPlanet, CordinateDTO cordinate)
     {
@@ -70,9 +74,18 @@ public class PlanetController : MonoBehaviour
         if (EventSystem.current.currentSelectedGameObject != null)
             return;
 
+        // Eğer giriş yapılmadıysa geri dön.
+        if (!LoginController.LC.IsLoggedIn)
+            return;
+
         // Üzerine tıklandığında fokuslanıyoruz.
         //if (PlanetZoomController.PZC.ZoomState != PlanetZoomController.ZoomStates.Zoomed)
         //    PlanetZoomController.PZC.BeginZoom(this);
-        GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.GalaxyPlanetActionPanel);
+
+        //Paneli açıyoruz.
+        GameObject actionPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.GalaxyPlanetActionPanel);
+
+        // Filo hareketini belirliyoruz.
+        actionPanel.GetComponent<PlanetActionController>().Load(this.SolarPlanetInfo, this.CordinateInfo);
     }
 }

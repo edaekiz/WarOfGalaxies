@@ -75,8 +75,10 @@ public class GalaxyController : MonoBehaviour
         // Kordinattaki verileri alıyoruz.
         StartCoroutine(ApiService.API.Post("GetCordinateDetails", new GalaxyInfoRequestDTO { GalaxyIndex = galaxyIndex, SolarIndex = solarIndex }, (ApiResult result) =>
         {
+            if (result.IsSuccess != true)
+                return;
             // Loading ekranını açıyoruz.
-            LoadingController.LC.HideLoading();
+            LoadingController.LC.CloseLoading();
 
             // Galaksi bilgisini alıyoruz.
             SolarSystem = result.GetData<GalaxyInfoResponseDTO>();

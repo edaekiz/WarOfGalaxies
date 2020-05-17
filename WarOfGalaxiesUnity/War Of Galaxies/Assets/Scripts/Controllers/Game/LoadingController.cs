@@ -50,7 +50,7 @@ public class LoadingController : MonoBehaviour
         LoadingCanvas.SetActive(true);
     }
 
-    public void HideLoading()
+    public void CloseLoading()
     {
         LoadingCanvas.SetActive(false);
     }

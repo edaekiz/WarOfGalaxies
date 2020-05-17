@@ -143,8 +143,11 @@ namespace Assets.Scripts.Data
         {
             new ShipDTO
             {
-                Cost = new ResourcesDTO(1500,750),
-                ShipID = Ships.HafifAvci
+                Cost = new ResourcesDTO(3000,1000),
+                ShipID = Ships.HafifAvci,
+                ShipSpeed = 12500,
+                BaseFuelt = 20,
+                CargoCapacity = 50
             }
         };
 
@@ -154,7 +157,7 @@ namespace Assets.Scripts.Data
         /// <param name="ship">Hesaplanacak gemi.</param>
         /// <param name="shipyardLevel">Hesaplanacak liman seviyesi.</param>
         /// <returns></returns>
-        public static double CalculateShipCountdown(Ships ship,int shipyardLevel)
+        public static double CalculateShipCountdown(Ships ship, int shipyardLevel)
         {
             ShipDTO shipInfo = ShipData.Find(x => x.ShipID == ship);
             return ((shipInfo.Cost.Metal + shipInfo.Cost.Crystal) / (2500 * (10 + shipyardLevel))) * 3600;

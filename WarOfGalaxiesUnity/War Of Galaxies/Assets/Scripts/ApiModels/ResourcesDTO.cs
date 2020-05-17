@@ -46,5 +46,8 @@ namespace Assets.Scripts.ApiModels
         }
 
         public static ResourcesDTO ResourceZero { get => new ResourcesDTO(0, 0, 0); }
+
+        public double Sum() => this.Metal + this.Crystal + this.Boron;
+
     }
 }

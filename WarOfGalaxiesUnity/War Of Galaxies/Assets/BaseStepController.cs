@@ -1,7 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class BaseStepController : MonoBehaviour
 {
+    public class StepEventArgs : EventArgs
+    {
+        public int CurrentStep;
+    }
     [Header("Steplerin bulunduğu transform.")]
     public Transform StepParent;
 
@@ -16,6 +21,7 @@ public class BaseStepController : MonoBehaviour
     private RectTransform[] steps;
     private int offsetValue;
 
+    public EventHandler<StepEventArgs> OnStepChanged;
 
     // Start is called before the first frame update
     protected virtual void Start()
@@ -87,6 +93,9 @@ public class BaseStepController : MonoBehaviour
 
         // Sonraki adıma geçişi başlatıyoruz.
         offsetValue = (int)steps[CurrentStep - 1].sizeDelta.x;
+
+        if (OnStepChanged != null)
+            OnStepChanged.Invoke(this, new StepEventArgs { CurrentStep = CurrentStep });
     }
 
     public void GoToPrevStep()
@@ -100,6 +109,10 @@ public class BaseStepController : MonoBehaviour
 
         // Önceki adıma geçişi başlatıyoruz.
         offsetValue = (int)-steps[CurrentStep - 1].sizeDelta.x;
+
+        if (OnStepChanged != null)
+            OnStepChanged.Invoke(this, new StepEventArgs { CurrentStep = CurrentStep });
     }
+
 
 }

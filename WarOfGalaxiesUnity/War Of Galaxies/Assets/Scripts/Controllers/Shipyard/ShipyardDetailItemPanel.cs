@@ -57,10 +57,10 @@ public class ShipyardDetailItemPanel : BasePanelController
         string quantity = currentShipCount == null ? "0" : currentShipCount.ShipCount.ToString();
 
         // Eğer yok ise gemisi 0 var ise miktarı basıyoruz.
-        ItemNameWithQuantity.text = $"{base.GetLanguageText($"G{(int)ship}")} <color=orange>({quantity})</color>";
+        ItemNameWithQuantity.text = $"{base.GetLanguageText($"S{(int)ship}")} <color=orange>({quantity})</color>";
 
         // Açıklamasını basıyoruz.
-        ItemDescription.text = base.GetLanguageText($"GD{(int)ship}");
+        ItemDescription.text = base.GetLanguageText($"SD{(int)ship}");
 
         // Geminin resmini basıyoruz.
         ItemImage.sprite = ShipyardController.SC.ShipWithImages.Find(x => x.Ship == ship).ShipImage;

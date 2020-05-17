@@ -9,21 +9,16 @@ public class LanguageItemController : MonoBehaviour
     [Header("Eşleşen dil metnini bulmak için kullanılır.")]
     public string KEYWORD;
 
+    [Header("Metnin sonuna yerleştirilecek olan.")]
+    public string Append;
+
+    [Header("Metnin başına yerleştirlecek olan.")]
+    public string Prepend;
+
     IEnumerator Start()
     {
         text = GetComponent<TMP_Text>();
         yield return new WaitUntil(() => LanguageController.LC.IsInitialized == true);
-        text.text = LanguageController.LC.GetText(KEYWORD);
-    }
-
-    /// <summary>
-    /// Şuan ki text değerini verir.
-    /// </summary>
-    /// <returns></returns>
-    public string GetCurrentText()
-    {
-        if (text == null)
-            text = GetComponent<TMP_Text>();
-        return text.text;
+        text.text = $"{Prepend}{LanguageController.LC.GetText(KEYWORD)}{Append}";
     }
 }

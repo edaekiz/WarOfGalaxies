@@ -291,7 +291,6 @@ public class BasePanelController : BaseLanguageBehaviour
 
     protected virtual void OnTransionCompleted(bool isClosed)
     {
-
     }
 
     /// <summary>

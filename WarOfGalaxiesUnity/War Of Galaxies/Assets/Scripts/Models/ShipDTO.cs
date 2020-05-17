@@ -30,9 +30,14 @@ namespace Assets.Scripts.Models
         public int CargoCapacity;
 
         /// <summary>
-        /// Geminin yakıtı.
+        /// Gemi hızı. 1000 demek 1 sonraki sıradaki gezegene 10dk da gidiyor demek.
         /// </summary>
-        public int ShipFuel;
+        public int ShipSpeed;
+
+        /// <summary>
+        /// Temel yakıt değeri.
+        /// </summary>
+        public int BaseFuelt;
 
         public ShipDTO()
         {

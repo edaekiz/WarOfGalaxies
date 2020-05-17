@@ -17,6 +17,9 @@ namespace WarOfGalaxiesApi.DTO.Models
         public bool IsReturning { get; set; }
         public string SenderPlanetName { get; set; }
         public string DestinationPlanetName { get; set; }
+        public double CarriedMetal { get; set; }
+        public double CarriedCrystal { get; set; }
+        public double CarriedBoron { get; set; }
     }
 
     public class GetLastFleetsDTO
@@ -26,15 +29,15 @@ namespace WarOfGalaxiesApi.DTO.Models
 
     public class SendFleetFromPlanetDTO
     {
-        public int UserPlanetId { get; set; }
+        public int SenderUserPlanetId { get; set; }
         public string Ships { get; set; }
-        public int GalaxyIndex { get; set; }
-        public int SolarIndex { get; set; }
-        public int OrderIndex { get; set; }
+        public int DestinationGalaxyIndex { get; set; }
+        public int DestinationSolarIndex { get; set; }
+        public int DestinationOrderIndex { get; set; }
         public int FleetType { get; set; }
-        public double Metal { get; set; }
-        public double Crystal { get; set; }
-        public double Boron { get; set; }
+        public double CarriedMetal { get; set; }
+        public double CarriedCrystal { get; set; }
+        public double CarriedBoron { get; set; }
+        public float FleetSpeed { get; set; }
     }
-
 }

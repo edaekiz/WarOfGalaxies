@@ -175,10 +175,10 @@
   <data name="SeviyeParantez" xml:space="preserve">
     <value></value>
   </data>
-  <data name="G1" xml:space="preserve">
+  <data name="S1" xml:space="preserve">
     <value></value>
   </data>
-  <data name="GD1" xml:space="preserve">
+  <data name="SD1" xml:space="preserve">
     <value></value>
   </data>
   <data name="KaynakDetay" xml:space="preserve">
@@ -230,6 +230,108 @@
     <value></value>
   </data>
   <data name="Sonraki" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Hedef" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FT1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FT2" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FT3" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FT4" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FT5" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="KeşfedilmemişGezegen" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Casusluk" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Saldır" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Nakliye" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Dur" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Sömürgeleştir" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="HareketSeçiniz" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Tamam" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GönderilecekGemiler" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GönderilebilirGemiler" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="DevamEt" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="HiçGemiSeçilmedi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GezegendeGemiYok" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Geri" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Gönder" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UçuşSüresi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="VarışTarihi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="DönüşTarihi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="YakıtTüketimi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Bor" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Metal" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Kristal" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TaşınacakKaynaklar" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FiloHızı" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Hepsi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Sıfırla" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Temizle" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FiloHareketleri" xml:space="preserve">
     <value></value>
   </data>
 </root>

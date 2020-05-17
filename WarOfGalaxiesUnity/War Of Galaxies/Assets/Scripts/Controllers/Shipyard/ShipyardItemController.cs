@@ -41,7 +41,7 @@ public class ShipyardItemController : BaseLanguageBehaviour
         CurrentShip = ship;
 
         // Gemi ismi.
-        ShipName.text = base.GetLanguageText($"G{(int)ship}");
+        ShipName.text = base.GetLanguageText($"S{(int)ship}");
 
         // Aktif gemi miktarı.
         UserPlanetShipDTO currentShipCount = LoginController.LC.CurrentUser.UserPlanetShips.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.ShipId == ship);

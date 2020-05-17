@@ -38,7 +38,7 @@ public class ShipyardQueueController : BaseLanguageBehaviour
             go.transform.Find("ItemImage").GetComponent<Image>().sprite = ShipyardController.SC.ShipWithImages.Find(x => x.Ship == queue.ShipId).ShipImage;
 
             // İsmini basıyoruz.
-            go.transform.Find("ItemName").GetComponent<TMP_Text>().text = base.GetLanguageText($"G{queue.ShipId}");
+            go.transform.Find("ItemName").GetComponent<TMP_Text>().text = base.GetLanguageText($"S{queue.ShipId}");
 
             // Miktarı basıyoruz.
             go.transform.Find("ItemCount").GetComponent<TMP_Text>().text = queue.ShipCount.ToString();

@@ -195,10 +195,10 @@
   <data name="SeviyeParantez" xml:space="preserve">
     <value>Seviye({0})</value>
   </data>
-  <data name="G1" xml:space="preserve">
+  <data name="S1" xml:space="preserve">
     <value>Hafif Avcı</value>
   </data>
-  <data name="GD1" xml:space="preserve">
+  <data name="SD1" xml:space="preserve">
     <value>Hafif Avcı açıklaması</value>
   </data>
   <data name="KaynakDetay" xml:space="preserve">
@@ -251,5 +251,107 @@
   </data>
   <data name="Sonraki" xml:space="preserve">
     <value>Sonraki</value>
+  </data>
+  <data name="Hedef" xml:space="preserve">
+    <value>Hedef</value>
+  </data>
+  <data name="FT1" xml:space="preserve">
+    <value>Casusluk</value>
+  </data>
+  <data name="FT2" xml:space="preserve">
+    <value>Saldır</value>
+  </data>
+  <data name="FT3" xml:space="preserve">
+    <value>Nakliye</value>
+  </data>
+  <data name="FT4" xml:space="preserve">
+    <value>Konuşlandır</value>
+  </data>
+  <data name="FT5" xml:space="preserve">
+    <value>Sömürgeleştir</value>
+  </data>
+  <data name="KeşfedilmemişGezegen" xml:space="preserve">
+    <value>Keşfedilmemiş Gezegen</value>
+  </data>
+  <data name="Casusluk" xml:space="preserve">
+    <value>Casusluk</value>
+  </data>
+  <data name="Saldır" xml:space="preserve">
+    <value>Saldır</value>
+  </data>
+  <data name="Nakliye" xml:space="preserve">
+    <value>Nakliye</value>
+  </data>
+  <data name="Dur" xml:space="preserve">
+    <value>Dur</value>
+  </data>
+  <data name="Sömürgeleştir" xml:space="preserve">
+    <value>Sömürgeleştir</value>
+  </data>
+  <data name="HareketSeçiniz" xml:space="preserve">
+    <value>Hareket Seçiniz</value>
+  </data>
+  <data name="Tamam" xml:space="preserve">
+    <value>Tamam</value>
+  </data>
+  <data name="GönderilecekGemiler" xml:space="preserve">
+    <value>Gönderilecek gemiler:</value>
+  </data>
+  <data name="GönderilebilirGemiler" xml:space="preserve">
+    <value>Gönderilebilir gemiler:</value>
+  </data>
+  <data name="DevamEt" xml:space="preserve">
+    <value>Devam Et</value>
+  </data>
+  <data name="HiçGemiSeçilmedi" xml:space="preserve">
+    <value>Henüz bir gemi seçilmedi.</value>
+  </data>
+  <data name="GezegendeGemiYok" xml:space="preserve">
+    <value>Gezegende gemi bulunmuyor.</value>
+  </data>
+  <data name="Geri" xml:space="preserve">
+    <value>Geri</value>
+  </data>
+  <data name="Gönder" xml:space="preserve">
+    <value>Gönder</value>
+  </data>
+  <data name="UçuşSüresi" xml:space="preserve">
+    <value>Uçuş Süresi</value>
+  </data>
+  <data name="VarışTarihi" xml:space="preserve">
+    <value>Varış Tarihi</value>
+  </data>
+  <data name="DönüşTarihi" xml:space="preserve">
+    <value>Dönüş Tarihi</value>
+  </data>
+  <data name="YakıtTüketimi" xml:space="preserve">
+    <value>Yakıt Tüketimi</value>
+  </data>
+  <data name="Bor" xml:space="preserve">
+    <value>Bor</value>
+  </data>
+  <data name="Metal" xml:space="preserve">
+    <value>Metal</value>
+  </data>
+  <data name="Kristal" xml:space="preserve">
+    <value>Kristal</value>
+  </data>
+  <data name="TaşınacakKaynaklar" xml:space="preserve">
+    <value>Taşınacak Kaynaklar</value>
+  </data>
+  <data name="FiloHızı" xml:space="preserve">
+    <value>Filo Hızı</value>
+  </data>
+  <data name="Hepsi" xml:space="preserve">
+    <value>Hepsi</value>
+  </data>
+  <data name="Sıfırla" xml:space="preserve">
+    <value>Sıfırla</value>
+  </data>
+  <data name="Temizle" xml:space="preserve">
+    <value>Temizle</value>
+  </data>
+  <data name="FiloHareketleri" xml:space="preserve">
+    <value>Filo Hareketleri</value>
   </data>
 </root>

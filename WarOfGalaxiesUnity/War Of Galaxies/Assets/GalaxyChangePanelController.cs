@@ -93,14 +93,14 @@ public class GalaxyChangePanelController : MonoBehaviour
         bool isDecrased = false;
 
         // Eğer 500 den büyük olduysa başa dönüyoruz ancak bir sonraki galaksiye geçiyoruz.
-        if (currentSolarIndex > 500)
+        if (currentSolarIndex > 100)
         {
             currentSolarIndex = 1;
             isIncreased = true;
         }
         else if (currentSolarIndex < 1)
         {
-            currentSolarIndex = 500;
+            currentSolarIndex = 100;
             isDecrased = true;
         }
 
@@ -120,8 +120,8 @@ public class GalaxyChangePanelController : MonoBehaviour
             currentGalaxyIndex--;
 
         // Galaksi indeksinin sınırlarını kontrol ediyoruz.
-        if (currentGalaxyIndex >= 6)
-            currentGalaxyIndex = 5;
+        if (currentGalaxyIndex > 1)
+            currentGalaxyIndex = 1;
         else if (currentGalaxyIndex < 1)
             currentGalaxyIndex = 1;
 

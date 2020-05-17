@@ -32,5 +32,7 @@ namespace Assets.Scripts.Models
             this.OrderIndex = _orderIndex;
         }
 
+        public bool Equals(int _galaxyIndex, int _solarIndex, int _orderIndex) => GalaxyIndex == _galaxyIndex && SolarIndex == _solarIndex && OrderIndex == _orderIndex;
+
     }
 }
