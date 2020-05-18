@@ -50,16 +50,52 @@ public class FleetPanelItemController : BaseLanguageBehaviour
     /// </summary>
     public FleetDTO FleetInfo { get; set; }
 
+    public DateTime GetHalfOfFlyDate
+    {
+        get
+        {
+            // Uçuşa başlanılan tarih.
+            DateTime fleetBeginFlyDate = FleetInfo.FleetLoadDate.AddSeconds(-FleetInfo.BeginPassedTime);
+
+            // Filo hareketinin tamamlanmasına kalan süre.
+            DateTime fleetEndFlyDate = FleetInfo.FleetLoadDate.AddSeconds(FleetInfo.EndLeftTime);
+
+            // Toplam yolculuk süresi saniye cinsinden.
+            double totalPathSeconds = (fleetEndFlyDate - fleetBeginFlyDate).TotalSeconds;
+
+            // Toplam yolculuk süresi.
+            double haflOfPath = totalPathSeconds / 2;
+
+            return fleetBeginFlyDate.AddSeconds(haflOfPath);
+        }
+    }
+
+    public DateTime GetEndFlyDate
+    {
+        get
+        {
+            return FleetInfo.FleetLoadDate.AddSeconds(FleetInfo.EndLeftTime);
+        }
+    }
+
+    public DateTime GetBeginFlyDate
+    {
+        get
+        {
+            return FleetInfo.FleetLoadDate.AddSeconds(-FleetInfo.BeginPassedTime);
+        }
+    }
+
     public IEnumerator LoadData(FleetDTO fleetInfo)
     {
         // Şuanki tarih.
         DateTime currentDate = DateTime.Now;
 
         // Uçuşa başlanılan tarih.
-        DateTime fleetBeginFlyDate = fleetInfo.FleetLoadDate.AddSeconds(-fleetInfo.BeginPassedTime);
+        DateTime fleetBeginFlyDate = GetBeginFlyDate;
 
         // Filo hareketinin tamamlanmasına kalan süre.
-        DateTime fleetEndFlyDate = fleetInfo.FleetLoadDate.AddSeconds(fleetInfo.EndLeftTime);
+        DateTime fleetEndFlyDate = GetEndFlyDate;
 
         // Toplam yolculuk süresi saniye cinsinden.
         double totalPathSeconds = (fleetEndFlyDate - fleetBeginFlyDate).TotalSeconds;
@@ -68,13 +104,17 @@ public class FleetPanelItemController : BaseLanguageBehaviour
         double haflOfPath = totalPathSeconds / 2;
 
         // Yolun yarısı.
-        DateTime halfOfFlyDate = fleetBeginFlyDate.AddSeconds(haflOfPath);
+        DateTime halfOfFlyDate = GetHalfOfFlyDate;
 
         // Filo bilgisini tutuyoruz.
         FleetInfo = fleetInfo;
 
         // Filo hareketini basıyoruz.
-        TXT_ActionType.text = base.GetLanguageText($"FT{(int)fleetInfo.FleetActionTypeId}");
+        TXT_ActionType.text = $"{base.GetLanguageText($"FT{(int)fleetInfo.FleetActionTypeId}")}";
+
+        // Eğer dönüyor ise dönüş.
+        if (currentDate > halfOfFlyDate)
+            TXT_ActionType.text += $" (<color=green>{base.GetLanguageText("Dönüyor")}</color>)";
 
         // Gönderenin adını basıyoruz.
         TXT_SenderPlanetName.text = fleetInfo.SenderPlanetName;

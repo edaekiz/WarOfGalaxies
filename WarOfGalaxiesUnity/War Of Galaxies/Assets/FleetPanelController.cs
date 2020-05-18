@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.ApiModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -47,9 +48,9 @@ public class FleetPanelController : BasePanelController
         {
             // Listede var ise buluyoruz.
             bool isAlreadyInListFleet = Fleets.Any(x => x.FleetInfo.FleetId == fleet.FleetId);
-            
+
             // Eğer yok ise oluşturuyoruz.
-            if(!isAlreadyInListFleet)
+            if (!isAlreadyInListFleet)
             {
                 // Olmayan filoyu ekliyoruz.
                 GameObject newFleet = Instantiate(FleetItem, FleetItemContent.content);
@@ -60,10 +61,22 @@ public class FleetPanelController : BasePanelController
                 // Listeye filomuzu ekliyoruz.
                 Fleets.Add(fpic);
 
+                // Filo bilgisini de veriyoruz.
+                fpic.FleetInfo = fleet;
+
                 // Ve hesaplamalara başlıyoruz.
                 fpic.StartCoroutine(fpic.LoadData(fleet));
             }
         }
+
+        int index = 0;
+        var currentDate = DateTime.Now;
+        foreach (FleetPanelItemController fleet in Fleets.OrderBy(x => x.GetHalfOfFlyDate < currentDate ? x.GetEndFlyDate : x.GetHalfOfFlyDate))
+        {
+            fleet.transform.SetSiblingIndex(index);
+            index++;
+        }
+
     }
 
 }

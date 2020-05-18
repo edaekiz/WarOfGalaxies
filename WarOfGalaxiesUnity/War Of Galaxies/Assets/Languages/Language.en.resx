@@ -360,4 +360,7 @@
   <data name="TekYön" xml:space="preserve">
     <value>One Way</value>
   </data>
+  <data name="Dönüyor" xml:space="preserve">
+    <value>Return</value>
+  </data>
 </root>
