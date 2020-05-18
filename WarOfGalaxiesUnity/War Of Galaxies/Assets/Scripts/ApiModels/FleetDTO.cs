@@ -11,9 +11,11 @@ namespace Assets.Scripts.ApiModels
         public string SenderCordinate;
         public int SenderUserId;
         public int SenderUserPlanetId;
+        public int SenderPlanetTypeId;
         public int DestinationUserId;
         public int DestinationUserPlanetId;
         public string DestinationCordinate;
+        public int DestinationPlanetTypeId;
         public double BeginPassedTime;
         public double EndLeftTime;
         public bool IsReturning;
@@ -22,6 +24,11 @@ namespace Assets.Scripts.ApiModels
         public double CarriedMetal;
         public double CarriedCrystal;
         public double CarriedBoron;
+        public DateTime FleetLoadDate;
+        public FleetDTO()
+        {
+            FleetLoadDate = DateTime.Now;
+        }
     }
 
     [Serializable]

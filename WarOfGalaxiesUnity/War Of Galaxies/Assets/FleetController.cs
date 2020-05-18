@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using static GlobalPanelController;
 
 public class FleetController : MonoBehaviour
 {
@@ -31,19 +32,27 @@ public class FleetController : MonoBehaviour
 
     public void GetLatestFleets()
     {
-        ApiService.API.Post("GetLastFleets", new GetLastFleetsDTO { LastFleetId = Fleets.Select(x => x.FleetId).DefaultIfEmpty(0).Max() }, (ApiResult response) =>
+        StartCoroutine(ApiService.API.Post("GetLastFleets", new GetLastFleetsDTO { LastFleetId = Fleets.Select(x => x.FleetId).DefaultIfEmpty(0).Max() }, (ApiResult response) =>
          {
 
+             // Yanıt başarılı ise.
              if (response.IsSuccess)
              {
-                 var newFleets = response.GetDataList<FleetDTO>();
+                 // Yeni gelen filo bilgilerini alıyoruz.
+                 List<FleetDTO> newFleets = response.GetDataList<FleetDTO>();
 
+                 // Eğer yeni filo var ise listeye ekliyoruz.
                  if (newFleets.Count > 0)
                  {
+                     // Listeye dahil ediyoruz.
                      Fleets.AddRange(newFleets);
+
+                     // Eğer panel açık ise paneli de yeniliyoruz.
+                     if (FleetPanelController.FPC != null)
+                         FleetPanelController.FPC.RefreshPanelItems();
                  }
              }
-         });
+         }));
     }
 
     public void RefreshFleetList()

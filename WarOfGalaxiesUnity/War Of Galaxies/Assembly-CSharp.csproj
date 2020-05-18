@@ -86,6 +86,7 @@
     <Compile Include="Assets\ExternalAssets\Hi-Tech Buttons and Panels\Resources\Scripts\JustRotate.cs" />
     <Compile Include="Assets\FleetController.cs" />
     <Compile Include="Assets\FleetPanelController.cs" />
+    <Compile Include="Assets\FleetPanelItemController.cs" />
     <Compile Include="Assets\GalaxyChangePanelController.cs" />
     <Compile Include="Assets\Languages\Language.Designer.cs" />
     <Compile Include="Assets\PlanetActionController.cs" />

@@ -354,4 +354,7 @@
   <data name="FiloHareketleri" xml:space="preserve">
     <value>Filo Hareketleri</value>
   </data>
+  <data name="Tamamlandı" xml:space="preserve">
+    <value>Tamamlandı</value>
+  </data>
 </root>

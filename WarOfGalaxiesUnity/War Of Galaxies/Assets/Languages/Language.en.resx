@@ -354,4 +354,7 @@
   <data name="FiloHareketleri" xml:space="preserve">
     <value>Active Fleets</value>
   </data>
+  <data name="Tamamlandı" xml:space="preserve">
+    <value>Completed</value>
+  </data>
 </root>

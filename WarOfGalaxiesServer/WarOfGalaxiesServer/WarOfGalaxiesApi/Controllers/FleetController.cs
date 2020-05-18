@@ -45,7 +45,9 @@ namespace WarOfGalaxiesApi.Controllers
                     EndLeftTime = (x.EndDate - RequestDate).TotalSeconds,
                     CarriedBoron = x.CarriedBoron,
                     CarriedCrystal = x.CarriedCrystal,
-                    CarriedMetal = x.CarriedMetal
+                    CarriedMetal = x.CarriedMetal,
+                    DestinationPlanetTypeId = x.DestinationUserPlanetId.HasValue ? x.DestinationUserPlanet.PlanetType : 0,
+                    SenderPlanetTypeId = x.SenderUserPlanet.PlanetType
                 }).ToList();
 
             return ResponseHelper.GetSuccess(lastFleets);
