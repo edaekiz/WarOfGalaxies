@@ -248,6 +248,9 @@ public class PlanetActionController : BasePanelController
         StartCoroutine(OnStepSecond());
     }
 
+    /// <summary>
+    /// Filoyu yola çıkarır.
+    /// </summary>
     public void SendFleet()
     {
         string shipData = FleetExtends.ShipDataToStringData(ShipsToSend.Select(x => new Tuple<Ships, int>(x.UserPlanetShip.ShipId, x.Quantity)));
@@ -255,7 +258,7 @@ public class PlanetActionController : BasePanelController
         // Uçuş bilgileri.
         SendFleetFromPlanetDTO requestData = new SendFleetFromPlanetDTO
         {
-            SenderUserPlanetId= GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId,
+            SenderUserPlanetId = GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId,
             CarriedBoron = carriedResources.Boron,
             CarriedCrystal = carriedResources.Crystal,
             CarriedMetal = carriedResources.Metal,
@@ -277,6 +280,12 @@ public class PlanetActionController : BasePanelController
             {
                 // Yükleniyor paneli kapatıyoruz.
                 LoadingController.LC.CloseLoading();
+
+                // Filoları yeniliyoruz.
+                FleetController.FC.GetLatestFleets();
+
+                // Gemileri envanterden siliyoruz.
+                ShipsToSend.ForEach(e => ShipyardController.SC.DestroyShip(e.UserPlanetShip.ShipId, e.Quantity));
 
                 // Paneli artık kapatabiliriz.
                 base.ClosePanel();
@@ -326,7 +335,7 @@ public class PlanetActionController : BasePanelController
         double flightTime = FleetExtends.CalculateFlightTime(distance, shipSpeed, minSpeed);
 
         // Ekrana uçuş süresini basıyoruz.
-        TXT_FlightTime.text = $"<color=red>{base.GetLanguageText("UçuşSüresi")} : </color> {TimeExtends.GetCountdownText(TimeSpan.FromSeconds(flightTime))}";
+        TXT_FlightTime.text = $"<color=red>{base.GetLanguageText("UçuşSüresi")} ({base.GetLanguageText("TekYön")}) : </color> {TimeExtends.GetCountdownText(TimeSpan.FromSeconds(flightTime / 2))}";
 
         // Şuanı alıyoruz.
         DateTime currentDate = DateTime.Now;

@@ -113,4 +113,25 @@ public class ShipyardController : MonoBehaviour
         LoginController.LC.CurrentUser.UserPlanetShipProgs.RemoveAll(x => x.ShipCount <= 0);
     }
 
+    public void DestroyShip(Ships shipId, int quantity)
+    {
+        // Gezegendeki gemiyi buluyoruz.
+        UserPlanetShipDTO ship = LoginController.LC.CurrentUser.UserPlanetShips.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.ShipId == shipId);
+
+        // Eğer yok ise geri dön.
+        if (ship == null)
+            return;
+
+        // Var ise miktarı düş.
+        ship.ShipCount -= quantity;
+
+        // Eğer miktar 0 dan küçük olduysa listeden siliyoruz.
+        if (ship.ShipCount <= 0)
+            LoginController.LC.CurrentUser.UserPlanetShips.Remove(ship);
+
+        // Eğer panel açık ise refresh ediyoruz.
+        if (ShipyardPanelController.SPC != null)
+            ShipyardPanelController.SPC.LoadAllShips();
+
+    }
 }

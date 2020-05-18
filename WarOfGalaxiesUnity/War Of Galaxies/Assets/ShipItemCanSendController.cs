@@ -101,7 +101,8 @@ public class ShipItemCanSendController : MonoBehaviour
         LoadData(UserPlanetShip);
 
         // Butonu açıyoruz. En az bir gemi seçili olduğu için.
-        PlanetActionController.PAC.ContinueButton.interactable = true;
+        if (PlanetActionController.PAC.CurrentFleetType != Assets.Scripts.Enums.FleetTypes.None)
+            PlanetActionController.PAC.ContinueButton.interactable = true;
 
         // Eğer panel açık değil ise açıyoruz.
         if (PlanetActionController.PAC.NoShipSelected.activeSelf)

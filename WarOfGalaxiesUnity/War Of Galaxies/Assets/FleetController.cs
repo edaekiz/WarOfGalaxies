@@ -55,11 +55,6 @@ public class FleetController : MonoBehaviour
          }));
     }
 
-    public void RefreshFleetList()
-    {
-
-    }
-
     public void ShowFleetPanel()
     {
         GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.FleetPanel);

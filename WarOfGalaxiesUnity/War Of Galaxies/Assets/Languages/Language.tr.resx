@@ -357,4 +357,7 @@
   <data name="Tamamlandı" xml:space="preserve">
     <value>Tamamlandı</value>
   </data>
+  <data name="TekYön" xml:space="preserve">
+    <value>Tek Yön</value>
+  </data>
 </root>
