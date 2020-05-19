@@ -1,4 +1,7 @@
-﻿namespace WarOfGalaxiesApi.DTO.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace WarOfGalaxiesApi.DTO.Models
 {
     public class UserPlanetDTO
     {

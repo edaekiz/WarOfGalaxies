@@ -22,6 +22,7 @@ namespace WarOfGalaxiesApi.DTO.Models
         public double CarriedMetal { get; set; }
         public double CarriedCrystal { get; set; }
         public double CarriedBoron { get; set; }
+        public string FleetData { get; set; }
     }
 
     public class GetLastFleetsDTO

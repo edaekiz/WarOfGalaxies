@@ -24,6 +24,7 @@ namespace Assets.Scripts.ApiModels
         public double CarriedMetal;
         public double CarriedCrystal;
         public double CarriedBoron;
+        public string FleetData;
         public DateTime FleetLoadDate;
         public FleetDTO()
         {

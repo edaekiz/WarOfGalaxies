@@ -134,4 +134,24 @@ public class ShipyardController : MonoBehaviour
             ShipyardPanelController.SPC.LoadAllShips();
 
     }
+
+    public void AddShip(int userPlanetId,Ships shipId,int quantity)
+    {
+        // Gezegendeki gemiyi buluyoruz.
+        UserPlanetShipDTO ship = LoginController.LC.CurrentUser.UserPlanetShips.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.ShipId == shipId);
+
+        // Eğer yok ise geri dön.
+        if (ship == null)
+        {
+            LoginController.LC.CurrentUser.UserPlanetShips.Add(new UserPlanetShipDTO
+            {
+                UserPlanetId = userPlanetId,
+                ShipId = shipId,
+                ShipCount = quantity
+            });
+        }
+        else
+            ship.ShipCount += quantity;
+
+    }
 }

@@ -81,24 +81,24 @@ namespace Assets.Scripts.Extends
             }).DefaultIfEmpty(0).Sum(), 0);
         }
 
-        public static Dictionary<Ships, int> FleetDataToShipData(string data)
+        public static List<Tuple<Ships, int>> FleetDataToShipData(string data)
         {
             try
             {
-                Dictionary<Ships, int> fleet = new Dictionary<Ships, int>();
+                List<Tuple<Ships, int>> fleet = new List<Tuple<Ships, int>>();
                 string[] ships = data.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var ship in ships)
                 {
                     string[] shipData = ship.Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
                     Ships shipId = (Ships)int.Parse(shipData[0]);
                     int shipQuantity = int.Parse(shipData[1]);
-                    fleet.Add(shipId, shipQuantity);
+                    fleet.Add(new Tuple<Ships, int>(shipId, shipQuantity));
                 }
                 return fleet;
             }
             catch (System.Exception)
             {
-                return new Dictionary<Ships, int>();
+                return new List<Tuple<Ships, int>>();
             }
         }
 

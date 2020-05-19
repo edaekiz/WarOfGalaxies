@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.ApiModels;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -31,8 +32,8 @@ public class FleetPanelController : BasePanelController
     {
         base.Start();
 
-        RefreshPanelItems();
-
+        // Aktif filoları getiriyoruz.
+        RefreshActiveFleets();
     }
 
     // Update is called once per frame
@@ -41,7 +42,7 @@ public class FleetPanelController : BasePanelController
         base.Update();
     }
 
-    public void RefreshPanelItems()
+    public void RefreshActiveFleets()
     {
         // Filolaları
         foreach (FleetDTO fleet in FleetController.FC.Fleets)
@@ -78,5 +79,4 @@ public class FleetPanelController : BasePanelController
         }
 
     }
-
 }

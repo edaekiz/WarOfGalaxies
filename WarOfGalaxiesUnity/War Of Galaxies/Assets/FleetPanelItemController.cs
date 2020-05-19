@@ -50,6 +50,9 @@ public class FleetPanelItemController : BaseLanguageBehaviour
     /// </summary>
     public FleetDTO FleetInfo { get; set; }
 
+    /// <summary>
+    /// Hedefe varış süresi.
+    /// </summary>
     public DateTime GetHalfOfFlyDate
     {
         get
@@ -70,6 +73,9 @@ public class FleetPanelItemController : BaseLanguageBehaviour
         }
     }
 
+    /// <summary>
+    /// Gezegene dönüş süresi.
+    /// </summary>
     public DateTime GetEndFlyDate
     {
         get
@@ -112,7 +118,7 @@ public class FleetPanelItemController : BaseLanguageBehaviour
         // Filo hareketini basıyoruz.
         TXT_ActionType.text = $"{base.GetLanguageText($"FT{(int)fleetInfo.FleetActionTypeId}")}";
 
-        // Eğer dönüyor ise dönüş.
+        // Eğer dönüyor ise dönü yazıyoruz.
         if (currentDate > halfOfFlyDate)
             TXT_ActionType.text += $" (<color=green>{base.GetLanguageText("Dönüyor")}</color>)";
 

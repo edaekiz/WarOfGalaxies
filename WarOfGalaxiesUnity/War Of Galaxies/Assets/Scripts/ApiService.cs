@@ -60,6 +60,8 @@ public class ApiService : MonoBehaviour
             {
                 Debug.Log(webRequest.url + "->" + webRequest.error);
                 trigger.Invoke(JsonUtility.FromJson<TResponse>("{\"IsSuccess\":false}"));
+                yield return new WaitForSeconds(3);
+                StartCoroutine(Post(url, data, trigger));
             }
             else
             {

@@ -20,6 +20,42 @@ namespace WarOfGalaxiesApi.Controllers
         {
         }
 
+        [HttpPost("GetFleetDetails")]
+        [Description("Verilen filo hareketini döner.")]
+        public ApiResult GetFleetDetails(GetLastFleetsDTO request)
+        {
+            // Idsi verilen filoyu dönüyoruz.
+            FleetDTO fleet = base.UnitOfWork.GetRepository<TblFleets>()
+                .Where(x => x.FleetId == request.LastFleetId)
+                .Select(x => new FleetDTO
+                {
+                    SenderCordinate = x.SenderCordinate,
+                    SenderUserId = x.SenderUserPlanet.UserId,
+                    SenderUserPlanetId = x.SenderUserPlanetId,
+                    SenderPlanetName = x.SenderUserPlanet.PlanetName,
+                    DestinationCordinate = x.DestinationCordinate,
+                    DestinationUserPlanetId = x.DestinationUserPlanetId,
+                    DestinationUserId = x.DestinationUserPlanetId.HasValue ? (int?)x.DestinationUserPlanet.UserId : null,
+                    DestinationPlanetName = x.DestinationUserPlanetId.HasValue ? x.DestinationUserPlanet.PlanetName : null,
+                    FleetActionTypeId = x.FleetActionTypeId,
+                    FleetId = x.FleetId,
+                    IsReturning = x.IsReturning,
+                    BeginPassedTime = (RequestDate - x.BeginDate).TotalSeconds,
+                    EndLeftTime = (x.EndDate - RequestDate).TotalSeconds,
+                    CarriedBoron = x.CarriedBoron,
+                    CarriedCrystal = x.CarriedCrystal,
+                    CarriedMetal = x.CarriedMetal,
+                    DestinationPlanetTypeId = x.DestinationUserPlanetId.HasValue ? x.DestinationUserPlanet.PlanetType : 0,
+                    SenderPlanetTypeId = x.SenderUserPlanet.PlanetType,
+                    FleetData = x.FleetData,
+                }).FirstOrDefault();
+
+            if (fleet == null)
+                return ResponseHelper.GetError("Filo bulunamadı!");
+
+            return ResponseHelper.GetSuccess(fleet);
+        }
+
         [HttpPost("GetLastFleets")]
         [Description("Son filo hareketlerini döner.")]
         public ApiResult GetLastFleets(GetLastFleetsDTO request)
@@ -47,7 +83,8 @@ namespace WarOfGalaxiesApi.Controllers
                     CarriedCrystal = x.CarriedCrystal,
                     CarriedMetal = x.CarriedMetal,
                     DestinationPlanetTypeId = x.DestinationUserPlanetId.HasValue ? x.DestinationUserPlanet.PlanetType : 0,
-                    SenderPlanetTypeId = x.SenderUserPlanet.PlanetType
+                    SenderPlanetTypeId = x.SenderUserPlanet.PlanetType,
+                    FleetData = x.FleetData
                 }).ToList();
 
             return ResponseHelper.GetSuccess(lastFleets);
@@ -171,7 +208,7 @@ namespace WarOfGalaxiesApi.Controllers
             return ResponseHelper.GetSuccess();
         }
 
-        private List<Tuple<Ships, int>> FleetDataToShipData(string data)
+        public static List<Tuple<Ships, int>> FleetDataToShipData(string data)
         {
             try
             {

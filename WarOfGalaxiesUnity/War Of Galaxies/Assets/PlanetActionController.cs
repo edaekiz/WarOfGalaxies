@@ -287,6 +287,9 @@ public class PlanetActionController : BasePanelController
                 // Gemileri envanterden siliyoruz.
                 ShipsToSend.ForEach(e => ShipyardController.SC.DestroyShip(e.UserPlanetShip.ShipId, e.Quantity));
 
+                // Taşınan kaynakları depodan çıkıyoruz.
+                GlobalPlanetController.GPC.CurrentPlanet.ReducePlanetResources(carriedResources);
+
                 // Paneli artık kapatabiliriz.
                 base.ClosePanel();
             }

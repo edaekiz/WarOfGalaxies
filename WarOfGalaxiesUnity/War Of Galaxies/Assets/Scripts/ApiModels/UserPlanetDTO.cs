@@ -145,18 +145,27 @@ namespace Assets.Scripts.ApiModels
         /// <param name="resources"></param>
         public void SetPlanetResources(ResourcesDTO resources)
         {
-            // Yeni metal değerine set ediyoruz.
             this.Metal = resources.Metal;
-
-            // Yeni kristal değerine set ediyoruz.
             this.Crystal = resources.Crystal;
-
-            // Yeni boron değerine set ediyoruz.
             this.Boron = resources.Boron;
 
             // Son verify tarihini güncelliyoruz.
             this.LastUpdateDateInClient = DateTime.UtcNow;
 
+        }
+
+        public void ReducePlanetResources(ResourcesDTO resources)
+        {
+            this.Metal -= resources.Metal;
+            this.Crystal -= resources.Crystal;
+            this.Boron -= resources.Boron;
+        }
+
+        public void IncreasePlanetResources(ResourcesDTO resources)
+        {
+            this.Metal += resources.Metal;
+            this.Crystal += resources.Crystal;
+            this.Boron += resources.Boron;
         }
 
         /// <summary>
