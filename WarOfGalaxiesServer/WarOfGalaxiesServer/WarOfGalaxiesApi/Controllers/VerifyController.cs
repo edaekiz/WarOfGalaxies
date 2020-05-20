@@ -147,6 +147,9 @@ namespace WarOfGalaxiesApi.Controllers
                 // En son yine bütün kaynakları o saat için doğruluyoruz..
                 VerifyPlanetResources(controller, currentDate, userPlanet);
 
+                // Güncelleme tarihini değiştiriyoruz.
+                userPlanet.LastUpdateDate = currentDate;
+
                 // Değişiklikleri kayıt ediyoruz.
                 controller.UnitOfWork.SaveChanges();
 

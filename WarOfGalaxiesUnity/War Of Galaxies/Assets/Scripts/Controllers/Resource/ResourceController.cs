@@ -42,7 +42,7 @@ public class ResourceController : BaseLanguageBehaviour
 
     IEnumerator Start()
     {
-
+        yield return new WaitUntil(() => LoadingController.LC.IsGameLoaded);
         // Kullanıcının gezegenleri yüklenene kadar bekliyoruz.
         yield return new WaitUntil(() => GlobalPlanetController.GPC.CurrentPlanet != null);
 

@@ -54,7 +54,7 @@ namespace WarOfGalaxiesApi.Statics
         {
             TblBuildings baseCost = GetBuilding(building);
             ResourcesDTO cost = new ResourcesDTO(baseCost.BaseCostMetal, baseCost.BaseCostCrystal, baseCost.BaseCostBoron);
-            return cost * Math.Pow(baseCost.BaseValue, buildingLevel);
+            return cost * Math.Pow(baseCost.BuildingUpgradeCostRate, buildingLevel);
         }
 
         public double CalculateBuildingUpgradeTime(Buildings building, int buildingLevel, int robotFactoryLevel)
