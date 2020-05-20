@@ -64,7 +64,7 @@ namespace WarOfGalaxiesApi.Controllers
             // Kullanıcıya gönderilen yada kullanıcıdan gönderilen filoların listesini alıyoruz.
             List<FleetDTO> lastFleets = base.UnitOfWork.GetRepository<TblFleets>()
                 .Where(x => x.FleetId > request.LastFleetId)
-                .Where(x => x.SenderUserPlanet.UserId == DBUser.UserId || (x.DestinationUserPlanetId.HasValue && x.DestinationUserPlanet.UserId == DBUser.UserId))
+                .Where(x => x.SenderUserPlanet.UserId == DBUser.UserId || (x.DestinationUserPlanetId.HasValue && x.DestinationUserPlanet.UserId == DBUser.UserId && !x.IsReturning))
                 .Select(x => new FleetDTO
                 {
                     SenderCordinate = x.SenderCordinate,

@@ -71,7 +71,7 @@ public class ShipItemToSendController : MonoBehaviour
         quantityPanel.GetComponent<QuantityItemPanel>().LoadData(ShipImage.sprite, ShipName.text, Quantity);
 
         // Panel tamama basılarak kapatıldığında burası tetiklenecek.
-        quantityPanel.GetComponent<QuantityItemPanel>().OnPanelClose += new EventHandler<QuantityItemPanel.QuantityEventArs>((s, e) => AddToUseableQuantity(e.Quantity));
+        quantityPanel.GetComponent<QuantityItemPanel>().OnPanelClose = new Action<QuantityItemPanel.QuantityEventArs>((e) => AddToUseableQuantity(e.Quantity));
     }
 
     public void AddToUseableQuantity(int quantity)

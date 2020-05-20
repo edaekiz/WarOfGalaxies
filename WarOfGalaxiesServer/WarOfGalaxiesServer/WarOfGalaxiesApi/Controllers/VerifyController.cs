@@ -123,8 +123,8 @@ namespace WarOfGalaxiesApi.Controllers
 
                             // Artık geri dönüyor.
                             userFleet.IsReturning = true;
-                        }
 
+                        }
                     }
 
                     // Dönüş tamamlandıysa işleyip siliyoruz.

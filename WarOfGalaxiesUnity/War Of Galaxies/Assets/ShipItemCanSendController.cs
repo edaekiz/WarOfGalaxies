@@ -4,6 +4,7 @@ using Assets.Scripts.ApiModels;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static QuantityItemPanel;
 
 public class ShipItemCanSendController : MonoBehaviour
 {
@@ -64,7 +65,7 @@ public class ShipItemCanSendController : MonoBehaviour
         quantityPanel.GetComponent<QuantityItemPanel>().LoadData(ShipImage.sprite, ShipName.text, GetUseableQuantity);
 
         // Panel tamama basılarak kapatıldığında burası tetiklenecek.
-        quantityPanel.GetComponent<QuantityItemPanel>().OnPanelClose += new EventHandler<QuantityItemPanel.QuantityEventArs>((s, e) => AddToUsedQueue(e.Quantity));
+        quantityPanel.GetComponent<QuantityItemPanel>().OnPanelClose = new Action<QuantityEventArs>((e) => AddToUsedQueue(e.Quantity));
     }
 
     public void AddToUsedQueue(int quantity)
@@ -117,7 +118,7 @@ public class ShipItemCanSendController : MonoBehaviour
     {
         get
         {
-            return PlanetActionController.PAC.ShipsToSend.Select(x => x.Quantity).DefaultIfEmpty(0).Sum();
+            return PlanetActionController.PAC.ShipsToSend.Where(x=> x.UserPlanetShip.ShipId == this.UserPlanetShip.ShipId).Select(x => x.Quantity).DefaultIfEmpty(0).Sum();
         }
     }
 

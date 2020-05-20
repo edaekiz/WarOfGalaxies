@@ -49,11 +49,11 @@ namespace WarOfGalaxiesApi.Controllers.Base
 
             StringValues token = string.Empty;
 
-#if DEBUG
-            token = "D26FC6FE-F9A7-4FA9-97EE-22EA219CC5F2";
-#else
+//#if DEBUG
+            //token = "D26FC6FE-F9A7-4FA9-97EE-22EA219CC5F2";
+//#else
             token = this.HttpContext.Request.Form[TOKEN_KEY];
-#endif
+//#endif
 
             // Eğer token yok ise geri dön.
             if (token.Count == 0)
