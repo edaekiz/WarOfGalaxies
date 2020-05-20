@@ -363,4 +363,10 @@
   <data name="Dönüyor" xml:space="preserve">
     <value>Dönüş</value>
   </data>
+  <data name="S2" xml:space="preserve">
+    <value>Küçük Nakliye</value>
+  </data>
+  <data name="SD2" xml:space="preserve">
+    <value>Küçük ancak çok hızlı bir nakliye gemisi.</value>
+  </data>
 </root>

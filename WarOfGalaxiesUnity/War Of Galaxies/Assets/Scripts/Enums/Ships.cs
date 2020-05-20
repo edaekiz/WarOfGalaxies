@@ -2,6 +2,7 @@
 {
     public enum Ships
     {
-        HafifAvci = 1
+        HafifAvci = 1,
+        KüçükNakliye = 2
     }
 }

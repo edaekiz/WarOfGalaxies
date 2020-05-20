@@ -7,12 +7,13 @@ using WarOfGalaxiesApi.DAL.Models;
 using WarOfGalaxiesApi.DTO.Enums;
 using WarOfGalaxiesApi.DTO.Helpers;
 using WarOfGalaxiesApi.DTO.Models;
+using WarOfGalaxiesApi.Statics;
 
 namespace WarOfGalaxiesApi.Controllers
 {
     public class BuildingController : MainController
     {
-        public BuildingController(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public BuildingController(IUnitOfWork unitOfWork, StaticValues staticValues) : base(unitOfWork, staticValues)
         {
         }
 
@@ -21,7 +22,7 @@ namespace WarOfGalaxiesApi.Controllers
         public ApiResult UpgradeUserPlanetBuilding([FromForm]UserPlanetUpgradeBuildingDTO request)
         {
             // Verify İşlemini gerçekleştiriyoruz.
-            bool isVerifySucceed = VerifyController.VerifyPlanetResources(base.UnitOfWork, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
+            bool isVerifySucceed = VerifyController.VerifyPlanetResources(this, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
 
             // Eğer doğrulama başarısız ise geri dön.
             if (!isVerifySucceed)
@@ -48,7 +49,7 @@ namespace WarOfGalaxiesApi.Controllers
             int nextLevel = userPlanetBuilding == null ? 1 : userPlanetBuilding.BuildingLevel + 1;
 
             // Yükseltme bilgisini tutuyoruz.
-            ResourcesDTO upgradeInfo = StaticData.CalculateCostBuilding((Buildings)request.BuildingID, nextLevel);
+            ResourcesDTO upgradeInfo = StaticValues.CalculateCostBuilding((Buildings)request.BuildingID, nextLevel);
 
             // Kaynak yeterli mi?
             if (userPlanet.Metal < upgradeInfo.Metal || userPlanet.Crystal < upgradeInfo.Crystal || userPlanet.Boron < upgradeInfo.Boron)
@@ -63,7 +64,7 @@ namespace WarOfGalaxiesApi.Controllers
             TblUserPlanetBuildings robotFactory = base.UnitOfWork.GetRepository<TblUserPlanetBuildings>().FirstOrDefault(x => x.UserPlanetId == request.UserPlanetID && x.BuildingId == (int)Buildings.RobotFabrikası);
 
             // Yükseltme süresi.
-            double upgradeTime = StaticData.CalculateBuildingUpgradeTime((Buildings)request.BuildingID, nextLevel, robotFactory == null ? 0 : robotFactory.BuildingLevel);
+            double upgradeTime = StaticValues.CalculateBuildingUpgradeTime((Buildings)request.BuildingID, nextLevel, robotFactory == null ? 0 : robotFactory.BuildingLevel);
 
             // Bitiş tarihi.
             DateTime endDate = base.RequestDate.AddSeconds(upgradeTime);

@@ -6,12 +6,13 @@ using WarOfGalaxiesApi.DAL.Interfaces;
 using WarOfGalaxiesApi.DAL.Models;
 using WarOfGalaxiesApi.DTO.Helpers;
 using WarOfGalaxiesApi.DTO.Models;
+using WarOfGalaxiesApi.Statics;
 
 namespace WarOfGalaxiesApi.Controllers
 {
     public class ShipyardController : MainController
     {
-        public ShipyardController(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public ShipyardController(IUnitOfWork unitOfWork, StaticValues staticValues) : base(unitOfWork, staticValues)
         {
         }
 
@@ -20,21 +21,23 @@ namespace WarOfGalaxiesApi.Controllers
         public ApiResult AddShipToShipyardQueue(ShipyardAddQueueRequestDTO request)
         {
             // Kaynakları doğruluyoruz.
-            bool isVerified = VerifyController.VerifyPlanetResources(base.UnitOfWork, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
+            bool isVerified = VerifyController.VerifyPlanetResources(this, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
 
             // Eğer doğrulanamaz ise hata dön.
             if (!isVerified)
                 return ResponseHelper.GetError("Kaynaklar doğrulanırken hata oluştu");
 
             // Gemi bilgisini buluyoruz.
-            ShipDTO shipInfo = StaticData.ShipData.Find(x => x.ShipID == request.ShipID);
+            TblShips shipInfo = StaticValues.GetShip(request.ShipID);
+
+            ResourcesDTO shipCost = new ResourcesDTO(shipInfo.CostMetal, shipInfo.CostCrystal, shipInfo.CostBoron);
 
             // Gemi yok ise hata dön.
             if (shipInfo == null)
                 return ResponseHelper.GetError("Gemi bulunamadı!");
 
             // Üretilmek istenen miktar ile gereksinimi çarpıyoruz. genel toplamı buluyoruz.
-            ResourcesDTO totalCalculatedRes = shipInfo.Cost * request.Quantity;
+            ResourcesDTO totalCalculatedRes =  shipCost* request.Quantity;
 
             // Gezegenin kaynaklarını alıyoruz.
             TblUserPlanets userPlanet = base.UnitOfWork.GetRepository<TblUserPlanets>().FirstOrDefault(x => x.UserPlanetId == request.UserPlanetID && x.UserId == base.DBUser.UserId);
@@ -47,10 +50,10 @@ namespace WarOfGalaxiesApi.Controllers
             ResourcesDTO planetRes = new ResourcesDTO(userPlanet.Metal, userPlanet.Crystal, userPlanet.Boron);
 
             // Hata almamak için 0 dan büyük olması koşulunu ekliyoruz.
-            if (shipInfo.Cost.Metal > 0)
+            if (shipCost.Metal > 0)
             {
                 // Gezegendeki kaynakların toplamı ile kaç adet üretilebilir.
-                int maxMetalQuantity = (int)(planetRes.Metal / shipInfo.Cost.Metal);
+                int maxMetalQuantity = (int)(planetRes.Metal / shipCost.Metal);
 
                 // Eğer gezegendeki toplam üretilebilir miktar kullanıcının yazdığından az ise üretim miktarını azaltıyoruz.
                 if (maxMetalQuantity < request.Quantity)
@@ -58,10 +61,10 @@ namespace WarOfGalaxiesApi.Controllers
             }
 
             // Hata almamak için 0 dan büyük olması koşulunu ekliyoruz.
-            if (shipInfo.Cost.Crystal > 0)
+            if (shipCost.Crystal > 0)
             {
                 // Gezegendeki kaynakların toplamı ile kaç adet üretilebilir.
-                int maxCrystalQuantity = (int)(planetRes.Crystal / shipInfo.Cost.Crystal);
+                int maxCrystalQuantity = (int)(planetRes.Crystal / shipCost.Crystal);
 
                 // Eğer gezegendeki toplam üretilebilir miktar kullanıcının yazdığından az ise üretim miktarını azaltıyoruz.
                 if (maxCrystalQuantity < request.Quantity)
@@ -69,10 +72,10 @@ namespace WarOfGalaxiesApi.Controllers
             }
 
             // Hata almamak için 0 dan büyük olması koşulunu ekliyoruz.
-            if (shipInfo.Cost.Boron > 0)
+            if (shipCost.Boron > 0)
             {
                 // Gezegendeki kaynakların toplamı ile kaç adet üretilebilir.
-                int maxBoronQuantity = (int)(planetRes.Boron / shipInfo.Cost.Boron);
+                int maxBoronQuantity = (int)(planetRes.Boron / shipCost.Boron);
 
                 // Eğer gezegendeki toplam üretilebilir miktar kullanıcının yazdığından az ise üretim miktarını azaltıyoruz.
                 if (maxBoronQuantity < request.Quantity)
@@ -84,7 +87,7 @@ namespace WarOfGalaxiesApi.Controllers
                 return ResponseHelper.GetError("Gemi miktarı 0 olamaz");
 
             // Düşülecek miktar.
-            ResourcesDTO calculatedCost = shipInfo.Cost * request.Quantity;
+            ResourcesDTO calculatedCost = shipCost * request.Quantity;
 
             // Kaynakları düşüyoruz.
             userPlanet.Metal -= calculatedCost.Metal;

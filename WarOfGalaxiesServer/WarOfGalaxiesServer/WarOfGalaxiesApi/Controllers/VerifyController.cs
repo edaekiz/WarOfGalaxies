@@ -2,10 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using WarOfGalaxiesApi.Controllers.Base;
 using WarOfGalaxiesApi.DAL.Interfaces;
 using WarOfGalaxiesApi.DAL.Models;
 using WarOfGalaxiesApi.DTO.Enums;
 using WarOfGalaxiesApi.DTO.Models;
+using WarOfGalaxiesApi.Statics;
 
 namespace WarOfGalaxiesApi.Controllers
 {
@@ -35,7 +37,7 @@ namespace WarOfGalaxiesApi.Controllers
         /// </summary>
         /// <param name="verifyData"></param>
         /// <returns></returns>
-        public static bool VerifyPlanetResources(IUnitOfWork uow, VerifyResourceDTO verifyData)
+        public static bool VerifyPlanetResources(MainController controller, VerifyResourceDTO verifyData)
         {
 
             #region Doğrulamadan önce zaten doğruluyor mu diye kontrol ediyoruz.
@@ -58,7 +60,7 @@ namespace WarOfGalaxiesApi.Controllers
                 DateTime currentDate = DateTime.UtcNow;
 
                 // Kullanıcının gezegenini buluyoruz.i
-                TblUserPlanets userPlanet = uow.GetRepository<TblUserPlanets>().Where(x => x.UserPlanetId == verifyData.UserPlanetID)
+                TblUserPlanets userPlanet = controller.UnitOfWork.GetRepository<TblUserPlanets>().Where(x => x.UserPlanetId == verifyData.UserPlanetID)
                     .Include(x => x.TblUserPlanetBuildings)
                     .Include(x => x.TblUserPlanetBuildingUpgs)
                     .Include(x => x.TblUserPlanetDefenses)
@@ -102,7 +104,7 @@ namespace WarOfGalaxiesApi.Controllers
                     if (currentDate >= halfOfFlyDate && !userFleet.IsReturning)
                     {
                         // Kaynaklar doğrulanıyor.
-                        VerifyPlanetResources(uow, halfOfFlyDate, userPlanet);
+                        VerifyPlanetResources(controller, halfOfFlyDate, userPlanet);
 
                         // Güncelleme tarihini değiştiriyoruz.
                         userPlanet.LastUpdateDate = halfOfFlyDate;
@@ -110,14 +112,14 @@ namespace WarOfGalaxiesApi.Controllers
                         if (userFleet.DestinationUserPlanetId.HasValue && userPlanet.UserPlanetId != userFleet.DestinationUserPlanetId)
                         {
                             // Gezegeni doğruluyoruz.
-                            bool isVerified = VerifyPlanetResources(uow, new VerifyResourceDTO { UserPlanetID = userFleet.DestinationUserPlanetId.Value });
+                            bool isVerified = VerifyPlanetResources(controller, new VerifyResourceDTO { UserPlanetID = userFleet.DestinationUserPlanetId.Value });
 
                             // EĞer kaynak doğrulama başarısız olduysa değer false dönüyoruz.
                             if (!isVerified)
                                 return false;
 
                             // Burada hedef gezegene kaynakları yükleyeceğiz.
-                            HandleFleetActions(uow, userPlanet, userFleet);
+                            HandleFleetActions(controller, userPlanet, userFleet);
 
                             // Artık geri dönüyor.
                             userFleet.IsReturning = true;
@@ -129,24 +131,24 @@ namespace WarOfGalaxiesApi.Controllers
                     if (currentDate >= endFlyDate && userFleet.IsReturning && userFleet.SenderUserPlanetId == verifyData.UserPlanetID)
                     {
                         // Kaynaklar doğrulanıyor.
-                        VerifyPlanetResources(uow, endFlyDate, userPlanet);
+                        VerifyPlanetResources(controller, endFlyDate, userPlanet);
 
                         // Güncelleme tarihini değiştiriyoruz.
                         userPlanet.LastUpdateDate = endFlyDate;
 
                         // Burada hedef gezegene kaynakları yükleyeceğiz.
-                        HandleFleetActions(uow, userPlanet, userFleet);
+                        HandleFleetActions(controller, userPlanet, userFleet);
 
                         // Kaydı siliyoruz.
-                        uow.GetRepository<TblFleets>().Delete(userFleet);
+                        controller.UnitOfWork.GetRepository<TblFleets>().Delete(userFleet);
                     }
                 }
 
                 // En son yine bütün kaynakları o saat için doğruluyoruz..
-                VerifyPlanetResources(uow, currentDate, userPlanet);
+                VerifyPlanetResources(controller, currentDate, userPlanet);
 
                 // Değişiklikleri kayıt ediyoruz.
-                uow.SaveChanges();
+                controller.UnitOfWork.SaveChanges();
 
                 // Gezegendeki üretimleri doğruladığımızı söylüyoruz.
                 return true;
@@ -163,7 +165,7 @@ namespace WarOfGalaxiesApi.Controllers
             }
         }
 
-        private static void VerifyPlanetResources(IUnitOfWork uow, DateTime verifyDate, TblUserPlanets userPlanet)
+        private static void VerifyPlanetResources(MainController controller, DateTime verifyDate, TblUserPlanets userPlanet)
         {
             #region Üretim hesaplamaları.
 
@@ -208,25 +210,25 @@ namespace WarOfGalaxiesApi.Controllers
                     double passedSecondsInPrevLevels = passedSeconds - passedSecondsInNewLevel;
 
                     // Önceki seviyede toplam üretilen kaynak miktarını hesaplıyoruz.
-                    double metalProduceQuantity = StaticData.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSecondsInPrevLevels / 3600);
+                    double metalProduceQuantity = controller.StaticValues.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSecondsInPrevLevels / 3600);
 
                     // Yeni seviyede toplam üretilen kaynak miktarını hesaplıyoruz.
-                    metalProduceQuantity += StaticData.GetBuildingProdPerHour(resourceBuilding, planetResourceBuildingUpg.BuildingLevel) * (passedSecondsInNewLevel / 3600);
+                    metalProduceQuantity += controller.StaticValues.GetBuildingProdPerHour(resourceBuilding, planetResourceBuildingUpg.BuildingLevel) * (passedSecondsInNewLevel / 3600);
 
                     // Kaynak depo kapasitesi.
-                    double metalBuildingCapacity = StaticData.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
+                    double metalBuildingCapacity = controller.StaticValues.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
 
                     // Gezegendeki kaynağı yükseltiyoruz.
                     UpdateUserPlanetResources(userPlanet, resourceBuilding, metalBuildingCapacity, metalProduceQuantity);
 
                     // Yükseltmeyi siliyoruz.
-                    uow.GetRepository<TblUserPlanetBuildingUpgs>().Delete(planetResourceBuildingUpg);
+                    controller.UnitOfWork.GetRepository<TblUserPlanetBuildingUpgs>().Delete(planetResourceBuildingUpg);
 
                     // Eğer bina yok ise ozaman binayı oluşturacağız.
                     if (planetResourceBuilding == null)
                     {
                         // Ve binayı sisteme ekliyoruz.
-                        uow.GetRepository<TblUserPlanetBuildings>().Add(new TblUserPlanetBuildings
+                        controller.UnitOfWork.GetRepository<TblUserPlanetBuildings>().Add(new TblUserPlanetBuildings
                         {
                             BuildingLevel = 1,
                             BuildingId = (int)resourceBuilding,
@@ -252,10 +254,10 @@ namespace WarOfGalaxiesApi.Controllers
                             double passedSecondsInPrevStorage = (planetStorageBuildingUpg.EndDate - userPlanet.LastUpdateDate).TotalSeconds;
 
                             // Deponun yükseltmeden önceki kapasitesi.
-                            double metalBuildingCapacityInPrevStorage = StaticData.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
+                            double metalBuildingCapacityInPrevStorage = controller.StaticValues.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
 
                             // Metal binasının depo yükseltilene kadar ürettiği toplam miktar.
-                            double metalProduceQuantityInPrevStorage = StaticData.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSecondsInPrevStorage / 3600);
+                            double metalProduceQuantityInPrevStorage = controller.StaticValues.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSecondsInPrevStorage / 3600);
 
                             // Gezegendeki kaynağı yükseltiyoruz.
                             UpdateUserPlanetResources(userPlanet, resourceBuilding, metalBuildingCapacityInPrevStorage, metalProduceQuantityInPrevStorage);
@@ -265,13 +267,13 @@ namespace WarOfGalaxiesApi.Controllers
                             #region Depo yükseltme işlemi.
 
                             // Yükseltme bilgisini siliyoruz.
-                            uow.GetRepository<TblUserPlanetBuildingUpgs>().Delete(planetStorageBuildingUpg);
+                            controller.UnitOfWork.GetRepository<TblUserPlanetBuildingUpgs>().Delete(planetStorageBuildingUpg);
 
                             // Metal deposunu inşaa etmemiz gerekiyor ise inşaa edeceğiz.
                             if (planetStorageBuilding == null)
                             {
                                 // Ve binayı sisteme ekliyoruz.
-                                uow.GetRepository<TblUserPlanetBuildings>().Add(new TblUserPlanetBuildings
+                                controller.UnitOfWork.GetRepository<TblUserPlanetBuildings>().Add(new TblUserPlanetBuildings
                                 {
                                     BuildingLevel = 1,
                                     BuildingId = (int)resourceStorageBuilding,
@@ -289,10 +291,10 @@ namespace WarOfGalaxiesApi.Controllers
                             double passedSecondsInNextStorage = (verifyDate - planetStorageBuildingUpg.EndDate).TotalSeconds;
 
                             // Deponun yükseltmeden sonraki kapasitesi.
-                            double metalBuildingCapacityInNextStorage = StaticData.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
+                            double metalBuildingCapacityInNextStorage = controller.StaticValues.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
 
                             // Metal binasının yükseltmeden sonraki geçen sürede ürettiği metal miktarı.
-                            double metalProduceQuantityInNextStorage = StaticData.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSecondsInNextStorage / 3600);
+                            double metalProduceQuantityInNextStorage = controller.StaticValues.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSecondsInNextStorage / 3600);
 
                             // Gezegendeki kaynağı yükseltiyoruz.
                             UpdateUserPlanetResources(userPlanet, resourceBuilding, metalBuildingCapacityInNextStorage, metalProduceQuantityInNextStorage);
@@ -306,10 +308,10 @@ namespace WarOfGalaxiesApi.Controllers
                         #region Kaynak üretimi (Herhangi bir yükseltme olmadan.)
 
                         // Toplam geçen sürede kaynak binasının ürettiği toplam üretim.
-                        double metalProduceQuantity = StaticData.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSeconds / 3600);
+                        double metalProduceQuantity = controller.StaticValues.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSeconds / 3600);
 
                         // Metal binasının kapasitesini hesaplıyoruz.
-                        double metalBuildingCapacity = StaticData.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
+                        double metalBuildingCapacity = controller.StaticValues.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
 
                         // Gezegendeki kaynağı yükseltiyoruz.
                         UpdateUserPlanetResources(userPlanet, resourceBuilding, metalBuildingCapacity, metalProduceQuantity);
@@ -339,7 +341,7 @@ namespace WarOfGalaxiesApi.Controllers
                 if (building == null)
                 {
                     // Ve binayı sisteme ekliyoruz.
-                    uow.GetRepository<TblUserPlanetBuildings>().Add(new TblUserPlanetBuildings
+                    controller.UnitOfWork.GetRepository<TblUserPlanetBuildings>().Add(new TblUserPlanetBuildings
                     {
                         BuildingLevel = 1,
                         BuildingId = buildingUpgrade.BuildingId,
@@ -350,7 +352,7 @@ namespace WarOfGalaxiesApi.Controllers
                     building.BuildingLevel = buildingUpgrade.BuildingLevel;
 
                 // Yükseltmeyi siliyoruz.
-                uow.GetRepository<TblUserPlanetBuildingUpgs>().Delete(buildingUpgrade);
+                controller.UnitOfWork.GetRepository<TblUserPlanetBuildingUpgs>().Delete(buildingUpgrade);
             }
 
 
@@ -373,7 +375,7 @@ namespace WarOfGalaxiesApi.Controllers
                     // Eğer 1.seviye ise ilk defa eklenecek.
                     if (researchUpg.ResearchTargetLevel == 1)
                     {
-                        uow.GetRepository<TblUserResearches>().Add(new TblUserResearches
+                        controller.UnitOfWork.GetRepository<TblUserResearches>().Add(new TblUserResearches
                         {
                             ResearchId = researchUpg.ResearchId,
                             ResearchLevel = researchUpg.ResearchTargetLevel,
@@ -390,7 +392,7 @@ namespace WarOfGalaxiesApi.Controllers
                     }
 
                     // Yükseltmeyi siliyoruz.
-                    uow.GetRepository<TblUserResearchUpgs>().Delete(researchUpg);
+                    controller.UnitOfWork.GetRepository<TblUserResearchUpgs>().Delete(researchUpg);
                 }
             }
 
@@ -415,7 +417,7 @@ namespace WarOfGalaxiesApi.Controllers
             foreach (TblUserPlanetShipProgs userPlanetShipProg in userPlanet.TblUserPlanetShipProgs)
             {
                 // Bir geminin üretim süresi.
-                double shipBuildTime = StaticData.CalculateShipCountdown((Ships)userPlanetShipProg.ShipId, shipyardLevel);
+                double shipBuildTime = controller.StaticValues.CalculateShipCountdown((Ships)userPlanetShipProg.ShipId, shipyardLevel);
 
                 // Son onaylanma tarihi bir öncekinin bitiş tarihi.
                 if (!userPlanetShipProg.LastVerifyDate.HasValue)
@@ -451,7 +453,7 @@ namespace WarOfGalaxiesApi.Controllers
                 if (userPlanetShip == null)
                 {
                     // Veritabanına gemiyi ekliyoruz.
-                    uow.GetRepository<TblUserPlanetShips>().Add(new TblUserPlanetShips
+                    controller.UnitOfWork.GetRepository<TblUserPlanetShips>().Add(new TblUserPlanetShips
                     {
                         ShipId = userPlanetShipProg.ShipId,
                         ShipCount = producedCount,
@@ -475,7 +477,7 @@ namespace WarOfGalaxiesApi.Controllers
             }
 
             // Silinecek olanları siliyoruz.
-            toRemoveShipProgs.ForEach(e => uow.GetRepository<TblUserPlanetShipProgs>().Delete(e));
+            toRemoveShipProgs.ForEach(e => controller.UnitOfWork.GetRepository<TblUserPlanetShipProgs>().Delete(e));
 
             #endregion
 
@@ -498,7 +500,7 @@ namespace WarOfGalaxiesApi.Controllers
             foreach (TblUserPlanetDefenseProgs userPlanetDefenseProg in userPlanet.TblUserPlanetDefenseProgs)
             {
                 // Bir savunmanın üretim süresi.
-                double defenseBuildTime = StaticData.CalculateDefenseCountdown((Defenses)userPlanetDefenseProg.DefenseId, robotFacLevel);
+                double defenseBuildTime = controller.StaticValues.CalculateDefenseCountdown((Defenses)userPlanetDefenseProg.DefenseId, robotFacLevel);
 
                 // Son onaylanma tarihi bir öncekinin bitiş tarihi.
                 if (!userPlanetDefenseProg.LastVerifyDate.HasValue)
@@ -534,7 +536,7 @@ namespace WarOfGalaxiesApi.Controllers
                 if (userPlanetDefense == null)
                 {
                     // Kaydı listeye de ekliyoruz ki aynı savunmadan tekrar üretim gelirse listeye basalım.
-                    uow.GetRepository<TblUserPlanetDefenses>().Add(new TblUserPlanetDefenses
+                    controller.UnitOfWork.GetRepository<TblUserPlanetDefenses>().Add(new TblUserPlanetDefenses
                     {
                         DefenseId = userPlanetDefenseProg.DefenseId,
                         DefenseCount = producedCount,
@@ -558,13 +560,13 @@ namespace WarOfGalaxiesApi.Controllers
             }
 
             // Silinecek olan üretimleri siliyoruz.
-            toRemoveDefenseProgs.ForEach(e => uow.GetRepository<TblUserPlanetDefenseProgs>().Delete(e));
+            toRemoveDefenseProgs.ForEach(e => controller.UnitOfWork.GetRepository<TblUserPlanetDefenseProgs>().Delete(e));
 
             #endregion
 
         }
 
-        private static void HandleFleetActions(IUnitOfWork uow, TblUserPlanets userPlanet, TblFleets userFleet)
+        private static void HandleFleetActions(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet)
         {
             if (userFleet.IsReturning) // Kaynağa döndüğünde yapılacak olan.
             {
@@ -617,7 +619,7 @@ namespace WarOfGalaxiesApi.Controllers
 
                             // Eğer hedef gezegen biz değil isek hedef gezegeni buluyoruz.
                             if (userFleet.DestinationUserPlanetId.HasValue && userPlanet.UserPlanetId != userFleet.DestinationUserPlanetId)
-                                destinationPlanet = uow.GetRepository<TblUserPlanets>().FirstOrDefault(x => x.UserPlanetId == userFleet.DestinationUserPlanetId.Value);
+                                destinationPlanet = controller.UnitOfWork.GetRepository<TblUserPlanets>().FirstOrDefault(x => x.UserPlanetId == userFleet.DestinationUserPlanetId.Value);
 
                             // Kaynakları ekliyoruz.
                             destinationPlanet.Metal += userFleet.CarriedMetal;

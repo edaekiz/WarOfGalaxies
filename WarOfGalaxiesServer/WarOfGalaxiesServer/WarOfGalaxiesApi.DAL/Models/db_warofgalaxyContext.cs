@@ -56,9 +56,13 @@ namespace WarOfGalaxiesApi.DAL.Models
                     .HasColumnName("BuildingID")
                     .ValueGeneratedNever();
 
+                entity.Property(e => e.BaseValue).HasComment("Depolar için depo değeri üretim binaları için ise saatlik üretim değeri 1.seviye de.");
+
                 entity.Property(e => e.BuildingName)
                     .IsRequired()
                     .HasMaxLength(20);
+
+                entity.Property(e => e.BuildingUpgradeCostRate).HasComment("Binanın seviye başına artık göstereceği maliyet oranı.");
             });
 
             modelBuilder.Entity<TblCordinateTypes>(entity =>
@@ -116,7 +120,9 @@ namespace WarOfGalaxiesApi.DAL.Models
                     .HasColumnName("DefenseID")
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.DefenseName).HasMaxLength(50);
+                entity.Property(e => e.DefenseName)
+                    .IsRequired()
+                    .HasMaxLength(50);
             });
 
             modelBuilder.Entity<TblFleetActionTypes>(entity =>

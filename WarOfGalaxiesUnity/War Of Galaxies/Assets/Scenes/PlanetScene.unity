@@ -4106,6 +4106,7 @@ GameObject:
   - component: {fileID: 515747099}
   - component: {fileID: 515747100}
   - component: {fileID: 515747101}
+  - component: {fileID: 515747102}
   m_Layer: 0
   m_Name: GameController
   m_TagString: Untagged
@@ -4224,7 +4225,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   LoadingCanvas: {fileID: 1299137451}
   IsGameLoaded: 0
-  TotalLoadItemCount: 1
+  TotalLoadItemCount: 2
   CurrentLoadItemCount: 0
 --- !u!114 &515747095
 MonoBehaviour:
@@ -4266,7 +4267,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShipWithImages:
   - Ship: 1
-    ShipImage: {fileID: 21300000, guid: 8a0b3cd76d2fb6f45b5ed6d3a9be28d5, type: 3}
+    ShipImage: {fileID: 21300000, guid: d98da49cf89a56748a46cc6ab8a3c052, type: 3}
+  - Ship: 2
+    ShipImage: {fileID: 21300000, guid: 10cdbba8dcdcf1c43932185b8ccfba53, type: 3}
 --- !u!114 &515747098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4335,6 +4338,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Fleets: []
+--- !u!114 &515747102
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 515747088}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f6d64c70222c6d46b7637caae34fa39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &525442637
 GameObject:
   m_ObjectHideFlags: 0

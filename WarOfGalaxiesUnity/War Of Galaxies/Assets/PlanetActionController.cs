@@ -329,7 +329,7 @@ public class PlanetActionController : BasePanelController
         float shipSpeed = SLIDER_ShipSpeed.value / 100;
 
         // Uçuş süresi hesaplanacak.
-        int minSpeed = FleetExtends.GetMinSpeedInFleet(ShipsToSend.Select(x => x.UserPlanetShip.ShipId));
+        double minSpeed = FleetExtends.GetMinSpeedInFleet(ShipsToSend.Select(x => x.UserPlanetShip.ShipId));
 
         // Gezegenler arasındaki mesafe.
         double distance = FleetExtends.CalculateDistance(GlobalPlanetController.GPC.CurrentPlanetCordinate, CurrentCordinate);

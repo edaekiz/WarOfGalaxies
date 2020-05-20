@@ -1,5 +1,5 @@
-﻿using Assets.Scripts.Enums;
-using System;
+﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Enums;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -29,9 +29,6 @@ public class ResearchPanelController : BasePanelController
 
     public void LoadAllResearchItems()
     {
-        // Araştırmaların listesi.
-        Array researches = Enum.GetValues(typeof(Researches));
-
         // Bütün eski araştırmaları sil.
         foreach (Transform child in ResearchContent)
             Destroy(child.gameObject);
@@ -39,10 +36,10 @@ public class ResearchPanelController : BasePanelController
         _researchItems.Clear();
 
         // Araştırmaları döneceğiz.
-        for (int ii = 0; ii < researches.Length; ii++)
+        for (int ii = 0; ii < DataController.DC.SystemData.Researches.Count; ii++)
         {
             // Basılacak araştırma.
-            Researches research = (Researches)researches.GetValue(ii);
+            ResearchDataDTO research = DataController.DC.SystemData.Researches[ii];
 
             // Kullanıcının bu araştırma için sahip olduğu seviye.
             GameObject researchItem = Instantiate(ResearchItem, ResearchContent);
@@ -51,16 +48,11 @@ public class ResearchPanelController : BasePanelController
             ResearchItemController ric = researchItem.GetComponent<ResearchItemController>();
 
             // Araştırma bilgisini yüklüyoruz.
-            ric.LoadResearchData(research);
+            ric.StartCoroutine(ric.LoadResearchData((Researches)research.ResearchId));
 
             // Oluşturulan araştırmayı listeye ekliyoruz.
             _researchItems.Add(ric);
         }
     }
-
-    /// <summary>
-    /// Bütün araştırmaları yeniliyoruz.
-    /// </summary>
-    public void RefreshAllResearches() => _researchItems.ForEach(e => e.LoadResearchData(e.CurrentResearch));
 
 }

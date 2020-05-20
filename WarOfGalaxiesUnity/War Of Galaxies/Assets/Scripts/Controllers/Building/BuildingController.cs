@@ -24,26 +24,16 @@ public class BuildingController : BaseLanguageBehaviour
     [Header("Bina ismini ve seviyesini basacağız.")]
     public TMP_Text BuildingInfo;
 
-    /// <summary>
-    /// Kullanıcının gezegen üzerindeki bina.
-    /// </summary>
-    public UserPlanetBuildingDTO UserPlanetBuilding { get; set; }
-
-    /// <summary>
-    /// Kullanıcının gezegen üzerindeki binanın yükseltmesi.
-    /// </summary>
-    public UserPlanetBuildingUpgDTO UserPlanetBuildingUpg { get; set; }
-
     IEnumerator Start()
     {
-        // Binalar yüklenene kadar bekliyoruz.
-        yield return new WaitUntil(() => LoginController.LC.IsLoggedIn);
-
-        // Default gezegen seçilene kadar bekliyoruz. Yada başka bir gezegen seçilene kadar
+        yield return new WaitUntil(() => LoadingController.LC.IsGameLoaded);
         yield return new WaitUntil(() => GlobalPlanetController.GPC.CurrentPlanet != null);
 
         // Bina detaylarını yükler.
         LoadBuildingDetails();
+
+        // Bina ismini seviye ile basıyoruz.
+        StartCoroutine(UpdateBuildingNameLevelAndTime());
     }
 
     public void LoadBuildingDetails()
@@ -58,10 +48,10 @@ public class BuildingController : BaseLanguageBehaviour
         ConstructableMesh.SetActive(true);
 
         // Kullanıcının binasını buluyoruz.
-        UserPlanetBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == BuildingType);
+        UserPlanetBuildingDTO userPlanetBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == BuildingType);
 
         // Kullanıcının binası var ise açacağız binayı.
-        if (UserPlanetBuilding != null)
+        if (userPlanetBuilding != null)
         {
             // Binanın görselini açıyoruz.
             BuildingMesh.SetActive(true);
@@ -69,37 +59,33 @@ public class BuildingController : BaseLanguageBehaviour
             // İnşaa edilemez olduğunu söylüyoruz.
             ConstructableMesh.SetActive(false);
         }
-
-        // Yükseltme için arıyoruz.
-        UserPlanetBuildingUpg = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == BuildingType);
-
-        // Eğer yükseltme var ise yükseltmeyi başlatıyoruz. 
-        if (UserPlanetBuildingUpg != null)
-        {
-            // Sayacı açıyoruz.
-            StartCoroutine(OnUpgrade());
-        }
-
-        // Bina ismini seviye ile basıyoruz.
-        updateBuildingNameLevelAndTime();
-
     }
 
-    private void updateBuildingNameLevelAndTime()
+    public IEnumerator UpdateBuildingNameLevelAndTime()
     {
+        // Kullanıcının binasını buluyoruz.
+        UserPlanetBuildingDTO userPlanetBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == BuildingType);
+
+        // Yükseltme bilgisi.
+        UserPlanetBuildingUpgDTO userPlanetBuildingUpg = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == BuildingType);
+
         // Bina ismini seviye ile basıyoruz.
         if (BuildingInfo != null)
         {
             // Texti güncelliyoruz. Bina seviyesini felan basmak üzere.     
-            if (UserPlanetBuilding == null)
+            if (userPlanetBuilding == null)
                 BuildingInfo.text = base.GetLanguageText("BinaVeSeviye", base.GetLanguageText($"B{(int)BuildingType}"), Environment.NewLine, "0");
             else
-                BuildingInfo.text = base.GetLanguageText("BinaVeSeviye", base.GetLanguageText($"B{(int)BuildingType}"), Environment.NewLine, UserPlanetBuilding.BuildingLevel.ToString());
+                BuildingInfo.text = base.GetLanguageText("BinaVeSeviye", base.GetLanguageText($"B{(int)BuildingType}"), Environment.NewLine, userPlanetBuilding.BuildingLevel.ToString());
 
             // Yükseltme var texti güncelliyoruz..
-            if (UserPlanetBuildingUpg != null)
-                BuildingInfo.text += $"{Environment.NewLine}<color=green>{TimeExtends.GetCountdownText(UserPlanetBuildingUpg.EndDate - DateTime.UtcNow)}</color>";
+            if (userPlanetBuildingUpg != null)
+                BuildingInfo.text += $"{Environment.NewLine}<color=green>{TimeExtends.GetCountdownText(userPlanetBuildingUpg.EndDate - DateTime.UtcNow)}</color>";
         }
+
+        yield return new WaitForSeconds(1);
+
+        StartCoroutine(UpdateBuildingNameLevelAndTime());
     }
 
     private void OnMouseDown()
@@ -119,59 +105,5 @@ public class BuildingController : BaseLanguageBehaviour
 
         // Bina yükseltme bilgisini yüklüyoruz.
         bpc.StartCoroutine(bpc.LoadData(BuildingType));
-    }
-
-    public IEnumerator OnUpgrade()
-    {
-        // 1 saniye bekletiyoruz.
-        yield return new WaitForSecondsRealtime(1);
-
-        // Eğer gezegende yükseltme yok ise iptal et.
-        if (UserPlanetBuildingUpg == null)
-            yield break;
-
-        // Tamamlandı mı?
-        bool isCompleted = DateTime.UtcNow >= UserPlanetBuildingUpg.EndDate;
-
-        // Eğer tarih tamamlanma tarihinnden az ise tamamlanmıştır.
-        if (isCompleted)
-        {
-            // Kullanıcının gezegendeki kaynaklarını verify ediyoruz.
-            LoginController.LC.VerifyUserResources(GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId, (UserPlanetDTO onSuccess) =>
-             {
-                 // Var olan binayı buluyoruz.
-                 UserPlanetBuildingDTO userBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == UserPlanetBuildingUpg.UserPlanetId && x.BuildingId == UserPlanetBuildingUpg.BuildingId);
-
-                 // Bina ilk kez kuruluyor.
-                 if (userBuilding == null)
-                 {
-                     // Bina listesine ekliyoruz.
-                     LoginController.LC.CurrentUser.UserPlanetsBuildings.Add(new UserPlanetBuildingDTO
-                     {
-                         BuildingId = UserPlanetBuildingUpg.BuildingId,
-                         BuildingLevel = UserPlanetBuildingUpg.BuildingLevel,
-                         UserPlanetId = UserPlanetBuildingUpg.UserPlanetId
-                     });
-                 }
-                 else // Eğer bina zaten var ise sadece kaynaklarını güncelliyoruz.
-                 {
-                     userBuilding.BuildingLevel = UserPlanetBuildingUpg.BuildingLevel;
-                 }
-
-                 // Yükseltmeyi sistemden siliyoruz.
-                 LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Remove(UserPlanetBuildingUpg);
-
-                 // Bina detaylarını yüklüyoruz.
-                 LoadBuildingDetails();
-
-             });
-        }
-
-        // State güncelleniyor.
-        updateBuildingNameLevelAndTime();
-
-        // Sonra tekrar sayacı aktif ediyoruz.
-        if (!isCompleted)
-            StartCoroutine(OnUpgrade());
     }
 }

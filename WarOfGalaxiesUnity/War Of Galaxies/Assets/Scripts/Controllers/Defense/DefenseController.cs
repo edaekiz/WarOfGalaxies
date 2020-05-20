@@ -1,9 +1,10 @@
 ﻿using Assets.Scripts.ApiModels;
-using Assets.Scripts.Data;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class DefenseController : MonoBehaviour
@@ -21,12 +22,17 @@ public class DefenseController : MonoBehaviour
             Destroy(gameObject);
     }
 
-    
+    IEnumerator Start()
+    {
+        yield return new WaitUntil(() => LoadingController.LC.IsGameLoaded);
+
+        // Panelin kapalı olduğu sürede gerçekleşen üretimi hesaplıyoruz.
+        StartCoroutine(ReCalculateDefenses());
+
+    }
+
     public void ShowDefensePanel()
     {
-        // Panelin kapalı olduğu sürede gerçekleşen üretimi hesaplıyoruz.
-        ReCalculateDefenses();
-
         // Paneli buluyoruz.
         GameObject panel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.DefensePanel);
 
@@ -37,83 +43,82 @@ public class DefenseController : MonoBehaviour
     /// <summary>
     /// Kapalıyken sayma işlemi gerçekleşmez. Bu yüzden kapalı olduğu süredeki üretimi bitirmek gerekiyor.
     /// </summary>
-    public void ReCalculateDefenses()
+    public IEnumerator ReCalculateDefenses()
     {
         // Şu an.
         DateTime currentDate = DateTime.UtcNow;
 
-        // Tersaneyi buluyoruz.
-        UserPlanetBuildingDTO robotFac = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.RobotFabrikası);
-
-        // Tersane seviyesi.
-        int robotFacLevel = robotFac == null ? 0 : robotFac.BuildingLevel;
-
-        // Son doğrulama tarihi.
-        DateTime? lastVerifyDateInDefense = null;
-
-        // Her bir üretimi dönüyoruz.
-        foreach (UserPlanetDefenseProgDTO userPlanetDefenseProg in LoginController.LC.CurrentUser.UserPlanetDefenseProgs)
+        foreach (var userPlanet in LoginController.LC.CurrentUser.UserPlanets)
         {
-            // Bir savunmanın üretim süresi.
-            double defenseBuildTime = StaticData.CalculateDefenseCountdown(userPlanetDefenseProg.DefenseId, robotFacLevel);
+            // Eğer üretim var ise ilk üretim devam eden üretimdir.
+            UserPlanetDefenseProgDTO firstDefenseProg = LoginController.LC.CurrentUser.UserPlanetDefenseProgs.FirstOrDefault(x => x.UserPlanetId == userPlanet.UserPlanetId);
 
-            // Son onaylanma tarihi bir öncekinin bitiş tarihi.
-            if (!userPlanetDefenseProg.LastVerifyDate.HasValue)
-                userPlanetDefenseProg.LastVerifyDate = lastVerifyDateInDefense;
+            // Eğer yok ise geri dön.
+            if (firstDefenseProg == null)
+                continue;
 
-            // Son doğrulamadan bu yana geçen süre.
-            double passedSeconds = (currentDate - userPlanetDefenseProg.LastVerifyDate.Value).TotalSeconds;
+            // Robot fabrikasını buluyoruz.
+            UserPlanetBuildingDTO robotFac = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == userPlanet.UserPlanetId && x.BuildingId == Buildings.RobotFabrikası);
 
-            // Toplam üretilen gemi sayısı.
-            int producedCount = (int)(passedSeconds / defenseBuildTime);
+            // Bir geminin üretimi için gereken süre.
+            double countdownOneItem = DataController.DC.CalculateDefenseCountdown(firstDefenseProg.DefenseId, robotFac == null ? 0 : robotFac.BuildingLevel);
 
-            // Eğer üretim yok ise güncel üretimdeyiz.
-            if (producedCount == 0)
-                break;
+            // Birim başına baktıktan sonra tamamlanmasına kalan süreye bakıyoruz.
+            DateTime completeTime = firstDefenseProg.LastVerifyDate.Value.AddSeconds(-firstDefenseProg.OffsetTime).AddSeconds(countdownOneItem);
 
-            // Eğer olandan fazla ürettiysek üretebileceğimiz sınıra getiriyoruz.
-            if (producedCount > userPlanetDefenseProg.DefenseCount)
-                producedCount = userPlanetDefenseProg.DefenseCount;
+            // Tamamlanmasına kalan süre.
+            TimeSpan leftTime = completeTime - currentDate;
 
-            // Üretilmesi için geçen süreyi buluyoruz.
-            passedSeconds = defenseBuildTime * producedCount;
-
-            // Son doğrulama tarihini güncelliyoruz.
-            userPlanetDefenseProg.LastVerifyDate = userPlanetDefenseProg.LastVerifyDate.Value.AddSeconds(passedSeconds);
-
-            // Son doğrulama süresini veriyoruz bunun üzerinden hesaplayacağız.
-            lastVerifyDateInDefense = userPlanetDefenseProg.LastVerifyDate;
-
-            // Gezegende bulunan benzer savunmalar.
-            UserPlanetDefenseDTO userPlanetDefense = LoginController.LC.CurrentUser.UserPlanetDefenses.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.DefenseId == userPlanetDefenseProg.DefenseId);
-
-            // Eğer gezegende bu savunmadan yok ise ekliyoruz.
-            if (userPlanetDefense == null)
+            // Eğer üretim süresi bittiyse.
+            if (leftTime.TotalSeconds <= 0)
             {
-                // Veritabanına savunma ekliyoruz.
-                LoginController.LC.CurrentUser.UserPlanetDefenses.Add(new UserPlanetDefenseDTO
+                // Ve yeni üretimlere başlıyoruz.
+                firstDefenseProg.LastVerifyDate = currentDate;
+
+                // Yarım üretimi 0lıyoruz.
+                firstDefenseProg.OffsetTime = 0;
+
+                // Üretilecek gemi miktarını 1 azaltıyoruz
+                firstDefenseProg.DefenseCount--;
+
+                // Aktif gemi miktarı.
+                UserPlanetDefenseDTO currentDefenseCount = LoginController.LC.CurrentUser.UserPlanetDefenses.Find(x => x.UserPlanetId == userPlanet.UserPlanetId && x.DefenseId == firstDefenseProg.DefenseId);
+
+                // Daha önce bu gemiye sahip miydi?
+                if (currentDefenseCount == null)
                 {
-                    DefenseId = userPlanetDefenseProg.DefenseId,
-                    DefenseCount = producedCount,
-                    UserPlanetId = GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId,
-                });
-            }
-            else
-            {
-                // Sadece miktarı güncelliyoruz.
-                userPlanetDefense.DefenseCount += producedCount;
-            }
+                    // Eğer ilk defa ekleniyor ise yeni oluşturuyoruz.
+                    currentDefenseCount = new UserPlanetDefenseDTO() { DefenseCount = 1, DefenseId = firstDefenseProg.DefenseId, UserPlanetId = firstDefenseProg.UserPlanetId };
 
-            // Üretim miktarını azaltıyoruz.
-            userPlanetDefenseProg.DefenseCount -= producedCount;
+                    // Listeye ekliyoruz.
+                    LoginController.LC.CurrentUser.UserPlanetDefenses.Add(currentDefenseCount);
+                }
+                else // AKsi durumda sadece miktarı arttırıyoruz.
+                    currentDefenseCount.DefenseCount++;
 
-            // Eğer üretimin tamamı bitmeiş ise döngüyü bitir.
-            if (userPlanetDefenseProg.DefenseCount > 0)
-                break;
+                // Eğer gemi kalmamış ise siliyoruz.
+                if (firstDefenseProg.DefenseCount <= 0)
+                {
+                    // Eğer daha yok ise listeden siliyoruz.
+                    LoginController.LC.CurrentUser.UserPlanetDefenseProgs.Remove(firstDefenseProg);
+
+                    // Sonrakinin başlangıç tarihini güncelliyoruz.
+                    UserPlanetDefenseProgDTO nextProg = LoginController.LC.CurrentUser.UserPlanetDefenseProgs.FirstOrDefault(x => x.UserPlanetId == userPlanet.UserPlanetId);
+
+                    // Sonraki üretim.
+                    if (nextProg != null)
+                        nextProg.LastVerifyDate = currentDate;
+                }
+
+                // Kuyruğu yeniliyoruz.
+                if (DefenseQueueController.DQC != null)
+                    DefenseQueueController.DQC.RefreshDefenseQueue();
+            }
         }
 
-        // Bitenleri siliyoruz.
-        LoginController.LC.CurrentUser.UserPlanetDefenseProgs.RemoveAll(x => x.DefenseCount <= 0);
+        yield return new WaitForSecondsRealtime(1);
+
+        StartCoroutine(ReCalculateDefenses());
     }
 
 

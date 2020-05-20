@@ -1,14 +1,16 @@
 ﻿using Assets.Scripts.ApiModels;
-using Assets.Scripts.Data;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Models;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ShipyardController : MonoBehaviour
 {
     public static ShipyardController SC { get; set; }
+
     public List<ShipImageDTO> ShipWithImages;
     private void Awake()
     {
@@ -18,12 +20,14 @@ public class ShipyardController : MonoBehaviour
             Destroy(gameObject);
     }
 
+    IEnumerator Start()
+    {
+        yield return new WaitUntil(() => LoadingController.LC.IsGameLoaded);
+        StartCoroutine(ReCalculateShips());
+    }
 
     public void ShowShipyardPanel()
     {
-        // Kapalı olduğu sürede üretilen toplam miktarı hesaplıyoruz.
-        ReCalculateShips();
-
         // Paneli açıyoruz.
         GameObject panel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.ShipyardPanel);
 
@@ -31,86 +35,82 @@ public class ShipyardController : MonoBehaviour
         panel.GetComponent<ShipyardPanelController>().LoadAllShips();
     }
 
-    /// <summary>
-    /// Kapalıyken sayma işlemi gerçekleşmez. Bu yüzden kapalı olduğu süredeki üretimi bitirmek gerekiyor.
-    /// </summary>
-    public void ReCalculateShips()
+    public IEnumerator ReCalculateShips()
     {
-        // Şu an.
         DateTime currentDate = DateTime.UtcNow;
 
-        // Tersaneyi buluyoruz.
-        UserPlanetBuildingDTO shipyard = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.Tersane);
-
-        // Tersane seviyesi.
-        int shipyardLevel = shipyard == null ? 0 : shipyard.BuildingLevel;
-
-        // Son doğrulama tarihi.
-        DateTime? lastVerifyDateInShipyard = null;
-
-        // Bütün gemi üretimlerini dönüyoruz.
-        foreach (UserPlanetShipProgDTO userPlanetShipProg in LoginController.LC.CurrentUser.UserPlanetShipProgs)
+        // Her bir gezegenin üretimi kontrol ediyoruz.
+        foreach (UserPlanetDTO userPlanet in LoginController.LC.CurrentUser.UserPlanets)
         {
-            // Bir geminin üretim süresi.
-            double shipBuildTime = StaticData.CalculateShipCountdown(userPlanetShipProg.ShipId, shipyardLevel);
+            // Eğer üretim var ise ilk üretim devam eden üretimdir.
+            UserPlanetShipProgDTO firstShipProg = LoginController.LC.CurrentUser.UserPlanetShipProgs.FirstOrDefault(x => x.UserPlanetId == userPlanet.UserPlanetId);
 
-            // Son onaylanma tarihi bir öncekinin bitiş tarihi.
-            if (!userPlanetShipProg.LastVerifyDate.HasValue)
-                userPlanetShipProg.LastVerifyDate = lastVerifyDateInShipyard;
+            // Eğer yok ise geri dön.
+            if (firstShipProg == null)
+                continue;
 
-            // Son doğrulamadan bu yana geçen süre.
-            double passedSeconds = (currentDate - userPlanetShipProg.LastVerifyDate.Value).TotalSeconds;
+            // Tersanesini buluyoruz.
+            UserPlanetBuildingDTO shipyard = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == userPlanet.UserPlanetId && x.BuildingId == Buildings.Tersane);
 
-            // Toplam üretilen gemi sayısı.
-            int producedCount = (int)(passedSeconds / shipBuildTime);
+            // Bir geminin üretimi için gereken süre.
+            double countdownOneItem = DataController.DC.CalculateShipCountdown(firstShipProg.ShipId, shipyard == null ? 0 : shipyard.BuildingLevel);
 
-            // Eğer üretim yok ise güncel üretimdeyiz.
-            if (producedCount == 0)
-                break;
+            // Birim başına baktıktan sonra tamamlanmasına kalan süreye bakıyoruz.
+            DateTime completeTime = firstShipProg.LastVerifyDate.Value.AddSeconds(-firstShipProg.OffsetTime).AddSeconds(countdownOneItem);
 
-            // Eğer olandan fazla ürettiysek üretebileceğimiz sınıra getiriyoruz.
-            if (producedCount > userPlanetShipProg.ShipCount)
-                producedCount = userPlanetShipProg.ShipCount;
+            // Tamamlanmasına kalan süre.
+            TimeSpan leftTime = completeTime - currentDate;
 
-            // Üretilmesi için geçen süreyi buluyoruz.
-            passedSeconds = shipBuildTime * producedCount;
-
-            // Son doğrulama tarihini güncelliyoruz.
-            userPlanetShipProg.LastVerifyDate = userPlanetShipProg.LastVerifyDate.Value.AddSeconds(passedSeconds);
-
-            // Son doğrulama süresini veriyoruz bunun üzerinden hesaplayacağız.
-            lastVerifyDateInShipyard = userPlanetShipProg.LastVerifyDate;
-
-            // Gezegende bulunan benzer gemi.
-            UserPlanetShipDTO userPlanetShip = LoginController.LC.CurrentUser.UserPlanetShips.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.ShipId == userPlanetShipProg.ShipId);
-
-            // Eğer gezegende bu gemiden yok ise ekliyoruz.
-            if (userPlanetShip == null)
+            // Eğer üretim süresi bittiyse.
+            if (leftTime.TotalSeconds <= 0)
             {
-                // Veritabanına gemiyi ekliyoruz.
-                LoginController.LC.CurrentUser.UserPlanetShips.Add(new UserPlanetShipDTO
+                // Ve yeni üretimlere başlıyoruz.
+                firstShipProg.LastVerifyDate = currentDate;
+
+                // Yarım üretimi 0lıyoruz.
+                firstShipProg.OffsetTime = 0;
+
+                // Üretilecek gemi miktarını 1 azaltıyoruz
+                firstShipProg.ShipCount--;
+
+                // Aktif gemi miktarı.
+                UserPlanetShipDTO currentShipCount = LoginController.LC.CurrentUser.UserPlanetShips.Find(x => x.UserPlanetId == userPlanet.UserPlanetId && x.ShipId == firstShipProg.ShipId);
+
+                // Daha önce bu gemiye sahip miydi?
+                if (currentShipCount == null)
                 {
-                    ShipId = userPlanetShipProg.ShipId,
-                    ShipCount = producedCount,
-                    UserPlanetId = GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId,
-                });
-            }
-            else
-            {
-                // Sadece miktarı güncelliyoruz.
-                userPlanetShip.ShipCount += producedCount;
-            }
+                    // Eğer ilk defa ekleniyor ise yeni oluşturuyoruz.
+                    currentShipCount = new UserPlanetShipDTO() { ShipCount = 1, ShipId = firstShipProg.ShipId, UserPlanetId = firstShipProg.UserPlanetId };
 
-            // Üretim miktarını azaltıyoruz.
-            userPlanetShipProg.ShipCount -= producedCount;
+                    // Listeye ekliyoruz.
+                    LoginController.LC.CurrentUser.UserPlanetShips.Add(currentShipCount);
+                }
+                else // AKsi durumda sadece miktarı arttırıyoruz.
+                    currentShipCount.ShipCount++;
 
-            // Eğer üretilebilecek gemi kalmamış ise veritabanından siliyoruz.
-            if (userPlanetShipProg.ShipCount > 0)
-                break;
+                // Eğer gemi kalmamış ise siliyoruz.
+                if (firstShipProg.ShipCount <= 0)
+                {
+                    // Eğer daha yok ise listeden siliyoruz.
+                    LoginController.LC.CurrentUser.UserPlanetShipProgs.Remove(firstShipProg);
+
+                    // Sonrakinin başlangıç tarihini güncelliyoruz.
+                    UserPlanetShipProgDTO nextProg = LoginController.LC.CurrentUser.UserPlanetShipProgs.FirstOrDefault(x => x.UserPlanetId == userPlanet.UserPlanetId);
+
+                    // Sonraki üretim.
+                    if (nextProg != null)
+                        nextProg.LastVerifyDate = currentDate;
+                }
+
+                // Kuyruğu yeniliyoruz.
+                if (ShipyardQueueController.SQC != null)
+                    ShipyardQueueController.SQC.RefreshShipyardQueue();
+            }
         }
 
-        // Bitenleri siliyoruz.
-        LoginController.LC.CurrentUser.UserPlanetShipProgs.RemoveAll(x => x.ShipCount <= 0);
+        yield return new WaitForSecondsRealtime(1);
+
+        StartCoroutine(ReCalculateShips());
     }
 
     public void DestroyShip(Ships shipId, int quantity)
@@ -135,7 +135,7 @@ public class ShipyardController : MonoBehaviour
 
     }
 
-    public void AddShip(int userPlanetId,Ships shipId,int quantity)
+    public void AddShip(int userPlanetId, Ships shipId, int quantity)
     {
         // Gezegendeki gemiyi buluyoruz.
         UserPlanetShipDTO ship = LoginController.LC.CurrentUser.UserPlanetShips.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.ShipId == shipId);

@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.ApiModels;
-using Assets.Scripts.Data;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using System;
@@ -66,12 +65,12 @@ public class ResearchDetailItemPanel : BasePanelController
 
         // Eğer seçilen araştırma yükleniyor ise süre zamanla azalacak.
         if (userResearchProg == null)
-            UpgradeTime.text = TimeExtends.GetCountdownText(TimeSpan.FromSeconds(StaticData.CalculateResearchUpgradeTime(research, researchLevel)));
+            UpgradeTime.text = TimeExtends.GetCountdownText(TimeSpan.FromSeconds(DataController.DC.CalculateResearchUpgradeTime(research, researchLevel)));
         else // Eğer yükseltiliyor ise kalan süreyi basıyoruz.
             UpgradeTime.text = TimeExtends.GetCountdownText(userResearchProg.EndDate - DateTime.UtcNow);
 
         // Maliyeti alıyoruz.
-        ResourcesDTO resources = StaticData.CalculateCostResearch(research, researchLevel);
+        ResourcesDTO resources = DataController.DC.CalculateCostResearch(research, researchLevel);
 
         #endregion
 
@@ -137,8 +136,6 @@ public class ResearchDetailItemPanel : BasePanelController
                  // Gezegenin kaynaklarını yeniliyoruz.
                  userPlanet.SetPlanetResources(prog.Resources);
 
-                 // Araştırmaları yeniliyoruz.
-                 ResearchPanelController.RPC.RefreshAllResearches();
              }
          }));
     }

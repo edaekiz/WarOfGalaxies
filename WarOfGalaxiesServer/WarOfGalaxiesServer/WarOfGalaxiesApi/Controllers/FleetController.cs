@@ -11,12 +11,13 @@ using WarOfGalaxiesApi.DTO.Extends;
 using WarOfGalaxiesApi.DTO.Helpers;
 using WarOfGalaxiesApi.DTO.Models;
 using Microsoft.EntityFrameworkCore;
+using WarOfGalaxiesApi.Statics;
 
 namespace WarOfGalaxiesApi.Controllers
 {
     public class FleetController : MainController
     {
-        public FleetController(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public FleetController(IUnitOfWork unitOfWork, StaticValues staticValues) : base(unitOfWork, staticValues)
         {
         }
 
@@ -110,7 +111,7 @@ namespace WarOfGalaxiesApi.Controllers
                 return ResponseHelper.GetError("Geçersiz veri tipi yada hiç gemi bulunamadı!");
 
             // Doğrulama tamamlandı mı?
-            bool isVerified = VerifyController.VerifyPlanetResources(base.UnitOfWork, new VerifyResourceDTO { UserPlanetID = request.SenderUserPlanetId });
+            bool isVerified = VerifyController.VerifyPlanetResources(this, new VerifyResourceDTO { UserPlanetID = request.SenderUserPlanetId });
 
             // Eğer hata verdiyse dön.
             if (!isVerified)
@@ -146,7 +147,7 @@ namespace WarOfGalaxiesApi.Controllers
             }
 
             // Minimum gemi hızı.
-            int minSpeed = GetMinSpeedInFleet(shipsInData.Select(x => x.Item1));
+            double minSpeed = GetMinSpeedInFleet(shipsInData.Select(x => x.Item1));
 
             // Kullanıcının toplam göndereceği miktar.
             double totalResource = request.CarriedMetal + request.CarriedCrystal + request.CarriedBoron;
@@ -234,7 +235,7 @@ namespace WarOfGalaxiesApi.Controllers
         /// </summary>
         /// <param name="ships"></param>
         /// <returns></returns>
-        public static int GetMinSpeedInFleet(IEnumerable<Ships> ships) => ships.Select(x => { return StaticData.ShipData.Find(y => y.ShipID == x).ShipSpeed; }).DefaultIfEmpty(0).Min();
+        public double GetMinSpeedInFleet(IEnumerable<Ships> ships) => ships.Select(x => { return StaticValues.GetShip(x).ShipSpeed; }).DefaultIfEmpty(0).Min();
 
         /// <summary>
         /// İki kordinat arasındaki mesafeyi hesaplar.
@@ -242,7 +243,7 @@ namespace WarOfGalaxiesApi.Controllers
         /// <param name="bCordinate"></param>
         /// <param name="eCordinate"></param>
         /// <returns></returns>
-        public static double CalculateDistance(CordinateDTO bCordinate, CordinateDTO eCordinate)
+        public double CalculateDistance(CordinateDTO bCordinate, CordinateDTO eCordinate)
         {
             // Toplam tutuyoruz.
             double distance = 0;
@@ -268,9 +269,9 @@ namespace WarOfGalaxiesApi.Controllers
         /// <param name="fleetSpeedRate"></param>
         /// <param name="slowestFleetSpeed"></param>
         /// <returns></returns>
-        public static double CalculateFlightTime(double distance, float fleetSpeedRate, double slowestFleetSpeed)
+        public double CalculateFlightTime(double distance, float fleetSpeedRate, double slowestFleetSpeed)
         {
-            return (10 + (3500 / fleetSpeedRate) * Math.Sqrt((10 * distance) / slowestFleetSpeed)) / 2;
+            return (10 + (3500 / fleetSpeedRate) * Math.Sqrt((10 * distance) / slowestFleetSpeed)) / StaticValues.UniverseFleetSpeed;
         }
 
         /// <summary>
@@ -278,7 +279,7 @@ namespace WarOfGalaxiesApi.Controllers
         /// </summary>
         /// <param name="ships"></param>
         /// <returns></returns>
-        public static double CalculateShipCapacity(IEnumerable<Tuple<Ships, int>> ships) => ships.Select(x => { return StaticData.ShipData.Find(y => y.ShipID == x.Item1).CargoCapacity * x.Item2; }).DefaultIfEmpty(0).Sum();
+        public double CalculateShipCapacity(IEnumerable<Tuple<Ships, int>> ships) => ships.Select(x => { return StaticValues.GetShip(x.Item1).CargoCapacity * x.Item2; }).DefaultIfEmpty(0).Sum();
 
         /// <summary>
         /// Filonun yakıt kapasitesini hesaplar.
@@ -287,16 +288,16 @@ namespace WarOfGalaxiesApi.Controllers
         /// <param name="distance"></param>
         /// <param name="fleetSpeedRate"></param>
         /// <returns></returns>
-        public static double CalculateFuelCost(IEnumerable<Tuple<Ships, int>> ships, double distance, double fleetSpeedRate)
+        public double CalculateFuelCost(IEnumerable<Tuple<Ships, int>> ships, double distance, double fleetSpeedRate)
         {
 
             return 1 + Math.Round(ships.Select(x =>
             {
                 // Gemi bilgisini buluyoruz.
-                ShipDTO shipData = StaticData.ShipData.Find(y => y.ShipID == x.Item1);
+                TblShips shipData = StaticValues.GetShip(x.Item1);
 
                 // Temel değerlerine bakarak yakıtını hesaplıyoruz.
-                return Math.Round(shipData.BaseFuelt * distance / 35000 * TamKare(fleetSpeedRate, 1), 5) * x.Item2;
+                return Math.Round(shipData.ShipFuelt * distance / 35000 * TamKare(fleetSpeedRate, 1), 5) * x.Item2;
 
             }).DefaultIfEmpty(0).Sum(), 0);
         }
@@ -307,7 +308,7 @@ namespace WarOfGalaxiesApi.Controllers
         /// <param name="first"></param>
         /// <param name="second"></param>
         /// <returns></returns>
-        public static double TamKare(double first, double second) => Math.Pow(first, 2) + (2 * first * second) + Math.Pow(second, 2);
+        public double TamKare(double first, double second) => Math.Pow(first, 2) + (2 * first * second) + Math.Pow(second, 2);
 
     }
 }

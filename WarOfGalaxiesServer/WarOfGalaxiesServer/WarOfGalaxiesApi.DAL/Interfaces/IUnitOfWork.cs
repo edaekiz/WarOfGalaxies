@@ -5,5 +5,6 @@
         bool Disposed { get; set; }
         IGenericRepository<T> GetRepository<T>() where T : class;
         int SaveChanges();
+        void Dispose();
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.ApiModels;
 using Assets.Scripts.Controllers.Base;
-using Assets.Scripts.Data;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using System.Collections;
@@ -83,7 +82,7 @@ public class ResourceController : BaseLanguageBehaviour
     {
 
         // Kaynakları tekrar hesaplıyoruz.
-        GlobalPlanetController.GPC.CurrentPlanet.VerifyResources();
+        LoginController.LC.CurrentUser.UserPlanets.ForEach(e => e.VerifyResources());
 
         // Her saniye tekrar çağıracağız bu methotu. Bu yüzden 1 saniye bekletiyoruz.
         yield return new WaitForSecondsRealtime(1);
@@ -154,7 +153,7 @@ public class ResourceController : BaseLanguageBehaviour
             buildingLevel = storageBuilding.BuildingLevel;
 
         // Kapasitesi.
-        double buildingCapacity = StaticData.GetBuildingStorage(Assets.Scripts.Enums.Buildings.MetalDeposu, buildingLevel);
+        double buildingCapacity = DataController.DC.GetBuildingStorage(Assets.Scripts.Enums.Buildings.MetalDeposu, buildingLevel);
 
         // Eğer deposu yeterli ise beyaz değil ise kırmızı olacak.
         if (metalAnimQuantity < buildingCapacity)
@@ -224,7 +223,7 @@ public class ResourceController : BaseLanguageBehaviour
             buildingLevel = storageBuilding.BuildingLevel;
 
         // Kapasitesi.
-        double buildingCapacity = StaticData.GetBuildingStorage(Assets.Scripts.Enums.Buildings.KristalDeposu, buildingLevel);
+        double buildingCapacity = DataController.DC.GetBuildingStorage(Assets.Scripts.Enums.Buildings.KristalDeposu, buildingLevel);
 
         // Eğer deposu yeterli ise beyaz değil ise kırmızı olacak.
         if (crystalAnimQuantity < buildingCapacity)
@@ -294,7 +293,7 @@ public class ResourceController : BaseLanguageBehaviour
             buildingLevel = storageBuilding.BuildingLevel;
 
         // Kapasitesi.
-        double buildingCapacity = StaticData.GetBuildingStorage(Buildings.BoronDeposu, buildingLevel);
+        double buildingCapacity = DataController.DC.GetBuildingStorage(Buildings.BoronDeposu, buildingLevel);
 
         // Eğer deposu yeterli ise beyaz değil ise kırmızı olacak.
         if (boronAnimQuantity < buildingCapacity)
@@ -317,7 +316,7 @@ public class ResourceController : BaseLanguageBehaviour
         UserPlanetBuildingDTO metalBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.MetalMadeni);
 
         // Saatlik hesaplanmış üretim.
-        double metalProducePerHour = StaticData.GetBuildingProdPerHour(Buildings.MetalMadeni, metalBuilding == null ? 0 : metalBuilding.BuildingLevel);
+        double metalProducePerHour = DataController.DC.GetBuildingProdPerHour(Buildings.MetalMadeni, metalBuilding == null ? 0 : metalBuilding.BuildingLevel);
 
         #endregion
 
@@ -327,7 +326,7 @@ public class ResourceController : BaseLanguageBehaviour
         UserPlanetBuildingDTO metalStorageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.MetalDeposu);
 
         // Kullanıcının metal deposu.
-        double metalBuildingCapacity = StaticData.GetBuildingStorage(Buildings.MetalDeposu, metalStorageBuilding == null ? 0 : metalStorageBuilding.BuildingLevel);
+        double metalBuildingCapacity = DataController.DC.GetBuildingStorage(Buildings.MetalDeposu, metalStorageBuilding == null ? 0 : metalStorageBuilding.BuildingLevel);
 
         #endregion
 
@@ -351,7 +350,7 @@ public class ResourceController : BaseLanguageBehaviour
         UserPlanetBuildingDTO crystalBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.KristalMadeni);
 
         // Saatlik hesaplanmış üretim.
-        double crystalProducePerHour = StaticData.GetBuildingProdPerHour(Buildings.KristalMadeni, crystalBuilding == null ? 0 : crystalBuilding.BuildingLevel);
+        double crystalProducePerHour = DataController.DC.GetBuildingProdPerHour(Buildings.KristalMadeni, crystalBuilding == null ? 0 : crystalBuilding.BuildingLevel);
 
         #endregion
 
@@ -361,7 +360,7 @@ public class ResourceController : BaseLanguageBehaviour
         UserPlanetBuildingDTO crystalStorageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.KristalDeposu);
 
         // Kullanıcının kristal deposu.
-        double crystalBuildingCapacity = StaticData.GetBuildingStorage(Buildings.KristalDeposu, crystalStorageBuilding == null ? 0 : crystalStorageBuilding.BuildingLevel);
+        double crystalBuildingCapacity = DataController.DC.GetBuildingStorage(Buildings.KristalDeposu, crystalStorageBuilding == null ? 0 : crystalStorageBuilding.BuildingLevel);
 
         #endregion
 
@@ -384,7 +383,7 @@ public class ResourceController : BaseLanguageBehaviour
         UserPlanetBuildingDTO boronBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.BoronMadeni);
 
         // Saatlik hesaplanmış üretim.
-        double boronProducePerHour = StaticData.GetBuildingProdPerHour(Buildings.BoronMadeni, boronBuilding == null ? 0 : boronBuilding.BuildingLevel);
+        double boronProducePerHour = DataController.DC.GetBuildingProdPerHour(Buildings.BoronMadeni, boronBuilding == null ? 0 : boronBuilding.BuildingLevel);
 
         #endregion
 
@@ -394,7 +393,7 @@ public class ResourceController : BaseLanguageBehaviour
         UserPlanetBuildingDTO boronStorageBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.BoronDeposu);
 
         // Kullanıcının kristal deposu.
-        double boronBuildingCapacity = StaticData.GetBuildingStorage(Buildings.BoronDeposu, boronStorageBuilding == null ? 0 : boronStorageBuilding.BuildingLevel);
+        double boronBuildingCapacity = DataController.DC.GetBuildingStorage(Buildings.BoronDeposu, boronStorageBuilding == null ? 0 : boronStorageBuilding.BuildingLevel);
 
         #endregion
 

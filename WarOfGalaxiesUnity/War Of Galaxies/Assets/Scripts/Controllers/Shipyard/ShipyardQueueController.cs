@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.ApiModels;
 using Assets.Scripts.Controllers.Base;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,7 +30,7 @@ public class ShipyardQueueController : BaseLanguageBehaviour
             Destroy(child.gameObject);
 
         // Şimdi yenilerini basıyoruz.
-        foreach (UserPlanetShipProgDTO queue in LoginController.LC.CurrentUser.UserPlanetShipProgs)
+        foreach (UserPlanetShipProgDTO queue in LoginController.LC.CurrentUser.UserPlanetShipProgs.Where(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId))
         {
             // Kuyruk eşyası.
             GameObject go = Instantiate(ShipyardQueueItem, ContentField);
@@ -38,7 +39,7 @@ public class ShipyardQueueController : BaseLanguageBehaviour
             go.transform.Find("ItemImage").GetComponent<Image>().sprite = ShipyardController.SC.ShipWithImages.Find(x => x.Ship == queue.ShipId).ShipImage;
 
             // İsmini basıyoruz.
-            go.transform.Find("ItemName").GetComponent<TMP_Text>().text = base.GetLanguageText($"S{queue.ShipId}");
+            go.transform.Find("ItemName").GetComponent<TMP_Text>().text = base.GetLanguageText($"S{(int)queue.ShipId}");
 
             // Miktarı basıyoruz.
             go.transform.Find("ItemCount").GetComponent<TMP_Text>().text = queue.ShipCount.ToString();

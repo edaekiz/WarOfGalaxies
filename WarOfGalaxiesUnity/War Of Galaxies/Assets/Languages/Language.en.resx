@@ -363,4 +363,10 @@
   <data name="Dönüyor" xml:space="preserve">
     <value>Return</value>
   </data>
+  <data name="S2" xml:space="preserve">
+    <value>Little Transport</value>
+  </data>
+  <data name="SD2" xml:space="preserve">
+    <value>Little but very fast tranport ship.</value>
+  </data>
 </root>

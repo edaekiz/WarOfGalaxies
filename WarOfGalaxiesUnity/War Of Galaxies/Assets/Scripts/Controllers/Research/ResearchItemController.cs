@@ -3,15 +3,13 @@ using Assets.Scripts.Controllers.Base;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ResearchItemController : BaseLanguageBehaviour
 {
-    // Yükseltme bilgisi.
-    public UserResearchProgDTO ResearchUpgradeData { get; set; }
-
     [Header("Araştırma ismi buraya basılacak.")]
     public TMP_Text ResearchName;
 
@@ -30,12 +28,10 @@ public class ResearchItemController : BaseLanguageBehaviour
     [Header("Aktif araştırma")]
     public Researches CurrentResearch;
 
-    /// <summary>
-    /// Araştırma bilgilerini yükler.
-    /// </summary>
-    /// <param name="research"></param>
-    public void LoadResearchData(Researches research)
+    public IEnumerator LoadResearchData(Researches research)
     {
+        DateTime currentDate = DateTime.UtcNow;
+
         // Aktif tuttuğu araştırma bilgisi.
         CurrentResearch = research;
 
@@ -59,20 +55,23 @@ public class ResearchItemController : BaseLanguageBehaviour
         // Eğer yükseltmesi var ise yükseltme metnini açıyoruz.
         if (upg != null)
         {
-            // Eğer yükseltme var ise basıyoruz.
-            ResearchUpgradeData = upg;
-
             // İkonu ve kalan süreyi basıyoruz.
-            ResearchCountdownImage.gameObject.SetActive(true);
+            if (!ResearchCountdownImage.gameObject.activeSelf)
+                ResearchCountdownImage.gameObject.SetActive(true);
 
             // Araştırma geri sayımını aktif ediyoruz.
-            ResearchCountdown.text = $"{base.GetLanguageText("SeviyeParantez", upg.ResearchLevel.ToString())}{Environment.NewLine}{TimeExtends.GetCountdownText(DateTime.UtcNow - upg.EndDate)}";
+            ResearchCountdown.text = $"{base.GetLanguageText("SeviyeParantez", upg.ResearchLevel.ToString())}{Environment.NewLine}{TimeExtends.GetCountdownText(upg.EndDate - currentDate)}";
         }
         else
         {
             // İkonu kapatıyoruz.
-            ResearchCountdownImage.gameObject.SetActive(false);
+            if (ResearchCountdownImage.gameObject.activeSelf)
+                ResearchCountdownImage.gameObject.SetActive(false);
         }
+
+        yield return new WaitForSecondsRealtime(1);
+
+        StartCoroutine(LoadResearchData(research));
     }
 
     public void ShowResearchDetail()
@@ -90,56 +89,4 @@ public class ResearchItemController : BaseLanguageBehaviour
         rdip.StartCoroutine(rdip.LoadReserchDetails(CurrentResearch));
     }
 
-    private void OnResearchCompleted()
-    {
-        // Yükseltme bilgisi.
-        UserResearchProgDTO upgradeInfo = LoginController.LC.CurrentUser.UserResearchProgs.Find(x => x.ResearchID == CurrentResearch);
-
-        // Araştırmayı buluyoruz. Eğer yok ise eklicez var ise güncelleyeceğiz.
-        UserResearchesDTO research = LoginController.LC.CurrentUser.UserResearches.Find(x => x.ResearchID == CurrentResearch);
-
-        // Yükseltme işlemi ise seviyeyi güncelliyoruz.
-        if (research != null)
-            research.ResearchLevel = upgradeInfo.ResearchLevel;
-        else
-        {
-            // Araştırmalara ekliyoruz.
-            LoginController.LC.CurrentUser.UserResearches.Add(new UserResearchesDTO
-            {
-                ResearchID = upgradeInfo.ResearchID,
-                ResearchLevel = upgradeInfo.ResearchLevel
-            });
-        }
-
-        // Listeden yükseltmeyi siliyoruz.
-        LoginController.LC.CurrentUser.UserResearchProgs.Remove(upgradeInfo);
-
-        // Bütün araştırmaları yeniliyoruz.
-        ResearchPanelController.RPC.RefreshAllResearches();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // Eğer yükseltme yok ise geri dön.
-        if (ResearchUpgradeData == null)
-            return;
-
-        // Araştırma geri sayımını güncelliyoruz.
-        ResearchCountdown.text = $"{base.GetLanguageText("SeviyeParantez", ResearchUpgradeData.ResearchLevel.ToString())}{Environment.NewLine}{TimeExtends.GetCountdownText(ResearchUpgradeData.EndDate - DateTime.UtcNow)}";
-
-        // Araştırma biter ise doğrulaman gönderiyoruz.
-        if (DateTime.UtcNow >= ResearchUpgradeData.EndDate)
-        {
-            // Sunucuya kaynakları doğrulamak için gönderiyoruz.
-            LoginController.LC.VerifyUserResources(GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId, (UserPlanetDTO userPlanet) =>
-             {
-                 // Yükseltme tamalandığında.
-                 OnResearchCompleted();
-             });
-
-            // Siliyoruz ki tekrar girmesin.
-            ResearchUpgradeData = null;
-        }
-    }
 }

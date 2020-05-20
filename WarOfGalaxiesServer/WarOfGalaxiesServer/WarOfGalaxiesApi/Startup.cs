@@ -1,13 +1,12 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.KeyVault.Models;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json.Serialization;
-using Swashbuckle.AspNetCore.Swagger;
 using WarOfGalaxiesApi.DAL.Interfaces;
 using WarOfGalaxiesApi.DAL.Repositories;
+using WarOfGalaxiesApi.Statics;
 
 namespace WarOfGalaxiesApi
 {
@@ -26,6 +25,8 @@ namespace WarOfGalaxiesApi
             // Veritabanı contextini atıyoruz.
             services.AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork));
 
+            // Statik değerleri burada tutucağız.
+            services.AddSingleton<StaticValues>();
 
             #region Swagger
 

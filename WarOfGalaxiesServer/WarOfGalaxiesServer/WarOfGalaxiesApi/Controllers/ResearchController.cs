@@ -6,12 +6,13 @@ using WarOfGalaxiesApi.DAL.Interfaces;
 using WarOfGalaxiesApi.DAL.Models;
 using WarOfGalaxiesApi.DTO.Helpers;
 using WarOfGalaxiesApi.DTO.Models;
+using WarOfGalaxiesApi.Statics;
 
 namespace WarOfGalaxiesApi.Controllers
 {
     public class ResearchController : MainController
     {
-        public ResearchController(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public ResearchController(IUnitOfWork unitOfWork, StaticValues staticValues) : base(unitOfWork, staticValues)
         {
         }
 
@@ -20,7 +21,7 @@ namespace WarOfGalaxiesApi.Controllers
         public ApiResult UpgradeUserResearch(UserResearchUpgRequest request)
         {
             // Yapılacak ilk iş kaynakları doğrulamak.
-            bool isVerified = VerifyController.VerifyPlanetResources(base.UnitOfWork, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
+            bool isVerified = VerifyController.VerifyPlanetResources(this, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
 
             // Doğrulama tamamlandı mı?
             if (!isVerified)
@@ -46,14 +47,14 @@ namespace WarOfGalaxiesApi.Controllers
             int nextResearchLevel = userExistsResearch == null ? 1 : userExistsResearch.ResearchLevel + 1;
 
             // Kullanıcı daha önce araştırmış ise araştırma seviyesini araştırmamış ise 1.seviyeye göre kaynakları hesaplıyoruz.
-            ResourcesDTO researchCost = StaticData.CalculateCostResearch(request.ResearchID, nextResearchLevel);
+            ResourcesDTO researchCost = StaticValues.CalculateCostResearch(request.ResearchID, nextResearchLevel);
 
             // Eğer kullanıcının gezegeninde yeterli kaynak yok ise geri dön.
             if (userPlanet.Metal < researchCost.Metal || userPlanet.Crystal < researchCost.Crystal || userPlanet.Boron < researchCost.Boron)
                 return ResponseHelper.GetError("Yetersiz hammadde.");
 
             // Yükseltme süresi
-            double researchUpgTime = StaticData.CalculateResearchUpgradeTime(request.ResearchID, nextResearchLevel);
+            double researchUpgTime = StaticValues.CalculateResearchUpgradeTime(request.ResearchID, nextResearchLevel);
 
             // Eğer var ise yükseltmeyi başlatabiliriz.
             TblUserResearchUpgs upgradeData = base.UnitOfWork.GetRepository<TblUserResearchUpgs>().Add(new TblUserResearchUpgs

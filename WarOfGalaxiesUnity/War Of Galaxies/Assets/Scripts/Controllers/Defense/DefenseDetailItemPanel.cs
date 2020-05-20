@@ -1,10 +1,10 @@
 ﻿using Assets.Scripts.ApiModels;
-using Assets.Scripts.Data;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using Assets.Scripts.Models;
 using System;
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -66,10 +66,10 @@ public class DefenseDetailItemPanel : BasePanelController
         ItemImage.sprite = DefenseController.DC.DefenseWithImages.Find(x => x.Defense == defense).DefenseImage;
 
         // Maliyeti.
-        DefenseDTO defenseInfo = StaticData.DefenseData.Find(x => x.DefenseID == defense);
+        DefenseDataDTO defenseInfo = DataController.DC.GetDefense(defense);
 
         // Maliyeti set ediyoruz.
-        bool isMathEnough = base.SetResources(defenseInfo.Cost);
+        bool isMathEnough = base.SetResources(new ResourcesDTO(defenseInfo.CostMetal, defenseInfo.CostCrystal, defenseInfo.CostBoron));
 
         // Eğer materyal yeterli ise butonu açıyoruz değil ise kapatıyoruz.
         if (isMathEnough && !IsSending)
@@ -81,7 +81,7 @@ public class DefenseDetailItemPanel : BasePanelController
         UserPlanetBuildingDTO robotFac = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.BuildingId == Buildings.RobotFabrikası && x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
 
         // Üretim süresini basıyoruz.
-        double countdown = StaticData.CalculateDefenseCountdown(defense, robotFac == null ? 0 : robotFac.BuildingLevel);
+        double countdown = DataController.DC.CalculateDefenseCountdown(defense, robotFac == null ? 0 : robotFac.BuildingLevel);
 
         // Üretim süresini basıyoruz.
         ItemCountdown.text = TimeExtends.GetCountdownText(TimeSpan.FromSeconds(countdown));
@@ -106,6 +106,8 @@ public class DefenseDetailItemPanel : BasePanelController
             // Butonu kapatıyoruz.
             ProduceButton.interactable = false;
 
+            LoadingController.LC.ShowLoading();
+
             StartCoroutine(ApiService.API.Post("AddDefenseToDefenseQueue", new DefenseAddQueueRequestDTO
             {
                 Quantity = quantity,
@@ -113,6 +115,7 @@ public class DefenseDetailItemPanel : BasePanelController
                 UserPlanetID = GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId
             }, (ApiResult response) =>
             {
+                LoadingController.LC.CloseLoading();
                 // Eğer başarılı ise.
                 if (response.IsSuccess)
                 {
@@ -127,7 +130,7 @@ public class DefenseDetailItemPanel : BasePanelController
                     };
 
                     // Eğer üretim yok ise tarih veriyoruz.
-                    if (LoginController.LC.CurrentUser.UserPlanetDefenseProgs.Count == 0)
+                    if (LoginController.LC.CurrentUser.UserPlanetDefenseProgs.Where(x => x.UserPlanetId == responseData.UserPlanetID).Count() == 0)
                         progress.LastVerifyDate = DateTime.UtcNow;
 
                     // Üretime ekliyoruz.

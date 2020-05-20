@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.Data;
-using Assets.Scripts.Enums;
+﻿using Assets.Scripts.Enums;
 using System;
 
 namespace Assets.Scripts.ApiModels
@@ -70,10 +69,10 @@ namespace Assets.Scripts.ApiModels
                 #region Kaynak Hesaplama
 
                 // Toplam geçen sürede kaynak binasının ürettiği toplam üretim.
-                double metalProduceQuantity = StaticData.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSeconds / 3600);
+                double metalProduceQuantity = DataController.DC.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSeconds / 3600);
 
                 // Metal binasının kapasitesini hesaplıyoruz.
-                double metalBuildingCapacity = StaticData.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
+                double metalBuildingCapacity = DataController.DC.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
 
                 // Gezegendeki kaynağı yükseltiyoruz.
                 UpdateUserPlanetResources(resourceBuilding, metalBuildingCapacity, metalProduceQuantity);

@@ -4,28 +4,6 @@ using WarOfGalaxiesApi.DTO.Enums;
 
 namespace WarOfGalaxiesApi.DTO.Models
 {
-    public class DefenseDTO
-    {
-        /// <summary>
-        /// Savunmanın idsi.
-        /// </summary>
-        public Defenses DefenseID { get; set; }
-
-        /// <summary>
-        /// Savunmanın taban maliyeti.
-        /// </summary>
-        public ResourcesDTO Cost { get; set; }
-
-        /// <summary>
-        /// Bir vuruşta kaç tane gemiyi yok edebilir.
-        /// </summary>
-        public List<Tuple<Ships, int>> KillInOneShot { get; set; }
-
-        public DefenseDTO()
-        {
-            KillInOneShot = new List<Tuple<Ships, int>>();
-        }
-    }
     public class DefenseAddQueueRequestDTO
     {
         public int UserPlanetID { get; set; }

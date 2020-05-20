@@ -1,9 +1,4 @@
-﻿using Assets.Scripts.Data;
-using Assets.Scripts.Enums;
-using Assets.Scripts.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using Assets.Scripts.Models;
 using UnityEngine;
 
 namespace Assets.Scripts.Extends

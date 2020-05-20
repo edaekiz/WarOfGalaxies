@@ -1,5 +1,4 @@
 ﻿using Assets.Scripts.ApiModels;
-using Assets.Scripts.Data;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using System;
@@ -77,13 +76,13 @@ public class BuildingPanelController : BasePanelController
         UserPlanetBuildingDTO robotBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.RobotFabrikası);
 
         // Yükseltme süresi.
-        double upgradeTime = StaticData.CalculateBuildingUpgradeTime(building, nextLevel, robotBuilding == null ? 0 : robotBuilding.BuildingLevel);
+        double upgradeTime = DataController.DC.CalculateBuildingUpgradeTime(building, nextLevel, robotBuilding == null ? 0 : robotBuilding.BuildingLevel);
 
         // Ekrana basıyoruz.
         BuildingUpgradeTime.text = $"<color=#C4E5FD>{base.GetLanguageText("YapımSüresi")}:</color> {TimeExtends.GetCountdownText(TimeSpan.FromSeconds(upgradeTime))}";
 
         // Kaynak kontrolü ve koşulları sağlıyor mu kontorlü
-        ResourcesDTO resources = StaticData.CalculateCostBuilding(building, nextLevel);
+        ResourcesDTO resources = DataController.DC.CalculateCostBuilding(building, nextLevel);
 
         #endregion
 
@@ -202,9 +201,6 @@ public class BuildingPanelController : BasePanelController
     {
         // Binanın seçimini kaldırıyoruz.
         GlobalBuildingController.GBC.DeSelectBuilding();
-
-        // Bütün timerları durduruyoruz bu sınıftaki.
-        StopAllCoroutines();
     }
 
 }

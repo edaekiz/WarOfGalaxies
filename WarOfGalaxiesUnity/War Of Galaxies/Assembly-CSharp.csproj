@@ -63,6 +63,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\BaseStepController.cs" />
+    <Compile Include="Assets\DataController.cs" />
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\AntiAliasing.cs" />
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\FXAA\FXAA.cs" />
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\IAntiAliasing.cs" />
@@ -89,10 +90,12 @@
     <Compile Include="Assets\FleetPanelItemController.cs" />
     <Compile Include="Assets\GalaxyChangePanelController.cs" />
     <Compile Include="Assets\Languages\Language.Designer.cs" />
+    <Compile Include="Assets\ParameterController.cs" />
     <Compile Include="Assets\PlanetActionController.cs" />
     <Compile Include="Assets\QuantityItemPanel.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ApiResult.cs" />
     <Compile Include="Assets\Scripts\ApiModels\Base\ProgressModel.cs" />
+    <Compile Include="Assets\Scripts\ApiModels\DataDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\DefenseDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\FleetDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\GalaxyInfoDTO.cs" />
@@ -142,10 +145,10 @@
     <Compile Include="Assets\Scripts\Controllers\Shipyard\ShipyardItemController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Shipyard\ShipyardPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Shipyard\ShipyardQueueController.cs" />
-    <Compile Include="Assets\Scripts\Data\StaticData.cs" />
     <Compile Include="Assets\Scripts\Enums\Buildings.cs" />
     <Compile Include="Assets\Scripts\Enums\Defenses.cs" />
     <Compile Include="Assets\Scripts\Enums\FleetTypes.cs" />
+    <Compile Include="Assets\Scripts\Enums\ParameterTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\PlanetTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\Researches.cs" />
     <Compile Include="Assets\Scripts\Enums\ResourceTypes.cs" />
@@ -159,10 +162,8 @@
     <Compile Include="Assets\Scripts\Extends\VectorExtends.cs" />
     <Compile Include="Assets\Scripts\Ignored\IgnoredCodes.cs" />
     <Compile Include="Assets\Scripts\Models\CordinateDTO.cs" />
-    <Compile Include="Assets\Scripts\Models\DefenseDTO.cs" />
     <Compile Include="Assets\Scripts\Models\DefenseImageDTO.cs" />
     <Compile Include="Assets\Scripts\Models\LanguageItem.cs" />
-    <Compile Include="Assets\Scripts\Models\ShipDTO.cs" />
     <Compile Include="Assets\Scripts\Models\ShipImageDTO.cs" />
     <Compile Include="Assets\Scripts\Models\SolarSystemDTO.cs" />
     <Compile Include="Assets\ShipItemCanSendController.cs" />

@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Enums;
+﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Enums;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,14 +37,11 @@ public class ShipyardPanelController : BasePanelController
         // Öncekileri temizliyoruz.
         _shipyardItems.Clear();
 
-        // Bütün gemileri alıyoruz.
-        Array ships = Enum.GetValues(typeof(Ships));
-
         // Bütün gemileri teker teker basıyoruz.
-        for (int ii = 0; ii < ships.Length; ii++)
+        for (int ii = 0; ii < DataController.DC.SystemData.Ships.Count; ii++)
         {
             // Gemi bilgisi.
-            Ships ship = (Ships)ships.GetValue(ii);
+            ShipDataDTO ship = DataController.DC.SystemData.Ships[ii];
 
             // Gemiyi oluşturuyoruz.
             GameObject shipyardItem = Instantiate(ShipyardItem, ShipyardItemContent);
@@ -52,7 +50,7 @@ public class ShipyardPanelController : BasePanelController
             ShipyardItemController sic = shipyardItem.GetComponent<ShipyardItemController>();
 
             // Detayları yükle.
-            sic.StartCoroutine(sic.LoadShipDetails(ship));
+            sic.StartCoroutine(sic.LoadShipDetails((Ships)ship.ShipId));
 
             // Listeye ekle
             _shipyardItems.Add(sic);

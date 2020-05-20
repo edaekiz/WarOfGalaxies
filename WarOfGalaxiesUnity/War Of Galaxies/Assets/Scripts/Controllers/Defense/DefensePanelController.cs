@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Enums;
+﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Enums;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -36,14 +37,11 @@ public class DefensePanelController : BasePanelController
         // Öncekileri temizliyoruz.
         _defenseItems.Clear();
 
-        // Bütün savunmaları alıyoruz.
-        Array defenses = Enum.GetValues(typeof(Defenses));
-
         // Bütün savunmaları teker teker basıyoruz.
-        for (int ii = 0; ii < defenses.Length; ii++)
+        for (int ii = 0; ii < DataController.DC.SystemData.Defenses.Count; ii++)
         {
             // Savunma bilgisi.
-            Defenses defense = (Defenses)defenses.GetValue(ii);
+            DefenseDataDTO defense = DataController.DC.SystemData.Defenses[ii];
 
             // Savunmayı oluşturuyoruz.
             GameObject defenseItem = Instantiate(DefenseItem, DefenseItemContent);
@@ -52,7 +50,7 @@ public class DefensePanelController : BasePanelController
             DefenseItemController dic = defenseItem.GetComponent<DefenseItemController>();
 
             // Detayları yükle.
-            dic.StartCoroutine(dic.LoadDefenseDetails(defense));
+            dic.StartCoroutine(dic.LoadDefenseDetails((Defenses)defense.DefenseId));
 
             // Listeye ekle
             _defenseItems.Add(dic);

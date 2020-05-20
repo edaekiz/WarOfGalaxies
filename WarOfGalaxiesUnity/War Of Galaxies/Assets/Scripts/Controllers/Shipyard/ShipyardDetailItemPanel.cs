@@ -1,10 +1,9 @@
 ﻿using Assets.Scripts.ApiModels;
-using Assets.Scripts.Data;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
-using Assets.Scripts.Models;
 using System;
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -66,10 +65,10 @@ public class ShipyardDetailItemPanel : BasePanelController
         ItemImage.sprite = ShipyardController.SC.ShipWithImages.Find(x => x.Ship == ship).ShipImage;
 
         // Maliyeti.
-        ShipDTO shipInfo = StaticData.ShipData.Find(x => x.ShipID == ship);
+        ShipDataDTO shipInfo = DataController.DC.GetShip(ship);
 
         // Maliyeti set ediyoruz.
-        bool isMathEnough = base.SetResources(shipInfo.Cost);
+        bool isMathEnough = base.SetResources(new ResourcesDTO(shipInfo.CostMetal, shipInfo.CostCrystal, shipInfo.CostBoron));
 
         // Eğer materyal yeterli ise butonu açıyoruz değil ise kapatıyoruz.
         if (isMathEnough && !IsSending)
@@ -81,7 +80,7 @@ public class ShipyardDetailItemPanel : BasePanelController
         UserPlanetBuildingDTO shipyard = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.BuildingId == Buildings.Tersane && x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
 
         // Üretim süresini basıyoruz.
-        double countdown = StaticData.CalculateShipCountdown(ship, shipyard == null ? 0 : shipyard.BuildingLevel);
+        double countdown = DataController.DC.CalculateShipCountdown(ship, shipyard == null ? 0 : shipyard.BuildingLevel);
 
         // Üretim süresini basıyoruz.
         ItemCountdown.text = TimeExtends.GetCountdownText(TimeSpan.FromSeconds(countdown));
@@ -127,7 +126,7 @@ public class ShipyardDetailItemPanel : BasePanelController
                     };
 
                     // Eğer üretim yok ise tarih veriyoruz.
-                    if (LoginController.LC.CurrentUser.UserPlanetShipProgs.Count == 0)
+                    if (LoginController.LC.CurrentUser.UserPlanetShipProgs.Where(x => x.UserPlanetId == responseData.UserPlanetID).Count() == 0)
                         progress.LastVerifyDate = DateTime.UtcNow;
 
                     // Üretime ekliyoruz.

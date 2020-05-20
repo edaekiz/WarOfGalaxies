@@ -14,11 +14,11 @@ namespace WarOfGalaxiesApi.DAL.Models
         public DateTime BeginDate { get; set; }
         public DateTime EndDate { get; set; }
         public bool IsReturning { get; set; }
+        public double FleetSpeed { get; set; }
         public string FleetData { get; set; }
         public double CarriedMetal { get; set; }
         public double CarriedCrystal { get; set; }
         public double CarriedBoron { get; set; }
-        public double FleetSpeed { get; set; }
 
         public virtual TblUserPlanets DestinationUserPlanet { get; set; }
         public virtual TblFleetActionTypes FleetActionType { get; set; }

@@ -1,4 +1,4 @@
-﻿using Assets.Scripts.Data;
+﻿using Assets.Scripts.ApiModels;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Models;
 using System;
@@ -14,7 +14,7 @@ namespace Assets.Scripts.Extends
         /// </summary>
         /// <param name="ships"></param>
         /// <returns></returns>
-        public static int GetMinSpeedInFleet(IEnumerable<Ships> ships) => ships.Select(x => { return StaticData.ShipData.Find(y => y.ShipID == x).ShipSpeed; }).DefaultIfEmpty(0).Min();
+        public static double GetMinSpeedInFleet(IEnumerable<Ships> ships) => ships.Select(x => { return DataController.DC.GetShip(x).ShipSpeed; }).DefaultIfEmpty(0).Min();
 
         /// <summary>
         /// İki kordinat arasındaki mesafeyi hesaplar.
@@ -50,7 +50,7 @@ namespace Assets.Scripts.Extends
         /// <returns></returns>
         public static double CalculateFlightTime(double distance, float fleetSpeedRate, double slowestFleetSpeed)
         {
-            return (10 + (3500 / fleetSpeedRate) * Math.Sqrt((10 * distance) / slowestFleetSpeed)) / 2;
+            return (10 + (3500 / fleetSpeedRate) * Math.Sqrt((10 * distance) / slowestFleetSpeed)) / DataController.DC.UniverseFleetSpeed;
         }
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace Assets.Scripts.Extends
         /// </summary>
         /// <param name="ships"></param>
         /// <returns></returns>
-        public static double CalculateShipCapacity(IEnumerable<Tuple<Ships, int>> ships) => ships.Select(x => { return StaticData.ShipData.Find(y => y.ShipID == x.Item1).CargoCapacity * x.Item2; }).DefaultIfEmpty(0).Sum();
+        public static double CalculateShipCapacity(IEnumerable<Tuple<Ships, int>> ships) => ships.Select(x => { return DataController.DC.GetShip(x.Item1).CargoCapacity * x.Item2; }).DefaultIfEmpty(0).Sum();
 
         /// <summary>
         /// Filonun yakıt kapasitesini hesaplar.
@@ -73,10 +73,10 @@ namespace Assets.Scripts.Extends
             return 1 + Math.Round(ships.Select(x =>
             {
                 // Gemi bilgisini buluyoruz.
-                ShipDTO shipData = StaticData.ShipData.Find(y => y.ShipID == x.Item1);
+                ShipDataDTO shipData = DataController.DC.GetShip(x.Item1);
 
                 // Temel değerlerine bakarak yakıtını hesaplıyoruz.
-                return Math.Round(shipData.BaseFuelt * distance / 35000 * MathExtends.TamKare(fleetSpeedRate, 1), 5) * x.Item2;
+                return Math.Round(shipData.ShipFuelt * distance / 35000 * MathExtends.TamKare(fleetSpeedRate, 1), 5) * x.Item2;
 
             }).DefaultIfEmpty(0).Sum(), 0);
         }
@@ -84,7 +84,7 @@ namespace Assets.Scripts.Extends
         public static List<Tuple<Ships, int>> FleetDataToShipData(string data)
         {
             try
-            {
+            { 
                 List<Tuple<Ships, int>> fleet = new List<Tuple<Ships, int>>();
                 string[] ships = data.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
                 foreach (var ship in ships)

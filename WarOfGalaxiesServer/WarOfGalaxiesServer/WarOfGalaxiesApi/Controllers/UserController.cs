@@ -10,12 +10,13 @@ using WarOfGalaxiesApi.DTO.Enums;
 using WarOfGalaxiesApi.DTO.Helpers;
 using WarOfGalaxiesApi.DTO.Models;
 using Microsoft.EntityFrameworkCore;
+using WarOfGalaxiesApi.Statics;
 
 namespace WarOfGalaxiesApi.Controllers
 {
     public class UserController : MainController
     {
-        public UserController(IUnitOfWork unitOfWork) : base(unitOfWork)
+        public UserController(IUnitOfWork unitOfWork, StaticValues staticValues) : base(unitOfWork, staticValues)
         {
         }
 
@@ -41,7 +42,7 @@ namespace WarOfGalaxiesApi.Controllers
 
             // Her bir gezegenin Verify işlemini yapıyoruz.
             foreach (TblUserPlanets userPlanet in userAndHisPlanets.TblUserPlanets)
-                VerifyController.VerifyPlanetResources(base.UnitOfWork, new VerifyResourceDTO { UserPlanetID = userPlanet.UserPlanetId });
+                VerifyController.VerifyPlanetResources(this, new VerifyResourceDTO { UserPlanetID = userPlanet.UserPlanetId });
 
             // Kullanıcıyı dönüyoruz.
             UserDTO user = new UserDTO
@@ -194,7 +195,7 @@ namespace WarOfGalaxiesApi.Controllers
         public ApiResult VerifyUserData(VerifyResourceDTO verify)
         {
             // Her bir gezegenin Verify işlemini yapıyoruz.
-            VerifyController.VerifyPlanetResources(base.UnitOfWork, new VerifyResourceDTO { UserPlanetID = verify.UserPlanetID });
+            VerifyController.VerifyPlanetResources(this, new VerifyResourceDTO { UserPlanetID = verify.UserPlanetID });
 
             // Kullanıcının gezegenlerini buluyoruz.
             UserPlanetDTO userPlanet = this.UnitOfWork.GetRepository<TblUserPlanets>().Where(x => x.UserId == DBUser.UserId)
