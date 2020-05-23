@@ -119,7 +119,7 @@ namespace WarOfGalaxiesApi.Controllers
                                 return false;
 
                             // Burada hedef gezegene kaynakları yükleyeceğiz.
-                            HandleFleetActions(controller, userPlanet, userFleet);
+                            HandleFleetActions(controller, userPlanet, userFleet, halfOfFlyDate);
 
                             // Artık geri dönüyor.
                             userFleet.IsReturning = true;
@@ -137,7 +137,7 @@ namespace WarOfGalaxiesApi.Controllers
                         userPlanet.LastUpdateDate = endFlyDate;
 
                         // Burada hedef gezegene kaynakları yükleyeceğiz.
-                        HandleFleetActions(controller, userPlanet, userFleet);
+                        HandleFleetActions(controller, userPlanet, userFleet, endFlyDate);
 
                         // Kaydı siliyoruz.
                         controller.UnitOfWork.GetRepository<TblFleets>().Delete(userFleet);
@@ -569,8 +569,29 @@ namespace WarOfGalaxiesApi.Controllers
 
         }
 
-        private static void HandleFleetActions(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet)
+        private static void HandleFleetActions(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet, DateTime actionDate)
         {
+            /// Hedef gezegen.
+            TblUserPlanets destinationPlanet = userPlanet;
+
+            // Eğer hedef gezegen biz değil isek hedef gezegeni buluyoruz.
+            if (userFleet.DestinationUserPlanetId.HasValue && userPlanet.UserPlanetId != userFleet.DestinationUserPlanetId)
+                destinationPlanet = controller.UnitOfWork.GetRepository<TblUserPlanets>().FirstOrDefault(x => x.UserPlanetId == userFleet.DestinationUserPlanetId.Value);
+
+            // Maillerin default valuesini atıyoruz. Gönderici ve alıcı gezegen ve kordinatları.
+            // Eğer dönüş maili ise ATR yani dönüş ifadesi kullanılacak.
+            List<string> defaultMailContent = new List<string>()
+            {
+                MailEncoder.GetParam(userFleet.IsReturning ? MailEncoder.KEY_ACTION_TYPE_RETURN : MailEncoder.KEY_ACTION_TYPE, userFleet.FleetActionTypeId),
+                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName),
+                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
+                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, destinationPlanet.PlanetName),
+                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETCORDINATE, userFleet.DestinationCordinate)
+            };
+
+            // Mailin kategorisi.
+            MailCategories category = MailCategories.None;
+
             if (userFleet.IsReturning) // Kaynağa döndüğünde yapılacak olan.
             {
                 switch ((FleetTypes)userFleet.FleetActionTypeId)
@@ -581,6 +602,9 @@ namespace WarOfGalaxiesApi.Controllers
                         break;
                     case FleetTypes.Nakliye: // Nakliye yapan geminin gezegene dönüşü.
                         {
+                            // Nakliye türünü ekliyoruz.
+                            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_MAIL_TYPE, 2));
+
                             // Gemileri alıyoruz. Kullanıcının gezegenine iade edeceğiz.
                             List<Tuple<Ships, int>> ships = FleetController.FleetDataToShipData(userFleet.FleetData);
                             foreach (Tuple<Ships, int> ship in ships)
@@ -599,6 +623,15 @@ namespace WarOfGalaxiesApi.Controllers
                             userPlanet.Metal += userFleet.CarriedMetal;
                             userPlanet.Crystal += userFleet.CarriedCrystal;
                             userPlanet.Boron += userFleet.CarriedBoron;
+
+                            // Gönderilen gemileri string formatına dönüştürüyoruz.
+                            string shipsWithCounts = string.Join(MailEncoder.KEY_SHIP_SEPERATOR, ships.Select(x => $"{(int)x.Item1}{MailEncoder.KEY_SHIP_KEY_VALUE_SEPERATOR}{x.Item2}"));
+
+                            // Gemileri maile ekliyoruz.
+                            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_SHIPS_ATTACKER, shipsWithCounts));
+
+                            // Gezegen kategorisinde olduğunu söylüyoruz mailin.
+                            category = MailCategories.Gezegen;
                         }
                         break;
                     case FleetTypes.Konuşlandır:
@@ -617,22 +650,26 @@ namespace WarOfGalaxiesApi.Controllers
                         break;
                     case FleetTypes.Nakliye:
                         {
-                            /// Hedef gezegen.
-                            TblUserPlanets destinationPlanet = userPlanet;
-
-                            // Eğer hedef gezegen biz değil isek hedef gezegeni buluyoruz.
-                            if (userFleet.DestinationUserPlanetId.HasValue && userPlanet.UserPlanetId != userFleet.DestinationUserPlanetId)
-                                destinationPlanet = controller.UnitOfWork.GetRepository<TblUserPlanets>().FirstOrDefault(x => x.UserPlanetId == userFleet.DestinationUserPlanetId.Value);
-
                             // Kaynakları ekliyoruz.
                             destinationPlanet.Metal += userFleet.CarriedMetal;
                             destinationPlanet.Crystal += userFleet.CarriedCrystal;
                             destinationPlanet.Boron += userFleet.CarriedBoron;
 
+                            // Türünü ekliyoruz.
+                            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_MAIL_TYPE, 1));
+
+                            // Mail datasını yüklüyoruz. Taşınan kaynaklar.
+                            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_METAL, userFleet.CarriedMetal));
+                            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_CRYSTAL, userFleet.CarriedCrystal));
+                            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_BORON, userFleet.CarriedBoron));
+
                             // Taşınan kaynakları siliyoruz.
                             userFleet.CarriedMetal = 0;
                             userFleet.CarriedCrystal = 0;
                             userFleet.CarriedBoron = 0;
+
+                            // Gezegen kategorisinde olduğunu söylüyoruz mailin.
+                            category = MailCategories.Gezegen;
                         }
                         break;
                     case FleetTypes.Konuşlandır:
@@ -641,6 +678,30 @@ namespace WarOfGalaxiesApi.Controllers
                         break;
                 }
             }
+
+            // 1. mail her zaman gidiyor. 2.mail ise sadece gönderilen oyuncu değil ise gidiyor.
+            controller.UnitOfWork.GetRepository<TblUserMails>().Add(new TblUserMails
+            {
+                IsReaded = false,
+                MailDate = actionDate,
+                MailCategoryId = (int)category,
+                MailContent = MailEncoder.EncodeMail(defaultMailContent),
+                UserId = userPlanet.UserId
+            });
+
+            // Eğer aynı kullanıcıya mail atıyorsak atmıyoruz dublike olmasın diye.
+            if (destinationPlanet.UserId != userPlanet.UserId)
+            {
+                controller.UnitOfWork.GetRepository<TblUserMails>().Add(new TblUserMails
+                {
+                    IsReaded = false,
+                    MailDate = actionDate,
+                    MailCategoryId = (int)category,
+                    MailContent = MailEncoder.EncodeMail(defaultMailContent),
+                    UserId = destinationPlanet.UserId
+                });
+            }
+
         }
 
         /// <summary>

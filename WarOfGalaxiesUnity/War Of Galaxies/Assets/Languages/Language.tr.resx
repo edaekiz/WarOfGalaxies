@@ -360,7 +360,7 @@
   <data name="TekYön" xml:space="preserve">
     <value>Tek Yön</value>
   </data>
-  <data name="Dönüyor" xml:space="preserve">
+  <data name="Dönüş" xml:space="preserve">
     <value>Dönüş</value>
   </data>
   <data name="S2" xml:space="preserve">
@@ -368,5 +368,56 @@
   </data>
   <data name="SD2" xml:space="preserve">
     <value>Küçük ancak çok hızlı bir nakliye gemisi.</value>
+  </data>
+  <data name="FilonYolaÇıktı" xml:space="preserve">
+    <value>Filon yola çıktı.</value>
+  </data>
+  <data name="XMesajınızVar" xml:space="preserve">
+    <value>{0} yeni mesajınız var.</value>
+  </data>
+  <data name="Posta" xml:space="preserve">
+    <value>Posta</value>
+  </data>
+  <data name="MT1" xml:space="preserve">
+    <value>&lt;color=orange&gt;{S}[{SC}]&lt;/color&gt; gezegeninden, &lt;color=orange&gt;{D}[{DC}]&lt;/color&gt; gezegenine,
+
+&lt;color=green&gt;Kaynaklar;&lt;/color&gt;
+&lt;color=green&gt;Metal :&lt;/color&gt; {NM},
+&lt;color=green&gt;Kristal :&lt;/color&gt; {NC},
+&lt;color=green&gt;Bor :&lt;/color&gt; {NB} aktarılıyor.</value>
+  </data>
+  <data name="MT2" xml:space="preserve">
+    <value>Filon &lt;color=orange&gt;{D}[{DC}]&lt;/color&gt; gezegeninden, &lt;color=orange&gt;{S}[{SC}]&lt;/color&gt; gezegenine,
+ geri dönüyor.
+
+&lt;color=green&gt;Dönen Filo;&lt;/color&gt;
+{AS}</value>
+  </data>
+  <data name="HiçMailYok" xml:space="preserve">
+    <value>Bu kategori de hiç postanız bulunmamakta.</value>
+  </data>
+  <data name="MC1" xml:space="preserve">
+    <value>Casusluk</value>
+  </data>
+  <data name="MC2" xml:space="preserve">
+    <value>Savaş</value>
+  </data>
+  <data name="MC3" xml:space="preserve">
+    <value>Gezegen</value>
+  </data>
+  <data name="MC4" xml:space="preserve">
+    <value>Özel</value>
+  </data>
+  <data name="MC5" xml:space="preserve">
+    <value>Oyun</value>
+  </data>
+  <data name="Gönderen" xml:space="preserve">
+    <value>Gönderen</value>
+  </data>
+  <data name="Koordinat" xml:space="preserve">
+    <value>Koordinat</value>
+  </data>
+  <data name="PostaTarihi" xml:space="preserve">
+    <value>Posta Tarihi</value>
   </data>
 </root>

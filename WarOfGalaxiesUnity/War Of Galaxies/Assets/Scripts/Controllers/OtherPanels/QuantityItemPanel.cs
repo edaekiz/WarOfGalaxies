@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,7 +29,6 @@ public class QuantityItemPanel : BasePanelController
     /// Panel kapandığında çağrılacak olanlar.
     /// </summary>
     public Action<QuantityEventArs> OnPanelClose;
-
 
     // Start is called before the first frame update
     protected override void Start()

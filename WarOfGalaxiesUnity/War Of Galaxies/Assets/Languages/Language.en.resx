@@ -360,7 +360,7 @@
   <data name="TekYön" xml:space="preserve">
     <value>One Way</value>
   </data>
-  <data name="Dönüyor" xml:space="preserve">
+  <data name="Dönüş" xml:space="preserve">
     <value>Return</value>
   </data>
   <data name="S2" xml:space="preserve">
@@ -368,5 +368,55 @@
   </data>
   <data name="SD2" xml:space="preserve">
     <value>Little but very fast tranport ship.</value>
+  </data>
+  <data name="FilonYolaÇıktı" xml:space="preserve">
+    <value>You fleet is on its way.</value>
+  </data>
+  <data name="XMesajınızVar" xml:space="preserve">
+    <value>You have {0} new messages.</value>
+  </data>
+  <data name="Posta" xml:space="preserve">
+    <value>Mail</value>
+  </data>
+  <data name="MT1" xml:space="preserve">
+    <value>Resources transferring from &lt;color=orange&gt;{S}[{SC}]&lt;/color&gt; planet to &lt;color=orange&gt;{D}[{DC}]&lt;/color&gt; planet,
+
+&lt;color=green&gt;Resources;&lt;/color&gt;
+&lt;color=green&gt;Metal :&lt;/color&gt; {NM},
+&lt;color=green&gt;Crystal :&lt;/color&gt; {NC},
+&lt;color=green&gt;Boron :&lt;/color&gt; {NB}.</value>
+  </data>
+  <data name="MT2" xml:space="preserve">
+    <value>Your fleet returns from &lt;color=orange&gt;{D}[{DC}]&lt;/color&gt; planet to &lt;color=orange&gt;{S}[{SC}]&lt;/color&gt; planet.
+
+&lt;color=green&gt;Return Fleet;&lt;/color&gt;
+{AS}</value>
+  </data>
+  <data name="HiçMailYok" xml:space="preserve">
+    <value>You dont have any mail in current category.</value>
+  </data>
+  <data name="MC1" xml:space="preserve">
+    <value>Spy</value>
+  </data>
+  <data name="MC2" xml:space="preserve">
+    <value>Battle</value>
+  </data>
+  <data name="MC3" xml:space="preserve">
+    <value>Planet</value>
+  </data>
+  <data name="MC4" xml:space="preserve">
+    <value>Private</value>
+  </data>
+  <data name="MC5" xml:space="preserve">
+    <value>Game</value>
+  </data>
+  <data name="Gönderen" xml:space="preserve">
+    <value>Sender</value>
+  </data>
+  <data name="Koordinat" xml:space="preserve">
+    <value>Coordinate</value>
+  </data>
+  <data name="PostaTarihi" xml:space="preserve">
+    <value>Email Date</value>
   </data>
 </root>

@@ -24,7 +24,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>Temp\bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE;UNITY_2019_3_0;UNITY_2019_3;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;RENDER_SOFTWARE_CURSOR;ENABLE_VIDEO;PLATFORM_STANDALONE;PLATFORM_STANDALONE_WIN;UNITY_STANDALONE_WIN;UNITY_STANDALONE;ENABLE_RUNTIME_GI;ENABLE_MOVIES;ENABLE_NETWORK;ENABLE_CRUNCH_TEXTURE_COMPRESSION;ENABLE_OUT_OF_PROCESS_CRASH_HANDLER;ENABLE_CLUSTER_SYNC;ENABLE_CLUSTERINPUT;ENABLE_WEBSOCKET_HOST;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_VSTU;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;UNITY_POST_PROCESSING_STACK_V2;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
+    <DefineConstants>DEBUG;TRACE;UNITY_2019_3_0;UNITY_2019_3;UNITY_2019;UNITY_5_3_OR_NEWER;UNITY_5_4_OR_NEWER;UNITY_5_5_OR_NEWER;UNITY_5_6_OR_NEWER;UNITY_2017_1_OR_NEWER;UNITY_2017_2_OR_NEWER;UNITY_2017_3_OR_NEWER;UNITY_2017_4_OR_NEWER;UNITY_2018_1_OR_NEWER;UNITY_2018_2_OR_NEWER;UNITY_2018_3_OR_NEWER;UNITY_2018_4_OR_NEWER;UNITY_2019_1_OR_NEWER;UNITY_2019_2_OR_NEWER;UNITY_2019_3_OR_NEWER;UNITY_INCLUDE_TESTS;ENABLE_AR;ENABLE_AUDIO;ENABLE_CACHING;ENABLE_CLOTH;ENABLE_EVENT_QUEUE;ENABLE_MICROPHONE;ENABLE_MULTIPLE_DISPLAYS;ENABLE_PHYSICS;ENABLE_TEXTURE_STREAMING;ENABLE_UNET;ENABLE_LZMA;ENABLE_UNITYEVENTS;ENABLE_VR;ENABLE_WEBCAM;ENABLE_UNITYWEBREQUEST;ENABLE_WWW;ENABLE_CLOUD_SERVICES;ENABLE_CLOUD_SERVICES_COLLAB;ENABLE_CLOUD_SERVICES_COLLAB_SOFTLOCKS;ENABLE_CLOUD_SERVICES_ADS;ENABLE_CLOUD_SERVICES_USE_WEBREQUEST;ENABLE_CLOUD_SERVICES_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_NATIVE_CRASH_REPORTING;ENABLE_CLOUD_SERVICES_PURCHASING;ENABLE_CLOUD_SERVICES_ANALYTICS;ENABLE_CLOUD_SERVICES_UNET;ENABLE_CLOUD_SERVICES_BUILD;ENABLE_CLOUD_LICENSE;ENABLE_EDITOR_HUB_LICENSE;ENABLE_WEBSOCKET_CLIENT;ENABLE_DIRECTOR_AUDIO;ENABLE_DIRECTOR_TEXTURE;ENABLE_MANAGED_JOBS;ENABLE_MANAGED_TRANSFORM_JOBS;ENABLE_MANAGED_ANIMATION_JOBS;ENABLE_MANAGED_AUDIO_JOBS;ENABLE_RUNTIME_PERMISSIONS;ENABLE_ENGINE_CODE_STRIPPING;ENABLE_ONSCREEN_KEYBOARD;INCLUDE_DYNAMIC_GI;ENABLE_MONO_BDWGC;ENABLE_SCRIPTING_GC_WBARRIERS;PLATFORM_SUPPORTS_MONO;ENABLE_VIDEO;PLATFORM_ANDROID;UNITY_ANDROID;UNITY_ANDROID_API;ENABLE_EGL;ENABLE_NETWORK;ENABLE_RUNTIME_GI;ENABLE_CRUNCH_TEXTURE_COMPRESSION;PLATFORM_SUPPORTS_ADS_ID;UNITY_CAN_SHOW_SPLASH_SCREEN;UNITY_HAS_GOOGLEVR;UNITY_HAS_TANGO;ENABLE_SPATIALTRACKING;UNITY_ASTC_ONLY_DECOMPRESS;ENABLE_UNITYADS_RUNTIME;UNITY_UNITYADS_API;ENABLE_MONO;NET_STANDARD_2_0;ENABLE_PROFILER;UNITY_ASSERTIONS;UNITY_EDITOR;UNITY_EDITOR_64;UNITY_EDITOR_WIN;ENABLE_UNITY_COLLECTIONS_CHECKS;ENABLE_BURST_AOT;UNITY_TEAM_LICENSE;ENABLE_VSTU;ENABLE_CUSTOM_RENDER_TEXTURE;ENABLE_DIRECTOR;ENABLE_LOCALIZATION;ENABLE_SPRITES;ENABLE_TERRAIN;ENABLE_TILEMAP;ENABLE_TIMELINE;ENABLE_LEGACY_INPUT_MANAGER;UNITY_POST_PROCESSING_STACK_V2;CSHARP_7_OR_LATER;CSHARP_7_3_OR_NEWER</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <NoWarn>0169;CS0649;IDE0051</NoWarn>
@@ -50,7 +50,7 @@
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Unity/VSTU</UnityProjectGenerator>
     <UnityProjectType>Game:1</UnityProjectType>
-    <UnityBuildTarget>StandaloneWindows:5</UnityBuildTarget>
+    <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>2019.3.0f6</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
@@ -62,8 +62,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BaseStepController.cs" />
-    <Compile Include="Assets\DataController.cs" />
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\AntiAliasing.cs" />
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\FXAA\FXAA.cs" />
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\IAntiAliasing.cs" />
@@ -85,14 +83,7 @@
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Utility\FPSCounter.cs" />
     <Compile Include="Assets\ExternalAssets\Asteroids Pack\Assets\Scripts\RandomRotator.cs" />
     <Compile Include="Assets\ExternalAssets\Hi-Tech Buttons and Panels\Resources\Scripts\JustRotate.cs" />
-    <Compile Include="Assets\FleetController.cs" />
-    <Compile Include="Assets\FleetPanelController.cs" />
-    <Compile Include="Assets\FleetPanelItemController.cs" />
-    <Compile Include="Assets\GalaxyChangePanelController.cs" />
     <Compile Include="Assets\Languages\Language.Designer.cs" />
-    <Compile Include="Assets\ParameterController.cs" />
-    <Compile Include="Assets\PlanetActionController.cs" />
-    <Compile Include="Assets\QuantityItemPanel.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ApiResult.cs" />
     <Compile Include="Assets\Scripts\ApiModels\Base\ProgressModel.cs" />
     <Compile Include="Assets\Scripts\ApiModels\DataDTO.cs" />
@@ -103,22 +94,28 @@
     <Compile Include="Assets\Scripts\ApiModels\ResourcesDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ShipyardDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserDTO.cs" />
+    <Compile Include="Assets\Scripts\ApiModels\UserMailDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserPlanetBuildingDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserPlanetCordinateDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserPlanetDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserResearchesDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\VerifyResourceDTO.cs" />
-    <Compile Include="Assets\Scripts\ApiService.cs" />
     <Compile Include="Assets\Scripts\Controllers\Base\BaseLanguageBehaviour.cs" />
     <Compile Include="Assets\Scripts\Controllers\Base\BasePanelController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Base\BaseStepController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Building\BuildingController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Building\BuildingPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Building\GlobalBuildingController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Data\DataController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Defense\DefenseController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Defense\DefenseDetailItemPanel.cs" />
     <Compile Include="Assets\Scripts\Controllers\Defense\DefenseItemController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Defense\DefensePanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Defense\DefenseQueueController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Fleet\FleetController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Fleet\FleetPanelController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Fleet\FleetPanelItemController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Galaxy\GalaxyChangePanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Galaxy\GalaxyController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Galaxy\SunController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Galaxy\ZoomPanController.cs" />
@@ -130,10 +127,21 @@
     <Compile Include="Assets\Scripts\Controllers\Global\GlobalPlanetController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Language\LanguageController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Language\LanguageItemController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Mail\MailController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Mail\MailDetailItemOnlyTextController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Mail\MailDetailItemPanelController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Mail\MailPanelController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Mail\MailPanelItemController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Notification\NotificationController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Notification\NotificationPanelController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\OtherPanels\QuantityItemPanel.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetPickerController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetRotateController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetZoomController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlanetAction\PlanetActionController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlanetAction\ShipItemCanSendController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlanetAction\ShipItemToSendController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Research\ResearchController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Research\ResearchDetailItemPanel.cs" />
     <Compile Include="Assets\Scripts\Controllers\Research\ResearchItemController.cs" />
@@ -145,9 +153,11 @@
     <Compile Include="Assets\Scripts\Controllers\Shipyard\ShipyardItemController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Shipyard\ShipyardPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Shipyard\ShipyardQueueController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Toast\ToastController.cs" />
     <Compile Include="Assets\Scripts\Enums\Buildings.cs" />
     <Compile Include="Assets\Scripts\Enums\Defenses.cs" />
     <Compile Include="Assets\Scripts\Enums\FleetTypes.cs" />
+    <Compile Include="Assets\Scripts\Enums\MailCategories.cs" />
     <Compile Include="Assets\Scripts\Enums\ParameterTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\PlanetTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\Researches.cs" />
@@ -158,16 +168,18 @@
     <Compile Include="Assets\Scripts\Extends\JsonHelper.cs" />
     <Compile Include="Assets\Scripts\Extends\MathExtends.cs" />
     <Compile Include="Assets\Scripts\Extends\ResourceExtends.cs" />
+    <Compile Include="Assets\Scripts\Extends\TextExtends.cs" />
     <Compile Include="Assets\Scripts\Extends\TimeExtends.cs" />
     <Compile Include="Assets\Scripts\Extends\VectorExtends.cs" />
     <Compile Include="Assets\Scripts\Ignored\IgnoredCodes.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IMailDetailItem.cs" />
     <Compile Include="Assets\Scripts\Models\CordinateDTO.cs" />
     <Compile Include="Assets\Scripts\Models\DefenseImageDTO.cs" />
     <Compile Include="Assets\Scripts\Models\LanguageItem.cs" />
     <Compile Include="Assets\Scripts\Models\ShipImageDTO.cs" />
     <Compile Include="Assets\Scripts\Models\SolarSystemDTO.cs" />
-    <Compile Include="Assets\ShipItemCanSendController.cs" />
-    <Compile Include="Assets\ShipItemToSendController.cs" />
+    <Compile Include="Assets\Scripts\Pluigns\MailEncoder.cs" />
+    <Compile Include="Assets\Scripts\Services\ApiService.cs" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Ring.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MultiPassHollywoodFlares.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\Blend.shader" />
@@ -283,12 +295,6 @@
     </Reference>
     <Reference Include="UnityEngine.ClothModule">
       <HintPath>C:/Program Files/Unity/2019.3.0f6/Editor/Data/Managed/UnityEngine/UnityEngine.ClothModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.ClusterInputModule">
-      <HintPath>C:/Program Files/Unity/2019.3.0f6/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterInputModule.dll</HintPath>
-    </Reference>
-    <Reference Include="UnityEngine.ClusterRendererModule">
-      <HintPath>C:/Program Files/Unity/2019.3.0f6/Editor/Data/Managed/UnityEngine/UnityEngine.ClusterRendererModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>C:/Program Files/Unity/2019.3.0f6/Editor/Data/Managed/UnityEngine/UnityEngine.CoreModule.dll</HintPath>

@@ -19,7 +19,10 @@ public class GlobalPanelController : MonoBehaviour
         GalaxyPlanetActionPanel,
         PlanetActionShipSelectionStep,
         QuantityPanel,
-        FleetPanel
+        FleetPanel,
+        NotificationPanel,
+        MailPanel,
+        MailDetailPanel
     }
 
     [Serializable]

@@ -290,6 +290,9 @@ public class PlanetActionController : BasePanelController
                 // Taşınan kaynakları depodan çıkıyoruz.
                 GlobalPlanetController.GPC.CurrentPlanet.ReducePlanetResources(carriedResources);
 
+                // Toast mesajını basıyoruz ekrana.
+                ToastController.TC.ShowToast(base.GetLanguageText("FilonYolaÇıktı"));
+
                 // Paneli artık kapatabiliriz.
                 base.ClosePanel();
             }

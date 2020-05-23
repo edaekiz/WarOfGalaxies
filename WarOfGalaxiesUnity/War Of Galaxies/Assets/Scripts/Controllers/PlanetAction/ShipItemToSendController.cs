@@ -4,6 +4,7 @@ using Assets.Scripts.ApiModels;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static QuantityItemPanel;
 
 public class ShipItemToSendController : MonoBehaviour
 {
@@ -71,7 +72,7 @@ public class ShipItemToSendController : MonoBehaviour
         quantityPanel.GetComponent<QuantityItemPanel>().LoadData(ShipImage.sprite, ShipName.text, Quantity);
 
         // Panel tamama basılarak kapatıldığında burası tetiklenecek.
-        quantityPanel.GetComponent<QuantityItemPanel>().OnPanelClose = new Action<QuantityItemPanel.QuantityEventArs>((e) => AddToUseableQuantity(e.Quantity));
+        quantityPanel.GetComponent<QuantityItemPanel>().OnPanelClose = new Action<QuantityEventArs>((e) => AddToUseableQuantity(e.Quantity));
     }
 
     public void AddToUseableQuantity(int quantity)

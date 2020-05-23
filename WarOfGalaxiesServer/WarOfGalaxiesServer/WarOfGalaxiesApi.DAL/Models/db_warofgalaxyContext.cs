@@ -24,6 +24,8 @@ namespace WarOfGalaxiesApi.DAL.Models
         public virtual DbSet<TblParameters> TblParameters { get; set; }
         public virtual DbSet<TblResearches> TblResearches { get; set; }
         public virtual DbSet<TblShips> TblShips { get; set; }
+        public virtual DbSet<TblUserMailCategories> TblUserMailCategories { get; set; }
+        public virtual DbSet<TblUserMails> TblUserMails { get; set; }
         public virtual DbSet<TblUserPlanetBuildingUpgs> TblUserPlanetBuildingUpgs { get; set; }
         public virtual DbSet<TblUserPlanetBuildings> TblUserPlanetBuildings { get; set; }
         public virtual DbSet<TblUserPlanetDefenseProgs> TblUserPlanetDefenseProgs { get; set; }
@@ -235,6 +237,54 @@ namespace WarOfGalaxiesApi.DAL.Models
                 entity.Property(e => e.ShipName)
                     .IsRequired()
                     .HasMaxLength(30);
+            });
+
+            modelBuilder.Entity<TblUserMailCategories>(entity =>
+            {
+                entity.HasKey(e => e.UserMailCategoryId);
+
+                entity.ToTable("tbl_user_mail_categories");
+
+                entity.Property(e => e.UserMailCategoryId).HasColumnName("UserMailCategoryID");
+
+                entity.Property(e => e.UserMailCategoryName)
+                    .IsRequired()
+                    .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TblUserMails>(entity =>
+            {
+                entity.HasKey(e => e.UserMailId);
+
+                entity.ToTable("tbl_user_mails");
+
+                entity.HasIndex(e => e.UserId);
+
+                entity.HasIndex(e => new { e.UserId, e.IsReaded });
+
+                entity.Property(e => e.UserMailId).HasColumnName("UserMailID");
+
+                entity.Property(e => e.MailCategoryId).HasColumnName("MailCategoryID");
+
+                entity.Property(e => e.MailContent)
+                    .IsRequired()
+                    .HasMaxLength(4000);
+
+                entity.Property(e => e.MailDate).HasColumnType("datetime");
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.HasOne(d => d.MailCategory)
+                    .WithMany(p => p.TblUserMails)
+                    .HasForeignKey(d => d.MailCategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_mails_tbl_user_mail_categories");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TblUserMails)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_user_mails_tbl_users");
             });
 
             modelBuilder.Entity<TblUserPlanetBuildingUpgs>(entity =>

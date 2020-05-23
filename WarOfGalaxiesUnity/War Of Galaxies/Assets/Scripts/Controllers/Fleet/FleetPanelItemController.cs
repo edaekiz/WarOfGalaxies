@@ -120,7 +120,7 @@ public class FleetPanelItemController : BaseLanguageBehaviour
 
         // Eğer dönüyor ise dönü yazıyoruz.
         if (currentDate > halfOfFlyDate)
-            TXT_ActionType.text += $" (<color=green>{base.GetLanguageText("Dönüyor")}</color>)";
+            TXT_ActionType.text += $" (<color=green>{base.GetLanguageText("Dönüş")}</color>)";
 
         // Gönderenin adını basıyoruz.
         TXT_SenderPlanetName.text = fleetInfo.SenderPlanetName;

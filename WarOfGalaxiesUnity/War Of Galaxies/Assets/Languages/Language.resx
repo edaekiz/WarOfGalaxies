@@ -340,13 +340,55 @@
   <data name="TekYön" xml:space="preserve">
     <value></value>
   </data>
-  <data name="Dönüyor" xml:space="preserve">
+  <data name="Dönüş" xml:space="preserve">
     <value></value>
   </data>
   <data name="S2" xml:space="preserve">
     <value></value>
   </data>
   <data name="SD2" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FilonYolaÇıktı" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="XMesajınızVar" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Posta" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MT1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MT2" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="HiçMailYok" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MC1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MC2" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MC3" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MC4" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MC5" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Gönderen" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Koordinat" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PostaTarihi" xml:space="preserve">
     <value></value>
   </data>
 </root>

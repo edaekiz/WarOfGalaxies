@@ -7,6 +7,7 @@ namespace WarOfGalaxiesApi.DAL.Models
     {
         public TblUsers()
         {
+            TblUserMails = new HashSet<TblUserMails>();
             TblUserPlanets = new HashSet<TblUserPlanets>();
             TblUserResearchUpgs = new HashSet<TblUserResearchUpgs>();
             TblUserResearches = new HashSet<TblUserResearches>();
@@ -21,6 +22,7 @@ namespace WarOfGalaxiesApi.DAL.Models
         public string IosToken { get; set; }
         public string UserLanguage { get; set; }
 
+        public virtual ICollection<TblUserMails> TblUserMails { get; set; }
         public virtual ICollection<TblUserPlanets> TblUserPlanets { get; set; }
         public virtual ICollection<TblUserResearchUpgs> TblUserResearchUpgs { get; set; }
         public virtual ICollection<TblUserResearches> TblUserResearches { get; set; }

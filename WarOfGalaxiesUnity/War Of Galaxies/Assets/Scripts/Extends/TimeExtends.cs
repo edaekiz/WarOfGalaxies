@@ -21,5 +21,14 @@ namespace Assets.Scripts.Extends
                 return $"{seconds}{LanguageController.LC.SHORT_SECONDS}";
             return $"0{LanguageController.LC.SHORT_SECONDS}";
         }
+
+        public static string UTCDateToString(string oldDate)
+        {
+            int dotIndex = oldDate.IndexOf('.');
+            if (dotIndex == -1)
+                return oldDate;
+            return oldDate.Replace("T", " ").Remove(dotIndex, oldDate.Length - dotIndex);
+        }
+
     }
 }

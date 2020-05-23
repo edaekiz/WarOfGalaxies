@@ -75,7 +75,7 @@ public class LanguageController : MonoBehaviour
     /// <param name="keyword">Bulunacak olan data</param>
     /// <param name="replaceData">Eğer keyword value içerisinde {0} var ise bu replacedata daki ilk iteme denk gelir.</param>
     /// <returns></returns>
-    public string GetText(string keyword, params string[] replaceData)
+    public string GetText(string keyword, params object[] replaceData)
     {
         // Dil bilgisi mevcut mu diye kontrol ediyoruz.
         LanguageItem languageItem = LanguageItems.Items.Find(x => x.Keyword == keyword);
@@ -89,7 +89,7 @@ public class LanguageController : MonoBehaviour
 
         // Her bir data için dönüyoruz.
         for (int ii = 0; ii < replaceData.Length; ii++)
-            value = value.Replace($"{ii}", replaceData[ii]);
+            value = value.Replace($"{{{ii}}}", replaceData[ii].ToString());
 
         // Var ise karşılık gelen değeri.
         return value;
