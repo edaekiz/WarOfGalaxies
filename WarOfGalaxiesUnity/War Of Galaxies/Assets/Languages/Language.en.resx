@@ -390,7 +390,7 @@
     <value>Your fleet returns from &lt;color=orange&gt;{D}[{DC}]&lt;/color&gt; planet to &lt;color=orange&gt;{S}[{SC}]&lt;/color&gt; planet.
 
 &lt;color=green&gt;Return Fleet;&lt;/color&gt;
-{AS}</value>
+{SA}</value>
   </data>
   <data name="HiçMailYok" xml:space="preserve">
     <value>You dont have any mail in current category.</value>
@@ -418,5 +418,29 @@
   </data>
   <data name="PostaTarihi" xml:space="preserve">
     <value>Email Date</value>
+  </data>
+  <data name="S3" xml:space="preserve">
+    <value>Spy Drone</value>
+  </data>
+  <data name="SD3" xml:space="preserve">
+    <value>Spy drones is the fastest ship in the galaxy. it also not caught by the destination defenses.</value>
+  </data>
+  <data name="GezegenKaynakları" xml:space="preserve">
+    <value>Planet Resources</value>
+  </data>
+  <data name="GezegenYapıları" xml:space="preserve">
+    <value>Planet Structs</value>
+  </data>
+  <data name="Evet" xml:space="preserve">
+    <value>Yes</value>
+  </data>
+  <data name="Hayır" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Uyarı" xml:space="preserve">
+    <value>Alert</value>
+  </data>
+  <data name="Silmekİstemek" xml:space="preserve">
+    <value>Are you sure you want to delete this item?</value>
   </data>
 </root>

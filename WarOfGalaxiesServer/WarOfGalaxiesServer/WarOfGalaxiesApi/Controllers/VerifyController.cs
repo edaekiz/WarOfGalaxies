@@ -578,61 +578,18 @@ namespace WarOfGalaxiesApi.Controllers
             if (userFleet.DestinationUserPlanetId.HasValue && userPlanet.UserPlanetId != userFleet.DestinationUserPlanetId)
                 destinationPlanet = controller.UnitOfWork.GetRepository<TblUserPlanets>().FirstOrDefault(x => x.UserPlanetId == userFleet.DestinationUserPlanetId.Value);
 
-            // Maillerin default valuesini atıyoruz. Gönderici ve alıcı gezegen ve kordinatları.
-            // Eğer dönüş maili ise ATR yani dönüş ifadesi kullanılacak.
-            List<string> defaultMailContent = new List<string>()
-            {
-                MailEncoder.GetParam(userFleet.IsReturning ? MailEncoder.KEY_ACTION_TYPE_RETURN : MailEncoder.KEY_ACTION_TYPE, userFleet.FleetActionTypeId),
-                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName),
-                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
-                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, destinationPlanet.PlanetName),
-                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETCORDINATE, userFleet.DestinationCordinate)
-            };
-
-            // Mailin kategorisi.
-            MailCategories category = MailCategories.None;
-
             if (userFleet.IsReturning) // Kaynağa döndüğünde yapılacak olan.
             {
+
                 switch ((FleetTypes)userFleet.FleetActionTypeId)
                 {
                     case FleetTypes.Casusluk:
+                        ExecuteSpyReturnAction(controller, userPlanet, userFleet, actionDate, destinationPlanet);
                         break;
                     case FleetTypes.Saldır:
                         break;
                     case FleetTypes.Nakliye: // Nakliye yapan geminin gezegene dönüşü.
-                        {
-                            // Nakliye türünü ekliyoruz.
-                            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_MAIL_TYPE, 2));
-
-                            // Gemileri alıyoruz. Kullanıcının gezegenine iade edeceğiz.
-                            List<Tuple<Ships, int>> ships = FleetController.FleetDataToShipData(userFleet.FleetData);
-                            foreach (Tuple<Ships, int> ship in ships)
-                            {
-                                // BU gezegende bu gemiden var mı?
-                                TblUserPlanetShips shipInPlanet = userPlanet.TblUserPlanetShips.FirstOrDefault(x => x.ShipId == (int)ship.Item1);
-
-                                // Eğer yok ise oluşturuyoruuz.
-                                if (shipInPlanet == null)
-                                    userPlanet.TblUserPlanetShips.Add(new TblUserPlanetShips { ShipId = (int)ship.Item1, ShipCount = ship.Item2, UserPlanetId = userFleet.SenderUserPlanetId });
-                                else // Eğer gezegende zaten var ise miktarıın arttırıyoruz.
-                                    shipInPlanet.ShipCount += ship.Item2;
-                            }
-
-                            // Şurada kaynakları geri veriyoruz kullanıcıya.
-                            userPlanet.Metal += userFleet.CarriedMetal;
-                            userPlanet.Crystal += userFleet.CarriedCrystal;
-                            userPlanet.Boron += userFleet.CarriedBoron;
-
-                            // Gönderilen gemileri string formatına dönüştürüyoruz.
-                            string shipsWithCounts = string.Join(MailEncoder.KEY_SHIP_SEPERATOR, ships.Select(x => $"{(int)x.Item1}{MailEncoder.KEY_SHIP_KEY_VALUE_SEPERATOR}{x.Item2}"));
-
-                            // Gemileri maile ekliyoruz.
-                            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_SHIPS_ATTACKER, shipsWithCounts));
-
-                            // Gezegen kategorisinde olduğunu söylüyoruz mailin.
-                            category = MailCategories.Gezegen;
-                        }
+                        ExecuteTransportReturnAction(controller, userPlanet, userFleet, actionDate, destinationPlanet);
                         break;
                     case FleetTypes.Konuşlandır:
                         break;
@@ -645,32 +602,12 @@ namespace WarOfGalaxiesApi.Controllers
                 switch ((FleetTypes)userFleet.FleetActionTypeId)
                 {
                     case FleetTypes.Casusluk:
+                        ExecuteSpyAction(controller, userPlanet, userFleet, actionDate, destinationPlanet);
                         break;
                     case FleetTypes.Saldır:
                         break;
                     case FleetTypes.Nakliye:
-                        {
-                            // Kaynakları ekliyoruz.
-                            destinationPlanet.Metal += userFleet.CarriedMetal;
-                            destinationPlanet.Crystal += userFleet.CarriedCrystal;
-                            destinationPlanet.Boron += userFleet.CarriedBoron;
-
-                            // Türünü ekliyoruz.
-                            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_MAIL_TYPE, 1));
-
-                            // Mail datasını yüklüyoruz. Taşınan kaynaklar.
-                            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_METAL, userFleet.CarriedMetal));
-                            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_CRYSTAL, userFleet.CarriedCrystal));
-                            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_BORON, userFleet.CarriedBoron));
-
-                            // Taşınan kaynakları siliyoruz.
-                            userFleet.CarriedMetal = 0;
-                            userFleet.CarriedCrystal = 0;
-                            userFleet.CarriedBoron = 0;
-
-                            // Gezegen kategorisinde olduğunu söylüyoruz mailin.
-                            category = MailCategories.Gezegen;
-                        }
+                        ExecuteTransportAction(controller, userPlanet, userFleet, actionDate, destinationPlanet);
                         break;
                     case FleetTypes.Konuşlandır:
                         break;
@@ -678,31 +615,221 @@ namespace WarOfGalaxiesApi.Controllers
                         break;
                 }
             }
+        }
+
+        #region Reports 
+
+        private static void ExecuteSpyAction(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet, DateTime actionDate, TblUserPlanets destinationPlanet)
+        {
+            List<string> defaultMailContent = new List<string>()
+            {
+                MailEncoder.GetParam(userFleet.IsReturning ? MailEncoder.KEY_ACTION_TYPE_RETURN : MailEncoder.KEY_ACTION_TYPE, userFleet.FleetActionTypeId),
+                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName),
+                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
+                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, destinationPlanet.PlanetName),
+                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETCORDINATE, userFleet.DestinationCordinate)
+            };
+
+            // Nakliye türünü ekliyoruz.
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_MAIL_TYPE, (int)MailTypes.CasusRaporu));
+
+            // Mail datasını yüklüyoruz. Raporlanan gezgendeki kaynaklar.
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_METAL, destinationPlanet.Metal));
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_CRYSTAL, destinationPlanet.Crystal));
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_BORON, destinationPlanet.Boron));
+
+            // Gezgenin detaylarını alıyoruz.
+            destinationPlanet = controller.UnitOfWork.GetRepository<TblUserPlanets>()
+                .Where(x => x.UserPlanetId == userFleet.DestinationUserPlanetId.Value)
+                .Include(x => x.TblUserPlanetBuildings)
+                .Include(x => x.TblUserPlanetShips)
+                .Include(x => x.TblUserPlanetDefenses)
+                .Include(x => x.User)
+                .ThenInclude(x => x.TblUserResearches)
+                .FirstOrDefault();
+
+            #region Binalar.
+
+            // Binaları ve seviyeleri stringliyoruz.
+            string buildingWithLevels = string.Join(MailEncoder.KEY_MANY_ITEM_SEPERATOR, destinationPlanet.TblUserPlanetBuildings.Select(x => $"{x.BuildingId}{MailEncoder.KEY_MANY_ITEM_KEY_VALUE_SEPERATOR}{x.BuildingLevel}"));
+
+            // Ve mail datamıza ekliyoruz.
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_BUILDING_DEFENDER, buildingWithLevels));
+
+            #endregion
+
+            #region Gemiler.
+
+            // Gemileri ve miktarlarını stringliyoruz.
+            string shipsWithQuantity = string.Join(MailEncoder.KEY_MANY_ITEM_SEPERATOR, destinationPlanet.TblUserPlanetShips.Select(x => $"{x.ShipId}{MailEncoder.KEY_MANY_ITEM_KEY_VALUE_SEPERATOR}{x.ShipCount}"));
+
+            // Ve mail datamıza ekliyoruz.
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_SHIPS_DEFENDER, shipsWithQuantity));
+
+            #endregion
+
+            #region Savunmalar
+
+            // Savunmaları ve miktarlarını stringliyoruz.
+            string defensesWithQuantity = string.Join(MailEncoder.KEY_MANY_ITEM_SEPERATOR, destinationPlanet.TblUserPlanetDefenses.Select(x => $"{x.DefenseId}{MailEncoder.KEY_MANY_ITEM_KEY_VALUE_SEPERATOR}{x.DefenseCount}"));
+
+            // Ve mail datamıza ekliyoruz.
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_DEFENSES, defensesWithQuantity));
+
+            #endregion
+
+            #region Araştırmalar
+
+            // araştırma ve seviyelerini stringliyoruz.
+            string researchWithLevel = string.Join(MailEncoder.KEY_MANY_ITEM_SEPERATOR, destinationPlanet.User.TblUserResearches.Select(x => $"{x.ResearchId}{MailEncoder.KEY_MANY_ITEM_KEY_VALUE_SEPERATOR}{x.ResearchLevel}"));
+
+            // Ve mail datamıza ekliyoruz.
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_RESEARCHES, researchWithLevel));
+
+            #endregion
 
             // 1. mail her zaman gidiyor. 2.mail ise sadece gönderilen oyuncu değil ise gidiyor.
             controller.UnitOfWork.GetRepository<TblUserMails>().Add(new TblUserMails
             {
                 IsReaded = false,
                 MailDate = actionDate,
-                MailCategoryId = (int)category,
+                MailCategoryId = (int)MailCategories.Casusluk,
+                MailContent = MailEncoder.EncodeMail(defaultMailContent),
+                UserId = userPlanet.UserId
+            });
+        }
+
+        private static void ExecuteSpyReturnAction(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet, DateTime actionDate, TblUserPlanets destinationPlanet)
+        {
+            // Gemileri alıyoruz. Kullanıcının gezegenine iade edeceğiz.
+            List<Tuple<Ships, int>> ships = FleetController.FleetDataToShipData(userFleet.FleetData);
+
+            // Dönen her bir gemiyi envantere ekliyoruz.
+            foreach (Tuple<Ships, int> ship in ships)
+            {
+                // BU gezegende bu gemiden var mı?
+                TblUserPlanetShips shipInPlanet = userPlanet.TblUserPlanetShips.FirstOrDefault(x => x.ShipId == (int)ship.Item1);
+
+                // Eğer yok ise oluşturuyoruuz.
+                if (shipInPlanet == null)
+                    userPlanet.TblUserPlanetShips.Add(new TblUserPlanetShips { ShipId = (int)ship.Item1, ShipCount = ship.Item2, UserPlanetId = userFleet.SenderUserPlanetId });
+                else // Eğer gezegende zaten var ise miktarıın arttırıyoruz.
+                    shipInPlanet.ShipCount += ship.Item2;
+            }
+
+            // Şurada kaynakları geri veriyoruz kullanıcıya.
+            userPlanet.Metal += userFleet.CarriedMetal;
+            userPlanet.Crystal += userFleet.CarriedCrystal;
+            userPlanet.Boron += userFleet.CarriedBoron;
+        }
+
+        private static void ExecuteTransportAction(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet, DateTime actionDate, TblUserPlanets destinationPlanet)
+        {
+            List<string> defaultMailContent = new List<string>()
+            {
+                MailEncoder.GetParam(userFleet.IsReturning ? MailEncoder.KEY_ACTION_TYPE_RETURN : MailEncoder.KEY_ACTION_TYPE, userFleet.FleetActionTypeId),
+                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName),
+                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
+                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, destinationPlanet.PlanetName),
+                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETCORDINATE, userFleet.DestinationCordinate)
+            };
+
+            // Kaynakları ekliyoruz.
+            destinationPlanet.Metal += userFleet.CarriedMetal;
+            destinationPlanet.Crystal += userFleet.CarriedCrystal;
+            destinationPlanet.Boron += userFleet.CarriedBoron;
+
+            // Türünü ekliyoruz.
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_MAIL_TYPE, (int)MailTypes.NakliyeRaporu));
+
+            // Mail datasını yüklüyoruz. Taşınan kaynaklar.
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_METAL, userFleet.CarriedMetal));
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_CRYSTAL, userFleet.CarriedCrystal));
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_BORON, userFleet.CarriedBoron));
+
+            // Taşınan kaynakları siliyoruz.
+            userFleet.CarriedMetal = 0;
+            userFleet.CarriedCrystal = 0;
+            userFleet.CarriedBoron = 0;
+
+            // 1. mail her zaman gidiyor. 2.mail ise sadece gönderilen oyuncu değil ise gidiyor.
+            controller.UnitOfWork.GetRepository<TblUserMails>().Add(new TblUserMails
+            {
+                IsReaded = false,
+                MailDate = actionDate,
+                MailCategoryId = (int)MailCategories.Gezegen,
                 MailContent = MailEncoder.EncodeMail(defaultMailContent),
                 UserId = userPlanet.UserId
             });
 
-            // Eğer aynı kullanıcıya mail atıyorsak atmıyoruz dublike olmasın diye.
+            // Eğer aynı kullanıcıya mail atıyorsak atmıyoruz dublike olmasın diye. Ayrıca atarken de geminin dönüyor olmasının hedef gezegen ile alakası yok.
             if (destinationPlanet.UserId != userPlanet.UserId)
             {
                 controller.UnitOfWork.GetRepository<TblUserMails>().Add(new TblUserMails
                 {
                     IsReaded = false,
                     MailDate = actionDate,
-                    MailCategoryId = (int)category,
+                    MailCategoryId = (int)MailCategories.Gezegen,
                     MailContent = MailEncoder.EncodeMail(defaultMailContent),
                     UserId = destinationPlanet.UserId
                 });
             }
-
         }
+
+        private static void ExecuteTransportReturnAction(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet, DateTime actionDate, TblUserPlanets destinationPlanet)
+        {
+            List<string> defaultMailContent = new List<string>()
+            {
+                MailEncoder.GetParam(userFleet.IsReturning ? MailEncoder.KEY_ACTION_TYPE_RETURN : MailEncoder.KEY_ACTION_TYPE, userFleet.FleetActionTypeId),
+                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName),
+                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
+                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, destinationPlanet.PlanetName),
+                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETCORDINATE, userFleet.DestinationCordinate)
+            };
+
+            // Gemileri alıyoruz. Kullanıcının gezegenine iade edeceğiz.
+            List<Tuple<Ships, int>> ships = FleetController.FleetDataToShipData(userFleet.FleetData);
+
+            // Dönen her bir gemiyi envantere ekliyoruz.
+            foreach (Tuple<Ships, int> ship in ships)
+            {
+                // BU gezegende bu gemiden var mı?
+                TblUserPlanetShips shipInPlanet = userPlanet.TblUserPlanetShips.FirstOrDefault(x => x.ShipId == (int)ship.Item1);
+
+                // Eğer yok ise oluşturuyoruuz.
+                if (shipInPlanet == null)
+                    userPlanet.TblUserPlanetShips.Add(new TblUserPlanetShips { ShipId = (int)ship.Item1, ShipCount = ship.Item2, UserPlanetId = userFleet.SenderUserPlanetId });
+                else // Eğer gezegende zaten var ise miktarıın arttırıyoruz.
+                    shipInPlanet.ShipCount += ship.Item2;
+            }
+
+            // Şurada kaynakları geri veriyoruz kullanıcıya.
+            userPlanet.Metal += userFleet.CarriedMetal;
+            userPlanet.Crystal += userFleet.CarriedCrystal;
+            userPlanet.Boron += userFleet.CarriedBoron;
+
+            // Gönderilen gemileri string formatına dönüştürüyoruz.
+            string shipsWithCounts = string.Join(MailEncoder.KEY_MANY_ITEM_SEPERATOR, ships.Select(x => $"{(int)x.Item1}{MailEncoder.KEY_MANY_ITEM_KEY_VALUE_SEPERATOR}{x.Item2}"));
+
+            // Gemileri maile ekliyoruz.
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_SHIPS_ATTACKER, shipsWithCounts));
+
+            // Nakliye türünü ekliyoruz.
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_MAIL_TYPE, (int)MailTypes.NakliyeRaporuDönüş));
+
+            // 1. mail her zaman gidiyor. 2.mail ise sadece gönderilen oyuncu değil ise gidiyor.
+            controller.UnitOfWork.GetRepository<TblUserMails>().Add(new TblUserMails
+            {
+                IsReaded = false,
+                MailDate = actionDate,
+                MailCategoryId = (int)MailCategories.Gezegen,
+                MailContent = MailEncoder.EncodeMail(defaultMailContent),
+                UserId = userPlanet.UserId
+            });
+        }
+
+        #endregion
+
 
         /// <summary>
         /// Verilen türe göre kaynakları günceller.

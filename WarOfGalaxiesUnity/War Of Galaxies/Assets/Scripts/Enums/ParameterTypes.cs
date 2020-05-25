@@ -7,6 +7,9 @@ namespace Assets.Scripts.Enums
     {
         UniverseSpeed = 1,
         UniverseFleetSpeed = 2,
-        UniverseResearchSpeed = 3
+        UniverseResearchSpeed = 3,
+        GalaxyCount = 4,
+        SolarSystemCount = 5,
+        SolarSystemPlanetCount = 6
     }
 }

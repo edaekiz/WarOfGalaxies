@@ -23,4 +23,12 @@ namespace Assets.Scripts.ApiModels
     {
         public int UserMailId;
     }
+
+
+    [Serializable]
+    public class MailDeleteRequestDTO
+    {
+        public int UserMailId;
+    }
+
 }

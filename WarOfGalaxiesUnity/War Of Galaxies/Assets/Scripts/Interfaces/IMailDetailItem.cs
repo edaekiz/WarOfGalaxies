@@ -1,7 +1,10 @@
 ﻿using Assets.Scripts.ApiModels;
 using static Assets.Scripts.Pluigns.MailEncoder;
 
-public interface IMailDetailItem
+namespace Assets.Scripts.Interfaces
 {
-    void LoadContent(UserMailDTO mailData, MailDecodeDTO decodedData);
+    public interface IMailDetailItem
+    {
+        void LoadContent(UserMailDTO mailData, MailDecodeDTO decodedData);
+    }
 }

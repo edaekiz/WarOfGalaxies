@@ -245,8 +245,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e26559a95eb8d7e45b67f590d1032819, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MailContent: {fileID: 215085357024010019}
-  MailDate: {fileID: 7654028150475023882}
+  TXT_MailContent: {fileID: 215085357024010019}
+  TXT_MailDate: {fileID: 7654028150475023882}
   ReadColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
 --- !u!114 &1039039301797839565
 MonoBehaviour:

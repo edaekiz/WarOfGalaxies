@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.ApiModels;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
+using Assets.Scripts.Interfaces;
 using Assets.Scripts.Pluigns;
 using System;
 using System.Collections.Generic;
@@ -105,13 +106,42 @@ public class MailDetailItemPanelController : BasePanelController
 
     public void SetAsRead()
     {
-        StartCoroutine(ApiService.API.Post("SetMailAsRead", new MailReadRequestDTO { UserMailId = this.MailData.UserMailId },(ApiResult response) =>
-        {
-            if (response.IsSuccess) {
-                MailData.IsReaded = true;
-                if (MailPanelController.MPC != null)
-                    MailPanelController.MPC.ShowCategoryDetails(MailPanelController.MPC.CurrentShownCategory);
-            }
-        }));
+        StartCoroutine(ApiService.API.Post("SetMailAsRead", new MailReadRequestDTO { UserMailId = this.MailData.UserMailId }, (ApiResult response) =>
+         {
+             if (response.IsSuccess)
+             {
+                 MailData.IsReaded = true;
+                 if (MailPanelController.MPC != null)
+                     MailPanelController.MPC.ShowCategoryDetails(MailPanelController.MPC.CurrentShownCategory);
+             }
+         }));
     }
+
+    public void DeleteMail()
+    {
+        // Onay panelini açıyoruz.
+        GameObject yesNoPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.YesNoPanel);
+
+        // Kontrolleri alıyoruz.
+        YesNoPanelController ynpc = yesNoPanel.GetComponent<YesNoPanelController>();
+
+        // Uyarı paneli açıyoruz. Eğer panelden evet denirse kayıdı siliyoruz sistemden.
+        ynpc.LoadData(base.GetLanguageText("Uyarı"), base.GetLanguageText("Silmekİstemek"), () =>
+        {
+            StartCoroutine(ApiService.API.Post("DeleteMail", new MailDeleteRequestDTO { UserMailId = this.MailData.UserMailId }, (ApiResult response) =>
+            {
+
+                if (response.IsSuccess)
+                {
+                    // Maili siliyoruz listeden.
+                    MailController.MC.DeleteMail(this.MailData);
+
+                    // Paneli kapatıyoruz.
+                    this.ClosePanel();
+
+                }
+            }));
+        });
+    }
+
 }

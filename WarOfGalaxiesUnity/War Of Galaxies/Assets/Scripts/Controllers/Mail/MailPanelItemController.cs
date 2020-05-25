@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using Assets.Scripts.Pluigns;
 using System.Collections.Generic;
@@ -20,10 +21,10 @@ public class MailPanelItemController : MonoBehaviour
     public MailDecodeDTO MailDecodedData { get; set; }
 
     [Header("Mail içeriğini buraya basacağız.")]
-    public TMP_Text MailContent;
+    public TMP_Text TXT_MailContent;
 
     [Header("Mail tarihini buraya basıyoruz.")]
-    public TMP_Text MailDate;
+    public TMP_Text TXT_MailDate;
 
     [Header("Eğer mail okunmuş ise renk tonu bu olacak.")]
     public Color ReadColor;
@@ -36,20 +37,20 @@ public class MailPanelItemController : MonoBehaviour
         MailDecodedData = MailEncoder.DecodeMail(mailData.MailContent);
 
         // Mailin türünü arıyoruz. Ona göre Dil dosyasından alacağız datayı.
-        string mailType = MailDecodedData.GetMailType();
+        MailTypes mailType = MailDecodedData.GetMailType();
 
         // Template yüklüyoruz dil dosyasından.
-        string template = LanguageController.LC.GetText($"MT{mailType}");
+        string template = LanguageController.LC.GetText($"MT{(int)mailType}");
 
         // Bütün kayıtları dönüp dil dosyası üzerinden eşliyoruz.
         foreach (KeyValuePair<string, string> record in MailDecodedData.Records)
             template = template.Replace($"{{{record.Key}}}", MailDecodedData.GetValue(record.Key));
 
         // Mail eğer fazla uzun ise kısa metin olarak gösteriyoruz.
-        MailContent.text = template;
+        TXT_MailContent.text = template;
 
         // Mail tarihini basıyoruz.
-        MailDate.text = TimeExtends.UTCDateToString(mailData.MailDate);
+        TXT_MailDate.text = TimeExtends.UTCDateToString(mailData.MailDate);
 
         // Eğer okunduysa okundu olarak değiştiriyoruz.
         if (mailData.IsReaded)
@@ -57,7 +58,12 @@ public class MailPanelItemController : MonoBehaviour
 
     }
 
-    public void SetAsRead() => GetComponent<Image>().color = ReadColor;
+    public void SetAsRead()
+    {
+        GetComponent<Image>().color = ReadColor;
+        TXT_MailContent.alpha = .66f;
+        TXT_MailDate.alpha = .66f;
+    }
 
     public void ShowMailDetails()
     {

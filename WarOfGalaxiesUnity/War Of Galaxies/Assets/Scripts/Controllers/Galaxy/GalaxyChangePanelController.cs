@@ -71,7 +71,8 @@ public class GalaxyChangePanelController : MonoBehaviour
         {
             MainPanel.SetActive(false);
             ToggleText.text = "+";
-        }else
+        }
+        else
         {
             MainPanel.SetActive(true);
             ToggleText.text = "-";
@@ -92,15 +93,15 @@ public class GalaxyChangePanelController : MonoBehaviour
         bool isIncreased = false;
         bool isDecrased = false;
 
-        // Eğer 500 den büyük olduysa başa dönüyoruz ancak bir sonraki galaksiye geçiyoruz.
-        if (currentSolarIndex > 100)
+        // Eğer X den büyük olduysa başa dönüyoruz ancak bir sonraki galaksiye geçiyoruz.
+        if (currentSolarIndex > DataController.DC.GetParameter(Assets.Scripts.Enums.ParameterTypes.SolarSystemCount).ParameterIntValue)
         {
             currentSolarIndex = 1;
             isIncreased = true;
         }
         else if (currentSolarIndex < 1)
         {
-            currentSolarIndex = 100;
+            currentSolarIndex = DataController.DC.GetParameter(Assets.Scripts.Enums.ParameterTypes.SolarSystemCount).ParameterIntValue;
             isDecrased = true;
         }
 
@@ -120,10 +121,10 @@ public class GalaxyChangePanelController : MonoBehaviour
             currentGalaxyIndex--;
 
         // Galaksi indeksinin sınırlarını kontrol ediyoruz.
-        if (currentGalaxyIndex > 1)
+        if (currentGalaxyIndex > DataController.DC.GetParameter(Assets.Scripts.Enums.ParameterTypes.GalaxyCount).ParameterIntValue)
             currentGalaxyIndex = 1;
         else if (currentGalaxyIndex < 1)
-            currentGalaxyIndex = 1;
+            currentGalaxyIndex = DataController.DC.GetParameter(Assets.Scripts.Enums.ParameterTypes.GalaxyCount).ParameterIntValue;
 
         // Güneş sistemini değiştiriyoruz.
         SolarIndexField.text = $"{currentSolarIndex}";

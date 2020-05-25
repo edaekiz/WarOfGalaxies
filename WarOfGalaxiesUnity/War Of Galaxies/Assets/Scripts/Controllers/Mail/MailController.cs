@@ -100,4 +100,15 @@ public class MailController : MonoBehaviour
             NotificationController.NC.AddNotificationQueue(LanguageController.LC.GetText("XMesajınızVar", newQuantity), () => ShowMailPanel());
     }
 
+    public void DeleteMail(UserMailDTO userMail)
+    {
+        // Öncekini siliyoruz.
+        this.UserMails.Remove(userMail);
+
+        // Eğer panel açık ise paneli de yeniliyoruz.
+        if (MailPanelController.MPC != null)
+            MailPanelController.MPC.ShowCategoryDetails(MailPanelController.MPC.CurrentShownCategory);
+
+    }
+
 }

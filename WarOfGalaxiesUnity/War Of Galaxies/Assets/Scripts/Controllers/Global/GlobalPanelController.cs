@@ -22,7 +22,8 @@ public class GlobalPanelController : MonoBehaviour
         FleetPanel,
         NotificationPanel,
         MailPanel,
-        MailDetailPanel
+        MailDetailPanel,
+        YesNoPanel
     }
 
     [Serializable]

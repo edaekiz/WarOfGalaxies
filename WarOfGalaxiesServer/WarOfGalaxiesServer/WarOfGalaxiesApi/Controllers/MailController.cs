@@ -57,6 +57,29 @@ namespace WarOfGalaxiesApi.Controllers
             // Ve başarılı sonucunu dönüyoruz.
             return ResponseHelper.GetSuccess();
 
-        } 
+        }
+
+        [HttpPost("DeleteMail")]
+        [Description("Bir maili okundu olarak işaretler.")]
+        public ApiResult DeleteMail(MailDeleteRequestDTO request)
+        {
+            // Kullanıcının mailini buluyoruz.
+            TblUserMails userMail = base.UnitOfWork.GetRepository<TblUserMails>()
+                .FirstOrDefault(x => x.UserId == DBUser.UserId && x.UserMailId == request.UserMailId);
+
+            // Eğer mail yok ise hata dön.
+            if (userMail == null)
+                return ResponseHelper.GetError("Posta bulunamadı!");
+
+            // Okundu olarak ayarlıyoruz.
+            base.UnitOfWork.GetRepository<TblUserMails>().Delete(userMail);
+
+            // Ve kayıt ediyoruz.
+            base.UnitOfWork.SaveChanges();
+
+            // Ve başarılı sonucunu dönüyoruz.
+            return ResponseHelper.GetSuccess();
+
+        }
     }
 }

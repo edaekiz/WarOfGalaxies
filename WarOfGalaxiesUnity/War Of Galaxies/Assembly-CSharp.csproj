@@ -84,6 +84,7 @@
     <Compile Include="Assets\ExternalAssets\Asteroids Pack\Assets\Scripts\RandomRotator.cs" />
     <Compile Include="Assets\ExternalAssets\Hi-Tech Buttons and Panels\Resources\Scripts\JustRotate.cs" />
     <Compile Include="Assets\Languages\Language.Designer.cs" />
+    <Compile Include="Assets\MailDetailItemOnlySpyController.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ApiResult.cs" />
     <Compile Include="Assets\Scripts\ApiModels\Base\ProgressModel.cs" />
     <Compile Include="Assets\Scripts\ApiModels\DataDTO.cs" />
@@ -135,6 +136,7 @@
     <Compile Include="Assets\Scripts\Controllers\Notification\NotificationController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Notification\NotificationPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\OtherPanels\QuantityItemPanel.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Panels\YesNoPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetPickerController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetRotateController.cs" />
@@ -158,6 +160,7 @@
     <Compile Include="Assets\Scripts\Enums\Defenses.cs" />
     <Compile Include="Assets\Scripts\Enums\FleetTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\MailCategories.cs" />
+    <Compile Include="Assets\Scripts\Enums\MailTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\ParameterTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\PlanetTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\Researches.cs" />

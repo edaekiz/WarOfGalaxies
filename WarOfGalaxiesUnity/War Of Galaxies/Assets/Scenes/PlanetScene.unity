@@ -4398,6 +4398,9 @@ MonoBehaviour:
   - PanelType: 14
     Prefab: {fileID: 7619140004591594058, guid: 18283a8e5e222014eac155a288bfe854,
       type: 3}
+  - PanelType: 15
+    Prefab: {fileID: 1425446694950270894, guid: f94bee878e764bd49b571f8049707917,
+      type: 3}
 --- !u!4 &515747090
 Transform:
   m_ObjectHideFlags: 0
@@ -4512,6 +4515,8 @@ MonoBehaviour:
     ShipImage: {fileID: 21300000, guid: d98da49cf89a56748a46cc6ab8a3c052, type: 3}
   - Ship: 2
     ShipImage: {fileID: 21300000, guid: 10cdbba8dcdcf1c43932185b8ccfba53, type: 3}
+  - Ship: 3
+    ShipImage: {fileID: 21300000, guid: d98da49cf89a56748a46cc6ab8a3c052, type: 3}
 --- !u!114 &515747098
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4636,7 +4641,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 148c9f4ce02428149950ec3d3488c6ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UnReadedMails: []
+  UserMails: []
   UnreadMailCount: {fileID: 358478837}
   LastSelectedCategory: 1
 --- !u!1 &525442637

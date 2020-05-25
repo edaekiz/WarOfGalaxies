@@ -20,4 +20,9 @@ namespace WarOfGalaxiesApi.DTO.Models
     {
         public int UserMailId { get; set; }
     }
+
+    public class MailDeleteRequestDTO
+    {
+        public int UserMailId { get; set; }
+    }
 }

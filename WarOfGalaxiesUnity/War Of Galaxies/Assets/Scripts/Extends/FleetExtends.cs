@@ -86,10 +86,10 @@ namespace Assets.Scripts.Extends
             try
             { 
                 List<Tuple<Ships, int>> fleet = new List<Tuple<Ships, int>>();
-                string[] ships = data.Split(new string[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+                string[] ships = data.Split(new string[] { "," }, StringSplitOptions.None);
                 foreach (var ship in ships)
                 {
-                    string[] shipData = ship.Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries);
+                    string[] shipData = ship.Split(new string[] { ":" }, StringSplitOptions.None);
                     Ships shipId = (Ships)int.Parse(shipData[0]);
                     int shipQuantity = int.Parse(shipData[1]);
                     fleet.Add(new Tuple<Ships, int>(shipId, shipQuantity));

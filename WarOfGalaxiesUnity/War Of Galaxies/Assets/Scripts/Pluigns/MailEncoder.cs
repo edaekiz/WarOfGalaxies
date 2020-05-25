@@ -8,28 +8,34 @@ namespace Assets.Scripts.Pluigns
 {
     public static class MailEncoder
     {
-        public const string KEY_SHIP_KEY_VALUE_SEPERATOR = ":";
-        public const string KEY_SHIP_SEPERATOR = "|";
         public const string KEY_VALUE_SEPERATOR = "=";
         public const string RECORD_SEPERATOR = ";";
+
+        public const string KEY_MANY_ITEM_KEY_VALUE_SEPERATOR = ":";
+        public const string KEY_MANY_ITEM_SEPERATOR = "|";
 
         public const string KEY_ACTION_TYPE = "AT";
         public const string KEY_ACTION_TYPE_RETURN = "ATR";
         public const string KEY_MAIL_TYPE = "MT";
 
-        public const string KEY_SENDERPLANETNAME = "S";
+        public const string KEY_SENDERPLANETNAME = "SM";
         public const string KEY_SENDERPLANETCORDINATE = "SC";
-        public const string KEY_DESTINATIONPLANETNAME = "D";
+        public const string KEY_DESTINATIONPLANETNAME = "DM";
         public const string KEY_DESTINATIONPLANETCORDINATE = "DC";
-        public const string KEY_OLD_METAL = "OM";
-        public const string KEY_OLD_CRYSTAL = "OC";
-        public const string KEY_OLD_BORON = "OB";
+
         public const string KEY_NEW_METAL = "NM";
         public const string KEY_NEW_CRYSTAL = "NC";
         public const string KEY_NEW_BORON = "NB";
 
-        public const string KEY_SHIPS_ATTACKER = "AS";
-        public const string KEY_SHIPS_DEFENDER = "DS";
+        public const string KEY_BUILDING_DEFENDER = "BD";
+
+        public const string KEY_SHIPS_ATTACKER = "SA";
+
+        public const string KEY_SHIPS_DEFENDER = "SD";
+
+        public const string KEY_DEFENSES = "D";
+
+        public const string KEY_RESEARCHES = "R";
 
         public static string GetParam(string key, object value) => $"{key}{KEY_VALUE_SEPERATOR}{value}";
 
@@ -38,10 +44,10 @@ namespace Assets.Scripts.Pluigns
         public static MailDecodeDTO DecodeMail(string template)
         {
             MailDecodeDTO decode = new MailDecodeDTO();
-            List<string> records = template.Split(new string[] { RECORD_SEPERATOR }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            List<string> records = template.Split(new string[] { RECORD_SEPERATOR }, StringSplitOptions.None).ToList();
             records.ForEach(x =>
             {
-                string[] keyAndValue = x.Split(new string[] { KEY_VALUE_SEPERATOR }, StringSplitOptions.RemoveEmptyEntries);
+                string[] keyAndValue = x.Split(new string[] { KEY_VALUE_SEPERATOR }, StringSplitOptions.None);
                 decode.Records.Add(keyAndValue[0], keyAndValue[1]);
             });
             return decode;
@@ -71,34 +77,10 @@ namespace Assets.Scripts.Pluigns
                 #region Kaynaklarda  Noktalı olarak dönceğiz.
 
                 // Kaynak değerleri noktalı olarak gösterilecek.
-                if (record.Key == KEY_OLD_METAL || record.Key == KEY_OLD_CRYSTAL || record.Key == KEY_OLD_BORON ||
-                    record.Key == KEY_NEW_METAL || record.Key == KEY_NEW_CRYSTAL || record.Key == KEY_NEW_BORON)
+                if (record.Key == KEY_NEW_METAL || record.Key == KEY_NEW_CRYSTAL || record.Key == KEY_NEW_BORON)
                 {
                     if (double.TryParse(record.Value, out double val))
                         return ResourceExtends.ConvertToDottedResource(val);
-                }
-
-                #endregion
-
-                #region Gemileri birleştirip döneceğiz.
-
-                // Eğer data saldıran gemi ise key value şeklinde dönüyoruz.
-                if (record.Key == KEY_SHIPS_ATTACKER || record.Key == KEY_SHIPS_DEFENDER)
-                {
-                    // Gemileri buluyoruz.
-                    List<string> ships = record.Value.Split(new string[] { KEY_SHIP_SEPERATOR }, StringSplitOptions.RemoveEmptyEntries).ToList();
-
-                    // Her bir gemiyi satır satır alt alta basıyoruz.
-                    return string.Join(Environment.NewLine, ships.Select(e =>
-                     {
-                         // 1.değer her zaman gemi idsi. 2. olan da miktarı.
-                         string[] keyValue = e.Split(new string[] { KEY_SHIP_KEY_VALUE_SEPERATOR }, StringSplitOptions.RemoveEmptyEntries);
-                         int shipId = int.Parse(keyValue[0]);
-                         int shipCount = int.Parse(keyValue[1]);
-
-                         // Gemi ismini alıp miktar ile basıyoruz.
-                         return $"{LanguageController.LC.GetText($"S{shipId}")} : {shipCount}";
-                     }));
                 }
 
                 #endregion
@@ -108,7 +90,13 @@ namespace Assets.Scripts.Pluigns
 
             }
 
-            public string GetMailType() => GetValue(KEY_MAIL_TYPE);
+            public MailTypes GetMailType()
+            {
+                string at = GetValue(KEY_MAIL_TYPE);
+                if (int.TryParse(at, out int mailType))
+                    return (MailTypes)mailType;
+                return MailTypes.None;
+            }
 
             public FleetTypes GetMailAction()
             {
@@ -135,6 +123,30 @@ namespace Assets.Scripts.Pluigns
                 if (!string.IsNullOrEmpty(GetValue(KEY_ACTION_TYPE_RETURN)))
                     return true;
                 return false;
+            }
+
+            public List<Tuple<T, int>> GetManyItem<T>(string key) where T : Enum, IConvertible
+            {
+                // Verilen keye ait dataları alıyoruz.
+                string data = GetValue(key);
+
+                // Eğer kayıt yok ise boş bir liste dönüyoruz.
+                if (string.IsNullOrEmpty(data))
+                    return new List<Tuple<T, int>>();
+
+                // Var ise her bir key valueyi alıyoruz datadan.
+                string[] items = data.Split(new string[] { KEY_MANY_ITEM_SEPERATOR }, StringSplitOptions.None);
+
+                // Her birini dönüp gemi idsini ve miktarını alıyoruz.
+                return items.Select(x =>
+                {
+                    // 1. Paramtre item idsi 2.parametre ise miktarı.
+                    string[] itemWithQuantityQuantity = x.Split(new string[] { KEY_MANY_ITEM_KEY_VALUE_SEPERATOR }, StringSplitOptions.None);
+
+                    // Tuple olarak geri dönüyoruz.
+                    return new Tuple<T, int>((T)(object)int.Parse(itemWithQuantityQuantity[0]), int.Parse(itemWithQuantityQuantity[1]));
+
+                }).ToList();
             }
 
         }

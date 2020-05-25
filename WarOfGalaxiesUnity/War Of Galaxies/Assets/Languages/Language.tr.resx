@@ -391,7 +391,7 @@
  geri dönüyor.
 
 &lt;color=green&gt;Dönen Filo;&lt;/color&gt;
-{AS}</value>
+{SA}</value>
   </data>
   <data name="HiçMailYok" xml:space="preserve">
     <value>Bu kategori de hiç postanız bulunmamakta.</value>
@@ -419,5 +419,29 @@
   </data>
   <data name="PostaTarihi" xml:space="preserve">
     <value>Posta Tarihi</value>
+  </data>
+  <data name="S3" xml:space="preserve">
+    <value>Casus Dronu</value>
+  </data>
+  <data name="SD3" xml:space="preserve">
+    <value>Casus dronu galaksideki en hızlı gemidir. Ayrıca hedef gezegendeki savunmalara yaklanmaz.</value>
+  </data>
+  <data name="GezegenKaynakları" xml:space="preserve">
+    <value>Gezegen Kaynakları</value>
+  </data>
+  <data name="GezegenYapıları" xml:space="preserve">
+    <value>Gezegen Yapıları</value>
+  </data>
+  <data name="Evet" xml:space="preserve">
+    <value>Evet</value>
+  </data>
+  <data name="Hayır" xml:space="preserve">
+    <value>Hayır</value>
+  </data>
+  <data name="Uyarı" xml:space="preserve">
+    <value>Uyarı</value>
+  </data>
+  <data name="Silmekİstemek" xml:space="preserve">
+    <value>Silmek istediğine emin misin?</value>
   </data>
 </root>

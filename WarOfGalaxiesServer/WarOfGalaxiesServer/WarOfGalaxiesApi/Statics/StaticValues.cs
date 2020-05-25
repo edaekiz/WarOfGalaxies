@@ -113,6 +113,20 @@ namespace WarOfGalaxiesApi.Statics
 
         #endregion
 
+        #region Cordinates
+
+        public bool IsValidCordinate(int galaxyIndex, int solarIndex, int planetOrderIndex)
+        {
+            int galaxyCount = GetParameter(ParameterTypes.GalaxyCount).ParameterIntValue.Value;
+            int solarSystemCount = GetParameter(ParameterTypes.SolarSystemCount).ParameterIntValue.Value;
+            int planetCount = GetParameter(ParameterTypes.SolarSystemPlanetCount).ParameterIntValue.Value;
+            if (galaxyIndex > galaxyCount || solarIndex > solarSystemCount || planetOrderIndex > planetCount)
+                return false;
+            return true;
+        }
+
+        #endregion
+
         #endregion
 
         #region DB Loads

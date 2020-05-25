@@ -21,42 +21,6 @@ namespace WarOfGalaxiesApi.Controllers
         {
         }
 
-        [HttpPost("GetFleetDetails")]
-        [Description("Verilen filo hareketini döner.")]
-        public ApiResult GetFleetDetails(GetLastFleetsDTO request)
-        {
-            // Idsi verilen filoyu dönüyoruz.
-            FleetDTO fleet = base.UnitOfWork.GetRepository<TblFleets>()
-                .Where(x => x.FleetId == request.LastFleetId)
-                .Select(x => new FleetDTO
-                {
-                    SenderCordinate = x.SenderCordinate,
-                    SenderUserId = x.SenderUserPlanet.UserId,
-                    SenderUserPlanetId = x.SenderUserPlanetId,
-                    SenderPlanetName = x.SenderUserPlanet.PlanetName,
-                    DestinationCordinate = x.DestinationCordinate,
-                    DestinationUserPlanetId = x.DestinationUserPlanetId,
-                    DestinationUserId = x.DestinationUserPlanetId.HasValue ? (int?)x.DestinationUserPlanet.UserId : null,
-                    DestinationPlanetName = x.DestinationUserPlanetId.HasValue ? x.DestinationUserPlanet.PlanetName : null,
-                    FleetActionTypeId = x.FleetActionTypeId,
-                    FleetId = x.FleetId,
-                    IsReturning = x.IsReturning,
-                    BeginPassedTime = (RequestDate - x.BeginDate).TotalSeconds,
-                    EndLeftTime = (x.EndDate - RequestDate).TotalSeconds,
-                    CarriedBoron = x.CarriedBoron,
-                    CarriedCrystal = x.CarriedCrystal,
-                    CarriedMetal = x.CarriedMetal,
-                    DestinationPlanetTypeId = x.DestinationUserPlanetId.HasValue ? x.DestinationUserPlanet.PlanetType : 0,
-                    SenderPlanetTypeId = x.SenderUserPlanet.PlanetType,
-                    FleetData = x.FleetData,
-                }).FirstOrDefault();
-
-            if (fleet == null)
-                return ResponseHelper.GetError("Filo bulunamadı!");
-
-            return ResponseHelper.GetSuccess(fleet);
-        }
-
         [HttpPost("GetLastFleets")]
         [Description("Son filo hareketlerini döner.")]
         public ApiResult GetLastFleets(GetLastFleetsDTO request)
@@ -95,12 +59,44 @@ namespace WarOfGalaxiesApi.Controllers
         [Description("Gezegenden filo çıkarma.")]
         public ApiResult FlyNewFleet(SendFleetFromPlanetDTO request)
         {
+            #region Gönderen gezegeni.
+
+            // Kullanıcının gezegeni.
+            TblUserPlanets userPlanet = base.UnitOfWork.GetRepository<TblUserPlanets>().Where(x => x.UserPlanetId == request.SenderUserPlanetId && x.UserId == DBUser.UserId)
+                .Include(x => x.TblCordinates).FirstOrDefault();
+
+            // Gezegen yok ise hata dön.
+            if (userPlanet == null)
+                return ResponseHelper.GetError("Gezegeni bulamadık!");
+
+            #endregion
+
+            #region Gönderen kordinatı.
+
+            // Gönderen kordinat.
+            CordinateDTO senderCordinateDTO = new CordinateDTO(userPlanet.TblCordinates.GalaxyIndex, userPlanet.TblCordinates.SolarIndex, userPlanet.TblCordinates.OrderIndex);
+
+            #endregion
+
+            #region Hedef Kordinatı
+
             // Eğer geçersiz bir kordinat ise geri dön.
-            if (request.DestinationGalaxyIndex > 1 || request.DestinationSolarIndex > 100 || request.DestinationOrderIndex > 8)
+            if (!base.StaticValues.IsValidCordinate(request.DestinationGalaxyIndex, request.DestinationSolarIndex, request.DestinationOrderIndex))
                 return ResponseHelper.GetError("Kordinat bulunamadı!");
 
+            // Hedef kordinat.
+            TblCordinates destinationCordinate = base.UnitOfWork.GetRepository<TblCordinates>().Where(x => x.GalaxyIndex == request.DestinationGalaxyIndex && x.SolarIndex == request.DestinationSolarIndex && x.OrderIndex == request.DestinationOrderIndex).Include(x => x.UserPlanet).FirstOrDefault();
+
+            // Eğer kordinat tanımlı değil ise boştur.
+            if (destinationCordinate == null)
+                destinationCordinate = new TblCordinates() { GalaxyIndex = request.DestinationGalaxyIndex, SolarIndex = request.DestinationSolarIndex, OrderIndex = request.DestinationOrderIndex };
+
+            CordinateDTO destinationCordinateDTO = new CordinateDTO(destinationCordinate.GalaxyIndex, destinationCordinate.SolarIndex, destinationCordinate.OrderIndex);
+
+            #endregion
+
             // Filo hızının geçerliliğini kontrol ediyoruz.
-            if (request.FleetSpeed < 0 || request.FleetSpeed > 1)
+            if (request.FleetSpeed <= 0 || request.FleetSpeed > 1)
                 return ResponseHelper.GetError("Geçersiz filo hızı!");
 
             // Gelen gemilerin bilsini anlaşılır formata çeviriyoruz.
@@ -110,6 +106,39 @@ namespace WarOfGalaxiesApi.Controllers
             if (shipsInData.Count == 0)
                 return ResponseHelper.GetError("Geçersiz veri tipi yada hiç gemi bulunamadı!");
 
+            #region Seçilen aksiyon türüne özel kontroller.
+
+            switch ((FleetTypes)request.FleetType)
+            {
+                case FleetTypes.Casusluk:
+                    {
+                        // Casus sondasını arıyoruz.
+                        Tuple<Ships, int> spySolar = shipsInData.Find(x => x.Item1 == Ships.CasusSondası);
+
+                        // Eğer yok ise ozaman hata dönüyoruz. Çünkü casusluk da en az bir gemi olmalı.
+                        if (spySolar == null || spySolar.Item2 <= 0)
+                            return ResponseHelper.GetError("En az bir casus sondası olmak zorunda.");
+
+                        // Hedefte bir gezegen var mı?
+                        if (destinationCordinate.UserPlanet == null)
+                            return ResponseHelper.GetError("Hedef konumda bir gezegen olmak zorunda.");
+                    }
+                    break;
+                case FleetTypes.Sömürgeleştir:
+                    break;
+                default:
+                    {
+                        // Hedefte bir gezegen var mı?
+                        if (destinationCordinate.UserPlanet == null)
+                            return ResponseHelper.GetError("Hedef konumda bir gezegen olmak zorunda.");
+                    }
+                    break;
+            }
+
+            #endregion
+
+            #region Kaynak onaylama
+
             // Doğrulama tamamlandı mı?
             bool isVerified = VerifyController.VerifyPlanetResources(this, new VerifyResourceDTO { UserPlanetID = request.SenderUserPlanetId });
 
@@ -117,13 +146,9 @@ namespace WarOfGalaxiesApi.Controllers
             if (!isVerified)
                 return ResponseHelper.GetError("Kaynaklar doğrulanamadı!");
 
-            // Kullanıcının gezegeni.
-            TblUserPlanets userPlanet = base.UnitOfWork.GetRepository<TblUserPlanets>().Where(x => x.UserPlanetId == request.SenderUserPlanetId && x.UserId == DBUser.UserId)
-                .Include(x => x.TblCordinates).FirstOrDefault();
+            #endregion
 
-            // Gezegen yok ise hata dön.
-            if (userPlanet == null)
-                return ResponseHelper.GetError("Gezegeni bulamadık!");
+            #region Gemileri tersaneden düşüyoruz.
 
             // Kullanıcının filosunu alıyoruz.
             List<TblUserPlanetShips> userPlanetShips = base.UnitOfWork.GetRepository<TblUserPlanetShips>().Where(x => x.UserPlanetId == request.SenderUserPlanetId).ToList();
@@ -145,6 +170,10 @@ namespace WarOfGalaxiesApi.Controllers
                 if (planetShip.ShipCount <= 0)
                     base.UnitOfWork.GetRepository<TblUserPlanetShips>().Delete(planetShip);
             }
+
+            #endregion
+
+            #region Taşınan kaynaklar, Kapasite ve filo hızı.
 
             // Minimum gemi hızı.
             double minSpeed = GetMinSpeedInFleet(shipsInData.Select(x => x.Item1));
@@ -168,21 +197,17 @@ namespace WarOfGalaxiesApi.Controllers
             userPlanet.Crystal -= request.CarriedCrystal;
             userPlanet.Boron -= request.CarriedBoron;
 
-            // Gönderen kordinat.
-            CordinateDTO senderCordinateDTO = new CordinateDTO(userPlanet.TblCordinates.GalaxyIndex, userPlanet.TblCordinates.SolarIndex, userPlanet.TblCordinates.OrderIndex);
-            TblCordinates destinationCordinate = base.UnitOfWork.GetRepository<TblCordinates>().Where(x => x.GalaxyIndex == request.DestinationGalaxyIndex && x.SolarIndex == request.DestinationSolarIndex && x.OrderIndex == request.DestinationOrderIndex).Include(x => x.UserPlanet).FirstOrDefault();
+            #endregion
 
-            // Eğer kordinat tanımlı değil ise boştur.
-            if (destinationCordinate == null)
-                destinationCordinate = new TblCordinates() { GalaxyIndex = request.DestinationGalaxyIndex, SolarIndex = request.DestinationSolarIndex, OrderIndex = request.DestinationOrderIndex };
-
-            CordinateDTO destinationCordinateDTO = new CordinateDTO(destinationCordinate.GalaxyIndex, destinationCordinate.SolarIndex, destinationCordinate.OrderIndex);
+            #region Uçuş Mesafe ve Süresi.
 
             // Uçuş süresi saniye cinsinden.
             double flyDistance = CalculateDistance(senderCordinateDTO, destinationCordinateDTO);
 
             // Toplam uçuş süresi.
             DateTime flyCompleteDate = base.RequestDate.AddSeconds(CalculateFlightTime(flyDistance, request.FleetSpeed, minSpeed));
+
+            #endregion
 
             // Filoyu oluşturuyoruz.
             TblFleets fleet = base.UnitOfWork.GetRepository<TblFleets>().Add(new TblFleets
