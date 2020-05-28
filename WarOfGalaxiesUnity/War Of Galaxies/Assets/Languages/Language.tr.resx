@@ -444,4 +444,7 @@
   <data name="Silmekİstemek" xml:space="preserve">
     <value>Silmek istediğine emin misin?</value>
   </data>
+  <data name="GezegenVeKoloniler" xml:space="preserve">
+    <value>Gezegenlerin ve Kolonilerin</value>
+  </data>
 </root>

@@ -245,7 +245,9 @@ namespace WarOfGalaxiesApi.DAL.Models
 
                 entity.ToTable("tbl_user_mail_categories");
 
-                entity.Property(e => e.UserMailCategoryId).HasColumnName("UserMailCategoryID");
+                entity.Property(e => e.UserMailCategoryId)
+                    .HasColumnName("UserMailCategoryID")
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.UserMailCategoryName)
                     .IsRequired()

@@ -2732,7 +2732,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &8734965623041127619
 MonoBehaviour:
@@ -3126,6 +3126,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KEYWORD: "Y\xFCkseltmeGereksinim"
+  Append: 
+  Prepend: 
 --- !u!1 &8734965623538657584
 GameObject:
   m_ObjectHideFlags: 0

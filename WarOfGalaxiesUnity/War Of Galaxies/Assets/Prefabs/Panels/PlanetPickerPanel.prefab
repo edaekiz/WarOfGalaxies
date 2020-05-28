@@ -60,7 +60,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 20
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &1898201824284612138
 MonoBehaviour:
@@ -843,6 +843,7 @@ GameObject:
   - component: {fileID: 1898201825022965376}
   - component: {fileID: 1898201825022965378}
   - component: {fileID: 1898201825022965377}
+  - component: {fileID: 819200353487252189}
   m_Layer: 5
   m_Name: TITLE_PlanetAndColonies
   m_TagString: Untagged
@@ -988,6 +989,21 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &819200353487252189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898201825022965391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88dd0c5c693a9004aab6916a54bef9f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KEYWORD: GezegenVeKoloniler
+  Append: 
+  Prepend: 
 --- !u!1 &1898201825038032803
 GameObject:
   m_ObjectHideFlags: 0

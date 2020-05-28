@@ -1880,6 +1880,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KEYWORD: "\xDCretimGereksinimleri"
+  Append: 
+  Prepend: 
 --- !u!1 &768503060
 GameObject:
   m_ObjectHideFlags: 0
@@ -2611,6 +2613,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KEYWORD: "\xDCret"
+  Append: 
+  Prepend: 
 --- !u!1 &1075559406
 GameObject:
   m_ObjectHideFlags: 0
@@ -3429,6 +3433,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KEYWORD: "Ko\u015Fullar"
+  Append: 
+  Prepend: 
 --- !u!1 &1490143231
 GameObject:
   m_ObjectHideFlags: 0
@@ -3829,6 +3835,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KEYWORD: "\xDCretimS\xFCresi"
+  Append: 
+  Prepend: 
 --- !u!1 &1750975184
 GameObject:
   m_ObjectHideFlags: 0
@@ -4744,6 +4752,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KEYWORD: Bilgi
+  Append: 
+  Prepend: 
 --- !u!1 &8822283582476298439
 GameObject:
   m_ObjectHideFlags: 0
@@ -5258,7 +5268,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 20
   m_TargetDisplay: 0
 --- !u!114 &9169019502093364652
 MonoBehaviour:

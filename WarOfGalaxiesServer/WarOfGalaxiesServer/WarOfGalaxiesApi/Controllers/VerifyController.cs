@@ -6,6 +6,7 @@ using WarOfGalaxiesApi.Controllers.Base;
 using WarOfGalaxiesApi.DAL.Interfaces;
 using WarOfGalaxiesApi.DAL.Models;
 using WarOfGalaxiesApi.DTO.Enums;
+using WarOfGalaxiesApi.DTO.Extends;
 using WarOfGalaxiesApi.DTO.Models;
 using WarOfGalaxiesApi.Statics;
 
@@ -584,7 +585,7 @@ namespace WarOfGalaxiesApi.Controllers
                 switch ((FleetTypes)userFleet.FleetActionTypeId)
                 {
                     case FleetTypes.Casusluk:
-                        ExecuteSpyReturnAction(controller, userPlanet, userFleet, actionDate, destinationPlanet);
+                        ExecuteSpyReturnAction(userPlanet, userFleet);
                         break;
                     case FleetTypes.Saldır:
                         break;
@@ -618,6 +619,100 @@ namespace WarOfGalaxiesApi.Controllers
         }
 
         #region Reports 
+        private enum Sides { AttackerShips, DefenderShips, DefenderDefense };
+
+        private static void ExecuteWarAction(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet, DateTime actionDate, TblUserPlanets destinationPlanet)
+        {
+            // Saldıran gemiler.
+            List<Tuple<Ships, int>> attackerShips = FleetController.FleetDataToShipData(userFleet.FleetData);
+
+            // Savunan gemiler.
+            List<TblUserPlanetShips> defenderShips = controller.UnitOfWork.GetRepository<TblUserPlanetShips>().Where(x => x.UserPlanetId == userFleet.DestinationUserPlanetId.Value).ToList();
+
+            // Savunana ait savunma tesisleri.
+            List<TblUserPlanetDefenses> defenderDefenses = controller.UnitOfWork.GetRepository<TblUserPlanetDefenses>().Where(x => x.UserPlanetId == userFleet.DestinationUserPlanetId.Value).ToList();
+
+            #region Gemi ve Savunma bilgileri.
+
+            IEnumerable<TblShips> attackerShipsData = controller.StaticValues.GetShips(attackerShips.Select(x => x.Item1));
+
+            IEnumerable<TblShips> defenderShipsData = controller.StaticValues.GetShips(defenderShips.Select(x => (Ships)x.ShipId));
+
+            IEnumerable<TblDefenses> defenderDefenseData = controller.StaticValues.GetDefenses(defenderDefenses.Select(x => (Defenses)x.DefenseId));
+
+
+            #endregion
+
+            int usedAttackerShipCount = 0;
+            int usedDefenderShipCount = 0;
+            int usedDefenderDefenseCount = 0;
+
+            List<Tuple<Sides, int>> attackOrder = new List<Tuple<Sides, int>>();
+
+            while (usedAttackerShipCount < attackerShips.Count && usedDefenderShipCount < defenderShips.Count && usedDefenderDefenseCount < defenderDefenses.Count)
+            {
+                List<Sides> useableSides = new List<Sides>();
+
+                if (usedAttackerShipCount < attackerShips.Count)
+                    useableSides.Add(Sides.AttackerShips);
+
+                if (usedDefenderShipCount < defenderShips.Count)
+                    useableSides.Add(Sides.DefenderShips);
+
+                if (usedDefenderDefenseCount < defenderDefenses.Count())
+                    useableSides.Add(Sides.DefenderDefense);
+
+                Sides rndSide = MathExtends.GetRandom(useableSides);
+
+                switch (rndSide)
+                {
+                    case Sides.AttackerShips:
+
+                        attackOrder.Add(new Tuple<Sides, int>(Sides.AttackerShips, usedAttackerShipCount));
+                        usedAttackerShipCount += 1;
+
+                        break;
+                    case Sides.DefenderShips:
+
+                        attackOrder.Add(new Tuple<Sides, int>(Sides.DefenderShips, usedDefenderShipCount));
+                        usedDefenderShipCount += 1;
+
+                        break;
+                    case Sides.DefenderDefense:
+
+                        attackOrder.Add(new Tuple<Sides, int>(Sides.DefenderDefense, usedDefenderDefenseCount));
+                        usedDefenderDefenseCount += 1;
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            // Saldırılara başlıyoruz.
+            attackOrder.ForEach(e =>
+            {
+
+                switch (e.Item1)
+                {
+                    case Sides.AttackerShips:
+
+                        Tuple<Ships, int> attackerShip = attackerShips[e.Item2];
+
+
+
+                        break;
+                    case Sides.DefenderShips:
+                        break;
+                    case Sides.DefenderDefense:
+                        break;
+                    default:
+                        break;
+                }
+
+            });
+        }
+
 
         private static void ExecuteSpyAction(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet, DateTime actionDate, TblUserPlanets destinationPlanet)
         {
@@ -699,29 +794,7 @@ namespace WarOfGalaxiesApi.Controllers
             });
         }
 
-        private static void ExecuteSpyReturnAction(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet, DateTime actionDate, TblUserPlanets destinationPlanet)
-        {
-            // Gemileri alıyoruz. Kullanıcının gezegenine iade edeceğiz.
-            List<Tuple<Ships, int>> ships = FleetController.FleetDataToShipData(userFleet.FleetData);
-
-            // Dönen her bir gemiyi envantere ekliyoruz.
-            foreach (Tuple<Ships, int> ship in ships)
-            {
-                // BU gezegende bu gemiden var mı?
-                TblUserPlanetShips shipInPlanet = userPlanet.TblUserPlanetShips.FirstOrDefault(x => x.ShipId == (int)ship.Item1);
-
-                // Eğer yok ise oluşturuyoruuz.
-                if (shipInPlanet == null)
-                    userPlanet.TblUserPlanetShips.Add(new TblUserPlanetShips { ShipId = (int)ship.Item1, ShipCount = ship.Item2, UserPlanetId = userFleet.SenderUserPlanetId });
-                else // Eğer gezegende zaten var ise miktarıın arttırıyoruz.
-                    shipInPlanet.ShipCount += ship.Item2;
-            }
-
-            // Şurada kaynakları geri veriyoruz kullanıcıya.
-            userPlanet.Metal += userFleet.CarriedMetal;
-            userPlanet.Crystal += userFleet.CarriedCrystal;
-            userPlanet.Boron += userFleet.CarriedBoron;
-        }
+        private static void ExecuteSpyReturnAction(TblUserPlanets userPlanet, TblFleets userFleet) => ExecuteAlwaysInReturn(userPlanet, userFleet);
 
         private static void ExecuteTransportAction(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet, DateTime actionDate, TblUserPlanets destinationPlanet)
         {
@@ -788,6 +861,31 @@ namespace WarOfGalaxiesApi.Controllers
             };
 
             // Gemileri alıyoruz. Kullanıcının gezegenine iade edeceğiz.
+            List<Tuple<Ships, int>> ships = ExecuteAlwaysInReturn(userPlanet, userFleet);
+
+            // Gönderilen gemileri string formatına dönüştürüyoruz.
+            string shipsWithCounts = string.Join(MailEncoder.KEY_MANY_ITEM_SEPERATOR, ships.Select(x => $"{(int)x.Item1}{MailEncoder.KEY_MANY_ITEM_KEY_VALUE_SEPERATOR}{x.Item2}"));
+
+            // Gemileri maile ekliyoruz.
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_SHIPS_ATTACKER, shipsWithCounts));
+
+            // Nakliye türünü ekliyoruz.
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_MAIL_TYPE, (int)MailTypes.NakliyeRaporuDönüş));
+
+            // 1. mail her zaman gidiyor. 2.mail ise sadece gönderilen oyuncu değil ise gidiyor.
+            controller.UnitOfWork.GetRepository<TblUserMails>().Add(new TblUserMails
+            {
+                IsReaded = false,
+                MailDate = actionDate,
+                MailCategoryId = (int)MailCategories.Gezegen,
+                MailContent = MailEncoder.EncodeMail(defaultMailContent),
+                UserId = userPlanet.UserId
+            });
+        }
+
+        private static List<Tuple<Ships, int>> ExecuteAlwaysInReturn(TblUserPlanets userPlanet, TblFleets userFleet)
+        {
+            // Gemileri alıyoruz. Kullanıcının gezegenine iade edeceğiz.
             List<Tuple<Ships, int>> ships = FleetController.FleetDataToShipData(userFleet.FleetData);
 
             // Dönen her bir gemiyi envantere ekliyoruz.
@@ -808,24 +906,8 @@ namespace WarOfGalaxiesApi.Controllers
             userPlanet.Crystal += userFleet.CarriedCrystal;
             userPlanet.Boron += userFleet.CarriedBoron;
 
-            // Gönderilen gemileri string formatına dönüştürüyoruz.
-            string shipsWithCounts = string.Join(MailEncoder.KEY_MANY_ITEM_SEPERATOR, ships.Select(x => $"{(int)x.Item1}{MailEncoder.KEY_MANY_ITEM_KEY_VALUE_SEPERATOR}{x.Item2}"));
-
-            // Gemileri maile ekliyoruz.
-            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_SHIPS_ATTACKER, shipsWithCounts));
-
-            // Nakliye türünü ekliyoruz.
-            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_MAIL_TYPE, (int)MailTypes.NakliyeRaporuDönüş));
-
-            // 1. mail her zaman gidiyor. 2.mail ise sadece gönderilen oyuncu değil ise gidiyor.
-            controller.UnitOfWork.GetRepository<TblUserMails>().Add(new TblUserMails
-            {
-                IsReaded = false,
-                MailDate = actionDate,
-                MailCategoryId = (int)MailCategories.Gezegen,
-                MailContent = MailEncoder.EncodeMail(defaultMailContent),
-                UserId = userPlanet.UserId
-            });
+            // Gemileri de dönüyoruz en son.
+            return ships;
         }
 
         #endregion

@@ -11,10 +11,10 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{68EBC2CE-7B3E-3D83-5E3E-D1BED417E212}</ProjectGuid>
+    <ProjectGuid>{066BC4B0-4A2E-D3C2-6881-4632CD90E992}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <AssemblyName>Assembly-CSharp</AssemblyName>
+    <AssemblyName>Assembly-CSharp-firstpass</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <BaseDirectory>.</BaseDirectory>
@@ -49,7 +49,7 @@
   <PropertyGroup>
     <ProjectTypeGuids>{E097FAD1-6243-4DAD-9C02-E9B9EFC3FFC1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UnityProjectGenerator>Unity/VSTU</UnityProjectGenerator>
-    <UnityProjectType>Game:1</UnityProjectType>
+    <UnityProjectType>GamePlugins:3</UnityProjectType>
     <UnityBuildTarget>Android:13</UnityBuildTarget>
     <UnityVersion>2019.3.0f6</UnityVersion>
   </PropertyGroup>
@@ -62,181 +62,28 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\AntiAliasing.cs" />
-    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\FXAA\FXAA.cs" />
-    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\IAntiAliasing.cs" />
-    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\SMAA\SMAA.cs" />
-    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\Common\ImageEffectHelper.cs" />
-    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\Common\MinAttribute.cs" />
-    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\Common\RenderTextureUtility.cs" />
-    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Scripts\Bloom.cs" />
-    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Scripts\BloomAndFlares.cs" />
-    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Scripts\BloomOptimized.cs" />
-    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Scripts\ImageEffectBase.cs" />
-    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Scripts\ImageEffects.cs" />
-    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Scripts\PostEffectsBase.cs" />
-    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Scripts\PostEffectsHelper.cs" />
-    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Scripts\Quads.cs" />
-    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Scripts\ScreenOverlay.cs" />
-    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Scripts\SunShafts.cs" />
-    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Scripts\Triangles.cs" />
-    <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Utility\FPSCounter.cs" />
-    <Compile Include="Assets\ExternalAssets\Asteroids Pack\Assets\Scripts\RandomRotator.cs" />
-    <Compile Include="Assets\ExternalAssets\Hi-Tech Buttons and Panels\Resources\Scripts\JustRotate.cs" />
-    <Compile Include="Assets\FpsController.cs" />
-    <Compile Include="Assets\Languages\Language.Designer.cs" />
-    <Compile Include="Assets\MailDetailItemOnlySpyController.cs" />
-    <Compile Include="Assets\Scripts\ApiModels\ApiResult.cs" />
-    <Compile Include="Assets\Scripts\ApiModels\Base\ProgressModel.cs" />
-    <Compile Include="Assets\Scripts\ApiModels\DataDTO.cs" />
-    <Compile Include="Assets\Scripts\ApiModels\DefenseDTO.cs" />
-    <Compile Include="Assets\Scripts\ApiModels\FleetDTO.cs" />
-    <Compile Include="Assets\Scripts\ApiModels\GalaxyInfoDTO.cs" />
-    <Compile Include="Assets\Scripts\ApiModels\LoginStuffDTO.cs" />
-    <Compile Include="Assets\Scripts\ApiModels\ResourcesDTO.cs" />
-    <Compile Include="Assets\Scripts\ApiModels\ShipyardDTO.cs" />
-    <Compile Include="Assets\Scripts\ApiModels\UserDTO.cs" />
-    <Compile Include="Assets\Scripts\ApiModels\UserMailDTO.cs" />
-    <Compile Include="Assets\Scripts\ApiModels\UserPlanetBuildingDTO.cs" />
-    <Compile Include="Assets\Scripts\ApiModels\UserPlanetCordinateDTO.cs" />
-    <Compile Include="Assets\Scripts\ApiModels\UserPlanetDTO.cs" />
-    <Compile Include="Assets\Scripts\ApiModels\UserResearchesDTO.cs" />
-    <Compile Include="Assets\Scripts\ApiModels\VerifyResourceDTO.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Base\BaseLanguageBehaviour.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Base\BasePanelController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Base\BaseStepController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Building\BuildingController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Building\BuildingPanelController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Building\GlobalBuildingController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Data\DataController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Defense\DefenseController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Defense\DefenseDetailItemPanel.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Defense\DefenseItemController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Defense\DefensePanelController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Defense\DefenseQueueController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Fleet\FleetController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Fleet\FleetPanelController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Fleet\FleetPanelItemController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Galaxy\GalaxyChangePanelController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Galaxy\GalaxyController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Galaxy\SunController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Galaxy\ZoomPanController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Game\LoadingController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Game\LoginController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Game\StaticValuesController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Global\GlobalGalaxyController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Global\GlobalPanelController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Global\GlobalPlanetController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Language\LanguageController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Language\LanguageItemController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Mail\MailController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Mail\MailDetailItemOnlyTextController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Mail\MailDetailItemPanelController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Mail\MailPanelController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Mail\MailPanelItemController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Notification\NotificationController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Notification\NotificationPanelController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\OtherPanels\QuantityItemPanel.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Panels\YesNoPanelController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Planet\PlanetController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Planet\PlanetPickerController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Planet\PlanetRotateController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Planet\PlanetZoomController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\PlanetAction\PlanetActionController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\PlanetAction\ShipItemCanSendController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\PlanetAction\ShipItemToSendController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Research\ResearchController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Research\ResearchDetailItemPanel.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Research\ResearchItemController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Research\ResearchPanelController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Resource\ResourceController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Resource\ResourceDetailController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Shipyard\ShipyardController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Shipyard\ShipyardDetailItemPanel.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Shipyard\ShipyardItemController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Shipyard\ShipyardPanelController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Shipyard\ShipyardQueueController.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Toast\ToastController.cs" />
-    <Compile Include="Assets\Scripts\Enums\Buildings.cs" />
-    <Compile Include="Assets\Scripts\Enums\Defenses.cs" />
-    <Compile Include="Assets\Scripts\Enums\FleetTypes.cs" />
-    <Compile Include="Assets\Scripts\Enums\MailCategories.cs" />
-    <Compile Include="Assets\Scripts\Enums\MailTypes.cs" />
-    <Compile Include="Assets\Scripts\Enums\ParameterTypes.cs" />
-    <Compile Include="Assets\Scripts\Enums\PlanetTypes.cs" />
-    <Compile Include="Assets\Scripts\Enums\Researches.cs" />
-    <Compile Include="Assets\Scripts\Enums\ResourceTypes.cs" />
-    <Compile Include="Assets\Scripts\Enums\Ships.cs" />
-    <Compile Include="Assets\Scripts\Extends\CordinateExtends.cs" />
-    <Compile Include="Assets\Scripts\Extends\FleetExtends.cs" />
-    <Compile Include="Assets\Scripts\Extends\JsonHelper.cs" />
-    <Compile Include="Assets\Scripts\Extends\MathExtends.cs" />
-    <Compile Include="Assets\Scripts\Extends\ResourceExtends.cs" />
-    <Compile Include="Assets\Scripts\Extends\TextExtends.cs" />
-    <Compile Include="Assets\Scripts\Extends\TimeExtends.cs" />
-    <Compile Include="Assets\Scripts\Extends\VectorExtends.cs" />
-    <Compile Include="Assets\Scripts\Ignored\IgnoredCodes.cs" />
-    <Compile Include="Assets\Scripts\Interfaces\IMailDetailItem.cs" />
-    <Compile Include="Assets\Scripts\Models\CordinateDTO.cs" />
-    <Compile Include="Assets\Scripts\Models\DefenseImageDTO.cs" />
-    <Compile Include="Assets\Scripts\Models\LanguageItem.cs" />
-    <Compile Include="Assets\Scripts\Models\ShipImageDTO.cs" />
-    <Compile Include="Assets\Scripts\Models\SolarSystemDTO.cs" />
-    <Compile Include="Assets\Scripts\Pluigns\MailEncoder.cs" />
-    <Compile Include="Assets\Scripts\Services\ApiService.cs" />
-    <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Ring.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MultiPassHollywoodFlares.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\Blend.shader" />
-    <None Include="Assets\ExternalAssets\Exo planets\READ ME.txt" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\SunShaftsComposite.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\ConvertDepth.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\Shader\PlanetShaderHi.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\SMAA\Resources\SMAA.cginc" />
-    <None Include="Assets\Languages\Language.en.resx" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\FXAA\Resources\FXAA3.cginc" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Apply.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Adaptation.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\SMAA\Resources\SMAA.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\LensFlareCreate.shader" />
-    <None Include="Assets\Languages\Language.tr.resx" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\ScreenSpaceRaytrace.cginc" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\VignetteShader.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\SimpleClear.shader" />
-    <None Include="Assets\StreamingAssets\Languages\Language.tr.txt" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\ContrastComposite.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\MinMaxReduction.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\BlurEffectConeTaps.shader" />
-    <None Include="Assets\ExternalAssets\Exo planets\Shaders\Sun.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BrightPassFilter.shader" />
-    <None Include="Assets\StreamingAssets\Languages\Language.en.txt" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MobileBloom.shader" />
-    <None Include="Assets\ExternalAssets\Exo planets\Shaders\Planet lava.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendForBloom.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Textures\README - Copyright.txt" />
-    <None Include="Assets\ExternalAssets\Exo planets\Shaders\Atmosphere sun.shader" />
-    <None Include="Assets\ExternalAssets\Exo planets\Shaders\Atmosphere ASE.shader" />
-    <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Atmosphere - Copy.shader" />
-    <None Include="Assets\ExternalAssets\Exo planets\Shaders\corona.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\SeparableBlurPlus.shader" />
-    <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Atmosphere.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MobileBlur.shader" />
-    <None Include="Assets\ExternalAssets\Robo's turret (free)\Shaders\SDR_Structures.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BrightPassFilter2.shader" />
-    <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Planet.shader" />
-    <None Include="Assets\StreamingAssets\Languages\Language.txt" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\PrepareSunShaftsBlur.shader" />
-    <None Include="Assets\ExternalAssets\Exo planets\Shaders\planet shader NO reflection.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\ShowAlphaChannel.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\Shader\PlanetRingShader.shader" />
-    <None Include="Assets\ExternalAssets\Exo planets\Shaders\planet shader.shader" />
-    <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Planet - Transparency.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\Shader\PlanetShaderMobile.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\FXAA\Resources\FXAA.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Luminance.shader" />
-    <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlurAndFlares.shader" />
-    <None Include="Assets\Languages\Language.resx" />
+    <Compile Include="Assets\Plugins\ReOrder\EditScriptableAttribute.cs" />
+    <Compile Include="Assets\Plugins\ReOrder\ReorderableArrayInspector.cs" />
+    <Compile Include="Assets\Plugins\ReOrder\ReorderableAttribute.cs" />
+    <Compile Include="Assets\Plugins\ReOrder\SerializedPropExtension.cs" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Fonts\LiberationSans - OFL.txt" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
+    <None Include="Assets\Plugins\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/Furkan/Documents/GitHub/WarOfGalaxies/WarOfGalaxiesUnity/War Of Galaxies/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
     </Reference>
@@ -804,12 +651,6 @@
     <Reference Include="Boo.Lang">
       <HintPath>C:/Program Files/Unity/2019.3.0f6/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{066BC4B0-4A2E-D3C2-6881-4632CD90E992}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

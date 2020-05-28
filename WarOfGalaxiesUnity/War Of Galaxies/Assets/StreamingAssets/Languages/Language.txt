@@ -415,7 +415,4 @@
   <data name="Silmekİstemek" xml:space="preserve">
     <value></value>
   </data>
-  <data name="GezegenVeKoloniler" xml:space="preserve">
-    <value></value>
-  </data>
 </root>

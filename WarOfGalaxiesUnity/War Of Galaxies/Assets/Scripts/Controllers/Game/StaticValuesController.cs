@@ -4,6 +4,8 @@ public class StaticValuesController : MonoBehaviour
 {
     public static StaticValuesController SVC { get; set; }
 
+    [Header("Mobil de default 30dur. Bu yüzden biz belirliyoruz. YÜksek olması şarj ömrünü tüketir.")]
+    public int MaxFps = 60;
     private void Awake()
     {
         if (SVC == null)
@@ -11,4 +13,10 @@ public class StaticValuesController : MonoBehaviour
         else
             Destroy(gameObject);
     }
+
+    private void Start()
+    {
+        Application.targetFrameRate = MaxFps;
+    }
+
 }

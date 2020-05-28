@@ -612,7 +612,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &371627565951962524
 MonoBehaviour:
@@ -676,6 +676,7 @@ MonoBehaviour:
   FleetItem: {fileID: 2526438858004501365, guid: b14581c37b571cb47a9ff23299d3587e,
     type: 3}
   FleetItemContent: {fileID: 371627565759677967}
+  Fleets: []
 --- !u!1 &371627566058471314
 GameObject:
   m_ObjectHideFlags: 0

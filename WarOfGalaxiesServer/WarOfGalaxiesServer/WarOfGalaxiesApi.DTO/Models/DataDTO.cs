@@ -38,8 +38,8 @@ namespace WarOfGalaxiesApi.DTO.Models
         public double CostCrystal { get; set; }
         public double CostBoron { get; set; }
         public double ShipSpeed { get; set; }
-        public double ShipFuelt { get; set; }
-        public double CargoCapacity { get; set; }
+        public int ShipFuelt { get; set; }
+        public int CargoCapacity { get; set; }
     }
     public class ResearchDataDTO
     {

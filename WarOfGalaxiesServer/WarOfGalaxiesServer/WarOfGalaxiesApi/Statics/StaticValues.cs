@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using WarOfGalaxiesApi.DAL.Interfaces;
 using WarOfGalaxiesApi.DAL.Models;
 using WarOfGalaxiesApi.DAL.Repositories;
@@ -145,6 +146,8 @@ namespace WarOfGalaxiesApi.Statics
 
         public TblDefenses GetDefense(Defenses defense) => DBDefenses.Find(x => x.DefenseId == (int)defense);
 
+        public IEnumerable<TblDefenses> GetDefenses(IEnumerable<Defenses> defenses) => DBDefenses.Where(x => defenses.Contains((Defenses)x.DefenseId));
+
         #endregion
 
         #region Ships
@@ -152,6 +155,8 @@ namespace WarOfGalaxiesApi.Statics
         public void LoadShips() => DBShips = UOW.GetRepository<TblShips>().ToList();
 
         public TblShips GetShip(Ships ship) => DBShips.Find(x => x.ShipId == (int)ship);
+
+        public IEnumerable<TblShips> GetShips(IEnumerable<Ships> ships) => DBShips.Where(x => ships.Contains((Ships)x.ShipId));
 
         #endregion
 

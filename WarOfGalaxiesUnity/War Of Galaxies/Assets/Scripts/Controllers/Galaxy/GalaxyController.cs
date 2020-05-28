@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.ApiModels;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Models;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -44,7 +45,19 @@ public class GalaxyController : MonoBehaviour
 
     private void Start()
     {
-        LoadSolarSystem(1, 1);
+        StartCoroutine(GoCurrentPlanetCordinate());
+    }
+
+    private IEnumerator GoCurrentPlanetCordinate()
+    {
+        // Oyun yüklendiğinde çalışacak.
+        yield return new WaitUntil(() => LoadingController.LC.IsGameLoaded);
+
+        // Kordinatı alıyoruz ilk açılışta.
+        yield return new WaitUntil(() => GlobalPlanetController.GPC.CurrentPlanetCordinate != null);
+
+        // Gezegenin kordinatını yüklüyoruz.
+        LoadSolarSystem(GlobalPlanetController.GPC.CurrentPlanetCordinate.GalaxyIndex, GlobalPlanetController.GPC.CurrentPlanetCordinate.SolarIndex);
     }
 
     void Update()

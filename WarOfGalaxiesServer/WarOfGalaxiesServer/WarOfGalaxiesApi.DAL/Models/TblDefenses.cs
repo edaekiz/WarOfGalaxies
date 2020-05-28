@@ -16,6 +16,9 @@ namespace WarOfGalaxiesApi.DAL.Models
         public double CostMetal { get; set; }
         public double CostCrystal { get; set; }
         public double CostBoron { get; set; }
+        public int DefenseHealth { get; set; }
+        public int DefenseAttackDamage { get; set; }
+        public int DefenseAttackQuantity { get; set; }
 
         public virtual ICollection<TblUserPlanetDefenseProgs> TblUserPlanetDefenseProgs { get; set; }
         public virtual ICollection<TblUserPlanetDefenses> TblUserPlanetDefenses { get; set; }

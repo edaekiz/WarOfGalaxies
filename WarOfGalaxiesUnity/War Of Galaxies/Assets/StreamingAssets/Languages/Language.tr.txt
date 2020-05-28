@@ -117,333 +117,331 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Araştır" xml:space="preserve">
-    <value>Research</value>
-  </data>
-  <data name="Araştırılıyor" xml:space="preserve">
-    <value>Researching</value>
-  </data>
   <data name="B1" xml:space="preserve">
-    <value>Metal Mine</value>
+    <value>Metal Madeni</value>
+  </data>
+  <data name="B2" xml:space="preserve">
+    <value>Kristal Madeni</value>
+  </data>
+  <data name="B3" xml:space="preserve">
+    <value>Bor Madeni</value>
+  </data>
+  <data name="B4" xml:space="preserve">
+    <value>Metal Deposu</value>
+  </data>
+  <data name="B5" xml:space="preserve">
+    <value>Kristal Deposu</value>
+  </data>
+  <data name="B6" xml:space="preserve">
+    <value>Bor Deposu</value>
+  </data>
+  <data name="B7" xml:space="preserve">
+    <value>Robot Fabrikası</value>
+  </data>
+  <data name="B8" xml:space="preserve">
+    <value>Tersane</value>
+  </data>
+  <data name="B9" xml:space="preserve">
+    <value>Araştırma Laboratuvarı</value>
   </data>
   <data name="B10" xml:space="preserve">
     <value>Radar</value>
   </data>
-  <data name="B2" xml:space="preserve">
-    <value>Crystal Mine</value>
-  </data>
-  <data name="B3" xml:space="preserve">
-    <value>Boron Mine</value>
-  </data>
-  <data name="B4" xml:space="preserve">
-    <value>Metal Storage</value>
-  </data>
-  <data name="B5" xml:space="preserve">
-    <value>Crystal Storage</value>
-  </data>
-  <data name="B6" xml:space="preserve">
-    <value>Boron Storage</value>
-  </data>
-  <data name="B7" xml:space="preserve">
-    <value>Robot Factory</value>
-  </data>
-  <data name="B8" xml:space="preserve">
-    <value>Shipyard</value>
-  </data>
-  <data name="B9" xml:space="preserve">
-    <value>Research Lab</value>
+  <data name="Kademe" xml:space="preserve">
+    <value>Kademe &lt;color=#C4E5FD&gt;{0}&lt;/color&gt;</value>
   </data>
   <data name="BinaVeSeviye" xml:space="preserve">
-    <value>{0} {1}&lt;size=2.2&gt;&lt;color=orange&gt;Level {2}&lt;/color&gt;&lt;/size&gt;</value>
-  </data>
-  <data name="D1" xml:space="preserve">
-    <value>Rocket Launcher</value>
-  </data>
-  <data name="DD1" xml:space="preserve">
-    <value>Rocket Launcher short description</value>
-  </data>
-  <data name="S1" xml:space="preserve">
-    <value>Light Hunter</value>
-  </data>
-  <data name="SD1" xml:space="preserve">
-    <value>Light Hunter description</value>
-  </data>
-  <data name="InciSeviye" xml:space="preserve">
-    <value>{0}. Level</value>
-  </data>
-  <data name="Kademe" xml:space="preserve">
-    <value>Level &lt;color=#C4E5FD&gt;{0}&lt;/color&gt;</value>
-  </data>
-  <data name="KaynakDetay" xml:space="preserve">
-    <value>Current&lt;br&gt;&lt;color=white&gt;{0}&lt;/color&gt;&lt;br&gt;Storage Capacity&lt;br&gt;&lt;color=white&gt;{1}&lt;/color&gt;&lt;br&gt;Per Hour&lt;br&gt;&lt;color=white&gt;{2}&lt;/color&gt;</value>
-  </data>
-  <data name="KISA_DAKIKA" xml:space="preserve">
-    <value>m</value>
+    <value>{0} {1}&lt;size=2.2&gt;&lt;color=orange&gt;Seviye {2}&lt;/color&gt;&lt;/size&gt;</value>
   </data>
   <data name="KISA_GUN" xml:space="preserve">
-    <value>d</value>
+    <value>g</value>
   </data>
   <data name="KISA_SAAT" xml:space="preserve">
-    <value>h</value>
+    <value>s</value>
+  </data>
+  <data name="KISA_DAKIKA" xml:space="preserve">
+    <value>d</value>
   </data>
   <data name="KISA_SANIYE" xml:space="preserve">
     <value>s</value>
   </data>
-  <data name="R1" xml:space="preserve">
-    <value>Weapon Technique</value>
-  </data>
-  <data name="SeviyeParantez" xml:space="preserve">
-    <value>Level({0})</value>
-  </data>
   <data name="YapımSüresi" xml:space="preserve">
-    <value>Build Time</value>
-  </data>
-  <data name="Yükselt" xml:space="preserve">
-    <value>Upgrade</value>
+    <value>Yapım Süresi</value>
   </data>
   <data name="Yükseltiliyor" xml:space="preserve">
-    <value>Upgrading</value>
+    <value>Yükseltiliyor</value>
+  </data>
+  <data name="Yükselt" xml:space="preserve">
+    <value>Yükselt</value>
+  </data>
+  <data name="D1" xml:space="preserve">
+    <value>Roketatar</value>
+  </data>
+  <data name="DD1" xml:space="preserve">
+    <value>Roketatar kısa açıklaması</value>
+  </data>
+  <data name="R1" xml:space="preserve">
+    <value>Silah Tekniği</value>
+  </data>
+  <data name="InciSeviye" xml:space="preserve">
+    <value>{0}. Seviye</value>
+  </data>
+  <data name="Araştır" xml:space="preserve">
+    <value>Araştır</value>
+  </data>
+  <data name="Araştırılıyor" xml:space="preserve">
+    <value>Araştırılıyor</value>
+  </data>
+  <data name="SeviyeParantez" xml:space="preserve">
+    <value>Seviye({0})</value>
+  </data>
+  <data name="S1" xml:space="preserve">
+    <value>Hafif Avcı</value>
+  </data>
+  <data name="SD1" xml:space="preserve">
+    <value>Hafif Avcı açıklaması</value>
+  </data>
+  <data name="KaynakDetay" xml:space="preserve">
+    <value>Şu anda&lt;br&gt;&lt;color=white&gt;{0}&lt;/color&gt;&lt;br&gt;Depo Kapasitesi&lt;br&gt;&lt;color=white&gt;{1}&lt;/color&gt;&lt;br&gt;Saaatlik Üretim&lt;br&gt;&lt;color=white&gt;{2}&lt;/color&gt;</value>
   </data>
   <data name="YükseltmeGereksinim" xml:space="preserve">
-    <value>Upgrade Requirements</value>
+    <value>Yükseltme Gereksinimleri</value>
   </data>
   <data name="Savunma" xml:space="preserve">
-    <value>Defense</value>
+    <value>Savunma</value>
   </data>
   <data name="Araştırmalar" xml:space="preserve">
-    <value>Researches</value>
+    <value>Araştırmalar</value>
   </data>
   <data name="RD1" xml:space="preserve">
-    <value>Weapoon Technique description.</value>
+    <value>Silah Tekniği açıklaması.</value>
   </data>
   <data name="ÜretimSüresi" xml:space="preserve">
-    <value>Produce Time</value>
+    <value>Üretim Süresi</value>
   </data>
   <data name="ÜretimGereksinimleri" xml:space="preserve">
-    <value>Produce Requirements</value>
+    <value>Üretim Gereksinimleri</value>
   </data>
   <data name="Bilgi" xml:space="preserve">
-    <value>Info</value>
+    <value>Bilgi</value>
   </data>
   <data name="Koşullar" xml:space="preserve">
-    <value>Conditions</value>
+    <value>Koşullar</value>
   </data>
   <data name="Üret" xml:space="preserve">
-    <value>Produce</value>
+    <value>Üret</value>
   </data>
   <data name="Tersane" xml:space="preserve">
-    <value>Shipyard</value>
+    <value>Tersane</value>
   </data>
   <data name="GalaksiYönetimi" xml:space="preserve">
-    <value>Galaxy Management</value>
+    <value>Galaksi Yönetimi</value>
   </data>
   <data name="Git" xml:space="preserve">
-    <value>Go</value>
+    <value>Git</value>
   </data>
   <data name="Galaksi" xml:space="preserve">
-    <value>Galaxy</value>
+    <value>Galaksi</value>
   </data>
   <data name="GSistemi" xml:space="preserve">
-    <value>S.System</value>
+    <value>G.Sistemi</value>
   </data>
   <data name="Önceki" xml:space="preserve">
-    <value>Previous</value>
+    <value>Önceki</value>
   </data>
   <data name="Sonraki" xml:space="preserve">
-    <value>Next</value>
+    <value>Sonraki</value>
   </data>
   <data name="Hedef" xml:space="preserve">
-    <value>Destination</value>
+    <value>Hedef</value>
   </data>
   <data name="FT1" xml:space="preserve">
-    <value>Spy</value>
+    <value>Casusluk</value>
   </data>
   <data name="FT2" xml:space="preserve">
-    <value>Attack</value>
+    <value>Saldır</value>
   </data>
   <data name="FT3" xml:space="preserve">
-    <value>Transport</value>
+    <value>Nakliye</value>
   </data>
   <data name="FT4" xml:space="preserve">
-    <value>Stop</value>
+    <value>Konuşlandır</value>
   </data>
   <data name="FT5" xml:space="preserve">
-    <value>Colony</value>
+    <value>Sömürgeleştir</value>
   </data>
   <data name="KeşfedilmemişGezegen" xml:space="preserve">
-    <value>Unexplored Planet</value>
+    <value>Keşfedilmemiş Gezegen</value>
   </data>
   <data name="Casusluk" xml:space="preserve">
-    <value>Spy</value>
+    <value>Casusluk</value>
   </data>
   <data name="Saldır" xml:space="preserve">
-    <value>Attack</value>
+    <value>Saldır</value>
   </data>
   <data name="Nakliye" xml:space="preserve">
-    <value>Transport</value>
+    <value>Nakliye</value>
   </data>
   <data name="Dur" xml:space="preserve">
-    <value>Stop</value>
+    <value>Dur</value>
   </data>
   <data name="Sömürgeleştir" xml:space="preserve">
-    <value>Colony</value>
+    <value>Sömürgeleştir</value>
   </data>
   <data name="HareketSeçiniz" xml:space="preserve">
-    <value>Choose An Action</value>
+    <value>Hareket Seçiniz</value>
   </data>
   <data name="Tamam" xml:space="preserve">
-    <value>Ok</value>
+    <value>Tamam</value>
   </data>
   <data name="GönderilecekGemiler" xml:space="preserve">
-    <value>Ships will send:</value>
+    <value>Gönderilecek gemiler:</value>
   </data>
   <data name="GönderilebilirGemiler" xml:space="preserve">
-    <value>Ships can send:</value>
+    <value>Gönderilebilir gemiler:</value>
   </data>
   <data name="DevamEt" xml:space="preserve">
-    <value>Continue</value>
+    <value>Devam Et</value>
   </data>
   <data name="HiçGemiSeçilmedi" xml:space="preserve">
-    <value>No ship selected yet.</value>
+    <value>Henüz bir gemi seçilmedi.</value>
   </data>
   <data name="GezegendeGemiYok" xml:space="preserve">
-    <value>There is no ship in the planet.</value>
+    <value>Gezegende gemi bulunmuyor.</value>
   </data>
   <data name="Geri" xml:space="preserve">
-    <value>Back</value>
+    <value>Geri</value>
   </data>
   <data name="Gönder" xml:space="preserve">
-    <value>Send</value>
+    <value>Gönder</value>
   </data>
   <data name="UçuşSüresi" xml:space="preserve">
-    <value>Fly Time</value>
+    <value>Uçuş Süresi</value>
   </data>
   <data name="VarışTarihi" xml:space="preserve">
-    <value>Arrive Date</value>
+    <value>Varış Tarihi</value>
   </data>
   <data name="DönüşTarihi" xml:space="preserve">
-    <value>Return Date</value>
+    <value>Dönüş Tarihi</value>
   </data>
   <data name="YakıtTüketimi" xml:space="preserve">
-    <value>Fuelt Cost</value>
+    <value>Yakıt Tüketimi</value>
   </data>
   <data name="Bor" xml:space="preserve">
-    <value>Boron</value>
+    <value>Bor</value>
   </data>
   <data name="Metal" xml:space="preserve">
     <value>Metal</value>
   </data>
   <data name="Kristal" xml:space="preserve">
-    <value>Crystal</value>
+    <value>Kristal</value>
   </data>
   <data name="TaşınacakKaynaklar" xml:space="preserve">
-    <value>Carried Resources</value>
+    <value>Taşınacak Kaynaklar</value>
   </data>
   <data name="FiloHızı" xml:space="preserve">
-    <value>Fleet Speed</value>
+    <value>Filo Hızı</value>
   </data>
   <data name="Hepsi" xml:space="preserve">
-    <value>All</value>
+    <value>Hepsi</value>
   </data>
   <data name="Sıfırla" xml:space="preserve">
-    <value>Reset</value>
+    <value>Sıfırla</value>
   </data>
   <data name="Temizle" xml:space="preserve">
-    <value>Clear</value>
+    <value>Temizle</value>
   </data>
   <data name="FiloHareketleri" xml:space="preserve">
-    <value>Active Fleets</value>
+    <value>Filo Hareketleri</value>
   </data>
   <data name="Tamamlandı" xml:space="preserve">
-    <value>Completed</value>
+    <value>Tamamlandı</value>
   </data>
   <data name="TekYön" xml:space="preserve">
-    <value>One Way</value>
+    <value>Tek Yön</value>
   </data>
   <data name="Dönüş" xml:space="preserve">
-    <value>Return</value>
+    <value>Dönüş</value>
   </data>
   <data name="S2" xml:space="preserve">
-    <value>Little Transport</value>
+    <value>Küçük Nakliye</value>
   </data>
   <data name="SD2" xml:space="preserve">
-    <value>Little but very fast tranport ship.</value>
+    <value>Küçük ancak çok hızlı bir nakliye gemisi.</value>
   </data>
   <data name="FilonYolaÇıktı" xml:space="preserve">
-    <value>You fleet is on its way.</value>
+    <value>Filon yola çıktı.</value>
   </data>
   <data name="XMesajınızVar" xml:space="preserve">
-    <value>You have {0} new messages.</value>
+    <value>{0} yeni mesajınız var.</value>
   </data>
   <data name="Posta" xml:space="preserve">
-    <value>Mail</value>
+    <value>Posta</value>
   </data>
   <data name="MT1" xml:space="preserve">
-    <value>Resources transferring from &lt;color=orange&gt;{S}[{SC}]&lt;/color&gt; planet to &lt;color=orange&gt;{D}[{DC}]&lt;/color&gt; planet,
+    <value>&lt;color=orange&gt;{S}[{SC}]&lt;/color&gt; gezegeninden, &lt;color=orange&gt;{D}[{DC}]&lt;/color&gt; gezegenine,
 
-&lt;color=green&gt;Resources;&lt;/color&gt;
+&lt;color=green&gt;Kaynaklar;&lt;/color&gt;
 &lt;color=green&gt;Metal :&lt;/color&gt; {NM},
-&lt;color=green&gt;Crystal :&lt;/color&gt; {NC},
-&lt;color=green&gt;Boron :&lt;/color&gt; {NB}.</value>
+&lt;color=green&gt;Kristal :&lt;/color&gt; {NC},
+&lt;color=green&gt;Bor :&lt;/color&gt; {NB} aktarılıyor.</value>
   </data>
   <data name="MT2" xml:space="preserve">
-    <value>Your fleet returns from &lt;color=orange&gt;{D}[{DC}]&lt;/color&gt; planet to &lt;color=orange&gt;{S}[{SC}]&lt;/color&gt; planet.
+    <value>Filon &lt;color=orange&gt;{D}[{DC}]&lt;/color&gt; gezegeninden, &lt;color=orange&gt;{S}[{SC}]&lt;/color&gt; gezegenine,
+ geri dönüyor.
 
-&lt;color=green&gt;Return Fleet;&lt;/color&gt;
+&lt;color=green&gt;Dönen Filo;&lt;/color&gt;
 {SA}</value>
   </data>
   <data name="HiçMailYok" xml:space="preserve">
-    <value>You dont have any mail in current category.</value>
+    <value>Bu kategori de hiç postanız bulunmamakta.</value>
   </data>
   <data name="MC1" xml:space="preserve">
-    <value>Spy</value>
+    <value>Casusluk</value>
   </data>
   <data name="MC2" xml:space="preserve">
-    <value>Battle</value>
+    <value>Savaş</value>
   </data>
   <data name="MC3" xml:space="preserve">
-    <value>Planet</value>
+    <value>Gezegen</value>
   </data>
   <data name="MC4" xml:space="preserve">
-    <value>Private</value>
+    <value>Özel</value>
   </data>
   <data name="MC5" xml:space="preserve">
-    <value>Game</value>
+    <value>Oyun</value>
   </data>
   <data name="Gönderen" xml:space="preserve">
-    <value>Sender</value>
+    <value>Gönderen</value>
   </data>
   <data name="Koordinat" xml:space="preserve">
-    <value>Coordinate</value>
+    <value>Koordinat</value>
   </data>
   <data name="PostaTarihi" xml:space="preserve">
-    <value>Email Date</value>
+    <value>Posta Tarihi</value>
   </data>
   <data name="S3" xml:space="preserve">
-    <value>Spy Drone</value>
+    <value>Casus Dronu</value>
   </data>
   <data name="SD3" xml:space="preserve">
-    <value>Spy drones is the fastest ship in the galaxy. it also not caught by the destination defenses.</value>
+    <value>Casus dronu galaksideki en hızlı gemidir. Ayrıca hedef gezegendeki savunmalara yaklanmaz.</value>
   </data>
   <data name="GezegenKaynakları" xml:space="preserve">
-    <value>Planet Resources</value>
+    <value>Gezegen Kaynakları</value>
   </data>
   <data name="GezegenYapıları" xml:space="preserve">
-    <value>Planet Structs</value>
+    <value>Gezegen Yapıları</value>
   </data>
   <data name="Evet" xml:space="preserve">
-    <value>Yes</value>
+    <value>Evet</value>
   </data>
   <data name="Hayır" xml:space="preserve">
-    <value>No</value>
+    <value>Hayır</value>
   </data>
   <data name="Uyarı" xml:space="preserve">
-    <value>Alert</value>
+    <value>Uyarı</value>
   </data>
   <data name="Silmekİstemek" xml:space="preserve">
-    <value>Are you sure you want to delete this item?</value>
-  </data>
-  <data name="GezegenVeKoloniler" xml:space="preserve">
-    <value>Planets And Colonies</value>
+    <value>Silmek istediğine emin misin?</value>
   </data>
 </root>

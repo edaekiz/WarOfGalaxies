@@ -443,7 +443,4 @@
   <data name="Silmekİstemek" xml:space="preserve">
     <value>Are you sure you want to delete this item?</value>
   </data>
-  <data name="GezegenVeKoloniler" xml:space="preserve">
-    <value>Planets And Colonies</value>
-  </data>
 </root>

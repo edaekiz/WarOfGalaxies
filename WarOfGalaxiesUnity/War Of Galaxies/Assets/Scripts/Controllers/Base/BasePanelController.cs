@@ -55,6 +55,7 @@ public class BasePanelController : BaseLanguageBehaviour
 
     protected virtual void Start()
     {
+        // Panelin açılıyor olduğunu söylüyoruz.
         isOpening = true;
 
         // Açılış da ulaşacağı nokta.

@@ -17,8 +17,11 @@ namespace WarOfGalaxiesApi.DAL.Models
         public double CostCrystal { get; set; }
         public double CostBoron { get; set; }
         public double ShipSpeed { get; set; }
-        public double ShipFuelt { get; set; }
-        public double CargoCapacity { get; set; }
+        public int ShipFuelt { get; set; }
+        public int CargoCapacity { get; set; }
+        public int ShipHealth { get; set; }
+        public int ShipAttackDamage { get; set; }
+        public int ShipAttackQuantity { get; set; }
 
         public virtual ICollection<TblUserPlanetShipProgs> TblUserPlanetShipProgs { get; set; }
         public virtual ICollection<TblUserPlanetShips> TblUserPlanetShips { get; set; }

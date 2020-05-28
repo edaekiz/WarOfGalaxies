@@ -52,8 +52,8 @@ namespace Assets.Scripts.ApiModels
         public double CostCrystal;
         public double CostBoron;
         public double ShipSpeed;
-        public double ShipFuelt;
-        public double CargoCapacity;
+        public int ShipFuelt;
+        public int CargoCapacity;
     }
 
     [Serializable]
