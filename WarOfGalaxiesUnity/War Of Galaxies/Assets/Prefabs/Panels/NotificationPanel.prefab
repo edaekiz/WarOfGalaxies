@@ -274,6 +274,7 @@ MonoBehaviour:
   OpenTransition: 2
   CloseTransition: 2
   MainPanel: {fileID: 6371090978437704975}
+  IsPanel: 0
   MetalDetail: {fileID: 0}
   CrystalDetail: {fileID: 0}
   BoronDetail: {fileID: 0}

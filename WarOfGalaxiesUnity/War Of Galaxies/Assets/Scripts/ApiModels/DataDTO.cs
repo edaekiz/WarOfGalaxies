@@ -54,6 +54,7 @@ namespace Assets.Scripts.ApiModels
         public double ShipSpeed;
         public int ShipFuelt;
         public int CargoCapacity;
+        public bool IsCivil;
     }
 
     [Serializable]

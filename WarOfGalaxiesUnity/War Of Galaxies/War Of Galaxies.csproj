@@ -635,8 +635,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\BaseStepController.cs" />
-    <Compile Include="Assets\DataController.cs" />
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\AntiAliasing.cs" />
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\FXAA\FXAA.cs" />
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\IAntiAliasing.cs" />
@@ -658,18 +656,11 @@
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Utility\FPSCounter.cs" />
     <Compile Include="Assets\ExternalAssets\Asteroids Pack\Assets\Scripts\RandomRotator.cs" />
     <Compile Include="Assets\ExternalAssets\Hi-Tech Buttons and Panels\Resources\Scripts\JustRotate.cs" />
-    <Compile Include="Assets\FleetController.cs" />
-    <Compile Include="Assets\FleetPanelController.cs" />
-    <Compile Include="Assets\FleetPanelItemController.cs" />
-    <Compile Include="Assets\GalaxyChangePanelController.cs" />
     <Compile Include="Assets\Languages\Language.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Language.resx</DependentUpon>
     </Compile>
-    <Compile Include="Assets\ParameterController.cs" />
-    <Compile Include="Assets\PlanetActionController.cs" />
-    <Compile Include="Assets\QuantityItemPanel.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ApiResult.cs" />
     <Compile Include="Assets\Scripts\ApiModels\Base\ProgressModel.cs" />
     <Compile Include="Assets\Scripts\ApiModels\DataDTO.cs" />
@@ -680,37 +671,58 @@
     <Compile Include="Assets\Scripts\ApiModels\ResourcesDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ShipyardDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserDTO.cs" />
+    <Compile Include="Assets\Scripts\ApiModels\UserMailDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserPlanetBuildingDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserPlanetCordinateDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserPlanetDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserResearchesDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\VerifyResourceDTO.cs" />
-    <Compile Include="Assets\Scripts\ApiService.cs" />
     <Compile Include="Assets\Scripts\Controllers\Base\BaseLanguageBehaviour.cs" />
     <Compile Include="Assets\Scripts\Controllers\Base\BasePanelController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Base\BaseStepController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Building\BuildingController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Building\BuildingPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Building\GlobalBuildingController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Data\DataController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Defense\DefenseController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Defense\DefenseDetailItemPanel.cs" />
     <Compile Include="Assets\Scripts\Controllers\Defense\DefenseItemController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Defense\DefensePanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Defense\DefenseQueueController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Fleet\FleetController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Fleet\FleetPanelController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Fleet\FleetPanelItemController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Galaxy\GalaxyChangePanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Galaxy\GalaxyController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Galaxy\SunController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Galaxy\ZoomPanController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Game\LoadingController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Game\LoginController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Game\StaticValuesController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Global\FpsController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Global\GlobalGalaxyController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Global\GlobalPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Global\GlobalPlanetController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Language\LanguageController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Language\LanguageItemController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Mail\MailController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Mail\MailDetailItemOnlySpyController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Mail\MailDetailItemOnlyTextController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Mail\MailDetailItemOnlyWarContent.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Mail\MailDetailItemPanelController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Mail\MailPanelController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Mail\MailPanelItemController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Notification\NotificationController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Notification\NotificationPanelController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\OtherPanels\QuantityItemPanel.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Panels\YesNoPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetPickerController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetRotateController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetZoomController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlanetAction\PlanetActionController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlanetAction\ShipItemCanSendController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlanetAction\ShipItemToSendController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Research\ResearchController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Research\ResearchDetailItemPanel.cs" />
     <Compile Include="Assets\Scripts\Controllers\Research\ResearchItemController.cs" />
@@ -722,9 +734,12 @@
     <Compile Include="Assets\Scripts\Controllers\Shipyard\ShipyardItemController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Shipyard\ShipyardPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Shipyard\ShipyardQueueController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Toast\ToastController.cs" />
     <Compile Include="Assets\Scripts\Enums\Buildings.cs" />
     <Compile Include="Assets\Scripts\Enums\Defenses.cs" />
     <Compile Include="Assets\Scripts\Enums\FleetTypes.cs" />
+    <Compile Include="Assets\Scripts\Enums\MailCategories.cs" />
+    <Compile Include="Assets\Scripts\Enums\MailTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\ParameterTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\PlanetTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\Researches.cs" />
@@ -735,16 +750,18 @@
     <Compile Include="Assets\Scripts\Extends\JsonHelper.cs" />
     <Compile Include="Assets\Scripts\Extends\MathExtends.cs" />
     <Compile Include="Assets\Scripts\Extends\ResourceExtends.cs" />
+    <Compile Include="Assets\Scripts\Extends\TextExtends.cs" />
     <Compile Include="Assets\Scripts\Extends\TimeExtends.cs" />
     <Compile Include="Assets\Scripts\Extends\VectorExtends.cs" />
     <Compile Include="Assets\Scripts\Ignored\IgnoredCodes.cs" />
+    <Compile Include="Assets\Scripts\Interfaces\IMailDetailItem.cs" />
     <Compile Include="Assets\Scripts\Models\CordinateDTO.cs" />
     <Compile Include="Assets\Scripts\Models\DefenseImageDTO.cs" />
     <Compile Include="Assets\Scripts\Models\LanguageItem.cs" />
     <Compile Include="Assets\Scripts\Models\ShipImageDTO.cs" />
     <Compile Include="Assets\Scripts\Models\SolarSystemDTO.cs" />
-    <Compile Include="Assets\ShipItemCanSendController.cs" />
-    <Compile Include="Assets\ShipItemToSendController.cs" />
+    <Compile Include="Assets\Scripts\Pluigns\MailEncoder.cs" />
+    <Compile Include="Assets\Scripts\Services\ApiService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\FXAA\Resources\FXAA.shader" />

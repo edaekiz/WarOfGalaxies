@@ -1,11 +1,20 @@
 ﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Enums;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class GlobalBuildingController : MonoBehaviour
 {
+    [Serializable]
+    public struct BuildingsWithImage
+    {
+        public Buildings Building;
+        public Sprite BuildingImage;
+    }
+
     public static GlobalBuildingController GBC { get; set; }
     private void Awake()
     {
@@ -14,6 +23,9 @@ public class GlobalBuildingController : MonoBehaviour
         else
             Destroy(GBC);
     }
+
+    [Header("Binalar ve ikonları.")]
+    public List<BuildingsWithImage> BuildingWithImages;
 
     [Header("Seçili olan bina.")]
     public BuildingController CurrentSelectedBuilding;
@@ -27,14 +39,14 @@ public class GlobalBuildingController : MonoBehaviour
     public IEnumerator ReCalculateBuildings()
     {
         DateTime currentDate = DateTime.UtcNow;
-        
-        foreach(UserPlanetDTO userPlanet in LoginController.LC.CurrentUser.UserPlanets)
+
+        foreach (UserPlanetDTO userPlanet in LoginController.LC.CurrentUser.UserPlanets)
         {
             UserPlanetBuildingUpgDTO UserPlanetBuildingUpg = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.FirstOrDefault(x => x.UserPlanetId == userPlanet.UserPlanetId);
 
             if (UserPlanetBuildingUpg == null)
                 continue;
-            
+
             // Eğer tarih tamamlanma tarihinnden az ise tamamlanmıştır.
             if (DateTime.UtcNow >= UserPlanetBuildingUpg.EndDate)
             {

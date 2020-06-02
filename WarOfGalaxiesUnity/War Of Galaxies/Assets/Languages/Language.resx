@@ -418,4 +418,31 @@
   <data name="GezegenVeKoloniler" xml:space="preserve">
     <value></value>
   </data>
+  <data name="MT3" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Gemiler" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Savunmalar" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Yükleniyor" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MT5" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SavaşGemileri" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SivilGemiler" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Saldıran" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Savunan" xml:space="preserve">
+    <value></value>
+  </data>
 </root>

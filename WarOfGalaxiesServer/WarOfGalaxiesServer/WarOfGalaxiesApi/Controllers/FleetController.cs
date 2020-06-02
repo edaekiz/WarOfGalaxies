@@ -234,6 +234,7 @@ namespace WarOfGalaxiesApi.Controllers
             return ResponseHelper.GetSuccess();
         }
 
+        public static string ShipDataToStringData(IEnumerable<Tuple<Ships, int>> fleet) => string.Join(",", fleet.Select(x => $"{(int)x.Item1}:{x.Item2}"));
         public static List<Tuple<Ships, int>> FleetDataToShipData(string data)
         {
             try

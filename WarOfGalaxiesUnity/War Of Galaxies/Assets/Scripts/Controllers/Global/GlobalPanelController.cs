@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GlobalPanelController : MonoBehaviour
@@ -7,7 +8,8 @@ public class GlobalPanelController : MonoBehaviour
     public static GlobalPanelController GPC { get; set; }
 
     [Serializable]
-    public enum PanelTypes {
+    public enum PanelTypes
+    {
         BuildingPanel,
         ResearchPanel,
         ResearchDetailPanel,
@@ -45,12 +47,12 @@ public class GlobalPanelController : MonoBehaviour
     public List<PanelData> Panels;
 
     // Açık olan panellerin listesi.
-    public List<Tuple<PanelData, GameObject>> OpenPanels;
+    public List<Tuple<PanelData, BasePanelController>> OpenPanels;
 
     private void Start()
     {
         // Açık panelleri burada tutacağız.
-        OpenPanels = new List<Tuple<PanelData, GameObject>>();
+        OpenPanels = new List<Tuple<PanelData, BasePanelController>>();
     }
 
     /// <summary>
@@ -110,7 +112,7 @@ public class GlobalPanelController : MonoBehaviour
         basePanel.PanelType = panelType;
 
         // Açık panellerin listesine ekliyoruz.
-        OpenPanels.Add(new Tuple<PanelData, GameObject>(panelData, panelObject));
+        OpenPanels.Add(new Tuple<PanelData, BasePanelController>(panelData, basePanel));
 
         return panelObject;
     }
@@ -122,7 +124,7 @@ public class GlobalPanelController : MonoBehaviour
     public void ClosePanel(PanelTypes panelType)
     {
         // Açık olan paneli buluyoruz.
-        Tuple<PanelData, GameObject> panel = OpenPanels.Find(x => x.Item1.PanelType == panelType);
+        Tuple<PanelData, BasePanelController> panel = OpenPanels.Find(x => x.Item1.PanelType == panelType);
 
         // Eğer panel yok ise hata dön.
         if (panel == null)
@@ -136,6 +138,6 @@ public class GlobalPanelController : MonoBehaviour
     /// Eğer açık panel var ise değer true döner.
     /// </summary>
     /// <returns></returns>
-    public bool IsAnyPanelOpen => OpenPanels.Count > 0;
+    public bool IsAnyPanelOpen => OpenPanels.Count(x => x.Item2.IsPanel) > 0;
 
 }

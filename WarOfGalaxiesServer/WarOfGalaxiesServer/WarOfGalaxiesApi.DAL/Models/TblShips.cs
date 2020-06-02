@@ -22,6 +22,7 @@ namespace WarOfGalaxiesApi.DAL.Models
         public int ShipHealth { get; set; }
         public int ShipAttackDamage { get; set; }
         public int ShipAttackQuantity { get; set; }
+        public bool IsCivil { get; set; }
 
         public virtual ICollection<TblUserPlanetShipProgs> TblUserPlanetShipProgs { get; set; }
         public virtual ICollection<TblUserPlanetShips> TblUserPlanetShips { get; set; }

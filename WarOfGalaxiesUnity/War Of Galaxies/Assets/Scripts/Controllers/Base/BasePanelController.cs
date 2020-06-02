@@ -26,6 +26,9 @@ public class BasePanelController : BaseLanguageBehaviour
     [Header("Bütün nesnelerin içinde bulunduğu panel.")]
     public RectTransform MainPanel;
 
+    [Header("Bu bir panel mi? yoksa mini pop up gibi bir şey mi?")]
+    public bool IsPanel = true;
+
     [Header("Gereken metal detayı.")]
     public ResourceDetailController MetalDetail;
 

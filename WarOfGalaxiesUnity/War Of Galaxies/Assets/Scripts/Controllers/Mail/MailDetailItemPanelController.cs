@@ -101,7 +101,6 @@ public class MailDetailItemPanelController : BasePanelController
         // Eğer okunmamış ise okundu olarak işaretlemeliyiz.
         if (!mailData.IsReaded)
             SetAsRead();
-
     }
 
     public void SetAsRead()

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using UnityEngine;
+using System.IO;
 using UnityEngine.Networking;
 #if UNITY_IOS
 using System.IO;
@@ -211,7 +212,6 @@ public class LanguageController : MonoBehaviour
     public string GetLanguage(string culture)
     {
 #if  UNITY_EDITOR
-
         string path = $"{Application.dataPath}/Languages/Language.{culture}.resx";
         using (UnityWebRequest www = UnityWebRequest.Get(path))
         {
@@ -221,7 +221,9 @@ public class LanguageController : MonoBehaviour
             string data = www.downloadHandler.text;
             return data;
         }
-
+#elif UNITY_STANDALONE_WIN
+        string path = $"{Application.streamingAssetsPath}/Languages/Language.{culture}.txt";
+        return File.ReadAllText(path);
 #elif UNITY_ANDROID
         string path = $"{Application.streamingAssetsPath}/Languages/Language.{culture}.txt";
         using (UnityWebRequest www = UnityWebRequest.Get(path))

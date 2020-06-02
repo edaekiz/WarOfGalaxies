@@ -10,7 +10,6 @@ namespace WarOfGalaxiesApi.DTO.Models
         public double Boron { get; set; }
         public ResourcesDTO()
         {
-
         }
 
         public ResourcesDTO(double metal, double crystal)

@@ -34,7 +34,20 @@ namespace WarOfGalaxiesApi
         public const string KEY_DEFENSES = "D";
 
         public const string KEY_RESEARCHES = "R";
-       
+
+        public const string KEY_WINNER = "W";
+
+        public const string KEY_GARBAGE_METAL = "GM";
+        public const string KEY_GARBAGE_CRYSTAL = "GC";
+        public const string KEY_GARBAGE_BORON = "GB";
+
+        public const string KEY_DESTROYED_ATTACKER_SHIPS = "DAS";
+        public const string KEY_DESTROYED_DEFENDER_SHIPS = "DDS";
+        public const string KEY_DESTROYED_DEFENDER_DEFENSES = "DDD";
+
+        public const string KEY_FIXED_ATTACKER_SHIPS = "FAS";
+        public const string KEY_FIXED_DEFENDER_SHIPS = "FDS";
+        public const string KEY_FIXED_DEFENDER_DEFENSES = "FDD";
 
         public static string GetParam(string key, object value)
         {

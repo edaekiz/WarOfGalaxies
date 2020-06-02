@@ -40,6 +40,7 @@ namespace WarOfGalaxiesApi.DTO.Models
         public double ShipSpeed { get; set; }
         public int ShipFuelt { get; set; }
         public int CargoCapacity { get; set; }
+        public bool IsCivil { get; set; }
     }
     public class ResearchDataDTO
     {

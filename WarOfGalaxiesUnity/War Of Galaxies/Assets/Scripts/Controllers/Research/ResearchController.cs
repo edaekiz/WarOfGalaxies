@@ -1,12 +1,21 @@
 ﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Enums;
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using static GlobalPanelController;
 
 public class ResearchController : MonoBehaviour
 {
+    [Serializable]
+    public struct ResearchWithImage
+    {
+        public Researches Research;
+        public Sprite ResearchImage;
+    }
+
     public static ResearchController RC { get; set; }
 
     private void Awake()
@@ -16,6 +25,9 @@ public class ResearchController : MonoBehaviour
         else
             Destroy(gameObject);
     }
+
+    [Header("Araştırmalar ve ikonları.")]
+    public List<ResearchWithImage> ResearchWithImages;
 
     private IEnumerator Start()
     {

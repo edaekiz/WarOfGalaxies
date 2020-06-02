@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8706753304952894410}
   - component: {fileID: 4982168504494079422}
   m_Layer: 5
-  m_Name: SpyMailTemplateItem
+  m_Name: SpyMailTemplateItemWithText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -63,7 +63,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Metal : 121.030.326'
+  m_text: 'Metal
+
+    121.030.326'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 95563f3213c13b54c9bf8932c51d40c4, type: 2}
   m_sharedMaterial: {fileID: -5341121368119280962, guid: 95563f3213c13b54c9bf8932c51d40c4,
@@ -99,7 +101,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_textAlignment: 257
+  m_textAlignment: 514
   m_characterSpacing: 0
   m_wordSpacing: 0
   m_lineSpacing: 0
@@ -133,12 +135,12 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 4982168504494079422}
-    characterCount: 19
+    characterCount: 17
     spriteCount: 0
-    spaceCount: 2
+    spaceCount: 1
     wordCount: 4
     linkCount: 0
-    lineCount: 1
+    lineCount: 16
     pageCount: 1
     materialCount: 1
   m_isUsingLegacyAnimationComponent: 0

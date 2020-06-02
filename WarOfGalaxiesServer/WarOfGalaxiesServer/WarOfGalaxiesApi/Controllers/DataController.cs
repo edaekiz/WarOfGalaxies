@@ -48,7 +48,8 @@ namespace WarOfGalaxiesApi.Controllers
                 ShipFuelt = x.ShipFuelt,
                 ShipId = x.ShipId,
                 ShipName = x.ShipName,
-                ShipSpeed = x.ShipSpeed
+                ShipSpeed = x.ShipSpeed,
+                IsCivil = x.IsCivil
             }).ToList();
 
             List<ResearchDataDTO> researches = base.StaticValues.DbResearches.Select(x => new ResearchDataDTO

@@ -83,9 +83,7 @@
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Utility\FPSCounter.cs" />
     <Compile Include="Assets\ExternalAssets\Asteroids Pack\Assets\Scripts\RandomRotator.cs" />
     <Compile Include="Assets\ExternalAssets\Hi-Tech Buttons and Panels\Resources\Scripts\JustRotate.cs" />
-    <Compile Include="Assets\FpsController.cs" />
     <Compile Include="Assets\Languages\Language.Designer.cs" />
-    <Compile Include="Assets\MailDetailItemOnlySpyController.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ApiResult.cs" />
     <Compile Include="Assets\Scripts\ApiModels\Base\ProgressModel.cs" />
     <Compile Include="Assets\Scripts\ApiModels\DataDTO.cs" />
@@ -124,13 +122,16 @@
     <Compile Include="Assets\Scripts\Controllers\Game\LoadingController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Game\LoginController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Game\StaticValuesController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Global\FpsController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Global\GlobalGalaxyController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Global\GlobalPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Global\GlobalPlanetController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Language\LanguageController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Language\LanguageItemController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Mail\MailController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Mail\MailDetailItemOnlySpyController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Mail\MailDetailItemOnlyTextController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Mail\MailDetailItemOnlyWarContent.cs" />
     <Compile Include="Assets\Scripts\Controllers\Mail\MailDetailItemPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Mail\MailPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Mail\MailPanelItemController.cs" />
@@ -202,14 +203,12 @@
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\ScreenSpaceRaytrace.cginc" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\VignetteShader.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\SimpleClear.shader" />
-    <None Include="Assets\StreamingAssets\Languages\Language.tr.txt" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\ContrastComposite.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\MinMaxReduction.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\BlurEffectConeTaps.shader" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\Sun.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendOneOne.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BrightPassFilter.shader" />
-    <None Include="Assets\StreamingAssets\Languages\Language.en.txt" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MobileBloom.shader" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\Planet lava.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendForBloom.shader" />
@@ -224,7 +223,6 @@
     <None Include="Assets\ExternalAssets\Robo's turret (free)\Shaders\SDR_Structures.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BrightPassFilter2.shader" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Planet.shader" />
-    <None Include="Assets\StreamingAssets\Languages\Language.txt" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\PrepareSunShaftsBlur.shader" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\planet shader NO reflection.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\ShowAlphaChannel.shader" />
@@ -449,9 +447,6 @@
     </Reference>
     <Reference Include="UnityEngine.XRModule">
       <HintPath>C:/Program Files/Unity/2019.3.0f6/Editor/Data/Managed/UnityEngine/UnityEngine.XRModule.dll</HintPath>
-    </Reference>
-    <Reference Include="Assembly-CSharp-firstpass">
-      <HintPath>C:/Users/Furkan/Documents/GitHub/WarOfGalaxies/WarOfGalaxiesUnity/War Of Galaxies/Library/ScriptAssemblies/Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/2019.3.0f6/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

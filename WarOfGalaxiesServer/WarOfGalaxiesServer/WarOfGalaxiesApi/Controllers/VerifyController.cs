@@ -588,6 +588,7 @@ namespace WarOfGalaxiesApi.Controllers
                         ExecuteSpyReturnAction(userPlanet, userFleet);
                         break;
                     case FleetTypes.Saldır:
+                        ExecuteWarReturnAction(controller, userPlanet, userFleet, actionDate, destinationPlanet);
                         break;
                     case FleetTypes.Nakliye: // Nakliye yapan geminin gezegene dönüşü.
                         ExecuteTransportReturnAction(controller, userPlanet, userFleet, actionDate, destinationPlanet);
@@ -606,6 +607,7 @@ namespace WarOfGalaxiesApi.Controllers
                         ExecuteSpyAction(controller, userPlanet, userFleet, actionDate, destinationPlanet);
                         break;
                     case FleetTypes.Saldır:
+                        ExecuteWarAction(controller, userPlanet, userFleet, actionDate, destinationPlanet);
                         break;
                     case FleetTypes.Nakliye:
                         ExecuteTransportAction(controller, userPlanet, userFleet, actionDate, destinationPlanet);
@@ -619,10 +621,11 @@ namespace WarOfGalaxiesApi.Controllers
         }
 
         #region Reports 
-        private enum Sides { AttackerShips, DefenderShips, DefenderDefense };
-
+     
         private static void ExecuteWarAction(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet, DateTime actionDate, TblUserPlanets destinationPlanet)
         {
+            #region Dataları getiriyoruz.
+
             // Saldıran gemiler.
             List<Tuple<Ships, int>> attackerShips = FleetController.FleetDataToShipData(userFleet.FleetData);
 
@@ -632,87 +635,615 @@ namespace WarOfGalaxiesApi.Controllers
             // Savunana ait savunma tesisleri.
             List<TblUserPlanetDefenses> defenderDefenses = controller.UnitOfWork.GetRepository<TblUserPlanetDefenses>().Where(x => x.UserPlanetId == userFleet.DestinationUserPlanetId.Value).ToList();
 
-            #region Gemi ve Savunma bilgileri.
+            // Hedef konumun kordinat bilgisini alıyoruz.
+            TblCordinates destinationCordinate = controller.UnitOfWork.GetRepository<TblCordinates>().FirstOrDefault(x => x.UserPlanetId == destinationPlanet.UserPlanetId);
 
-            IEnumerable<TblShips> attackerShipsData = controller.StaticValues.GetShips(attackerShips.Select(x => x.Item1));
+            #endregion
+            
+            #region Mail oluşturuyoruz.
 
-            IEnumerable<TblShips> defenderShipsData = controller.StaticValues.GetShips(defenderShips.Select(x => (Ships)x.ShipId));
-
-            IEnumerable<TblDefenses> defenderDefenseData = controller.StaticValues.GetDefenses(defenderDefenses.Select(x => (Defenses)x.DefenseId));
-
+            // Maili oluşturuyoruz.
+            List<string> mailParams = new List<string>();
 
             #endregion
 
-            int usedAttackerShipCount = 0;
-            int usedDefenderShipCount = 0;
-            int usedDefenderDefenseCount = 0;
+            #region Maillere Başlangıçdaki saldırı gemileri ekliyoruz.
 
-            List<Tuple<Sides, int>> attackOrder = new List<Tuple<Sides, int>>();
+            // Yok edilen saldırı gemileri alıyoruz.
+            string beginingAttackerShips = string.Join(MailEncoder.KEY_MANY_ITEM_SEPERATOR, attackerShips.Select(x => $"{(int)x.Item1}{MailEncoder.KEY_MANY_ITEM_KEY_VALUE_SEPERATOR}{x.Item2}"));
 
-            while (usedAttackerShipCount < attackerShips.Count && usedDefenderShipCount < defenderShips.Count && usedDefenderDefenseCount < defenderDefenses.Count)
+            // Saldırı gemilerini koyuyoruz.
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_SHIPS_ATTACKER, beginingAttackerShips));
+
+            #endregion
+
+            #region Maillere Başlangıçdaki savunma gemileri ekliyoruz.
+
+            // Yok edilen saldırı gemileri alıyoruz.
+            string beginingDefenseShips = string.Join(MailEncoder.KEY_MANY_ITEM_SEPERATOR, defenderShips.Select(x => $"{x.ShipId}{MailEncoder.KEY_MANY_ITEM_KEY_VALUE_SEPERATOR}{x.ShipCount}"));
+
+            // Saldırı gemilerini koyuyoruz.
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_SHIPS_DEFENDER, beginingDefenseShips));
+
+            #endregion
+
+            #region Maillere Başlangıçdaki savunma sistemlerini ekliyoruz.
+
+            // Yok edilen saldırı gemileri alıyoruz.
+            string beginingDefenses = string.Join(MailEncoder.KEY_MANY_ITEM_SEPERATOR, defenderDefenses.Select(x => $"{x.DefenseId}{MailEncoder.KEY_MANY_ITEM_KEY_VALUE_SEPERATOR}{x.DefenseCount}"));
+
+            // Savunmaları koyuyoruz.
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_DEFENSES, beginingDefenses));
+
+            #endregion
+
+            #region Gemi ve savunmaları parçalıyoruz. Normalde gurup halindeler.
+
+            // Gemiler normalde grup halinde bu yüzden her birini eklememiz lazım.
+            List<SimulationDTO> attackerShipsCombined = attackerShips.SelectMany(x =>
             {
-                List<Sides> useableSides = new List<Sides>();
-
-                if (usedAttackerShipCount < attackerShips.Count)
-                    useableSides.Add(Sides.AttackerShips);
-
-                if (usedDefenderShipCount < defenderShips.Count)
-                    useableSides.Add(Sides.DefenderShips);
-
-                if (usedDefenderDefenseCount < defenderDefenses.Count())
-                    useableSides.Add(Sides.DefenderDefense);
-
-                Sides rndSide = MathExtends.GetRandom(useableSides);
-
-                switch (rndSide)
+                List<SimulationDTO> ships = new List<SimulationDTO>();
+                TblShips shipData = controller.StaticValues.GetShip(x.Item1);
+                for (int i = 1; i <= x.Item2; i++)
                 {
-                    case Sides.AttackerShips:
+                    ships.Add(new SimulationDTO
+                    {
+                        Id = (int)x.Item1,
+                        ShipData = shipData,
+                        Health = shipData.ShipHealth,
+                        Side = SimulationDTO.SimulationSides.Attacker
+                    });
+                }
+                return ships;
 
-                        attackOrder.Add(new Tuple<Sides, int>(Sides.AttackerShips, usedAttackerShipCount));
-                        usedAttackerShipCount += 1;
+            }).OrderBy(x => x.ShipData.ShipAttackDamage).ToList();
 
-                        break;
-                    case Sides.DefenderShips:
+            // Savunmaya ait gemiler de grup halinde onları da tekliyoruz.
+            List<SimulationDTO> defenderShipCombined = defenderShips.SelectMany(x =>
+            {
+                List<SimulationDTO> ships = new List<SimulationDTO>();
+                TblShips shipData = controller.StaticValues.GetShip((Ships)x.ShipId);
+                for (int i = 1; i <= x.ShipCount; i++)
+                {
+                    ships.Add(new SimulationDTO
+                    {
+                        Id = x.ShipId,
+                        ShipData = shipData,
+                        Health = shipData.ShipHealth,
+                        Side = SimulationDTO.SimulationSides.DefenderShip
+                    });
+                }
+                return ships;
 
-                        attackOrder.Add(new Tuple<Sides, int>(Sides.DefenderShips, usedDefenderShipCount));
-                        usedDefenderShipCount += 1;
+            }).ToList();
 
-                        break;
-                    case Sides.DefenderDefense:
+            // Savunmaya ait savunmaları da ekliyoruz listeye.
+            defenderShipCombined.AddRange(defenderDefenses.SelectMany(x =>
+            {
+                List<SimulationDTO> defenses = new List<SimulationDTO>();
+                TblDefenses defenseData = controller.StaticValues.GetDefense((Defenses)x.DefenseId);
+                for (int i = 1; i <= x.DefenseCount; i++)
+                {
+                    defenses.Add(new SimulationDTO
+                    {
+                        Id = x.DefenseId,
+                        Side = SimulationDTO.SimulationSides.DefenderDefense,
+                        DefenseData = defenseData,
+                        Health = defenseData.DefenseHealth
 
-                        attackOrder.Add(new Tuple<Sides, int>(Sides.DefenderDefense, usedDefenderDefenseCount));
-                        usedDefenderDefenseCount += 1;
+                    });
+                }
+                return defenses;
+            }));
 
-                        break;
-                    default:
-                        break;
+            // Defans ise defansın saldırı değerine bakıyoruz değil ise gemilerin saldırı değerine bakıyoruz.
+            defenderShipCombined = defenderShipCombined.OrderBy(x => x.ShipData != null ? x.ShipData.ShipAttackDamage : x.DefenseData.DefenseAttackDamage).ToList();
+
+            // Enkaz oranını burada tutacağız.
+            ResourcesDTO shipGarbage = new ResourcesDTO(0, 0, 0);
+
+            #endregion
+
+            #region Savaş simülasyonunu yapıyoruz.
+
+            // İlk her zaman saldıran başlıyor.
+            bool isAttackersTurn = true;
+
+            int lastIndexOfAttacker = 0;
+            int lastIndexOfDefender = 0;
+
+            // Randomları yöneceğiz.
+            Random randomizer = new Random();
+
+            // İki taraftan birisinde savunma yada gemi kalmayana kadar devam ediyoruz.
+            while (attackerShipsCombined.Count > 0 && defenderShipCombined.Count > 0)
+            {
+                // Eğer saldıran taraf ise burası çalışacak.
+                if (isAttackersTurn)
+                {
+                    // Saldıran gemi.
+                    SimulationDTO attackerShip = attackerShipsCombined[lastIndexOfAttacker];
+
+                    // Atış yapabileceği sayı kadar atış yapıyoruz.
+                    for (int ii = 0; ii < attackerShip.ShipData.ShipAttackQuantity; ii++)
+                    {
+                        // Eğer bir hedef yok ise yada canı 0dan az ise rastgele birisini alıyoruz.
+                        if (attackerShip.Target == null || attackerShip.Target.Health <= 0)
+                            attackerShip.Target = defenderShipCombined[randomizer.Next(0, defenderShipCombined.Count)];
+
+                        // Şimdi hedefe saldırıyoruz.
+                        attackerShip.Target.Health -= attackerShip.ShipData.ShipAttackDamage;
+
+                        // Eğer hedef ölüyor ise listeden siliyoruz.
+                        if (attackerShip.Target.Health <= 0)
+                            defenderShipCombined.Remove(attackerShip.Target);
+                    }
+
+                    // Ve sıra kendisine geldiğinde bir sonraki gemiyi saldırtacağız.
+                    lastIndexOfAttacker++;
+                }
+                else // Değil ise savunma tarafı saldıracak.
+                {
+
+                    // Savunan gemi yada savunma.
+                    SimulationDTO defenderShipOrDefense = defenderShipCombined[lastIndexOfDefender];
+
+                    // Sistemden yapılacak olan atış sayısı.
+                    int shootCount = defenderShipOrDefense.Side == SimulationDTO.SimulationSides.DefenderShip ? defenderShipOrDefense.ShipData.ShipAttackQuantity : defenderShipOrDefense.DefenseData.DefenseAttackQuantity;
+
+                    // Saldırı miktarı.
+                    int damage = defenderShipOrDefense.Side == SimulationDTO.SimulationSides.DefenderShip ? defenderShipOrDefense.ShipData.ShipAttackDamage : defenderShipOrDefense.DefenseData.DefenseAttackDamage;
+
+                    // Atış yapabileceği sayı kadar atış yapıyoruz.
+                    for (int ii = 0; ii < shootCount; ii++)
+                    {
+                        // Eğer bir hedef yok ise yada canı 0dan az ise rastgele birisini alıyoruz.
+                        if (defenderShipOrDefense.Target == null || defenderShipOrDefense.Target.Health <= 0)
+                            defenderShipOrDefense.Target = attackerShipsCombined[randomizer.Next(0, attackerShipsCombined.Count)];
+
+                        // Şimdi hedefe saldırıyoruz.
+                        defenderShipOrDefense.Target.Health -= damage;
+
+                        // Eğer hedef ölüyor ise listeden siliyoruz.
+                        if (defenderShipOrDefense.Target.Health <= 0)
+                            attackerShipsCombined.Remove(defenderShipOrDefense.Target);
+                    }
+
+                    // Ve sıra kendisine geldiğinde bir sonraki gemiyi saldırtacağız.
+                    lastIndexOfDefender++;
+                }
+
+                // Saldıran ve savunan sırayla saldıracak.
+                if (!isAttackersTurn)
+                {
+                    // Saldırana sıra geçtiğinde emin olacağız saldıranın gemisi var mı?
+                    if (lastIndexOfAttacker < attackerShipsCombined.Count)
+                        isAttackersTurn = !isAttackersTurn;
+                }
+                else
+                {
+                    // Savunmaya sıra geçtiğinde emin olacağız savunmanın daha fazla birimi var mı?
+                    if (lastIndexOfDefender < defenderShipCombined.Count)
+                        isAttackersTurn = !isAttackersTurn;
+                }
+
+                // Eğer son saldıran gemiyi de saldırttıysak başa dönüyoruz.
+                if (lastIndexOfAttacker >= attackerShipsCombined.Count && lastIndexOfDefender >= defenderShipCombined.Count)
+                {
+                    lastIndexOfAttacker = 0;
+                    lastIndexOfDefender = 0;
+                    isAttackersTurn = !isAttackersTurn;
                 }
             }
 
-            // Saldırılara başlıyoruz.
-            attackOrder.ForEach(e =>
+            #endregion
+
+            #region Kazanana ganimetlerini veriyoruz.
+
+            // Yapılan işlemi yazıyoruz.
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_ACTION_TYPE, userFleet.FleetActionTypeId));
+            
+            // Yapılan işlemi yazıyoruz.
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_MAIL_TYPE, (int)MailTypes.SavaşRaporu));
+
+            // Gönderen gezegenini ismi.
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName));
+
+            // Gönderen gezegenin kordinatı.
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate));
+
+            // Hedef gezegenin ismi.
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, destinationPlanet.PlanetName));
+
+            // Hedef gezegenin kordinatı
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETCORDINATE, userFleet.DestinationCordinate));
+
+            // Eğer saldıranda gemi var ise kazanmış demektir.
+            if (attackerShipsCombined.Count > 0)
             {
+                // Burada taşınabilecek olan kaynakları hesaplamamız lazım. Gemilerin kapasitesine bakmalıyız.
+                double totalCapacity = attackerShipsCombined.Select(x => (double)x.ShipData.CargoCapacity).DefaultIfEmpty(0).Sum();
 
-                switch (e.Item1)
+                // Alınacak olan kaynakları alıyoruz.
+                double ownedMetal = destinationPlanet.Metal / 2;
+                double ownedCrystal = destinationPlanet.Crystal / 2;
+                double ownedBoron = destinationPlanet.Boron / 2;
+
+                // Toplamları.
+                double totalCost = ownedMetal + ownedCrystal + ownedBoron;
+
+                // Eğer kapasitemizin üstündeysek kapasiteye eşitliyoruz.
+                if (totalCapacity > totalCost)
+                    totalCapacity = totalCost;
+
+                // taşınamayacak miktarı eşit oranda düşeceğiz.
+                double ratio = (totalCapacity / totalCost);
+
+                // Çarpıp taşınacak olan miktarı hesaplıyoruz.
+                ownedMetal *= ratio;
+                ownedCrystal *= ratio;
+                ownedBoron *= ratio;
+
+                mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_METAL, ownedMetal));
+                mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_CRYSTAL, ownedCrystal));
+                mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_BORON, ownedBoron));
+
+                // Kazanan arkadaşa kaynakların yarısını vereceğiz.
+                userFleet.CarriedMetal += ownedMetal;
+                userFleet.CarriedCrystal += ownedCrystal;
+                userFleet.CarriedBoron += ownedBoron;
+
+                // Tabiki alınan kaynakları gezegeden düşmemiz lazım.
+                destinationPlanet.Metal -= ownedMetal;
+                destinationPlanet.Crystal -= ownedCrystal;
+                destinationPlanet.Boron -= ownedBoron;
+
+            }
+            else if (defenderShipCombined.Count > 0) // Saldıran kişi kaybettiyse 0 kaynak atıyoruz mail içerisine.
+            {
+                mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_METAL, 0));
+                mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_CRYSTAL, 0));
+                mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_BORON, 0));
+            }
+
+            // Kazananı basıyoruz. 0 ise saldıran kazanmıştır 1 ise savunan.
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_WINNER, attackerShipsCombined.Count > 0 ? 0 : 1));
+
+            #endregion
+
+            #region Oranları alıyoruz dbden.
+
+            // Defans birimlerinin taban yenilenme oranı.
+            double globalDefenseRepeatRate = controller.StaticValues.GetParameter(ParameterTypes.DefenseRepairChance).ParameterFloatValue.Value;
+
+            // Savunmaya ait gemilerin onarım şansı.
+            double globalShipRepeatRate = controller.StaticValues.GetParameter(ParameterTypes.ShipRepairChange).ParameterFloatValue.Value;
+
+            // Gemi enkaz oranı.
+            double globalGarbageRate = controller.StaticValues.GetParameter(ParameterTypes.ShipGarbageRate).ParameterFloatValue.Value;
+
+            #endregion
+
+            #region Kaybedilen savunma birimlerinin onarımını yapıyoruz.
+
+            // Kaybedilen savunmaya ait savunmalar.
+            List<SimulationRepairDTO> lostDefensesOfDefender = new List<SimulationRepairDTO>();
+
+            // Savunmaya ait tamir edilecek olan savunmaların miktarı.
+            defenderDefenses.ForEach(e =>
+            {
+                SimulationRepairDTO sim = new SimulationRepairDTO
                 {
-                    case Sides.AttackerShips:
+                    Id = e.DefenseId,
+                    LostCount = 0,
+                    RepairCount = 0,
+                    Side = SimulationDTO.SimulationSides.DefenderDefense
+                };
 
-                        Tuple<Ships, int> attackerShip = attackerShips[e.Item2];
+                // Yok edilmiş gemi miktarını buluyoruz.
+                int destroyedQuantity = e.DefenseCount - defenderShipCombined.Count(x => x.Id == e.DefenseId && x.Side == sim.Side);
 
+                // Birimleri silerken x olasılıkla yenilenme şansı var.
+                for (int ii = 1; ii <= destroyedQuantity; ii++)
+                {
+                    // Zar atıyoruz.
+                    double rate = randomizer.NextDouble();
 
-
-                        break;
-                    case Sides.DefenderShips:
-                        break;
-                    case Sides.DefenderDefense:
-                        break;
-                    default:
-                        break;
+                    // Eğer attığımız oran beklediğimiz orandan fazla ise savunma birimini kaybettik.
+                    if (rate > globalDefenseRepeatRate)
+                        sim.LostCount++;
+                    else // Aksi durumda sadece tamir edilenleri 1 arttırıyoruz.
+                        sim.RepairCount++;
                 }
 
+                // Kaybedilen savunmaları düşüyoruz.
+                e.DefenseCount -= sim.LostCount;
+
+                // Eğer bütün savunma yok olduysa siliyoruz.
+                if (e.DefenseCount <= 0)
+                    controller.UnitOfWork.GetRepository<TblUserPlanetDefenses>().Delete(e);
+
+                // Yok edilen miktarı listeye basıyoruz.
+                lostDefensesOfDefender.Add(sim);
             });
+
+            #endregion
+
+            #region Kaybedilen savunma gemileri onarıyoruz.
+
+            // Kaybedilen savunmaya ait filo.
+            List<SimulationRepairDTO> lostShipsOfDefender = new List<SimulationRepairDTO>();
+
+            // Savunmaya ait tamir edilecek gemi miktarı.
+            defenderShips.ForEach(e =>
+            {
+                SimulationRepairDTO sim = new SimulationRepairDTO
+                {
+                    Id = e.ShipId,
+                    LostCount = 0,
+                    RepairCount = 0,
+                    Side = SimulationDTO.SimulationSides.DefenderShip
+                };
+
+                // Yok edilmiş gemi miktarını buluyoruz.
+                int destroyedQuantity = e.ShipCount - defenderShipCombined.Count(x => x.Id == e.ShipId && x.Side == sim.Side);
+
+                // Birimleri silerken x olasılıkla yenilenme şansı var.
+                for (int ii = 1; ii <= e.ShipCount; ii++)
+                {
+                    // Zar atıyoruz.
+                    double rate = randomizer.NextDouble();
+
+                    // Eğer attığımız oran beklediğimiz orandan fazla ise savunma birimini kaybettik.
+                    if (rate > globalDefenseRepeatRate)
+                        sim.LostCount++;
+                    else
+                        sim.RepairCount++;
+                }
+
+                // Kaybettiği gemileri düşüyoruz.
+                e.ShipCount -= sim.LostCount;
+
+                // Gemi bilgisini alıyoruz.
+                TblShips shipData = controller.StaticValues.GetShip((Ships)e.ShipId);
+
+                // Enkaz alanına kaynak oluşturuyoruz.
+                shipGarbage.Metal += (sim.LostCount * shipData.CostMetal) * globalGarbageRate;
+
+                // Enkaz alanına kaynak oluşturuyoruz.
+                shipGarbage.Crystal += (sim.LostCount * shipData.CostCrystal) * globalGarbageRate;
+
+                // Enkaz alanına kaynak oluşturuyoruz.
+                shipGarbage.Boron += (sim.LostCount * shipData.CostBoron) * globalGarbageRate;
+
+                // Eğer gemisi kalmamış ise siliyoruz.
+                if (e.ShipCount <= 0)
+                    controller.UnitOfWork.GetRepository<TblUserPlanetShips>().Delete(e);
+
+                // Kaybedilen gemi miktarı.
+                lostShipsOfDefender.Add(sim);
+            });
+
+            #endregion
+
+            #region Kaybedilen saldırı gemilerinin onarılması şansını kontrol ediyoruz.
+
+            // Kullanıcının hiç kaybetmediği savaş gemileri.
+            List<Tuple<Ships, int>> newAttackerShips = attackerShipsCombined.GroupBy(x => x.Id, (ship, shipCount) => new Tuple<Ships, int>((Ships)ship, shipCount.Count())).ToList();
+
+            // Saldıran tarafa ait kaybedilen gemiler.
+            List<SimulationRepairDTO> lostAttackerShips = new List<SimulationRepairDTO>();
+
+            // Saldıran geminin dtolarını oluşturuyoruz.
+            attackerShips.ForEach(e =>
+            {
+                SimulationRepairDTO sim = new SimulationRepairDTO
+                {
+                    Id = (int)e.Item1,
+                    LostCount = 0,
+                    RepairCount = 0,
+                    Side = SimulationDTO.SimulationSides.Attacker
+                };
+
+                // Yeni kayıt bilgisini buluyoruz. BUradan kaybedilen gemi miktarını bulacağız.
+                Tuple<Ships, int> newAttackerShip = newAttackerShips.Find(x => x.Item1 == e.Item1);
+
+                // Toplan kaybedilen gemi miktarı. eğer yeni filo da bu gemiden yoksa demekki öncekilerin hepsi kaybedildi. Eğer var ise öncekilerin hepsinden yeni filodaki değeri çıkarıp buluyoruz.
+                int totalLostCount = newAttackerShip == null ? e.Item2 : e.Item2 - newAttackerShip.Item2;
+
+                // Kaybedilen bütün gemileri dönüyoruz.
+                for (int ii = 1; ii <= totalLostCount; ii++)
+                {
+                    // Zar atıyoruz.
+                    double rate = randomizer.NextDouble();
+
+                    // Eğer attığımız oran beklediğimiz orandan fazla ise saldırı birimini kaybettik.
+                    if (rate > globalShipRepeatRate)
+                        sim.LostCount++;
+                    else // Tamir edilen miktar.
+                        sim.RepairCount++;
+                }
+
+                // Gemi bilgisini alıyoruz.
+                TblShips shipData = controller.StaticValues.GetShip(e.Item1);
+
+                // Enkaz alanına kaynak oluşturuyoruz.
+                shipGarbage.Metal += (sim.LostCount * shipData.CostMetal) * globalGarbageRate;
+
+                // Enkaz alanına kaynak oluşturuyoruz.
+                shipGarbage.Crystal += (sim.LostCount * shipData.CostCrystal) * globalGarbageRate;
+
+                // Enkaz alanına kaynak oluşturuyoruz.
+                shipGarbage.Boron += (sim.LostCount * shipData.CostBoron) * globalGarbageRate;
+
+                //
+                if (sim.LostCount < totalLostCount)
+                {
+                    // Eğer filo tamamen listeden silinmiş ise listeye ekliyoruz.
+                    if (newAttackerShip == null)
+                        newAttackerShips.Add(new Tuple<Ships, int>(e.Item1, sim.RepairCount));
+                    else // Burada ise kayıt var sadece kayıttaki miktarı güncelleyeceğiz.
+                    {
+                        // Tuplelarda update yok bu yüzden sileceğiz ve tekrar yükleyeceğiz.
+                        newAttackerShips.Remove(newAttackerShip);
+
+                        // Tekrar ekliyoruz listeye.
+                        newAttackerShips.Add(new Tuple<Ships, int>(e.Item1, newAttackerShip.Item2 + sim.RepairCount));
+                    }
+                }
+
+                // Kaybedilen gemileri basıyoruz.
+                lostAttackerShips.Add(sim);
+            });
+
+            #endregion
+
+            #region Yok edilmiş saldırı gemilerini maile ekliyoruz.
+
+            // Yok edilen saldırı gemileri alıyoruz.
+            string destroyedAttackerShips = string.Join(MailEncoder.KEY_MANY_ITEM_SEPERATOR, lostAttackerShips.Select(x => $"{x.Id}{MailEncoder.KEY_MANY_ITEM_KEY_VALUE_SEPERATOR}{x.LostCount}"));
+
+            // Maile ekliyoruz.
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_DESTROYED_ATTACKER_SHIPS, destroyedAttackerShips));
+
+            #endregion
+
+            #region Yok edilmiş savunmaya ait gemileri maile ekliyoruz.
+
+            // Yok edilen savunma gemileri alıyoruz.
+            string destroyedDefenderShips = string.Join(MailEncoder.KEY_MANY_ITEM_SEPERATOR, lostShipsOfDefender.Select(x => $"{x.Id}{MailEncoder.KEY_MANY_ITEM_KEY_VALUE_SEPERATOR}{x.LostCount}"));
+
+            // Maile ekliyoruz.
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_DESTROYED_DEFENDER_SHIPS, destroyedDefenderShips));
+
+            #endregion
+
+            #region Yok edilmiş savunma sistemlerini maile ekliyoruz.
+
+            // Yok edilen savunma sistemlerini alıyoruz.
+            string destroyedDefenderDefenses = string.Join(MailEncoder.KEY_MANY_ITEM_SEPERATOR, lostDefensesOfDefender.Select(x => $"{x.Id}{MailEncoder.KEY_MANY_ITEM_KEY_VALUE_SEPERATOR}{x.LostCount}"));
+
+            // Maile ekliyoruz.
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_DESTROYED_DEFENDER_DEFENSES, destroyedDefenderDefenses));
+
+            #endregion
+
+            #region Onarılmış saldırı gemilerini maile ekliyoruz.
+
+            // Yok edilen saldırı gemileri alıyoruz.
+            string repairedAttackerShips = string.Join(MailEncoder.KEY_MANY_ITEM_SEPERATOR, lostAttackerShips.Select(x => $"{x.Id}{MailEncoder.KEY_MANY_ITEM_KEY_VALUE_SEPERATOR}{x.RepairCount}"));
+
+            // Maile ekliyoruz.
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_FIXED_ATTACKER_SHIPS, repairedAttackerShips));
+
+            #endregion
+
+            #region Onarılmış savunma gemilerini maile ekliyoruz.
+
+            // Yok edilen saldırı gemileri alıyoruz.
+            string repairedDefenderShips = string.Join(MailEncoder.KEY_MANY_ITEM_SEPERATOR, lostShipsOfDefender.Select(x => $"{x.Id}{MailEncoder.KEY_MANY_ITEM_KEY_VALUE_SEPERATOR}{x.RepairCount}"));
+
+            // Maile ekliyoruz.
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_FIXED_DEFENDER_SHIPS, repairedDefenderShips));
+
+            #endregion
+
+            #region Onarılmış savunma gemilerini maile ekliyoruz.
+
+            // Yok edilen saldırı gemileri alıyoruz.
+            string repairedDefenderDefenses = string.Join(MailEncoder.KEY_MANY_ITEM_SEPERATOR, lostDefensesOfDefender.Select(x => $"{x.Id}{MailEncoder.KEY_MANY_ITEM_KEY_VALUE_SEPERATOR}{x.RepairCount}"));
+
+            // Maile ekliyoruz.
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_FIXED_DEFENDER_DEFENSES, repairedDefenderDefenses));
+
+            #endregion
+
+            #region Filoyu güncelliyoruz.
+
+            // Filodaki datayı güncelliyoruz.
+            userFleet.FleetData = FleetController.ShipDataToStringData(newAttackerShips);
+
+            #endregion
+
+            #region Kordinata enkazı basıyoruz.
+
+            // Kaynakları hedef kordinata koyuyoruz.
+            destinationCordinate.Metal += shipGarbage.Metal;
+
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_GARBAGE_METAL,shipGarbage.Metal));
+
+            // Kaynakları hedef kordinata koyuyoruz.
+            destinationCordinate.Crystal += shipGarbage.Crystal;
+
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_GARBAGE_CRYSTAL, shipGarbage.Crystal));
+
+            // Kaynakları hedef kordinata koyuyoruz.
+            destinationCordinate.Boron += shipGarbage.Boron;
+
+            // Kaynakları hedef kordinata koyuyoruz.
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_GARBAGE_BORON, shipGarbage.Boron));
+
+            #endregion
+
+            #region Savaşı raporluyoruz her iki kullanıcıya da.
+
+            // Saldırana ait mail.
+            controller.UnitOfWork.GetRepository<TblUserMails>().Add(new TblUserMails
+            {
+                IsReaded = false,
+                MailCategoryId = (int)MailCategories.Savaş,
+                MailContent = MailEncoder.EncodeMail(mailParams),
+                MailDate = actionDate,
+                UserId = userPlanet.UserId
+            });
+
+            // Savunana ait mail.
+            controller.UnitOfWork.GetRepository<TblUserMails>().Add(new TblUserMails
+            {
+                IsReaded = false,
+                MailCategoryId = (int)MailCategories.Savaş,
+                MailContent = MailEncoder.EncodeMail(mailParams),
+                MailDate = actionDate,
+                UserId = destinationPlanet.UserId
+            });
+
+            #endregion
+
         }
 
+        private static void ExecuteWarReturnAction(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet, DateTime actionDate, TblUserPlanets destinationPlanet)
+        {
+            List<string> defaultMailContent = new List<string>()
+            {
+                MailEncoder.GetParam(userFleet.IsReturning ? MailEncoder.KEY_ACTION_TYPE_RETURN : MailEncoder.KEY_ACTION_TYPE, userFleet.FleetActionTypeId),
+                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName),
+                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
+                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, destinationPlanet.PlanetName),
+                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETCORDINATE, userFleet.DestinationCordinate)
+            };
+
+            // Gemileri alıyoruz. Kullanıcının gezegenine iade edeceğiz.
+            List<Tuple<Ships, int>> ships = ExecuteAlwaysInReturn(userPlanet, userFleet);
+
+            // Gönderilen gemileri string formatına dönüştürüyoruz.
+            string shipsWithCounts = string.Join(MailEncoder.KEY_MANY_ITEM_SEPERATOR, ships.Select(x => $"{(int)x.Item1}{MailEncoder.KEY_MANY_ITEM_KEY_VALUE_SEPERATOR}{x.Item2}"));
+
+            // Gemileri maile ekliyoruz.
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_SHIPS_ATTACKER, shipsWithCounts));
+
+            // Nakliye türünü ekliyoruz.
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_MAIL_TYPE, (int)MailTypes.SavaşRaporuDönüş));
+
+            // 1. mail her zaman gidiyor. 2.mail ise sadece gönderilen oyuncu değil ise gidiyor.
+            controller.UnitOfWork.GetRepository<TblUserMails>().Add(new TblUserMails
+            {
+                IsReaded = false,
+                MailDate = actionDate,
+                MailCategoryId = (int)MailCategories.Gezegen,
+                MailContent = MailEncoder.EncodeMail(defaultMailContent),
+                UserId = userPlanet.UserId
+            });
+        }
 
         private static void ExecuteSpyAction(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet, DateTime actionDate, TblUserPlanets destinationPlanet)
         {

@@ -379,7 +379,7 @@
     <value>Mail</value>
   </data>
   <data name="MT1" xml:space="preserve">
-    <value>Resources transferring from &lt;color=orange&gt;{S}[{SC}]&lt;/color&gt; planet to &lt;color=orange&gt;{D}[{DC}]&lt;/color&gt; planet,
+    <value>Resources transferring from &lt;color=orange&gt;{SM}[{SC}]&lt;/color&gt; planet to &lt;color=orange&gt;{DM}[{DC}]&lt;/color&gt; planet,
 
 &lt;color=green&gt;Resources;&lt;/color&gt;
 &lt;color=green&gt;Metal :&lt;/color&gt; {NM},
@@ -387,7 +387,7 @@
 &lt;color=green&gt;Boron :&lt;/color&gt; {NB}.</value>
   </data>
   <data name="MT2" xml:space="preserve">
-    <value>Your fleet returns from &lt;color=orange&gt;{D}[{DC}]&lt;/color&gt; planet to &lt;color=orange&gt;{S}[{SC}]&lt;/color&gt; planet.
+    <value>Your fleet returns from &lt;color=orange&gt;{DM}[{DC}]&lt;/color&gt; planet to &lt;color=orange&gt;{SM}[{SC}]&lt;/color&gt; planet.
 
 &lt;color=green&gt;Return Fleet;&lt;/color&gt;
 {SA}</value>
@@ -417,7 +417,7 @@
     <value>Coordinate</value>
   </data>
   <data name="PostaTarihi" xml:space="preserve">
-    <value>Email Date</value>
+    <value>Mail Date</value>
   </data>
   <data name="S3" xml:space="preserve">
     <value>Spy Drone</value>
@@ -445,5 +445,29 @@
   </data>
   <data name="GezegenVeKoloniler" xml:space="preserve">
     <value>Planets And Colonies</value>
+  </data>
+  <data name="MT3" xml:space="preserve">
+    <value>&lt;color=orange&gt;{DM} [{DC}]&lt;/color&gt; planet's spy report.</value>
+  </data>
+  <data name="Gemiler" xml:space="preserve">
+    <value>Ships</value>
+  </data>
+  <data name="Savunmalar" xml:space="preserve">
+    <value>Defenses</value>
+  </data>
+  <data name="Yükleniyor" xml:space="preserve">
+    <value>Loading</value>
+  </data>
+  <data name="SavaşGemileri" xml:space="preserve">
+    <value>Combat Ships</value>
+  </data>
+  <data name="SivilGemiler" xml:space="preserve">
+    <value>CivilShips</value>
+  </data>
+  <data name="Saldıran" xml:space="preserve">
+    <value>Attacker</value>
+  </data>
+  <data name="Savunan" xml:space="preserve">
+    <value>Defender</value>
   </data>
 </root>

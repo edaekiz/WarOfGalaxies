@@ -387,7 +387,7 @@
 &lt;color=green&gt;Bor :&lt;/color&gt; {NB} aktarılıyor.</value>
   </data>
   <data name="MT2" xml:space="preserve">
-    <value>Filon &lt;color=orange&gt;{D}[{DC}]&lt;/color&gt; gezegeninden, &lt;color=orange&gt;{S}[{SC}]&lt;/color&gt; gezegenine,
+    <value>Filon &lt;color=orange&gt;{DM}[{DC}]&lt;/color&gt; gezegeninden, &lt;color=orange&gt;{SM}[{SC}]&lt;/color&gt; gezegenine,
  geri dönüyor.
 
 &lt;color=green&gt;Dönen Filo;&lt;/color&gt;
@@ -446,5 +446,29 @@
   </data>
   <data name="GezegenVeKoloniler" xml:space="preserve">
     <value>Gezegenlerin ve Kolonilerin</value>
+  </data>
+  <data name="MT3" xml:space="preserve">
+    <value>&lt;color=orange&gt;{DM} [{DC}]&lt;/color&gt; gezegenine ait casusluk raporu.</value>
+  </data>
+  <data name="Gemiler" xml:space="preserve">
+    <value>Gemiler</value>
+  </data>
+  <data name="Savunmalar" xml:space="preserve">
+    <value>Savunmalar</value>
+  </data>
+  <data name="Yükleniyor" xml:space="preserve">
+    <value>Yükleniyor</value>
+  </data>
+  <data name="SavaşGemileri" xml:space="preserve">
+    <value>Savaş Gemileri</value>
+  </data>
+  <data name="SivilGemiler" xml:space="preserve">
+    <value>Sivil Gemiler</value>
+  </data>
+  <data name="Saldıran" xml:space="preserve">
+    <value>Saldıran</value>
+  </data>
+  <data name="Savunan" xml:space="preserve">
+    <value>Savunan</value>
   </data>
 </root>
