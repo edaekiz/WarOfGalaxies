@@ -471,4 +471,13 @@
   <data name="Savunan" xml:space="preserve">
     <value>Savunan</value>
   </data>
+  <data name="KazanılanGanimet" xml:space="preserve">
+    <value>Kazanılan Ganimet</value>
+  </data>
+  <data name="OluşanEnkaz" xml:space="preserve">
+    <value>Oluşan Enkaz</value>
+  </data>
+  <data name="MT5" xml:space="preserve">
+    <value>Savaşı {0} taraf kazandı.</value>
+  </data>
 </root>

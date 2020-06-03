@@ -470,4 +470,13 @@
   <data name="Savunan" xml:space="preserve">
     <value>Defender</value>
   </data>
+  <data name="KazanılanGanimet" xml:space="preserve">
+    <value>Reward Loot</value>
+  </data>
+  <data name="OluşanEnkaz" xml:space="preserve">
+    <value>Debris</value>
+  </data>
+  <data name="MT5" xml:space="preserve">
+    <value>{0} won the battle.</value>
+  </data>
 </root>

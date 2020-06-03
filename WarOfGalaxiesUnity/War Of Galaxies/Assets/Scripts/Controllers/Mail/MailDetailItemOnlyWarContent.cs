@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.ApiModels;
 using Assets.Scripts.Enums;
+using Assets.Scripts.Extends;
 using Assets.Scripts.Interfaces;
 using Assets.Scripts.Pluigns;
 using System;
@@ -15,6 +16,27 @@ public class MailDetailItemOnlyWarContent : MonoBehaviour, IMailDetailItem
 
     [Header("Savunanın ismini buraya basacağız.")]
     public TMP_Text TXT_DefenderName;
+
+    [Header("Mail içeriği buraya basılacak.")]
+    public TMP_Text TXT_MailContent;
+
+    [Header("Kazanılan metal ganimeti.")]
+    public TMP_Text TXT_MetalReward;
+
+    [Header("Kazanılan kristal ganimeti.")]
+    public TMP_Text TXT_CrystalReward;
+
+    [Header("Kazanılan boron ganimeti.")]
+    public TMP_Text TXT_BoronReward;
+
+    [Header("Oluşan metal enkazı.")]
+    public TMP_Text TXT_MetalGarbage;
+
+    [Header("Oluşan kristal enkazı.")]
+    public TMP_Text TXT_CrystalGarbage;
+
+    [Header("Oluşan kristal enkazı.")]
+    public TMP_Text TXT_BoronGarbage;
 
     [Header("Gemileri ve savunmaları doldurmak için bu modeli kullanacağız.")]
     public GameObject ContentShipDefenseItem;
@@ -36,6 +58,12 @@ public class MailDetailItemOnlyWarContent : MonoBehaviour, IMailDetailItem
 
     public void LoadContent(UserMailDTO mailData, MailEncoder.MailDecodeDTO decodedData)
     {
+        // Kazanan tarafı basıyoruz.
+        string winnerSide = TextExtends.MakeItColorize(decodedData.GetValue("KEY_WINNER") == "0" ? LanguageController.LC.GetText("Saldıran") : LanguageController.LC.GetText("Savunan"), "orange");
+
+        // Kazanan tarafı basıyoruz.
+        TXT_MailContent.text = LanguageController.LC.GetText($"MT{(int)decodedData.GetMailType()}", winnerSide);
+
         // Saldıran gezegenin ismini basıyoruz.
         TXT_AttackerName.text = $"{LanguageController.LC.GetText("Saldıran")} {decodedData.GetValue(MailEncoder.KEY_SENDERPLANETNAME)}";
 
@@ -140,6 +168,24 @@ public class MailDetailItemOnlyWarContent : MonoBehaviour, IMailDetailItem
             else
                 defense.transform.Find("ItemCount").GetComponent<TMP_Text>().text = e.Item2.ToString();
         });
+
+        // Kazanılan metali basıyoruz.
+        TXT_MetalReward.text = decodedData.GetValue(MailEncoder.KEY_NEW_METAL, "0");
+
+        // Kazanılan kristali basıyoruz.
+        TXT_CrystalReward.text = decodedData.GetValue(MailEncoder.KEY_NEW_CRYSTAL, "0");
+
+        // Kazanılan kristali basıyoruz.
+        TXT_BoronReward.text = decodedData.GetValue(MailEncoder.KEY_NEW_BORON, "0");
+
+        // Oluşan metal enkazını basıyoruz.
+        TXT_MetalGarbage.text = decodedData.GetValue(MailEncoder.KEY_GARBAGE_METAL, "0");
+
+        // Oluşan kristal enkazını basıyoruz.
+        TXT_CrystalGarbage.text = decodedData.GetValue(MailEncoder.KEY_GARBAGE_CRYSTAL, "0");
+
+        // Oluşan boron enkazını basıyoruz.
+        TXT_BoronGarbage.text = decodedData.GetValue(MailEncoder.KEY_GARBAGE_BORON, "0");
 
     }
 }

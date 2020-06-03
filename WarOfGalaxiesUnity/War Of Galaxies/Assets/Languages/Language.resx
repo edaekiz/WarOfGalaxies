@@ -445,4 +445,10 @@
   <data name="Savunan" xml:space="preserve">
     <value></value>
   </data>
+  <data name="KazanılanGanimet" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="OluşanEnkaz" xml:space="preserve">
+    <value></value>
+  </data>
 </root>

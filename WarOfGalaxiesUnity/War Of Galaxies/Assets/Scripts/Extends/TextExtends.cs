@@ -6,7 +6,7 @@ namespace Assets.Scripts.Extends
     {
         public static string MakeItColorize(string content, string color)
         {
-            return $"<color={color}>{content} </color>";
+            return $"<color={color}>{content}</color>";
         }
 
         public static string MakeItColorize(string content, string endFixOfContent, string color)

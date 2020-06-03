@@ -78,11 +78,11 @@ namespace Assets.Scripts.Pluigns
                 Records = new Dictionary<string, string>();
             }
 
-            public string GetValue(string key)
+            public string GetValue(string key, string defaultValue = "")
             {
                 // Eğer kayıt yok ise boş dön.
                 if (!Records.ContainsKey(key))
-                    return string.Empty;
+                    return defaultValue;
 
                 // Value değerini buluyoruz.
                 KeyValuePair<string, string> record = Records.FirstOrDefault(x => x.Key == key);
@@ -90,7 +90,7 @@ namespace Assets.Scripts.Pluigns
                 #region Kaynaklarda  Noktalı olarak dönceğiz.
 
                 // Kaynak değerleri noktalı olarak gösterilecek.
-                if (record.Key == KEY_NEW_METAL || record.Key == KEY_NEW_CRYSTAL || record.Key == KEY_NEW_BORON)
+                if (record.Key == KEY_NEW_METAL || record.Key == KEY_NEW_CRYSTAL || record.Key == KEY_NEW_BORON || record.Key == KEY_GARBAGE_METAL || record.Key == KEY_GARBAGE_CRYSTAL || record.Key == KEY_GARBAGE_BORON)
                 {
                     if (double.TryParse(record.Value, out double val))
                         return ResourceExtends.ConvertToDottedResource(val);
