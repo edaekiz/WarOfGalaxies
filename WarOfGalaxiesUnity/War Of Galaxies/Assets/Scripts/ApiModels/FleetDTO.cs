@@ -50,6 +50,10 @@ namespace Assets.Scripts.ApiModels
         public double CarriedMetal;
         public double CarriedCrystal;
         public double CarriedBoron;
+
+        /// <summary>
+        /// 0 ile 1 arasında.
+        /// </summary>
         public float FleetSpeed;
     }
 }

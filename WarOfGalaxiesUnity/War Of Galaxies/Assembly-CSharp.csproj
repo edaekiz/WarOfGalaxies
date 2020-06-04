@@ -84,6 +84,7 @@
     <Compile Include="Assets\ExternalAssets\Asteroids Pack\Assets\Scripts\RandomRotator.cs" />
     <Compile Include="Assets\ExternalAssets\Hi-Tech Buttons and Panels\Resources\Scripts\JustRotate.cs" />
     <Compile Include="Assets\Languages\Language.Designer.cs" />
+    <Compile Include="Assets\PlanetActionFooterPanel.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ApiResult.cs" />
     <Compile Include="Assets\Scripts\ApiModels\Base\ProgressModel.cs" />
     <Compile Include="Assets\Scripts\ApiModels\DataDTO.cs" />

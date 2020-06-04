@@ -4623,6 +4623,9 @@ MonoBehaviour:
   - PanelType: 15
     Prefab: {fileID: 1425446694950270894, guid: f94bee878e764bd49b571f8049707917,
       type: 3}
+  - PanelType: 16
+    Prefab: {fileID: 7784632557100716320, guid: df1fdc10530c54141b117f4effd1e6a4,
+      type: 3}
 --- !u!4 &515747090
 Transform:
   m_ObjectHideFlags: 0
@@ -4669,7 +4672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1935d206958581c49a051bcbe9732c75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Environment: 0
+  Environment: 1
   Token: D26FC6FE-F9A7-4FA9-97EE-22EA219CC5F2
 --- !u!114 &515747093
 MonoBehaviour:
@@ -7448,8 +7451,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   KEYWORD: "Y\xFCkleniyor"
-  Append: 
-  Prepend: ...
+  Append: ...
+  Prepend: 
 --- !u!1 &879174955
 GameObject:
   m_ObjectHideFlags: 0

@@ -18,14 +18,14 @@ public class PlanetController : MonoBehaviour
     /// <summary>
     /// Tutulan gezegene ait bilgiler. Var ise.
     /// </summary>
-    public UserPlanetDTO SolarPlanetInfo { get; set; }
+    public SolarPlanetDTO SolarPlanetInfo { get; set; }
 
     /// <summary>
     /// Kordinat bilgisi.
     /// </summary>
     public CordinateDTO CordinateInfo { get; set; }
 
-    public void LoadPlanetInfo(SunController sun, UserPlanetDTO solarPlanet, CordinateDTO cordinate)
+    public void LoadPlanetInfo(SunController sun, SolarPlanetDTO solarPlanet, CordinateDTO cordinate)
     {
         // Güneşi atıyoruz.
         Sun = sun;
@@ -40,10 +40,10 @@ public class PlanetController : MonoBehaviour
         transform.RotateAround(Sun.transform.position, transform.up, Random.Range(1, 360));
 
         // Eğer gezegen bilgisi var ise yüklüyoruz.
-        if (solarPlanet != null)
+        if (solarPlanet != null && solarPlanet.UserPlanet != null)
         {
             UserPlanetInfo = Instantiate(GalaxyController.GC.UserPlanetInfo, transform);
-            UserPlanetInfo.transform.Find("TXT_Username").GetComponent<TMP_Text>().text = solarPlanet.PlanetName;
+            UserPlanetInfo.transform.Find("TXT_Username").GetComponent<TMP_Text>().text = solarPlanet.UserPlanet.PlanetName;
             UserPlanetInfo.transform.Find("TXT_OrderIndex").GetComponent<TMP_Text>().text = cordinate.OrderIndex.ToString();
             UserPlanetInfo.transform.Find("TXT_UserOrder").GetComponent<TMP_Text>().text = "-";
         }
@@ -82,10 +82,13 @@ public class PlanetController : MonoBehaviour
         //if (PlanetZoomController.PZC.ZoomState != PlanetZoomController.ZoomStates.Zoomed)
         //    PlanetZoomController.PZC.BeginZoom(this);
 
+        // Önceden açık var ise kapatıyoruz.
+        GlobalPanelController.GPC.ClosePanel(GlobalPanelController.PanelTypes.PlanetActionFooterPanel);
+
         //Paneli açıyoruz.
-        GameObject actionPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.GalaxyPlanetActionPanel);
+        GameObject actionPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.PlanetActionFooterPanel);
 
         // Filo hareketini belirliyoruz.
-        actionPanel.GetComponent<PlanetActionController>().Load(this.SolarPlanetInfo, this.CordinateInfo);
+        actionPanel.GetComponent<PlanetActionFooterPanel>().ShowCordinate(this.SolarPlanetInfo, this.CordinateInfo);
     }
 }

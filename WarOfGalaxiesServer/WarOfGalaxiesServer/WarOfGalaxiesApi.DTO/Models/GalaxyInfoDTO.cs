@@ -23,6 +23,9 @@ namespace WarOfGalaxiesApi.DTO.Models
     {
         public UserPlanetDTO UserPlanet { get; set; }
         public int OrderIndex { get; set; }
+        public double GarbageMetal { get; set; }
+        public double GarbageCrystal { get; set; }
+        public double GarbageBoron { get; set; }
     }
 
 }

@@ -127,7 +127,7 @@ public class PlanetActionController : BasePanelController
     /// <summary>
     /// Gösterilen gezegen bilgisi.
     /// </summary>
-    public UserPlanetDTO CurrentSelectedPlanetInfo { get; set; }
+    public SolarPlanetDTO CurrentSelectedPlanetInfo { get; set; }
 
     protected override void Start()
     {
@@ -165,15 +165,15 @@ public class PlanetActionController : BasePanelController
         base.Update();
     }
 
-    public void Load(UserPlanetDTO planetInfo, CordinateDTO cordinateInfo)
+    public void Load(SolarPlanetDTO planetInfo, CordinateDTO cordinateInfo)
     {
         CurrentSelectedPlanetInfo = planetInfo;
         CurrentCordinate = cordinateInfo;
 
         // Gezegen seçilmiş ise ismini basıyoruz.
-        if (CurrentSelectedPlanetInfo != null)
+        if (CurrentSelectedPlanetInfo != null && CurrentSelectedPlanetInfo.UserPlanet != null)
         {
-            TXT_PlanetNameAndCordinate.text = $"<color=red>{LanguageController.LC.GetText("Hedef")} :</color> {planetInfo.PlanetName} <color=orange>({CordinateExtends.ToCordinateString(cordinateInfo)})</color>";
+            TXT_PlanetNameAndCordinate.text = $"<color=red>{LanguageController.LC.GetText("Hedef")} :</color> {planetInfo.UserPlanet.PlanetName} <color=orange>({CordinateExtends.ToCordinateString(cordinateInfo)})</color>";
             TXT_PlanetNameAndCordinateSecond.text = TXT_PlanetNameAndCordinate.text;
         }
         else

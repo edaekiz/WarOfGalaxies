@@ -451,4 +451,7 @@
   <data name="OluşanEnkaz" xml:space="preserve">
     <value></value>
   </data>
+  <data name="CasusGemisiGönderildi" xml:space="preserve">
+    <value></value>
+  </data>
 </root>

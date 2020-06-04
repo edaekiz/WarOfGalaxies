@@ -480,4 +480,7 @@
   <data name="MT5" xml:space="preserve">
     <value>Savaşı {0} taraf kazandı.</value>
   </data>
+  <data name="CasusGemisiGönderildi" xml:space="preserve">
+    <value>Casus gemisi gönderildi.</value>
+  </data>
 </root>

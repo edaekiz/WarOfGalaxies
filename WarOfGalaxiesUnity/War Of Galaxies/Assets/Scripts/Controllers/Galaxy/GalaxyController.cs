@@ -157,7 +157,7 @@ public class GalaxyController : MonoBehaviour
                     PlanetController planetController = planet.GetComponent<PlanetController>();
 
                     // Gezegen bilgisini yüklüyoruz.
-                    planetController.LoadPlanetInfo(currentSun, solarPlanet.UserPlanet, cordinate);
+                    planetController.LoadPlanetInfo(currentSun, solarPlanet, cordinate);
 
                     // Oluşan gezegeni ekliyoruz.
                     currentSun.AddPlanet(planetController);

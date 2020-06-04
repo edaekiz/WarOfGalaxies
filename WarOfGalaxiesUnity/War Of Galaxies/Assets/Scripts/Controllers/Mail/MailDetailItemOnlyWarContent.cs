@@ -186,6 +186,5 @@ public class MailDetailItemOnlyWarContent : MonoBehaviour, IMailDetailItem
 
         // Oluşan boron enkazını basıyoruz.
         TXT_BoronGarbage.text = decodedData.GetValue(MailEncoder.KEY_GARBAGE_BORON, "0");
-
     }
 }

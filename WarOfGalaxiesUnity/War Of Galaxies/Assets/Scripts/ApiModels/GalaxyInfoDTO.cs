@@ -27,5 +27,8 @@ namespace Assets.Scripts.ApiModels
     {
         public UserPlanetDTO UserPlanet;
         public int OrderIndex;
+        public double GarbageMetal;
+        public double GarbageCrystal;
+        public double GarbageBoron;
     }
 }

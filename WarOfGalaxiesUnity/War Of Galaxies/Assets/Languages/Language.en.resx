@@ -479,4 +479,7 @@
   <data name="MT5" xml:space="preserve">
     <value>{0} won the battle.</value>
   </data>
+  <data name="CasusGemisiGönderildi" xml:space="preserve">
+    <value>Spy ship sent.</value>
+  </data>
 </root>

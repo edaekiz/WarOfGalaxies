@@ -33,7 +33,10 @@ namespace WarOfGalaxiesApi.Controllers
                         UserId = x.UserPlanet.UserId,
                         UserPlanetId = x.UserPlanet.UserPlanetId,
                         PlanetType = x.UserPlanet.PlanetType
-                    } : null
+                    } : null,
+                    GarbageMetal = x.Metal,
+                    GarbageCrystal = x.Crystal,
+                    GarbageBoron = x.Boron
                 })
                 .ToList();
 
