@@ -6,6 +6,7 @@
         Saldır = 2,
         Nakliye = 3,
         Konuşlandır = 4,
-        Sömürgeleştir = 5
+        Sömürgeleştir = 5,
+        Sök = 6
     }
 }

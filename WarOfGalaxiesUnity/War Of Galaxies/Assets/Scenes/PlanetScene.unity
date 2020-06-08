@@ -1504,6 +1504,8 @@ MonoBehaviour:
   SolarIndexField: {fileID: 727813810}
   MainPanel: {fileID: 1470492923}
   ToggleText: {fileID: 681327557}
+  CurrentGalaxyIndex: 0
+  CurrentSolarIndex: 0
 --- !u!1 &266883413
 GameObject:
   m_ObjectHideFlags: 0
@@ -2950,6 +2952,7 @@ MonoBehaviour:
   GalaxyRotationSpeed: 0.5
   EmptyPlanetSign: {fileID: 1726110630314294, guid: 17019f2e03452cc428f0780c57041415,
     type: 3}
+  Debris: {fileID: 5385956419405837296, guid: 55d5a060e5b46184d894755a9b9de0c7, type: 3}
 --- !u!1 &387967976
 GameObject:
   m_ObjectHideFlags: 0
@@ -4752,6 +4755,8 @@ MonoBehaviour:
     ShipImage: {fileID: 21300000, guid: 10cdbba8dcdcf1c43932185b8ccfba53, type: 3}
   - Ship: 3
     ShipImage: {fileID: 21300000, guid: d98da49cf89a56748a46cc6ab8a3c052, type: 3}
+  - Ship: 4
+    ShipImage: {fileID: 21300000, guid: 10cdbba8dcdcf1c43932185b8ccfba53, type: 3}
 --- !u!114 &515747098
 MonoBehaviour:
   m_ObjectHideFlags: 0

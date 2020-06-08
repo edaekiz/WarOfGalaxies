@@ -24,6 +24,11 @@ public class GalaxyChangePanelController : MonoBehaviour
     [Header("Paneli kapatıp açma da kullanılacak.")]
     public TMP_Text ToggleText;
 
+    [Header("Aktif olan galaksi.")]
+    public int CurrentGalaxyIndex;
+
+    [Header("Aktif olan güneş sistemi.")]
+    public int CurrentSolarIndex;
 
     public void GoToPreviousCordinate()
     {
@@ -61,6 +66,10 @@ public class GalaxyChangePanelController : MonoBehaviour
         int currentSolarIndex = int.Parse(SolarIndexField.text);
 
         int currentGalaxyIndex = int.Parse(GalaxyIndexField.text);
+
+        CurrentSolarIndex = currentSolarIndex;
+
+        CurrentGalaxyIndex = currentGalaxyIndex;
 
         GalaxyController.GC.LoadSolarSystem(currentGalaxyIndex, currentSolarIndex);
     }

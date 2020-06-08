@@ -82,7 +82,7 @@ namespace WarOfGalaxiesApi.Controllers
                 userFleets.AddRange(userPlanet.TblFleetsSenderUserPlanet);
 
                 // Eğer hedef gezegen biz isek sadece bize geldikleri durumda verify ediyoruz.
-                userFleets.AddRange(userPlanet.TblFleetsDestinationUserPlanet.Where(x => x.DestinationUserPlanetId == verifyData.UserPlanetID && !x.IsReturning));
+                userFleets.AddRange(userPlanet.TblFleetsDestinationUserPlanet.Where(x => x.SenderUserPlanetId != verifyData.UserPlanetID && x.DestinationUserPlanetId == verifyData.UserPlanetID && !x.IsReturning));
 
                 // Filoları hareket tarihine göre sıralıyoruz.
                 IOrderedEnumerable<TblFleets> orderedUserFleets = userFleets.OrderBy(x =>
@@ -112,6 +112,7 @@ namespace WarOfGalaxiesApi.Controllers
 
                         if (userFleet.DestinationUserPlanetId.HasValue && userPlanet.UserPlanetId != userFleet.DestinationUserPlanetId)
                         {
+                            // Eğer hedefte bir gezegen var ise kaynaklarını onaylıyoruz.
                             // Gezegeni doğruluyoruz.
                             bool isVerified = VerifyPlanetResources(controller, new VerifyResourceDTO { UserPlanetID = userFleet.DestinationUserPlanetId.Value });
 
@@ -119,6 +120,13 @@ namespace WarOfGalaxiesApi.Controllers
                             if (!isVerified)
                                 return false;
 
+                            // Burada hedef gezegene kaynakları yükleyeceğiz.
+                            HandleFleetActions(controller, userPlanet, userFleet, halfOfFlyDate);
+
+                            // Artık geri dönüyor.
+                            userFleet.IsReturning = true;
+                        }else
+                        {
                             // Burada hedef gezegene kaynakları yükleyeceğiz.
                             HandleFleetActions(controller, userPlanet, userFleet, halfOfFlyDate);
 
@@ -593,6 +601,9 @@ namespace WarOfGalaxiesApi.Controllers
                     case FleetTypes.Nakliye: // Nakliye yapan geminin gezegene dönüşü.
                         ExecuteTransportReturnAction(controller, userPlanet, userFleet, actionDate, destinationPlanet);
                         break;
+                    case FleetTypes.Sök:
+                        ExecuteDebrisReturnAction(controller, userPlanet, userFleet, actionDate, destinationPlanet);
+                        break;
                     case FleetTypes.Konuşlandır:
                         break;
                     case FleetTypes.Sömürgeleştir:
@@ -612,6 +623,9 @@ namespace WarOfGalaxiesApi.Controllers
                     case FleetTypes.Nakliye:
                         ExecuteTransportAction(controller, userPlanet, userFleet, actionDate, destinationPlanet);
                         break;
+                    case FleetTypes.Sök:
+                        ExecuteDebrisAction(controller, userPlanet, userFleet, actionDate, destinationPlanet);
+                        break;
                     case FleetTypes.Konuşlandır:
                         break;
                     case FleetTypes.Sömürgeleştir:
@@ -620,8 +634,124 @@ namespace WarOfGalaxiesApi.Controllers
             }
         }
 
+        private static void ExecuteDebrisAction(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet, DateTime actionDate, TblUserPlanets destinationPlanet)
+        {
+            // Kordinat formatına dönüştürüyoruz.
+            CordinateDTO destinationCordinate = CordinateExtends.ToCordinate(userFleet.DestinationCordinate);
+
+            // Bu kordinattaki dataları alıyoruz.
+            TblCordinates cordinateInfo = controller.UnitOfWork.GetRepository<TblCordinates>().FirstOrDefault(x => x.GalaxyIndex == destinationCordinate.GalaxyIndex && x.SolarIndex == destinationCordinate.SolarIndex && x.OrderIndex == destinationCordinate.OrderIndex);
+
+            // Kordinatta bir şey yok ise sıfır veriyoruz.
+            if (cordinateInfo == null)
+            {
+                cordinateInfo = new TblCordinates
+                {
+                    Metal = 0,
+                    Crystal = 0,
+                    Boron = 0
+                };
+            }
+
+            // Gemi bilgisini alıyoruz.
+            List<Tuple<Ships, int>> ships = FleetController.FleetDataToShipData(userFleet.FleetData);
+
+            // İçerisinden geri dönüşümcüyü buluyoruz.
+            Tuple<Ships, int> garbageShip = ships.Find(x => x.Item1 == Ships.GeriDönüşümcü);
+
+            // Gegri dönüşümcülerin toplayabileceği miktar.
+            double garbageSum = 0;
+
+            // Eğer geri dönüşümcü var ise miktar ile çarpıp taşıma kapasitesini hesaplıyoruz.
+            if (garbageShip != null)
+                garbageSum = controller.StaticValues.GetShip(Ships.GeriDönüşümcü).CargoCapacity * garbageShip.Item2;
+
+            // Alınacak olan kaynakları alıyoruz.
+            double ownedMetal = cordinateInfo.Metal;
+            double ownedCrystal = cordinateInfo.Crystal;
+            double ownedBoron = cordinateInfo.Boron;
+
+            // Toplamları.
+            double totalCost = ownedMetal + ownedCrystal + ownedBoron;
+
+            // Eğer kapasitemizin üstündeysek kapasiteye eşitliyoruz.
+            if (garbageSum > totalCost)
+                garbageSum = totalCost;
+
+            // Taşınamayacak miktarı eşit oranda düşeceğiz.
+            double ratio = (garbageSum / totalCost);
+
+            // Çarpıp taşınacak olan miktarı hesaplıyoruz.
+            ownedMetal *= ratio;
+            ownedCrystal *= ratio;
+            ownedBoron *= ratio;
+
+            cordinateInfo.Metal -= ownedMetal;
+            cordinateInfo.Crystal -= ownedCrystal;
+            cordinateInfo.Boron -= ownedBoron;
+
+            userFleet.CarriedMetal += ownedMetal;
+            userFleet.CarriedCrystal += ownedCrystal;
+            userFleet.CarriedBoron += ownedBoron;
+
+            // Mail bilgisini oluşturuyoruz.
+            List<string> mail = new List<string>();
+            mail.Add(MailEncoder.GetParam(MailEncoder.KEY_ACTION_TYPE, userFleet.FleetActionTypeId));
+            mail.Add(MailEncoder.GetParam(MailEncoder.KEY_MAIL_TYPE, (int)MailTypes.SökRapor));
+            mail.Add(MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName));
+            mail.Add(MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate));
+            mail.Add(MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETCORDINATE, userFleet.DestinationCordinate));
+            mail.Add(MailEncoder.GetParam(MailEncoder.KEY_GARBAGE_METAL, ownedMetal));
+            mail.Add(MailEncoder.GetParam(MailEncoder.KEY_GARBAGE_CRYSTAL, ownedCrystal));
+            mail.Add(MailEncoder.GetParam(MailEncoder.KEY_GARBAGE_BORON, ownedBoron));
+
+            // Maili kullanıcıya iletiyoruz.
+            controller.UnitOfWork.GetRepository<TblUserMails>().Add(new TblUserMails
+            {
+                UserId = userPlanet.UserId,
+                IsReaded = false,
+                MailCategoryId = (int)MailCategories.Gezegen,
+                MailContent = MailEncoder.EncodeMail(mail),
+                MailDate = actionDate
+            });
+
+        }
+
+        private static void ExecuteDebrisReturnAction(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet, DateTime actionDate, TblUserPlanets destinationPlanet)
+        {
+            List<string> defaultMailContent = new List<string>()
+            {
+                MailEncoder.GetParam(MailEncoder.KEY_ACTION_TYPE_RETURN, userFleet.FleetActionTypeId),
+                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName),
+                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
+                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETCORDINATE, userFleet.DestinationCordinate)
+            };
+
+            // Gemileri alıyoruz. Kullanıcının gezegenine iade edeceğiz.
+            List<Tuple<Ships, int>> ships = ExecuteAlwaysInReturn(userPlanet, userFleet);
+
+            // Gönderilen gemileri string formatına dönüştürüyoruz.
+            string shipsWithCounts = string.Join(MailEncoder.KEY_MANY_ITEM_SEPERATOR, ships.Select(x => $"{(int)x.Item1}{MailEncoder.KEY_MANY_ITEM_KEY_VALUE_SEPERATOR}{x.Item2}"));
+
+            // Gemileri maile ekliyoruz.
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_SHIPS_ATTACKER, shipsWithCounts));
+
+            // Nakliye türünü ekliyoruz.
+            defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_MAIL_TYPE, (int)MailTypes.SökRaporDönüş));
+
+            // 1. mail her zaman gidiyor. 2.mail ise sadece gönderilen oyuncu değil ise gidiyor.
+            controller.UnitOfWork.GetRepository<TblUserMails>().Add(new TblUserMails
+            {
+                IsReaded = false,
+                MailDate = actionDate,
+                MailCategoryId = (int)MailCategories.Gezegen,
+                MailContent = MailEncoder.EncodeMail(defaultMailContent),
+                UserId = userPlanet.UserId
+            });
+        }
+
         #region Reports 
-     
+
         private static void ExecuteWarAction(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet, DateTime actionDate, TblUserPlanets destinationPlanet)
         {
             #region Dataları getiriyoruz.
@@ -639,7 +769,7 @@ namespace WarOfGalaxiesApi.Controllers
             TblCordinates destinationCordinate = controller.UnitOfWork.GetRepository<TblCordinates>().FirstOrDefault(x => x.UserPlanetId == destinationPlanet.UserPlanetId);
 
             #endregion
-            
+
             #region Mail oluşturuyoruz.
 
             // Maili oluşturuyoruz.
@@ -842,7 +972,7 @@ namespace WarOfGalaxiesApi.Controllers
 
             // Yapılan işlemi yazıyoruz.
             mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_ACTION_TYPE, userFleet.FleetActionTypeId));
-            
+
             // Yapılan işlemi yazıyoruz.
             mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_MAIL_TYPE, (int)MailTypes.SavaşRaporu));
 
@@ -1170,7 +1300,7 @@ namespace WarOfGalaxiesApi.Controllers
             // Kaynakları hedef kordinata koyuyoruz.
             destinationCordinate.Metal += shipGarbage.Metal;
 
-            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_GARBAGE_METAL,shipGarbage.Metal));
+            mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_GARBAGE_METAL, shipGarbage.Metal));
 
             // Kaynakları hedef kordinata koyuyoruz.
             destinationCordinate.Crystal += shipGarbage.Crystal;
@@ -1215,7 +1345,7 @@ namespace WarOfGalaxiesApi.Controllers
         {
             List<string> defaultMailContent = new List<string>()
             {
-                MailEncoder.GetParam(userFleet.IsReturning ? MailEncoder.KEY_ACTION_TYPE_RETURN : MailEncoder.KEY_ACTION_TYPE, userFleet.FleetActionTypeId),
+                MailEncoder.GetParam(MailEncoder.KEY_ACTION_TYPE_RETURN, userFleet.FleetActionTypeId),
                 MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName),
                 MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
                 MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, destinationPlanet.PlanetName),
@@ -1249,7 +1379,7 @@ namespace WarOfGalaxiesApi.Controllers
         {
             List<string> defaultMailContent = new List<string>()
             {
-                MailEncoder.GetParam(userFleet.IsReturning ? MailEncoder.KEY_ACTION_TYPE_RETURN : MailEncoder.KEY_ACTION_TYPE, userFleet.FleetActionTypeId),
+                MailEncoder.GetParam(MailEncoder.KEY_ACTION_TYPE_RETURN, userFleet.FleetActionTypeId),
                 MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName),
                 MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
                 MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, destinationPlanet.PlanetName),
@@ -1331,7 +1461,7 @@ namespace WarOfGalaxiesApi.Controllers
         {
             List<string> defaultMailContent = new List<string>()
             {
-                MailEncoder.GetParam(userFleet.IsReturning ? MailEncoder.KEY_ACTION_TYPE_RETURN : MailEncoder.KEY_ACTION_TYPE, userFleet.FleetActionTypeId),
+                MailEncoder.GetParam(MailEncoder.KEY_ACTION_TYPE_RETURN, userFleet.FleetActionTypeId),
                 MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName),
                 MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
                 MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, destinationPlanet.PlanetName),
@@ -1384,7 +1514,7 @@ namespace WarOfGalaxiesApi.Controllers
         {
             List<string> defaultMailContent = new List<string>()
             {
-                MailEncoder.GetParam(userFleet.IsReturning ? MailEncoder.KEY_ACTION_TYPE_RETURN : MailEncoder.KEY_ACTION_TYPE, userFleet.FleetActionTypeId),
+                MailEncoder.GetParam(MailEncoder.KEY_ACTION_TYPE_RETURN, userFleet.FleetActionTypeId),
                 MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName),
                 MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
                 MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, destinationPlanet.PlanetName),

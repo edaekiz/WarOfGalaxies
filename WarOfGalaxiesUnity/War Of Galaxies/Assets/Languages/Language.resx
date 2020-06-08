@@ -454,4 +454,34 @@
   <data name="CasusGemisiGönderildi" xml:space="preserve">
     <value></value>
   </data>
+  <data name="Sök" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="S4" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SD4" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FT6" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="s" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="EnkazBilgisi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ÇöpToplayıcıYok" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Hareket" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ÇöpGemisiGerekli" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GemiGidiyor" xml:space="preserve">
+    <value></value>
+  </data>
 </root>

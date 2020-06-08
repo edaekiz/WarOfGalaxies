@@ -53,6 +53,9 @@ public class ResourceController : BaseLanguageBehaviour
 
     private void Update()
     {
+        if (!LoadingController.LC.IsGameLoaded)
+            return;
+
         // Eğer gezegen seçili değil ise geri dön.
         if (GlobalPlanetController.GPC.CurrentPlanet == null)
             return;

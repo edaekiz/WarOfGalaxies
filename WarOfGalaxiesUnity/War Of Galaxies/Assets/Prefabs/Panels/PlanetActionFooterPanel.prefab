@@ -84,6 +84,7 @@ GameObject:
   - component: {fileID: 7784632555582085758}
   - component: {fileID: 7784632555582085756}
   - component: {fileID: 7784632555582085759}
+  - component: {fileID: 5854092981782243580}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -229,6 +230,21 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5854092981782243580
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7784632555582085753}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88dd0c5c693a9004aab6916a54bef9f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KEYWORD: EnkazBilgisi
+  Append: 
+  Prepend: 
 --- !u!1 &7784632555603855117
 GameObject:
   m_ObjectHideFlags: 0
@@ -1455,6 +1471,7 @@ GameObject:
   - component: {fileID: 7784632556296473738}
   - component: {fileID: 7784632556296473736}
   - component: {fileID: 7784632556296473739}
+  - component: {fileID: 7794226624416164353}
   m_Layer: 5
   m_Name: ItemName
   m_TagString: Untagged
@@ -1600,6 +1617,21 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &7794226624416164353
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7784632556296473749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88dd0c5c693a9004aab6916a54bef9f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KEYWORD: Casusluk
+  Append: 
+  Prepend: 
 --- !u!1 &7784632556302239961
 GameObject:
   m_ObjectHideFlags: 0
@@ -1685,6 +1717,7 @@ GameObject:
   - component: {fileID: 7784632556387148247}
   - component: {fileID: 7784632556387148245}
   - component: {fileID: 7784632556387148244}
+  - component: {fileID: 5186563178001649541}
   m_Layer: 5
   m_Name: ItemName
   m_TagString: Untagged
@@ -1830,6 +1863,21 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5186563178001649541
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7784632556387148246}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88dd0c5c693a9004aab6916a54bef9f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KEYWORD: Hareket
+  Append: 
+  Prepend: 
 --- !u!1 &7784632556423207743
 GameObject:
   m_ObjectHideFlags: 0
@@ -2055,6 +2103,7 @@ GameObject:
   - component: {fileID: 7784632556756860066}
   - component: {fileID: 7784632556756860064}
   - component: {fileID: 7784632556756860067}
+  - component: {fileID: 6508458910129661243}
   m_Layer: 5
   m_Name: ItemName
   m_TagString: Untagged
@@ -2200,6 +2249,21 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &6508458910129661243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7784632556756860077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88dd0c5c693a9004aab6916a54bef9f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KEYWORD: Bilgi
+  Append: 
+  Prepend: 
 --- !u!1 &7784632557098817660
 GameObject:
   m_ObjectHideFlags: 0
@@ -2446,6 +2510,8 @@ MonoBehaviour:
   TXT_GarbageMetalQuantity: {fileID: 7784632555659139735}
   TXT_GarbageCrystalQuantity: {fileID: 7784632557293726129}
   TXT_GarbageBoronQuantity: {fileID: 7784632556275476527}
+  TXT_GarbageAlreadySendMessage: {fileID: 7784632556073418777}
+  BTN_FastSendGarbage: {fileID: 7784632557098817650}
 --- !u!1 &7784632557109537433
 GameObject:
   m_ObjectHideFlags: 0
@@ -2457,6 +2523,7 @@ GameObject:
   - component: {fileID: 7784632557109537438}
   - component: {fileID: 7784632557109537436}
   - component: {fileID: 7784632557109537439}
+  - component: {fileID: 2151377428354765892}
   m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
@@ -2509,7 +2576,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Topla
+  m_text: "S\xF6k"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 95563f3213c13b54c9bf8932c51d40c4, type: 2}
   m_sharedMaterial: {fileID: -5341121368119280962, guid: 95563f3213c13b54c9bf8932c51d40c4,
@@ -2579,7 +2646,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 7784632557109537439}
-    characterCount: 5
+    characterCount: 3
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -2602,6 +2669,21 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &2151377428354765892
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7784632557109537433}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88dd0c5c693a9004aab6916a54bef9f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KEYWORD: "S\xF6k"
+  Append: 
+  Prepend: 
 --- !u!1 &7784632557230956138
 GameObject:
   m_ObjectHideFlags: 0

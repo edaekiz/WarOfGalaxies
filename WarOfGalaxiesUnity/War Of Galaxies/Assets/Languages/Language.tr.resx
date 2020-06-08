@@ -483,4 +483,34 @@
   <data name="CasusGemisiGönderildi" xml:space="preserve">
     <value>Casus gemisi gönderildi.</value>
   </data>
+  <data name="Sök" xml:space="preserve">
+    <value>Sök</value>
+  </data>
+  <data name="S4" xml:space="preserve">
+    <value>Enkaz Toplama Gemisi</value>
+  </data>
+  <data name="SD4" xml:space="preserve">
+    <value>Savaşlardan sonra oluşan enkazları toplamak için kullanılır.</value>
+  </data>
+  <data name="FT6" xml:space="preserve">
+    <value>Sök</value>
+  </data>
+  <data name="s" xml:space="preserve">
+    <value>{0}/{1} gemi buraya gidiyor.</value>
+  </data>
+  <data name="EnkazBilgisi" xml:space="preserve">
+    <value>Enkaz Bilgisi</value>
+  </data>
+  <data name="ÇöpToplayıcıYok" xml:space="preserve">
+    <value>Çöp toplayıcı bulunmuyor.</value>
+  </data>
+  <data name="Hareket" xml:space="preserve">
+    <value>Hareket</value>
+  </data>
+  <data name="ÇöpGemisiGerekli" xml:space="preserve">
+    <value>{0} çöp toplama gemisi gerekli.</value>
+  </data>
+  <data name="GemiGidiyor" xml:space="preserve">
+    <value>{0}/{1} gemi gidiyor.</value>
+  </data>
 </root>

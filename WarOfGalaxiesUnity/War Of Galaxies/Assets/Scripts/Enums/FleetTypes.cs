@@ -11,5 +11,6 @@ namespace Assets.Scripts.Enums
         Nakliye = 3,
         Konuşlandır = 4,
         Sömürgeleştir = 5,
+        Sök = 6
     }
 }

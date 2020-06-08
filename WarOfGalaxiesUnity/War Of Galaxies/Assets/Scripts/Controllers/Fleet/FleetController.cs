@@ -65,7 +65,6 @@ public class FleetController : MonoBehaviour
         GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.FleetPanel);
     }
 
-
     /// <summary>
     /// Her bir filoyu kontrol ediyoruz biten var mı?
     /// </summary>
@@ -157,39 +156,58 @@ public class FleetController : MonoBehaviour
         {
             LoginController.LC.VerifyUserResources(fleet.SenderUserPlanetId, (UserPlanetDTO userPlanet) =>
              {
-
-                 StartCoroutine(ApiService.API.Post("GetFleetDetails", new GetLastFleetsDTO { LastFleetId = fleet.FleetId }, (ApiResult response) =>
+                 // Eğer saldırı yada sök işlemi ise.
+                 if (fleet.FleetActionTypeId == FleetTypes.Saldır || fleet.FleetActionTypeId == FleetTypes.Sök)
                  {
-                     // Eğer response false ise filo yok demektir geri dön.
-                     if (!response.IsSuccess)
-                         return;
-
-                     // Son güncel filo bilgisi.
-                     FleetDTO newFleetInfo = response.GetData<FleetDTO>();
-
-                     // Eski olanı aktif filodan siliyoruz.
-                     Fleets.Remove(fleet);
-
-                     // Yeni olanı aktif filoya ekliyoruz.
-                     Fleets.Add(newFleetInfo);
-
-                     // Panel açık ise bilgiyi güncelliyoruz.
-                     if (FleetPanelController.FPC != null)
+                     // Ve eğer galaksiye bakıyorsak açık olan galaksiyi yenilememiz lazım.
+                     if (GlobalGalaxyController.GGC.IsInGalaxyView)
                      {
-                         // Paneldeki filoyu buluyoruz.
-                         FleetPanelItemController panelItem = FleetPanelController.FPC.Fleets.Find(x => x.FleetInfo.FleetId == fleet.FleetId);
+                         // Sök panelini yenilememiz lazım. Kapatıyoruz. İsterse yeniden açabilir.
+                         if (fleet.FleetActionTypeId == FleetTypes.Sök)
+                             GlobalPanelController.GPC.ClosePanel(GlobalPanelController.PanelTypes.PlanetActionFooterPanel);
 
-                         // Yok ise geri dön.
-                         if (panelItem == null)
-                             return;
-
-                         // Filo bilgisini güncelliyoruz.
-                         panelItem.FleetInfo = newFleetInfo;
-
-                         // Paneli refresh ediyoruz.
-                         FleetPanelController.FPC.RefreshActiveFleets();
+                         // Paneli yeniliyoruz.
+                         GalaxyChangePanelController.GCPC.GoToCordinate();
                      }
-                 }));
+                 }
+
+                 // Eski olanı aktif filodan siliyoruz.
+                 Fleets.Remove(fleet);
+
+
+
+                 //StartCoroutine(ApiService.API.Post("x", new GetLastFleetsDTO { LastFleetId = fleet.FleetId }, (ApiResult response) =>
+                 //{
+                 //    // Eğer response false ise filo yok demektir geri dön.
+                 //    if (!response.IsSuccess)
+                 //        return;
+
+                 //    // Son güncel filo bilgisi.
+                 //    FleetDTO newFleetInfo = response.GetData<FleetDTO>();
+
+                 //    // Eski olanı aktif filodan siliyoruz.
+                 //    Fleets.Remove(fleet);
+
+                 //    // Yeni olanı aktif filoya ekliyoruz.
+                 //    Fleets.Add(newFleetInfo);
+
+                 //    // Panel açık ise bilgiyi güncelliyoruz.
+                 //    if (FleetPanelController.FPC != null)
+                 //    {
+                 //        // Paneldeki filoyu buluyoruz.
+                 //        FleetPanelItemController panelItem = FleetPanelController.FPC.Fleets.Find(x => x.FleetInfo.FleetId == fleet.FleetId);
+
+                 //        // Yok ise geri dön.
+                 //        if (panelItem == null)
+                 //            return;
+
+                 //        // Filo bilgisini güncelliyoruz.
+                 //        panelItem.FleetInfo = newFleetInfo;
+
+                 //        // Paneli refresh ediyoruz.
+                 //        FleetPanelController.FPC.RefreshActiveFleets();
+                 //    }
+                 //}));
              });
         }
 

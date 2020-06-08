@@ -293,6 +293,10 @@ public class PlanetActionController : BasePanelController
                 // Toast mesajını basıyoruz ekrana.
                 ToastController.TC.ShowToast(base.GetLanguageText("FilonYolaÇıktı"));
 
+                // Footer paneli kapatıp açıyoruz.
+                if (PlanetActionFooterPanel.PAFP != null)
+                    PlanetActionFooterPanel.PAFP.ShowCordinate(PlanetActionFooterPanel.PAFP.CurrentShownPlanet, PlanetActionFooterPanel.PAFP.CurrentShownCordinate);
+
                 // Paneli artık kapatabiliriz.
                 base.ClosePanel();
             }

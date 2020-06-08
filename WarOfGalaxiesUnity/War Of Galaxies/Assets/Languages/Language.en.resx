@@ -482,4 +482,34 @@
   <data name="CasusGemisiGönderildi" xml:space="preserve">
     <value>Spy ship sent.</value>
   </data>
+  <data name="Sök" xml:space="preserve">
+    <value>Harvest</value>
+  </data>
+  <data name="S4" xml:space="preserve">
+    <value>Debris Harvester Ship</value>
+  </data>
+  <data name="SD4" xml:space="preserve">
+    <value>To harvest debris that created after battles.</value>
+  </data>
+  <data name="FT6" xml:space="preserve">
+    <value>Harvest</value>
+  </data>
+  <data name="s" xml:space="preserve">
+    <value>{0}/{1} ship is already going.</value>
+  </data>
+  <data name="EnkazBilgisi" xml:space="preserve">
+    <value>Debris Info</value>
+  </data>
+  <data name="ÇöpToplayıcıYok" xml:space="preserve">
+    <value>There is no garbage collector.</value>
+  </data>
+  <data name="Hareket" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="ÇöpGemisiGerekli" xml:space="preserve">
+    <value>{0} garbage ship is required.</value>
+  </data>
+  <data name="GemiGidiyor" xml:space="preserve">
+    <value>{0}/{1} ship is going.</value>
+  </data>
 </root>

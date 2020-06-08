@@ -12,6 +12,8 @@ using UnityEngine.UI;
 
 public class PlanetActionFooterPanel : BasePanelController
 {
+    public static PlanetActionFooterPanel PAFP { get; set; }
+
     [Header("Gezegen ve kordinat ismini basacağımız alan.")]
     public TMP_Text TXT_PlanetNameWithCordinate;
 
@@ -33,6 +35,12 @@ public class PlanetActionFooterPanel : BasePanelController
     [Header("Toplanabilir bor miktarı.")]
     public TMP_Text TXT_GarbageBoronQuantity;
 
+    [Header("Giden gemi sayısını buraya koyuyoruz.")]
+    public TMP_Text TXT_GarbageAlreadySendMessage;
+
+    [Header("Hızlı gönderme butonu.")]
+    public Button BTN_FastSendGarbage;
+
     /// <summary>
     /// Gösterilen kordinata ait bilgiler.
     /// </summary>
@@ -43,12 +51,20 @@ public class PlanetActionFooterPanel : BasePanelController
     /// </summary>
     public SolarPlanetDTO CurrentShownPlanet { get; set; }
 
+    private void Awake()
+    {
+        if (PAFP == null)
+            PAFP = this;
+        else
+            Destroy(gameObject);
+    }
+
     protected override void Update()
     {
         base.Update();
 
         // Boş alana tıklandığında paneli kapatıyoruz.
-        if (Input.GetMouseButtonUp(0) && EventSystem.current.currentSelectedGameObject == null)
+        if (Input.GetMouseButtonUp(0) && EventSystem.current.currentSelectedGameObject == null && !GlobalPanelController.GPC.IsAnyPanelOpen)
             base.ClosePanel();
     }
 
@@ -100,8 +116,49 @@ public class PlanetActionFooterPanel : BasePanelController
         // Toplanabilir bor miktarını basıyoruz.
         TXT_GarbageBoronQuantity.text = ResourceExtends.ConvertToDottedResource(this.CurrentShownPlanet.GarbageBoron);
 
+        // Çöp gemisi bilgisi.
+        ShipDataDTO shipInfo = DataController.DC.GetShip(Ships.GeriDönüşümcü);
 
+        // Eğer herhangi bir gemi gitmiyor ise boş mesaj koyuyoruz.
+        double goingShipQuantity = FleetController.FC.Fleets.Where(x => x.DestinationCordinate == CordinateExtends.ToCordinateString(CurrentShownCordinate)).Select(x =>
+        {
+            List<Tuple<Ships, int>> fleet = FleetExtends.FleetDataToShipData(x.FleetData);
+            Tuple<Ships, int> garbageCollector = fleet.Find(y => y.Item1 == Ships.GeriDönüşümcü);
+            if (garbageCollector != null)
+                return (double)(shipInfo.CargoCapacity * garbageCollector.Item2);
+            else
+                return 0;
+        }).DefaultIfEmpty(0).Sum();
 
+        // Gereken çöp aracı miktarı.
+        int requiredGarbageShipQuantity = (int)((CurrentShownPlanet.GarbageMetal + CurrentShownPlanet.GarbageCrystal + CurrentShownPlanet.GarbageBoron) / shipInfo.CargoCapacity);
+
+        // Gezegendeki çöp toplayıcıları buluyoruz.
+        UserPlanetShipDTO userPlanetGarbage = LoginController.LC.CurrentUser.UserPlanetShips.Find(x => x.ShipId == Ships.GeriDönüşümcü && x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
+
+        // Çöp toplama aracı sayısı.
+        int garbageCollectorCount = 0;
+
+        // Eğer gezegende çöp toplayıcı var ise miktarı yazıyoruzç
+        if (userPlanetGarbage != null)
+            garbageCollectorCount = userPlanetGarbage.ShipCount;
+
+        // Eğer hiç geri dönüşümcü yok ise uyarı ver.
+        if (goingShipQuantity == 0 && garbageCollectorCount == 0)
+        {
+            BTN_FastSendGarbage.interactable = false;
+            TXT_GarbageAlreadySendMessage.text = base.GetLanguageText("ÇöpToplayıcıYok");
+            TXT_GarbageAlreadySendMessage.color = Color.red;
+        }
+        else
+        {
+            // Eğer giden gemi var ise metni açıyoruz.
+            if (goingShipQuantity > 0)
+                TXT_GarbageAlreadySendMessage.text = base.GetLanguageText("GemiGidiyor", goingShipQuantity.ToString(), requiredGarbageShipQuantity.ToString());
+            else
+                TXT_GarbageAlreadySendMessage.text = base.GetLanguageText("ÇöpGemisiGerekli", requiredGarbageShipQuantity.ToString());
+            TXT_GarbageAlreadySendMessage.color = Color.green;
+        }
     }
 
     public void ClickAllAction()
@@ -161,6 +218,11 @@ public class PlanetActionFooterPanel : BasePanelController
                 ValidateSpyShipCount();
             }
         }));
+    }
+
+    public void HarvestGarbage()
+    {
+
     }
 
     private void ValidateSpyShipCount()

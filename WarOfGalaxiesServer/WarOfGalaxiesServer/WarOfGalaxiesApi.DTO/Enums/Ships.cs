@@ -4,6 +4,7 @@
     {
         HafifAvci = 1,
         KüçükNakliye = 2,
-        CasusSondası = 3
+        CasusSondası = 3,
+        GeriDönüşümcü = 4
     }
 }

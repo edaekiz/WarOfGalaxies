@@ -15,6 +15,9 @@ public class PlanetController : MonoBehaviour
     [Header("Gezegenin kullanıcı bilgisi.")]
     public GameObject UserPlanetInfo;
 
+    [Header("Gezegende enkaz olduğunda burası dolu olacak.")]
+    public Transform DebrisEffect;
+
     /// <summary>
     /// Tutulan gezegene ait bilgiler. Var ise.
     /// </summary>
@@ -46,6 +49,29 @@ public class PlanetController : MonoBehaviour
             UserPlanetInfo.transform.Find("TXT_Username").GetComponent<TMP_Text>().text = solarPlanet.UserPlanet.PlanetName;
             UserPlanetInfo.transform.Find("TXT_OrderIndex").GetComponent<TMP_Text>().text = cordinate.OrderIndex.ToString();
             UserPlanetInfo.transform.Find("TXT_UserOrder").GetComponent<TMP_Text>().text = "-";
+
+            // Enkazın toplamı.
+            double sumOfDebris = solarPlanet.GarbageMetal + solarPlanet.GarbageCrystal + solarPlanet.GarbageBoron;
+
+            // Eğer gezegende enkaz var ise enkaz oluşturuyoruz.
+            if (sumOfDebris > 0)
+            {
+                // Çokta fazla olmayacak şekilde asteroid gösteceğiz. 100k ve üzerinde her zaman 100 tane gösterilecek.
+                if (sumOfDebris > 100000)
+                    sumOfDebris = 100000;
+
+                // Particle oluşturuyoruz.
+                DebrisEffect = Instantiate(GalaxyController.GC.Debris, transform).transform;
+
+                // Particle alıyoruz.
+                ParticleSystem ps = DebrisEffect.GetComponent<ParticleSystem>();
+
+                // Effecti veriyoruz.
+                ParticleSystem.MainModule effect = ps.main;
+
+                // Ne kadar yoğun gösterileceğini hesaplıyoruz.
+                effect.maxParticles = (int)(100 * (sumOfDebris / 100000));
+            }
         }
     }
 
@@ -62,6 +88,11 @@ public class PlanetController : MonoBehaviour
             if (UserPlanetInfo != null)
                 UserPlanetInfo.transform.LookAt(ZoomPanController.ZPC.MainCamera.transform);
         }
+
+        // Enkazı var ise döndürüyoruz.
+        if (DebrisEffect != null)
+            DebrisEffect.RotateAround(DebrisEffect.position, -DebrisEffect.forward, Time.deltaTime * 18);
+
     }
 
     public void OnMouseDown()

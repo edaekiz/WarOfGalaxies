@@ -126,6 +126,16 @@ namespace WarOfGalaxiesApi.Controllers
                     break;
                 case FleetTypes.Sömürgeleştir:
                     break;
+                case FleetTypes.Sök:
+
+                    // Sok hareketi için geri dönüşümcü olmak zorunda.
+                    Tuple<Ships, int> garbageCollector = shipsInData.Find(x => x.Item1 == Ships.GeriDönüşümcü);
+
+                    // Eğer yok ise ozaman hata dönüyoruz. Çünkü casusluk da en az bir gemi olmalı.
+                    if (garbageCollector == null || garbageCollector.Item2 <= 0)
+                        return ResponseHelper.GetError("En az bir casus sondası olmak zorunda.");
+
+                    break;
                 default:
                     {
                         // Hedefte bir gezegen var mı?
@@ -215,7 +225,7 @@ namespace WarOfGalaxiesApi.Controllers
                 BeginDate = base.RequestDate,
                 FleetActionTypeId = request.FleetType,
                 DestinationCordinate = CordinateExtends.ToCordinateString(destinationCordinateDTO),
-                DestinationUserPlanetId = destinationCordinate?.UserPlanetId,
+                DestinationUserPlanetId = request.FleetType == (int)FleetTypes.Sök ? null : destinationCordinate?.UserPlanetId,
                 EndDate = flyCompleteDate,
                 FleetData = request.Ships,
                 IsReturning = false,

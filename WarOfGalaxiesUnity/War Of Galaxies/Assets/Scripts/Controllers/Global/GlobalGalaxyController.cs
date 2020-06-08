@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts.ApiModels;
+using UnityEngine;
 
 public class GlobalGalaxyController : MonoBehaviour
 {
@@ -36,6 +37,17 @@ public class GlobalGalaxyController : MonoBehaviour
             CloseGalaxy();
         else
             ShowGalaxy();
+    }
+
+    /// <summary>
+    /// Galaksi ekranında mı?
+    /// </summary>
+    public bool IsInGalaxyView
+    {
+        get
+        {
+            return GalaxyView.activeSelf;
+        }
     }
 
 }

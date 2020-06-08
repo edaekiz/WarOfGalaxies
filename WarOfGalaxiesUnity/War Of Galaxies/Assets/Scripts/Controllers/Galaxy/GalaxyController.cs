@@ -27,6 +27,9 @@ public class GalaxyController : MonoBehaviour
     [Header("Boş gezegen")]
     public GameObject EmptyPlanetSign;
 
+    [Header("Gezegende enkaz var ise bu modeli oluşturacağız.")]
+    public GameObject Debris;
+
     /// <summary>
     /// Gösterilen güneş sistemi.
     /// </summary>
@@ -71,10 +74,6 @@ public class GalaxyController : MonoBehaviour
 
     public void LoadSolarSystem(int galaxyIndex, int solarIndex)
     {
-        // Eğer zaten bu kordinatta isek geri dön.
-        if (SolarSystem != null && SolarSystem.GalaxyIndex == galaxyIndex && SolarSystem.SolarIndex == solarIndex)
-            return;
-
         // Loading ekranını açıyoruz.
         LoadingController.LC.ShowLoading();
 
