@@ -1,0 +1,496 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+		Microsoft ResX Schema
+
+		Version 1.3
+
+		The primary goals of this format is to allow a simple XML format 
+		that is mostly human readable. The generation and parsing of the 
+		various data types are done through the TypeConverter classes 
+		associated with the data types.
+
+		Example:
+
+		... ado.net/XML headers & schema ...
+		<resheader name="resmimetype">text/microsoft-resx</resheader>
+		<resheader name="version">1.3</resheader>
+		<resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+		<resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+		<data name="Name1">this is my long string</data>
+		<data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+		<data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+			[base64 mime encoded serialized .NET Framework object]
+		</data>
+		<data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+			[base64 mime encoded string representing a byte array form of the .NET Framework object]
+		</data>
+
+		There are any number of "resheader" rows that contain simple 
+		name/value pairs.
+
+		Each data row contains a name, and value. The row also contains a 
+		type or mimetype. Type corresponds to a .NET class that support 
+		text/value conversion through the TypeConverter architecture. 
+		Classes that don't support this are serialized and stored with the 
+		mimetype set.
+
+		The mimetype is used for serialized objects, and tells the 
+		ResXResourceReader how to depersist the object. This is currently not 
+		extensible. For a given mimetype the value must be set accordingly:
+
+		Note - application/x-microsoft.net.object.binary.base64 is the format 
+		that the ResXResourceWriter will generate, however the reader can 
+		read any of the formats listed below.
+
+		mimetype: application/x-microsoft.net.object.binary.base64
+		value   : The object must be serialized with 
+			: System.Serialization.Formatters.Binary.BinaryFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.soap.base64
+		value   : The object must be serialized with 
+			: System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+			: and then encoded with base64 encoding.
+
+		mimetype: application/x-microsoft.net.object.bytearray.base64
+		value   : The object must be serialized into a byte array 
+			: using a System.ComponentModel.TypeConverter
+			: and then encoded with base64 encoding.
+	-->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>1.3</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="B1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="B2" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="B3" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="B4" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="B5" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="B6" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="B7" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="B8" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="B9" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="B10" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Kademe" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="BinaVeSeviye" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="KISA_GUN" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="KISA_SAAT" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="KISA_DAKIKA" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="KISA_SANIYE" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="YapımSüresi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Yükseltiliyor" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Yükselt" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="D1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="DD1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="R1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="InciSeviye" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Araştır" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Araştırılıyor" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SeviyeParantez" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="S1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SD1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="KaynakDetay" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="YükseltmeGereksinim" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Savunma" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Araştırmalar" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="RD1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ÜretimSüresi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ÜretimGereksinimleri" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Bilgi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Koşullar" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Üret" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Tersane" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GalaksiYönetimi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Git" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Galaksi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GSistemi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Önceki" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Sonraki" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Hedef" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FT1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FT2" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FT3" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FT4" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FT5" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="KeşfedilmemişGezegen" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Casusluk" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Saldır" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Nakliye" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Dur" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Sömürgeleştir" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="HareketSeçiniz" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Tamam" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GönderilecekGemiler" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GönderilebilirGemiler" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="DevamEt" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="HiçGemiSeçilmedi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GezegendeGemiYok" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Geri" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Gönder" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="UçuşSüresi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="VarışTarihi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="DönüşTarihi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="YakıtTüketimi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Bor" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Metal" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Kristal" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TaşınacakKaynaklar" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FiloHızı" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Hepsi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Sıfırla" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Temizle" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FiloHareketleri" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Tamamlandı" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TekYön" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Dönüş" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="S2" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SD2" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FilonYolaÇıktı" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="XMesajınızVar" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Posta" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MT1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MT2" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="HiçMailYok" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MC1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MC2" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MC3" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MC4" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MC5" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Gönderen" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Koordinat" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="PostaTarihi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="S3" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SD3" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GezegenKaynakları" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GezegenYapıları" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Evet" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Hayır" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Uyarı" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Silmekİstemek" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GezegenVeKoloniler" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MT3" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Gemiler" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Savunmalar" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Yükleniyor" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MT5" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SavaşGemileri" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SivilGemiler" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Saldıran" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Savunan" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="KazanılanGanimet" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="OluşanEnkaz" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="CasusGemisiGönderildi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Sök" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="S4" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SD4" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FT6" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="s" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="EnkazBilgisi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ÇöpToplayıcıYok" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Hareket" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GeriDönüşümcüGerekli" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GemiGidiyor" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MT6" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MT7" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MT8" xml:space="preserve">
+    <value></value>
+  </data>
+</root>

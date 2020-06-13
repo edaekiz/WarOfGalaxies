@@ -194,6 +194,7 @@
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\SunShaftsComposite.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\ConvertDepth.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\Shader\PlanetShaderHi.shader" />
+    <None Include="Assets\StreamingAssets\Languages\Language.tr.txt" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\SMAA\Resources\SMAA.cginc" />
     <None Include="Assets\Languages\Language.en.resx" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\FXAA\Resources\FXAA3.cginc" />
@@ -228,10 +229,12 @@
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\PrepareSunShaftsBlur.shader" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\planet shader NO reflection.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\ShowAlphaChannel.shader" />
+    <None Include="Assets\StreamingAssets\Languages\Language.txt" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\Shader\PlanetRingShader.shader" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\planet shader.shader" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Planet - Transparency.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
+    <None Include="Assets\StreamingAssets\Languages\Language.en.txt" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\Shader\PlanetShaderMobile.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\FXAA\Resources\FXAA.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Luminance.shader" />
