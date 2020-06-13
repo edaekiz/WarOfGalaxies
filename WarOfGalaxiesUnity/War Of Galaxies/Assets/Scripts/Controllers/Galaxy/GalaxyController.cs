@@ -89,6 +89,7 @@ public class GalaxyController : MonoBehaviour
         {
             if (result.IsSuccess != true)
                 return;
+
             // Loading ekranını açıyoruz.
             LoadingController.LC.CloseLoading();
 

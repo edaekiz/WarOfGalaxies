@@ -55,7 +55,6 @@ public class MailPanelItemController : MonoBehaviour
         // Eğer okunduysa okundu olarak değiştiriyoruz.
         if (mailData.IsReaded)
             SetAsRead();
-
     }
 
     public void SetAsRead()

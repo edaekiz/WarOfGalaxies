@@ -21,20 +21,17 @@ namespace WarOfGalaxiesApi.Controllers
         public ApiResult AddDefenseToDefenseQueue(DefenseAddQueueRequestDTO request)
         {
             // Kaynakları doğruluyoruz.
-            bool isVerified = VerifyController.VerifyPlanetResources(this, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
-
-            // Eğer doğrulanamaz ise hata dön.
-            if (!isVerified)
-                return ResponseHelper.GetError("Kaynaklar doğrulanırken hata oluştu");
+            VerifyController.VerifyAllFleets(this, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
 
             // Savunma bilgisini buluyoruz.
             TblDefenses defenseInfo = StaticValues.GetDefense(request.DefenseID);
 
-            ResourcesDTO defenseCost = new ResourcesDTO(defenseInfo.CostMetal, defenseInfo.CostCrystal, defenseInfo.CostBoron);
-
             // Savunma yok ise hata dön.
             if (defenseInfo == null)
                 return ResponseHelper.GetError("Savunma bulunamadı!");
+
+            // Savunma maliyeti.
+            ResourcesDTO defenseCost = new ResourcesDTO(defenseInfo.CostMetal, defenseInfo.CostCrystal, defenseInfo.CostBoron);
 
             // Üretilmek istenen miktar ile gereksinimi çarpıyoruz. genel toplamı buluyoruz.
             ResourcesDTO totalCalculatedRes = defenseCost * request.Quantity;

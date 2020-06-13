@@ -42,7 +42,7 @@ namespace WarOfGalaxiesApi.Controllers
 
             // Her bir gezegenin Verify işlemini yapıyoruz.
             foreach (TblUserPlanets userPlanet in userAndHisPlanets.TblUserPlanets)
-                VerifyController.VerifyPlanetResources(this, new VerifyResourceDTO { UserPlanetID = userPlanet.UserPlanetId });
+                VerifyController.VerifyAllFleets(this, new VerifyResourceDTO { UserPlanetID = userPlanet.UserPlanetId });
 
             // Kullanıcıyı dönüyoruz.
             UserDTO user = new UserDTO
@@ -195,7 +195,7 @@ namespace WarOfGalaxiesApi.Controllers
         public ApiResult VerifyUserData(VerifyResourceDTO verify)
         {
             // Her bir gezegenin Verify işlemini yapıyoruz.
-            VerifyController.VerifyPlanetResources(this, new VerifyResourceDTO { UserPlanetID = verify.UserPlanetID });
+            VerifyController.VerifyAllFleets(this, new VerifyResourceDTO { UserPlanetID = verify.UserPlanetID });
 
             // Kullanıcının gezegenlerini buluyoruz.
             UserPlanetDTO userPlanet = this.UnitOfWork.GetRepository<TblUserPlanets>().Where(x => x.UserId == DBUser.UserId)

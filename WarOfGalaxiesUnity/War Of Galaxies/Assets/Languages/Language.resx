@@ -478,10 +478,19 @@
   <data name="Hareket" xml:space="preserve">
     <value></value>
   </data>
-  <data name="ÇöpGemisiGerekli" xml:space="preserve">
+  <data name="GeriDönüşümcüGerekli" xml:space="preserve">
     <value></value>
   </data>
   <data name="GemiGidiyor" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MT6" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MT7" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="MT8" xml:space="preserve">
     <value></value>
   </data>
 </root>

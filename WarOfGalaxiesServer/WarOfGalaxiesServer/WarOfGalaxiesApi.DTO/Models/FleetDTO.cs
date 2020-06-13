@@ -5,10 +5,11 @@ namespace WarOfGalaxiesApi.DTO.Models
     public class FleetDTO
     {
         public int FleetId { get; set; }
+        public int? ReturnFleetId { get; set; }
         public int FleetActionTypeId { get; set; }
         public string SenderCordinate { get; set; }
         public int SenderUserId { get; set; }
-        public int SenderUserPlanetId { get; set; }
+        public int? SenderUserPlanetId { get; set; }
         public string SenderPlanetName { get; set; }
         public int SenderPlanetTypeId { get; set; }
         public int? DestinationUserId { get; set; }
@@ -18,7 +19,6 @@ namespace WarOfGalaxiesApi.DTO.Models
         public int? DestinationPlanetTypeId { get; set; }
         public double BeginPassedTime { get; set; }
         public double EndLeftTime { get; set; }
-        public bool IsReturning { get; set; }
         public double CarriedMetal { get; set; }
         public double CarriedCrystal { get; set; }
         public double CarriedBoron { get; set; }

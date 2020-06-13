@@ -21,11 +21,7 @@ namespace WarOfGalaxiesApi.Controllers
         public ApiResult UpgradeUserResearch(UserResearchUpgRequest request)
         {
             // Yapılacak ilk iş kaynakları doğrulamak.
-            bool isVerified = VerifyController.VerifyPlanetResources(this, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
-
-            // Doğrulama tamamlandı mı?
-            if (!isVerified)
-                return ResponseHelper.GetError("Verify yapılamadı!");
+            VerifyController.VerifyAllFleets(this, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
 
             // Kullanıcının hangi gezegendeki kaynakları kullanılacak.
             TblUserPlanets userPlanet = base.UnitOfWork.GetRepository<TblUserPlanets>().FirstOrDefault(x => x.UserPlanetId == request.UserPlanetID && x.UserId == base.DBUser.UserId);

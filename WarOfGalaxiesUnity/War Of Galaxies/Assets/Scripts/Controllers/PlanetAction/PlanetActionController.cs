@@ -275,12 +275,11 @@ public class PlanetActionController : BasePanelController
 
         StartCoroutine(ApiService.API.Post("FlyNewFleet", requestData, (ApiResult response) =>
         {
+            // Yükleniyor paneli kapatıyoruz.
+            LoadingController.LC.CloseLoading();
 
             if (response.IsSuccess)
             {
-                // Yükleniyor paneli kapatıyoruz.
-                LoadingController.LC.CloseLoading();
-
                 // Filoları yeniliyoruz.
                 FleetController.FC.GetLatestFleets();
 

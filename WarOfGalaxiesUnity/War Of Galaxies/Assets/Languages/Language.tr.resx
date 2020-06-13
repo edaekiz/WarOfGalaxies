@@ -448,7 +448,7 @@
     <value>Gezegenlerin ve Kolonilerin</value>
   </data>
   <data name="MT3" xml:space="preserve">
-    <value>&lt;color=orange&gt;{DM} [{DC}]&lt;/color&gt; gezegenine ait casusluk raporu.</value>
+    <value>&lt;color=orange&gt;{DM}[{DC}]&lt;/color&gt; gezegenine ait casusluk raporu.</value>
   </data>
   <data name="Gemiler" xml:space="preserve">
     <value>Gemiler</value>
@@ -478,7 +478,7 @@
     <value>Oluşan Enkaz</value>
   </data>
   <data name="MT5" xml:space="preserve">
-    <value>Savaşı {0} taraf kazandı.</value>
+    <value>Savaşı {W} taraf kazandı.</value>
   </data>
   <data name="CasusGemisiGönderildi" xml:space="preserve">
     <value>Casus gemisi gönderildi.</value>
@@ -507,10 +507,42 @@
   <data name="Hareket" xml:space="preserve">
     <value>Hareket</value>
   </data>
-  <data name="ÇöpGemisiGerekli" xml:space="preserve">
-    <value>{0} çöp toplama gemisi gerekli.</value>
+  <data name="GeriDönüşümcüGerekli" xml:space="preserve">
+    <value>{0} geri dönüşümcüye ihtiyacın var.</value>
   </data>
   <data name="GemiGidiyor" xml:space="preserve">
     <value>{0}/{1} gemi gidiyor.</value>
+  </data>
+  <data name="MT6" xml:space="preserve">
+    <value>Savaş ganimetleri &lt;color=orange&gt;{SM}[{SC}]&lt;/color&gt; gezegenine aktarılıyor.
+
+&lt;color=green&gt;Kaynaklar;&lt;/color&gt;
+&lt;color=green&gt;Metal :&lt;/color&gt; {NM},
+&lt;color=green&gt;Kristal :&lt;/color&gt; {NC},
+&lt;color=green&gt;Bor :&lt;/color&gt; {NB}.
+
+&lt;color=green&gt;Dönen Filo;&lt;/color&gt;
+{SA}</value>
+  </data>
+  <data name="MT7" xml:space="preserve">
+    <value>[{DC}] koordinatındaki kaynaklar sökülüyor.
+
+&lt;color=green&gt;Sökülen Kaynaklar;&lt;/color&gt;
+&lt;color=green&gt;Metal :&lt;/color&gt; {GM},
+&lt;color=green&gt;Kristal :&lt;/color&gt; {GC},
+&lt;color=green&gt;Bor :&lt;/color&gt; {GB}.
+
+Filon &lt;color=orange&gt;{SM} [{SC}]&lt;/color&gt; gezegenine geri dönüyor.</value>
+  </data>
+  <data name="MT8" xml:space="preserve">
+    <value>Sökülen kaynaklar {SM}[{SC}] gezegenine aktarılıyor.
+
+&lt;color=green&gt;Kaynaklar;&lt;/color&gt;
+&lt;color=green&gt;Metal :&lt;/color&gt; {NM},
+&lt;color=green&gt;Kristal :&lt;/color&gt; {NC},
+&lt;color=green&gt;Bor :&lt;/color&gt; {NB}.
+
+&lt;color=green&gt;Dönen Filo;&lt;/color&gt;
+{SA}</value>
   </data>
 </root>

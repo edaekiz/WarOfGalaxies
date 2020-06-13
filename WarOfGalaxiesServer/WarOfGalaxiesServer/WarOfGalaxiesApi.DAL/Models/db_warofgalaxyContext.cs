@@ -168,6 +168,8 @@ namespace WarOfGalaxiesApi.DAL.Models
 
                 entity.Property(e => e.FleetData).IsRequired();
 
+                entity.Property(e => e.ReturnFleetId).HasColumnName("ReturnFleetID");
+
                 entity.Property(e => e.SenderCordinate)
                     .IsRequired()
                     .HasMaxLength(10);
@@ -184,6 +186,11 @@ namespace WarOfGalaxiesApi.DAL.Models
                     .HasForeignKey(d => d.FleetActionTypeId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tbl_fleets_tbl_fleet_action_types");
+
+                entity.HasOne(d => d.ReturnFleet)
+                    .WithMany(p => p.InverseReturnFleet)
+                    .HasForeignKey(d => d.ReturnFleetId)
+                    .HasConstraintName("FK_tbl_fleets_tbl_fleets_return_fleet");
 
                 entity.HasOne(d => d.SenderUserPlanet)
                     .WithMany(p => p.TblFleetsSenderUserPlanet)

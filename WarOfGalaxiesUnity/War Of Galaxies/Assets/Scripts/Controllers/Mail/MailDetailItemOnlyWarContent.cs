@@ -58,11 +58,11 @@ public class MailDetailItemOnlyWarContent : MonoBehaviour, IMailDetailItem
 
     public void LoadContent(UserMailDTO mailData, MailEncoder.MailDecodeDTO decodedData)
     {
-        // Kazanan tarafı basıyoruz.
-        string winnerSide = TextExtends.MakeItColorize(decodedData.GetValue("KEY_WINNER") == "0" ? LanguageController.LC.GetText("Saldıran") : LanguageController.LC.GetText("Savunan"), "orange");
+        // Template yüklüyoruz dil dosyasından.
+        string template = LanguageController.LC.GetText($"MT{(int)decodedData.GetMailType()}");
 
-        // Kazanan tarafı basıyoruz.
-        TXT_MailContent.text = LanguageController.LC.GetText($"MT{(int)decodedData.GetMailType()}", winnerSide);
+        // Kazanan dilini replace ediyoruz.
+        TXT_MailContent.text = template.Replace($"{{{MailEncoder.KEY_WINNER}}}", decodedData.GetValue(MailEncoder.KEY_WINNER));
 
         // Saldıran gezegenin ismini basıyoruz.
         TXT_AttackerName.text = $"{LanguageController.LC.GetText("Saldıran")} {decodedData.GetValue(MailEncoder.KEY_SENDERPLANETNAME)}";

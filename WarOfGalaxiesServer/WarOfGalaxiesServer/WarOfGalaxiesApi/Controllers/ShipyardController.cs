@@ -21,20 +21,17 @@ namespace WarOfGalaxiesApi.Controllers
         public ApiResult AddShipToShipyardQueue(ShipyardAddQueueRequestDTO request)
         {
             // Kaynakları doğruluyoruz.
-            bool isVerified = VerifyController.VerifyPlanetResources(this, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
-
-            // Eğer doğrulanamaz ise hata dön.
-            if (!isVerified)
-                return ResponseHelper.GetError("Kaynaklar doğrulanırken hata oluştu");
+            VerifyController.VerifyAllFleets(this, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
 
             // Gemi bilgisini buluyoruz.
             TblShips shipInfo = StaticValues.GetShip(request.ShipID);
 
-            ResourcesDTO shipCost = new ResourcesDTO(shipInfo.CostMetal, shipInfo.CostCrystal, shipInfo.CostBoron);
-
             // Gemi yok ise hata dön.
             if (shipInfo == null)
                 return ResponseHelper.GetError("Gemi bulunamadı!");
+
+            // Gemi maliyeti.
+            ResourcesDTO shipCost = new ResourcesDTO(shipInfo.CostMetal, shipInfo.CostCrystal, shipInfo.CostBoron);
 
             // Üretilmek istenen miktar ile gereksinimi çarpıyoruz. genel toplamı buluyoruz.
             ResourcesDTO totalCalculatedRes =  shipCost* request.Quantity;

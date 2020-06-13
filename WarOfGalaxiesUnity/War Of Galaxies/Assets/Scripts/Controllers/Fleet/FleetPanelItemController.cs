@@ -50,67 +50,19 @@ public class FleetPanelItemController : BaseLanguageBehaviour
     /// </summary>
     public FleetDTO FleetInfo { get; set; }
 
-    /// <summary>
-    /// Hedefe varış süresi.
-    /// </summary>
-    public DateTime GetHalfOfFlyDate
-    {
-        get
-        {
-            // Uçuşa başlanılan tarih.
-            DateTime fleetBeginFlyDate = FleetInfo.FleetLoadDate.AddSeconds(-FleetInfo.BeginPassedTime);
-
-            // Filo hareketinin tamamlanmasına kalan süre.
-            DateTime fleetEndFlyDate = FleetInfo.FleetLoadDate.AddSeconds(FleetInfo.EndLeftTime);
-
-            // Toplam yolculuk süresi saniye cinsinden.
-            double totalPathSeconds = (fleetEndFlyDate - fleetBeginFlyDate).TotalSeconds;
-
-            // Toplam yolculuk süresi.
-            double haflOfPath = totalPathSeconds / 2;
-
-            return fleetBeginFlyDate.AddSeconds(haflOfPath);
-        }
-    }
-
-    /// <summary>
-    /// Gezegene dönüş süresi.
-    /// </summary>
-    public DateTime GetEndFlyDate
-    {
-        get
-        {
-            return FleetInfo.FleetLoadDate.AddSeconds(FleetInfo.EndLeftTime);
-        }
-    }
-
-    public DateTime GetBeginFlyDate
-    {
-        get
-        {
-            return FleetInfo.FleetLoadDate.AddSeconds(-FleetInfo.BeginPassedTime);
-        }
-    }
-
     public IEnumerator LoadData(FleetDTO fleetInfo)
     {
         // Şuanki tarih.
         DateTime currentDate = DateTime.Now;
 
         // Uçuşa başlanılan tarih.
-        DateTime fleetBeginFlyDate = GetBeginFlyDate;
+        DateTime fleetBeginFlyDate = fleetInfo.FleetLoadDate.AddSeconds(-FleetInfo.BeginPassedTime);
 
         // Filo hareketinin tamamlanmasına kalan süre.
-        DateTime fleetEndFlyDate = GetEndFlyDate;
+        DateTime fleetEndFlyDate = fleetInfo.FleetLoadDate.AddSeconds(FleetInfo.EndLeftTime);
 
-        // Toplam yolculuk süresi saniye cinsinden.
-        double totalPathSeconds = (fleetEndFlyDate - fleetBeginFlyDate).TotalSeconds;
-
-        // Toplam yolculuk süresi.
-        double haflOfPath = totalPathSeconds / 2;
-
-        // Yolun yarısı.
-        DateTime halfOfFlyDate = GetHalfOfFlyDate;
+        // Toplam uçuş süresi.
+        double flightTime = (fleetEndFlyDate - fleetBeginFlyDate).TotalSeconds;
 
         // Filo bilgisini tutuyoruz.
         FleetInfo = fleetInfo;
@@ -119,7 +71,7 @@ public class FleetPanelItemController : BaseLanguageBehaviour
         TXT_ActionType.text = $"{base.GetLanguageText($"FT{(int)fleetInfo.FleetActionTypeId}")}";
 
         // Eğer dönüyor ise dönü yazıyoruz.
-        if (currentDate > halfOfFlyDate)
+        if (fleetInfo.IsReturnFleet)
             TXT_ActionType.text += $" (<color=green>{base.GetLanguageText("Dönüş")}</color>)";
 
         // Gönderenin adını basıyoruz.
@@ -129,7 +81,7 @@ public class FleetPanelItemController : BaseLanguageBehaviour
         TXT_SenderPlanetCordinate.text = fleetInfo.SenderCordinate;
 
         // Gönderene geri dönüş tarihi
-        TXT_SenderArriveDate.text = fleetEndFlyDate >= currentDate ? fleetEndFlyDate.ToString("yyyy.MM.dd hh:mm:ss") : "-";
+        TXT_SenderArriveDate.text = fleetEndFlyDate.AddSeconds(flightTime).ToString("yyyy.MM.dd hh:mm:ss");
 
         // Hedef konumun ismi.
         TXT_DestinationName.text = fleetInfo.DestinationPlanetName;
@@ -138,12 +90,10 @@ public class FleetPanelItemController : BaseLanguageBehaviour
         TXT_DestinationCordinate.text = fleetInfo.DestinationCordinate;
 
         // Hedef konuma ulaşma tarihi.
-        TXT_DestinationArriveDate.text = currentDate <= halfOfFlyDate ? halfOfFlyDate.ToString("yyyy.MM.dd hh:mm:ss") : "-";
+        TXT_DestinationArriveDate.text = fleetEndFlyDate.ToString("yyyy.MM.dd hh:mm:ss");
 
         // Eğer yolun yarısında ise ekrana kalan süreyi basacağız. Ulaşmak için.
-        if (currentDate <= halfOfFlyDate)
-            TXT_LeftTime.text = TimeExtends.GetCountdownText(halfOfFlyDate - currentDate);
-        else if (currentDate <= fleetEndFlyDate)
+        if (currentDate <= fleetEndFlyDate)
             TXT_LeftTime.text = TimeExtends.GetCountdownText(fleetEndFlyDate - currentDate);
         else
             TXT_LeftTime.text = base.GetLanguageText("Tamamlandı");
@@ -151,27 +101,27 @@ public class FleetPanelItemController : BaseLanguageBehaviour
         // Yuvarlak miktarını alıyoruz. Buna göre hesaplama yapacağız.
         float countOfCircle = SLIDER_FlightProgress.maxValue;
 
-        int quantityOfCircleInProg;
+        int quantityOfCircleInProg = 0;
 
         // Gidiş geliş olmasına bağlı olarak slider efekti çalışacak.
-        if (currentDate < halfOfFlyDate)
+        if (!fleetInfo.IsReturnFleet && currentDate < fleetEndFlyDate)
         {
             // Kalan süre.
-            double leftTimeToArrive = (halfOfFlyDate - currentDate).TotalSeconds;
+            double leftTimeToArrive = (fleetEndFlyDate - currentDate).TotalSeconds;
 
             // Bu kadar saniyede bir yuvarlak tamamlanacak.
-            double each = haflOfPath / countOfCircle;
+            double each = flightTime / countOfCircle;
 
             // Tamamlanmış olan yuvarlak miktarı.
             quantityOfCircleInProg = (int)countOfCircle - Mathf.FloorToInt((float)(leftTimeToArrive / each));
         }
-        else
+        else if (fleetInfo.IsReturnFleet)
         {
             // Kalan süre.
             double leftTimeToReturn = (fleetEndFlyDate - currentDate).TotalSeconds;
 
             // Bu kadar saniyede bir yuvarlak tamamlanacak.
-            double each = haflOfPath / countOfCircle;
+            double each = flightTime / countOfCircle;
 
             // Tamamlanmış olan yuvarlak miktarı.
             quantityOfCircleInProg = Mathf.FloorToInt((float)(leftTimeToReturn / each));
@@ -179,6 +129,9 @@ public class FleetPanelItemController : BaseLanguageBehaviour
             // Eğer buton açık ise kapatıyoruz.
             if (BallBackButton.gameObject.activeSelf)
                 BallBackButton.gameObject.SetActive(false);
+        }else
+        {
+            quantityOfCircleInProg = (int)countOfCircle;
         }
 
         // Slideri ayarlıyoruz.

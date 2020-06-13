@@ -22,11 +22,7 @@ namespace WarOfGalaxiesApi.Controllers
         public ApiResult UpgradeUserPlanetBuilding([FromForm]UserPlanetUpgradeBuildingDTO request)
         {
             // Verify İşlemini gerçekleştiriyoruz.
-            bool isVerifySucceed = VerifyController.VerifyPlanetResources(this, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
-
-            // Eğer doğrulama başarısız ise geri dön.
-            if (!isVerifySucceed)
-                return ResponseHelper.GetError("Kaynaklar doğrulanırken bir hata oluştu!");
+            VerifyController.VerifyAllFleets(this, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
 
             // İlk iş gezegeni buluyoruz.
             TblUserPlanets userPlanet = base.UnitOfWork.GetRepository<TblUserPlanets>().FirstOrDefault(x => x.UserPlanetId == request.UserPlanetID && x.UserId == base.DBUser.UserId);

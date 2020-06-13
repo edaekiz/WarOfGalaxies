@@ -447,7 +447,7 @@
     <value>Planets And Colonies</value>
   </data>
   <data name="MT3" xml:space="preserve">
-    <value>&lt;color=orange&gt;{DM} [{DC}]&lt;/color&gt; planet's spy report.</value>
+    <value>&lt;color=orange&gt;{DM}[{DC}]&lt;/color&gt; planet's spy report.</value>
   </data>
   <data name="Gemiler" xml:space="preserve">
     <value>Ships</value>
@@ -477,7 +477,7 @@
     <value>Debris</value>
   </data>
   <data name="MT5" xml:space="preserve">
-    <value>{0} won the battle.</value>
+    <value>{W} won the battle.</value>
   </data>
   <data name="CasusGemisiGönderildi" xml:space="preserve">
     <value>Spy ship sent.</value>
@@ -506,10 +506,42 @@
   <data name="Hareket" xml:space="preserve">
     <value>Action</value>
   </data>
-  <data name="ÇöpGemisiGerekli" xml:space="preserve">
-    <value>{0} garbage ship is required.</value>
+  <data name="GeriDönüşümcüGerekli" xml:space="preserve">
+    <value>You need {0} garbage collector.</value>
   </data>
   <data name="GemiGidiyor" xml:space="preserve">
     <value>{0}/{1} ship is going.</value>
+  </data>
+  <data name="MT6" xml:space="preserve">
+    <value>Battle rewards transferring to &lt;color=orange&gt;{SM}[{SC}]&lt;/color&gt; planet,
+
+&lt;color=green&gt;Resources;&lt;/color&gt;
+&lt;color=green&gt;Metal :&lt;/color&gt; {NM},
+&lt;color=green&gt;Crystal :&lt;/color&gt; {NC},
+&lt;color=green&gt;Boron :&lt;/color&gt; {NB}.
+
+&lt;color=green&gt;Return Fleet;&lt;/color&gt;
+{SA}</value>
+  </data>
+  <data name="MT7" xml:space="preserve">
+    <value>Resources are harvesting in &lt;color=orange&gt;[{DC}]&lt;/color&gt; coordinate.
+
+&lt;color=green&gt;Harvested Resources;&lt;/color&gt;
+&lt;color=green&gt;Metal :&lt;/color&gt; {GM},
+&lt;color=green&gt;Crystal :&lt;/color&gt; {GC},
+&lt;color=green&gt;Boron :&lt;/color&gt; {GB}.
+
+Fleets return to &lt;color=orange&gt;{SM} [{SC}]&lt;/color&gt; planet.</value>
+  </data>
+  <data name="MT8" xml:space="preserve">
+    <value>Harvested resources transferring to &lt;color=orange&gt;{SM}[{SC}] planet.
+
+&lt;color=green&gt;Resources;&lt;/color&gt;
+&lt;color=green&gt;Metal :&lt;/color&gt; {NM},
+&lt;color=green&gt;Crystal :&lt;/color&gt; {NC},
+&lt;color=green&gt;Boron :&lt;/color&gt; {NB}.
+
+&lt;color=green&gt;Return Fleet;&lt;/color&gt;
+{SA}</value>
   </data>
 </root>

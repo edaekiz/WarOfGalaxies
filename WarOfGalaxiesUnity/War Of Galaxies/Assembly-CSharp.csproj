@@ -236,6 +236,7 @@
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\FXAA\Resources\FXAA.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Luminance.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlurAndFlares.shader" />
+    <None Include="Assets\Sci-Fi Game Icons\Scifi.txt" />
     <None Include="Assets\Languages\Language.resx" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/burak/Documents/Github/WarOfGalaxies/WarOfGalaxiesUnity/War Of Galaxies/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

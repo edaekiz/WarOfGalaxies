@@ -98,6 +98,13 @@ namespace Assets.Scripts.Pluigns
 
                 #endregion
 
+                #region Savunan veya Saldıran değeri
+
+                if (record.Key == KEY_WINNER)
+                    return record.Value == "0" ? LanguageController.LC.GetText("Saldıran") : LanguageController.LC.GetText("Savunan");
+
+                #endregion
+
                 // En son normal string ise normal stringi dönüyoruz.
                 return record.Value;
 

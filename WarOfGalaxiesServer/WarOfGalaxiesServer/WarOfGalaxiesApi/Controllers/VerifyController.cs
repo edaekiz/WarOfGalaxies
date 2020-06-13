@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,12 +15,6 @@ namespace WarOfGalaxiesApi.Controllers
 {
     public static class VerifyController
     {
-
-        /// <summary>
-        /// Doğrulananların listesi.
-        /// </summary>
-        public static List<int> Verifies = new List<int>();
-
         /// <summary>
         ///  Üretim binaları ve depoları. Önce kaynak sonra depo.
         /// </summary>
@@ -32,152 +27,93 @@ namespace WarOfGalaxiesApi.Controllers
                     Buildings.BoronDeposu
                 };
 
-        /// <summary>
-        /// Gezegene ait kaynakları kullanmadan önce çağrılması gereken methot.
-        /// Bütün kaynak hesaplamalarını yeniden yapar.
-        /// </summary>
-        /// <param name="verifyData"></param>
-        /// <returns></returns>
-        public static bool VerifyPlanetResources(MainController controller, VerifyResourceDTO verifyData)
+        private static List<int> LockedPlanets = new List<int>();
+
+        public static void VerifyAllFleets(MainController controller, VerifyResourceDTO verifyData)
         {
-
-            #region Doğrulamadan önce zaten doğruluyor mu diye kontrol ediyoruz.
-
-            lock (Verifies)
+            lock (LockedPlanets)
             {
-                // Eğer zaten listede ve verify ediliyor ise hata dön.
-                if (Verifies.Contains(verifyData.UserPlanetID))
-                    throw new Exception("Zaten bir doğrulama yapılıyor.");
+                // Eğer zaten verify ediliyor ise geri dön.
+                if (LockedPlanets.Contains(verifyData.UserPlanetID))
+                    return;
 
-                // Listeye ekliyoruz.
-                Verifies.Add(verifyData.UserPlanetID);
+                // Verify listesine ekle.
+                LockedPlanets.Add(verifyData.UserPlanetID);
             }
-
-            #endregion
 
             try
             {
-                // Sistem tarihi.
                 DateTime currentDate = DateTime.UtcNow;
 
-                // Kullanıcının gezegenini buluyoruz.i
-                TblUserPlanets userPlanet = controller.UnitOfWork.GetRepository<TblUserPlanets>().Where(x => x.UserPlanetId == verifyData.UserPlanetID)
-                    .Include(x => x.TblUserPlanetBuildings)
-                    .Include(x => x.TblUserPlanetBuildingUpgs)
-                    .Include(x => x.TblUserPlanetDefenses)
-                    .Include(x => x.TblUserPlanetDefenseProgs)
-                    .Include(x => x.TblUserPlanetShips)
-                    .Include(x => x.TblUserPlanetShipProgs)
-                    .Include(x => x.TblUserResearchUpgs)
-                    .Include(x => x.TblFleetsDestinationUserPlanet)
-                    .Include(x => x.TblFleetsSenderUserPlanet)
-                    .Include(x => x.User)
-                    .ThenInclude(x => x.TblUserResearches)
-                    .FirstOrDefault();
+                List<TblFleets> fleets = controller.UnitOfWork.GetRepository<TblFleets>()
+                    .Where(x => x.EndDate <= currentDate)
+                    .Where(x => x.DestinationUserPlanetId == verifyData.UserPlanetID || x.SenderUserPlanetId == verifyData.UserPlanetID)
+                    .OrderBy(x => x.EndDate)
+                    .Include(x => x.ReturnFleet)
+                    .ToList();
 
-                // Bu gezegenden yada bu gezegene yapılan filo hareketleri.
-                List<TblFleets> userFleets = new List<TblFleets>();
-
-                // Gönderen gezegen isek her türlü alıyoruz listeye.
-                userFleets.AddRange(userPlanet.TblFleetsSenderUserPlanet);
-
-                // Eğer hedef gezegen biz isek sadece bize geldikleri durumda verify ediyoruz.
-                userFleets.AddRange(userPlanet.TblFleetsDestinationUserPlanet.Where(x => x.SenderUserPlanetId != verifyData.UserPlanetID && x.DestinationUserPlanetId == verifyData.UserPlanetID && !x.IsReturning));
-
-                // Filoları hareket tarihine göre sıralıyoruz.
-                IOrderedEnumerable<TblFleets> orderedUserFleets = userFleets.OrderBy(x =>
+                // Her bir filo hareketini execute ediyoruz.
+                foreach (TblFleets fleet in fleets)
                 {
-                    DateTime GetHalfOfFlyDate = x.BeginDate.AddSeconds((x.EndDate - x.BeginDate).TotalSeconds / 2);
-                    DateTime GetEndFlyDate = x.EndDate;
-                    return GetHalfOfFlyDate <= currentDate ? GetHalfOfFlyDate : GetEndFlyDate;
-                });
+                    TblUserPlanets senderUser = null;
+                    TblUserPlanets destinationUser = null;
 
-                // Her bir filo hedefe ulaşmadan önce kaynakları doğruluyoruz.
-                foreach (TblFleets userFleet in orderedUserFleets)
-                {
-                    // Hedefe varış süresini hesaplıyoruz.
-                    DateTime halfOfFlyDate = userFleet.BeginDate.AddSeconds((userFleet.EndDate - userFleet.BeginDate).TotalSeconds / 2);
+                    // Gönderen gezegen var ise kaynaklarını doğruluyoruz.
+                    if (fleet.SenderUserPlanetId.HasValue)
+                        senderUser = VerifyPlanetResources(controller, new VerifyResourceDTO { UserPlanetID = fleet.SenderUserPlanetId.Value, VerifyDate = fleet.EndDate });
 
-                    // Göndericiye dönüş süresini hesaplıyoruz.
-                    DateTime endFlyDate = userFleet.EndDate;
+                    // Hedef de gezegen var ise kaynaklarını doğruluyoruz.
+                    if (fleet.DestinationUserPlanetId.HasValue)
+                        destinationUser = VerifyPlanetResources(controller, new VerifyResourceDTO { UserPlanetID = fleet.DestinationUserPlanetId.Value, VerifyDate = fleet.EndDate });
 
-                    // Hedef ulaştıysak işlemleri hallediyoruz..
-                    if (currentDate >= halfOfFlyDate && !userFleet.IsReturning)
-                    {
-                        // Kaynaklar doğrulanıyor.
-                        VerifyPlanetResources(controller, halfOfFlyDate, userPlanet);
+                    // Filo hareketini yapıyoruz.
+                    HandlePlanetFleets(controller, senderUser, destinationUser, fleet, fleet.EndDate);
 
-                        // Güncelleme tarihini değiştiriyoruz.
-                        userPlanet.LastUpdateDate = halfOfFlyDate;
-
-                        if (userFleet.DestinationUserPlanetId.HasValue && userPlanet.UserPlanetId != userFleet.DestinationUserPlanetId)
-                        {
-                            // Eğer hedefte bir gezegen var ise kaynaklarını onaylıyoruz.
-                            // Gezegeni doğruluyoruz.
-                            bool isVerified = VerifyPlanetResources(controller, new VerifyResourceDTO { UserPlanetID = userFleet.DestinationUserPlanetId.Value });
-
-                            // EĞer kaynak doğrulama başarısız olduysa değer false dönüyoruz.
-                            if (!isVerified)
-                                return false;
-
-                            // Burada hedef gezegene kaynakları yükleyeceğiz.
-                            HandleFleetActions(controller, userPlanet, userFleet, halfOfFlyDate);
-
-                            // Artık geri dönüyor.
-                            userFleet.IsReturning = true;
-                        }else
-                        {
-                            // Burada hedef gezegene kaynakları yükleyeceğiz.
-                            HandleFleetActions(controller, userPlanet, userFleet, halfOfFlyDate);
-
-                            // Artık geri dönüyor.
-                            userFleet.IsReturning = true;
-
-                        }
-                    }
-
-                    // Dönüş tamamlandıysa işleyip siliyoruz.
-                    if (currentDate >= endFlyDate && userFleet.IsReturning && userFleet.SenderUserPlanetId == verifyData.UserPlanetID)
-                    {
-                        // Kaynaklar doğrulanıyor.
-                        VerifyPlanetResources(controller, endFlyDate, userPlanet);
-
-                        // Güncelleme tarihini değiştiriyoruz.
-                        userPlanet.LastUpdateDate = endFlyDate;
-
-                        // Burada hedef gezegene kaynakları yükleyeceğiz.
-                        HandleFleetActions(controller, userPlanet, userFleet, endFlyDate);
-
-                        // Kaydı siliyoruz.
-                        controller.UnitOfWork.GetRepository<TblFleets>().Delete(userFleet);
-                    }
+                    // Filo hareketlerini yaptıysak siliyoruz.
+                    controller.UnitOfWork.GetRepository<TblFleets>().Delete(fleet);
                 }
 
-                // En son yine bütün kaynakları o saat için doğruluyoruz..
-                VerifyPlanetResources(controller, currentDate, userPlanet);
-
-                // Güncelleme tarihini değiştiriyoruz.
-                userPlanet.LastUpdateDate = currentDate;
+                // Son olarak gezegendeki diğer kaynakları ayarlıyoruz.
+                VerifyPlanetResources(controller, verifyData);
 
                 // Değişiklikleri kayıt ediyoruz.
                 controller.UnitOfWork.SaveChanges();
-
-                // Gezegendeki üretimleri doğruladığımızı söylüyoruz.
-                return true;
             }
             catch (Exception exc)
             {
-                return false;
             }
             finally
             {
-                // Listeden siliyoruz.
-                lock (Verifies)
-                    Verifies.Remove(verifyData.UserPlanetID);
+                lock (LockedPlanets)
+                    LockedPlanets.Remove(verifyData.UserPlanetID);
             }
         }
 
-        private static void VerifyPlanetResources(MainController controller, DateTime verifyDate, TblUserPlanets userPlanet)
+        private static TblUserPlanets VerifyPlanetResources(MainController controller, VerifyResourceDTO verifyData)
+        {
+            // Kullanıcının gezegenini buluyoruz.i
+            TblUserPlanets userPlanet = controller.UnitOfWork.GetRepository<TblUserPlanets>().Where(x => x.UserPlanetId == verifyData.UserPlanetID)
+                .Include(x => x.TblUserPlanetBuildings)
+                .Include(x => x.TblUserPlanetBuildingUpgs)
+                .Include(x => x.TblUserPlanetDefenses)
+                .Include(x => x.TblUserPlanetDefenseProgs)
+                .Include(x => x.TblUserPlanetShips)
+                .Include(x => x.TblUserPlanetShipProgs)
+                .Include(x => x.TblUserResearchUpgs)
+                .Include(x => x.User)
+                .ThenInclude(x => x.TblUserResearches)
+                .FirstOrDefault();
+
+            // En son yine bütün kaynakları o saat için doğruluyoruz..
+            VerifyPlanetDetails(controller, verifyData.VerifyDate, userPlanet);
+
+            // Güncelleme tarihini değiştiriyoruz.
+            userPlanet.LastUpdateDate = verifyData.VerifyDate;
+
+            return userPlanet;
+        }
+
+        private static void VerifyPlanetDetails(MainController controller, DateTime verifyDate, TblUserPlanets userPlanet)
         {
             #region Üretim hesaplamaları.
 
@@ -578,39 +514,9 @@ namespace WarOfGalaxiesApi.Controllers
 
         }
 
-        private static void HandleFleetActions(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet, DateTime actionDate)
+        private static void HandlePlanetFleets(MainController controller, TblUserPlanets userPlanet, TblUserPlanets destinationPlanet, TblFleets userFleet, DateTime actionDate)
         {
-            /// Hedef gezegen.
-            TblUserPlanets destinationPlanet = userPlanet;
-
-            // Eğer hedef gezegen biz değil isek hedef gezegeni buluyoruz.
-            if (userFleet.DestinationUserPlanetId.HasValue && userPlanet.UserPlanetId != userFleet.DestinationUserPlanetId)
-                destinationPlanet = controller.UnitOfWork.GetRepository<TblUserPlanets>().FirstOrDefault(x => x.UserPlanetId == userFleet.DestinationUserPlanetId.Value);
-
-            if (userFleet.IsReturning) // Kaynağa döndüğünde yapılacak olan.
-            {
-
-                switch ((FleetTypes)userFleet.FleetActionTypeId)
-                {
-                    case FleetTypes.Casusluk:
-                        ExecuteSpyReturnAction(userPlanet, userFleet);
-                        break;
-                    case FleetTypes.Saldır:
-                        ExecuteWarReturnAction(controller, userPlanet, userFleet, actionDate, destinationPlanet);
-                        break;
-                    case FleetTypes.Nakliye: // Nakliye yapan geminin gezegene dönüşü.
-                        ExecuteTransportReturnAction(controller, userPlanet, userFleet, actionDate, destinationPlanet);
-                        break;
-                    case FleetTypes.Sök:
-                        ExecuteDebrisReturnAction(controller, userPlanet, userFleet, actionDate, destinationPlanet);
-                        break;
-                    case FleetTypes.Konuşlandır:
-                        break;
-                    case FleetTypes.Sömürgeleştir:
-                        break;
-                }
-            }
-            else // Hedef vardığında yapılacak olan.
+            if (userFleet.ReturnFleetId.HasValue) // Hedefe vardığımızda yapılacak olan.
             {
                 switch ((FleetTypes)userFleet.FleetActionTypeId)
                 {
@@ -632,7 +538,31 @@ namespace WarOfGalaxiesApi.Controllers
                         break;
                 }
             }
+            else // Gezegene dönüşte yapılacak olan.
+            {
+                switch ((FleetTypes)userFleet.FleetActionTypeId)
+                {
+                    case FleetTypes.Casusluk:
+                        ExecuteSpyReturnAction(destinationPlanet, userFleet);
+                        break;
+                    case FleetTypes.Saldır:
+                        ExecuteWarReturnAction(controller, destinationPlanet, userFleet, actionDate, userPlanet);
+                        break;
+                    case FleetTypes.Nakliye: // Nakliye yapan geminin gezegene dönüşü.
+                        ExecuteTransportReturnAction(controller, destinationPlanet, userFleet, actionDate, userPlanet);
+                        break;
+                    case FleetTypes.Sök:
+                        ExecuteDebrisReturnAction(controller, destinationPlanet, userFleet, actionDate, userPlanet);
+                        break;
+                    case FleetTypes.Konuşlandır:
+                        break;
+                    case FleetTypes.Sömürgeleştir:
+                        break;
+                }
+            }
         }
+
+        #region Fleet Actions 
 
         private static void ExecuteDebrisAction(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet, DateTime actionDate, TblUserPlanets destinationPlanet)
         {
@@ -690,9 +620,9 @@ namespace WarOfGalaxiesApi.Controllers
             cordinateInfo.Crystal -= ownedCrystal;
             cordinateInfo.Boron -= ownedBoron;
 
-            userFleet.CarriedMetal += ownedMetal;
-            userFleet.CarriedCrystal += ownedCrystal;
-            userFleet.CarriedBoron += ownedBoron;
+            userFleet.ReturnFleet.CarriedMetal += ownedMetal;
+            userFleet.ReturnFleet.CarriedCrystal += ownedCrystal;
+            userFleet.ReturnFleet.CarriedBoron += ownedBoron;
 
             // Mail bilgisini oluşturuyoruz.
             List<string> mail = new List<string>();
@@ -724,7 +654,10 @@ namespace WarOfGalaxiesApi.Controllers
                 MailEncoder.GetParam(MailEncoder.KEY_ACTION_TYPE_RETURN, userFleet.FleetActionTypeId),
                 MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName),
                 MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
-                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETCORDINATE, userFleet.DestinationCordinate)
+                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETCORDINATE, userFleet.DestinationCordinate),
+                MailEncoder.GetParam(MailEncoder.KEY_NEW_METAL, userFleet.CarriedMetal),
+                MailEncoder.GetParam(MailEncoder.KEY_NEW_CRYSTAL, userFleet.CarriedCrystal),
+                MailEncoder.GetParam(MailEncoder.KEY_NEW_BORON, userFleet.CarriedBoron)
             };
 
             // Gemileri alıyoruz. Kullanıcının gezegenine iade edeceğiz.
@@ -749,8 +682,6 @@ namespace WarOfGalaxiesApi.Controllers
                 UserId = userPlanet.UserId
             });
         }
-
-        #region Reports 
 
         private static void ExecuteWarAction(MainController controller, TblUserPlanets userPlanet, TblFleets userFleet, DateTime actionDate, TblUserPlanets destinationPlanet)
         {
@@ -1019,9 +950,9 @@ namespace WarOfGalaxiesApi.Controllers
                 mailParams.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_BORON, ownedBoron));
 
                 // Kazanan arkadaşa kaynakların yarısını vereceğiz.
-                userFleet.CarriedMetal += ownedMetal;
-                userFleet.CarriedCrystal += ownedCrystal;
-                userFleet.CarriedBoron += ownedBoron;
+                userFleet.ReturnFleet.CarriedMetal += ownedMetal;
+                userFleet.ReturnFleet.CarriedCrystal += ownedCrystal;
+                userFleet.ReturnFleet.CarriedBoron += ownedBoron;
 
                 // Tabiki alınan kaynakları gezegeden düşmemiz lazım.
                 destinationPlanet.Metal -= ownedMetal;
@@ -1291,7 +1222,7 @@ namespace WarOfGalaxiesApi.Controllers
             #region Filoyu güncelliyoruz.
 
             // Filodaki datayı güncelliyoruz.
-            userFleet.FleetData = FleetController.ShipDataToStringData(newAttackerShips);
+            userFleet.ReturnFleet.FleetData = FleetController.ShipDataToStringData(newAttackerShips);
 
             #endregion
 
@@ -1349,7 +1280,10 @@ namespace WarOfGalaxiesApi.Controllers
                 MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName),
                 MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
                 MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, destinationPlanet.PlanetName),
-                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETCORDINATE, userFleet.DestinationCordinate)
+                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETCORDINATE, userFleet.DestinationCordinate),
+                MailEncoder.GetParam(MailEncoder.KEY_NEW_METAL,userFleet.CarriedMetal),
+                MailEncoder.GetParam(MailEncoder.KEY_NEW_CRYSTAL,userFleet.CarriedCrystal),
+                MailEncoder.GetParam(MailEncoder.KEY_NEW_BORON,userFleet.CarriedBoron),
             };
 
             // Gemileri alıyoruz. Kullanıcının gezegenine iade edeceğiz.
@@ -1379,30 +1313,20 @@ namespace WarOfGalaxiesApi.Controllers
         {
             List<string> defaultMailContent = new List<string>()
             {
-                MailEncoder.GetParam(MailEncoder.KEY_ACTION_TYPE_RETURN, userFleet.FleetActionTypeId),
+                MailEncoder.GetParam(MailEncoder.KEY_ACTION_TYPE, userFleet.FleetActionTypeId),
                 MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName),
                 MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
                 MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, destinationPlanet.PlanetName),
                 MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETCORDINATE, userFleet.DestinationCordinate)
             };
 
-            // Nakliye türünü ekliyoruz.
+            // Casusluk türünü ekliyoruz.
             defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_MAIL_TYPE, (int)MailTypes.CasusRaporu));
 
             // Mail datasını yüklüyoruz. Raporlanan gezgendeki kaynaklar.
             defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_METAL, destinationPlanet.Metal));
             defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_CRYSTAL, destinationPlanet.Crystal));
             defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_BORON, destinationPlanet.Boron));
-
-            // Gezgenin detaylarını alıyoruz.
-            destinationPlanet = controller.UnitOfWork.GetRepository<TblUserPlanets>()
-                .Where(x => x.UserPlanetId == userFleet.DestinationUserPlanetId.Value)
-                .Include(x => x.TblUserPlanetBuildings)
-                .Include(x => x.TblUserPlanetShips)
-                .Include(x => x.TblUserPlanetDefenses)
-                .Include(x => x.User)
-                .ThenInclude(x => x.TblUserResearches)
-                .FirstOrDefault();
 
             #region Binalar.
 
@@ -1461,7 +1385,7 @@ namespace WarOfGalaxiesApi.Controllers
         {
             List<string> defaultMailContent = new List<string>()
             {
-                MailEncoder.GetParam(MailEncoder.KEY_ACTION_TYPE_RETURN, userFleet.FleetActionTypeId),
+                MailEncoder.GetParam(MailEncoder.KEY_ACTION_TYPE, userFleet.FleetActionTypeId),
                 MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName),
                 MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
                 MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, destinationPlanet.PlanetName),
@@ -1482,9 +1406,9 @@ namespace WarOfGalaxiesApi.Controllers
             defaultMailContent.Add(MailEncoder.GetParam(MailEncoder.KEY_NEW_BORON, userFleet.CarriedBoron));
 
             // Taşınan kaynakları siliyoruz.
-            userFleet.CarriedMetal = 0;
-            userFleet.CarriedCrystal = 0;
-            userFleet.CarriedBoron = 0;
+            userFleet.ReturnFleet.CarriedMetal = 0;
+            userFleet.ReturnFleet.CarriedCrystal = 0;
+            userFleet.ReturnFleet.CarriedBoron = 0;
 
             // 1. mail her zaman gidiyor. 2.mail ise sadece gönderilen oyuncu değil ise gidiyor.
             controller.UnitOfWork.GetRepository<TblUserMails>().Add(new TblUserMails
@@ -1557,7 +1481,7 @@ namespace WarOfGalaxiesApi.Controllers
 
                 // Eğer yok ise oluşturuyoruuz.
                 if (shipInPlanet == null)
-                    userPlanet.TblUserPlanetShips.Add(new TblUserPlanetShips { ShipId = (int)ship.Item1, ShipCount = ship.Item2, UserPlanetId = userFleet.SenderUserPlanetId });
+                    userPlanet.TblUserPlanetShips.Add(new TblUserPlanetShips { ShipId = (int)ship.Item1, ShipCount = ship.Item2, UserPlanetId = userFleet.SenderUserPlanetId.Value });
                 else // Eğer gezegende zaten var ise miktarıın arttırıyoruz.
                     shipInPlanet.ShipCount += ship.Item2;
             }
@@ -1572,7 +1496,6 @@ namespace WarOfGalaxiesApi.Controllers
         }
 
         #endregion
-
 
         /// <summary>
         /// Verilen türe göre kaynakları günceller.

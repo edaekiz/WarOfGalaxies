@@ -7,6 +7,8 @@ namespace Assets.Scripts.ApiModels
     public class FleetDTO
     {
         public int FleetId;
+
+        public int ReturnFleetId;
         public FleetTypes FleetActionTypeId;
         public string SenderCordinate;
         public int SenderUserId;
@@ -18,7 +20,6 @@ namespace Assets.Scripts.ApiModels
         public int DestinationPlanetTypeId;
         public double BeginPassedTime;
         public double EndLeftTime;
-        public bool IsReturning;
         public string SenderPlanetName;
         public string DestinationPlanetName;
         public double CarriedMetal;
@@ -26,6 +27,12 @@ namespace Assets.Scripts.ApiModels
         public double CarriedBoron;
         public string FleetData;
         public DateTime FleetLoadDate;
+
+        /// <summary>
+        /// Eğer dönen bir filo ise değer true dönecek.
+        /// </summary>
+        public bool IsReturnFleet => ReturnFleetId == 0;
+
         public FleetDTO()
         {
             FleetLoadDate = DateTime.Now;

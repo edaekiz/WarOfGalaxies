@@ -119,19 +119,19 @@ public class PlanetActionFooterPanel : BasePanelController
         // Çöp gemisi bilgisi.
         ShipDataDTO shipInfo = DataController.DC.GetShip(Ships.GeriDönüşümcü);
 
-        // Eğer herhangi bir gemi gitmiyor ise boş mesaj koyuyoruz.
-        double goingShipQuantity = FleetController.FC.Fleets.Where(x => x.DestinationCordinate == CordinateExtends.ToCordinateString(CurrentShownCordinate)).Select(x =>
+        // Toplam gidiyor olan gemi miktarı
+        int goingShipQuantity = FleetController.FC.Fleets.Where(x => !x.IsReturnFleet && x.DestinationCordinate == CordinateExtends.ToCordinateString(CurrentShownCordinate)).Select(x =>
         {
             List<Tuple<Ships, int>> fleet = FleetExtends.FleetDataToShipData(x.FleetData);
             Tuple<Ships, int> garbageCollector = fleet.Find(y => y.Item1 == Ships.GeriDönüşümcü);
             if (garbageCollector != null)
-                return (double)(shipInfo.CargoCapacity * garbageCollector.Item2);
+                return garbageCollector.Item2;
             else
                 return 0;
         }).DefaultIfEmpty(0).Sum();
 
         // Gereken çöp aracı miktarı.
-        int requiredGarbageShipQuantity = (int)((CurrentShownPlanet.GarbageMetal + CurrentShownPlanet.GarbageCrystal + CurrentShownPlanet.GarbageBoron) / shipInfo.CargoCapacity);
+        int requiredGarbageShipQuantity = Mathf.CeilToInt((float)(CurrentShownPlanet.GarbageMetal + CurrentShownPlanet.GarbageCrystal + CurrentShownPlanet.GarbageBoron) / shipInfo.CargoCapacity);
 
         // Gezegendeki çöp toplayıcıları buluyoruz.
         UserPlanetShipDTO userPlanetGarbage = LoginController.LC.CurrentUser.UserPlanetShips.Find(x => x.ShipId == Ships.GeriDönüşümcü && x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
@@ -146,18 +146,52 @@ public class PlanetActionFooterPanel : BasePanelController
         // Eğer hiç geri dönüşümcü yok ise uyarı ver.
         if (goingShipQuantity == 0 && garbageCollectorCount == 0)
         {
+            // Eğer gönderebileceği gemi yok ise butonu kapatıyoruz.
             BTN_FastSendGarbage.interactable = false;
-            TXT_GarbageAlreadySendMessage.text = base.GetLanguageText("ÇöpToplayıcıYok");
+
+            // Texte de gereken gemi miktarını basıyoruz.
+            TXT_GarbageAlreadySendMessage.text = base.GetLanguageText("GeriDönüşümcüGerekli", requiredGarbageShipQuantity.ToString());
+
+            // Texti de kırmızıya boyuyoruz.
             TXT_GarbageAlreadySendMessage.color = Color.red;
         }
         else
         {
             // Eğer giden gemi var ise metni açıyoruz.
             if (goingShipQuantity > 0)
+            {
+                // Gönderilen gemi miktarını basıyoruz.
                 TXT_GarbageAlreadySendMessage.text = base.GetLanguageText("GemiGidiyor", goingShipQuantity.ToString(), requiredGarbageShipQuantity.ToString());
-            else
-                TXT_GarbageAlreadySendMessage.text = base.GetLanguageText("ÇöpGemisiGerekli", requiredGarbageShipQuantity.ToString());
-            TXT_GarbageAlreadySendMessage.color = Color.green;
+
+                // Eğer maksimum gemi gönderiliyor ise butonu kapatıyoruz.
+                if (goingShipQuantity == requiredGarbageShipQuantity)
+                {
+                    // Butonu da kapatıyoruz.
+                    BTN_FastSendGarbage.interactable = false;
+
+                    // Yazı rengi de kırmızı olacak belirgin.
+                    TXT_GarbageAlreadySendMessage.color = Color.red;
+                }
+                else
+                {
+                    // Butonu da açıyoruz.
+                    BTN_FastSendGarbage.interactable = true;
+
+                    // Eğer hala gemi gönderebilir isek yeşil yapıyoruz butonu.
+                    TXT_GarbageAlreadySendMessage.color = Color.green;
+                }
+            }
+            else // Hiç gemisi gitmiyor demekki.
+            {
+                // Gemisi olmadığını söylüyoruz.
+                TXT_GarbageAlreadySendMessage.text = base.GetLanguageText("GeriDönüşümcüGerekli", requiredGarbageShipQuantity.ToString());
+
+                // Butonu da açıyoruz.
+                BTN_FastSendGarbage.interactable = true;
+
+                // Yazı rengi de kırmızı olacak belirgin. Turuncu.
+                TXT_GarbageAlreadySendMessage.color = new Color32(255, 134, 0, 1);
+            }
         }
     }
 
@@ -220,8 +254,80 @@ public class PlanetActionFooterPanel : BasePanelController
         }));
     }
 
-    public void HarvestGarbage()
+    public void FastHarvestGarbage()
     {
+        // Çöp gemisi bilgisi.
+        ShipDataDTO shipInfo = DataController.DC.GetShip(Ships.GeriDönüşümcü);
+
+        // Gereken çöp aracı miktarı.
+        int requiredGarbageShipQuantity = Mathf.CeilToInt((float)(CurrentShownPlanet.GarbageMetal + CurrentShownPlanet.GarbageCrystal + CurrentShownPlanet.GarbageBoron) / shipInfo.CargoCapacity);
+
+        // Gezegendeki çöp toplayıcıları buluyoruz.
+        UserPlanetShipDTO userPlanetGarbage = LoginController.LC.CurrentUser.UserPlanetShips.Find(x => x.ShipId == Ships.GeriDönüşümcü && x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
+
+        // Toplam gidiyor olan gemi miktarı
+        int goingShipQuantity = FleetController.FC.Fleets.Where(x => x.DestinationCordinate == CordinateExtends.ToCordinateString(CurrentShownCordinate)).Select(x =>
+        {
+            List<Tuple<Ships, int>> fleet = FleetExtends.FleetDataToShipData(x.FleetData);
+            Tuple<Ships, int> garbageCollector = fleet.Find(y => y.Item1 == Ships.GeriDönüşümcü);
+            if (garbageCollector != null)
+                return garbageCollector.Item2;
+            else
+                return 0;
+        }).DefaultIfEmpty(0).Sum();
+
+        // Hızlı şekilde gönderilecek olan gemi miktarı.
+        int sendShipQuantity = requiredGarbageShipQuantity - goingShipQuantity;
+
+        // Eğer miktar 0 dan küçük yada eşit ise geri dön.
+        if (sendShipQuantity <= 0)
+            return;
+
+        // Gönderilecek olan geri dönüşümcüler.
+        List<Tuple<Ships, int>> shipsToSend = new List<Tuple<Ships, int>> { new Tuple<Ships, int>(Ships.GeriDönüşümcü, sendShipQuantity) };
+
+        // Datayı alıyoruz.
+        string shipData = FleetExtends.ShipDataToStringData(shipsToSend);
+
+        // Uçuş bilgileri.
+        SendFleetFromPlanetDTO requestData = new SendFleetFromPlanetDTO
+        {
+            SenderUserPlanetId = GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId,
+            CarriedBoron = 0,
+            CarriedCrystal = 0,
+            CarriedMetal = 0,
+            FleetSpeed = 1,
+            FleetType = (int)FleetTypes.Sök,
+            DestinationGalaxyIndex = CurrentShownCordinate.GalaxyIndex,
+            DestinationSolarIndex = CurrentShownCordinate.SolarIndex,
+            DestinationOrderIndex = CurrentShownCordinate.OrderIndex,
+            Ships = shipData
+        };
+
+        // Yükleniyor panelini açıyoruz.
+        LoadingController.LC.ShowLoading();
+
+        StartCoroutine(ApiService.API.Post("FlyNewFleet", requestData, (ApiResult response) =>
+        {
+            // Yükleniyor paneli kapatıyoruz.
+            LoadingController.LC.CloseLoading();
+
+            if (response.IsSuccess)
+            {
+                // Filoları yeniliyoruz.
+                FleetController.FC.GetLatestFleets();
+
+                // Gemileri envanterden siliyoruz.
+                shipsToSend.ForEach(e => ShipyardController.SC.DestroyShip(e.Item1, e.Item2));
+
+                // Toast mesajını basıyoruz ekrana.
+                ToastController.TC.ShowToast(base.GetLanguageText("FilonYolaÇıktı"));
+
+                // Footer paneli kapatıp açıyoruz.
+                base.ClosePanel();
+            }
+
+        }));
 
     }
 

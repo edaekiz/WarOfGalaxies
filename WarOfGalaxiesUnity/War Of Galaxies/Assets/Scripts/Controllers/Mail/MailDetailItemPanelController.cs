@@ -89,14 +89,14 @@ public class MailDetailItemPanelController : BasePanelController
             TXT_ActionName.text += TextExtends.MakeItColorize($"({base.GetLanguageText("Dönüş")})", "green");
         }
 
-        // Mailin yüklenecek olan içeriği.
-        MailCategoryContent mailContentTemplate = MailCategoryContents.Find(x => (int)x.Category == mailData.MailCategoryId);
-
-        // Templateyi açıyoruz.
-        mailContentTemplate.ContentObject.SetActive(true);
-
-        // Ve şimdi dataları yüklüyoruz.
-        mailContentTemplate.ContentObject.GetComponent<IMailDetailItem>().LoadContent(mailData, decodedData);
+        // Seçili olan mail türüne dataları yükleyeceğiz diğerlerini kapatacağız.
+        MailCategoryContents.ForEach(e =>
+        {
+            if ((int)e.Category == mailData.MailCategoryId)
+                e.ContentObject.GetComponent<IMailDetailItem>().LoadContent(mailData, decodedData);
+            else
+                e.ContentObject.SetActive(false);
+        });
 
         // Eğer okunmamış ise okundu olarak işaretlemeliyiz.
         if (!mailData.IsReaded)

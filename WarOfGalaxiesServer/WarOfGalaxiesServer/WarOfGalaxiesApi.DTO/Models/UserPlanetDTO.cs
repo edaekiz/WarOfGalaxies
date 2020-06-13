@@ -25,5 +25,10 @@ namespace WarOfGalaxiesApi.DTO.Models
     public class VerifyResourceDTO
     {
         public int UserPlanetID { get; set; }
+        public DateTime VerifyDate { get; set; }
+        public VerifyResourceDTO()
+        {
+            VerifyDate = DateTime.UtcNow;
+        }
     }
 }

@@ -48,25 +48,30 @@ public class MailController : MonoBehaviour
         // Son gelen mailleri alıyoruz.
         StartCoroutine(ApiService.API.Post("GetLatestUnReadedMails", new LatestUnReadedUserMailRequestDTO { LastUnReadedMailId = UserMails.Select(x => x.UserMailId).DefaultIfEmpty(0).Max() }, (ApiResult response) =>
         {
-            // Gelen mailleri alıyoruz.
-            List<UserMailDTO> newUnreadedMails = response.GetDataList<UserMailDTO>();
-
-            // Eğer miktar sıfırdan büyük ise listeye okunmamışlara ekliyoruz.
-            if (newUnreadedMails.Count > 0)
+            if (response.IsSuccess)
             {
-                // Okunmamışlara ekliyoruz.
-                UserMails.AddRange(newUnreadedMails);
+                // Gelen mailleri alıyoruz.
+                List<UserMailDTO> newUnreadedMails = response.GetDataList<UserMailDTO>();
 
-                // Bildirimi gösteriyoruz.
-                ShowNotification(newUnreadedMails.Where(x => !x.IsReaded).Count());
+                // Eğer miktar sıfırdan büyük ise listeye okunmamışlara ekliyoruz.
+                if (newUnreadedMails.Count > 0)
+                {
+                    IEnumerable<UserMailDTO> mails = newUnreadedMails.Where(x => !UserMails.Any(y => x.UserMailId == y.UserMailId));
 
-                // Eğer panel açık ise paneli de yeniliyoruz.
-                if (MailPanelController.MPC != null)
-                    MailPanelController.MPC.ShowCategoryDetails(MailPanelController.MPC.CurrentShownCategory);
+                    // Okunmamışlara ekliyoruz.
+                    UserMails.AddRange(mails);
+
+                    // Bildirimi gösteriyoruz.
+                    ShowNotification(mails.Where(x => !x.IsReaded).Count());
+
+                    // Eğer panel açık ise paneli de yeniliyoruz.
+                    if (MailPanelController.MPC != null)
+                        MailPanelController.MPC.ShowCategoryDetails(MailPanelController.MPC.CurrentShownCategory);
+                }
+
+                // Miktarı güncelliyoruz.
+                RefreshMailIconQuantity();
             }
-
-            // Miktarı güncelliyoruz.
-            RefreshMailIconQuantity();
 
         }));
 

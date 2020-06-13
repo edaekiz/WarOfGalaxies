@@ -50,7 +50,7 @@ public class FleetController : MonoBehaviour
                  if (newFleets.Count > 0)
                  {
                      // Listeye dahil ediyoruz.
-                     Fleets.AddRange(newFleets);
+                     Fleets.AddRange(newFleets.Where(x => !Fleets.Any(y => y.FleetId == x.FleetId)));
 
                      // Eğer panel açık ise paneli de yeniliyoruz.
                      if (FleetPanelController.FPC != null)
@@ -78,70 +78,17 @@ public class FleetController : MonoBehaviour
         {
             FleetDTO fleet = Fleets[ii];
 
-            // Uçuşa başlanılan tarih.
-            DateTime fleetBeginFlyDate = fleet.FleetLoadDate.AddSeconds(-fleet.BeginPassedTime);
-
             // Filo hareketinin tamamlanmasına kalan süre.
             DateTime fleetEndFlyDate = fleet.FleetLoadDate.AddSeconds(fleet.EndLeftTime);
 
-            // Toplam yolculuk süresi saniye cinsinden.
-            double totalPathSeconds = (fleetEndFlyDate - fleetBeginFlyDate).TotalSeconds;
-
-            // Toplam yolculuk süresi.
-            double haflOfPath = totalPathSeconds / 2;
-
-            // Filonun hedefe ulaşma süresi.
-            DateTime halfDateOfFly = fleetBeginFlyDate.AddSeconds(haflOfPath);
-
-            // Filonun gezegene dönüş süresi.
-            DateTime endDateOfFly = fleet.FleetLoadDate.AddSeconds(fleet.EndLeftTime);
-
-            // Eğer gidişi bitirdikysek ve hala daha geri dönmüyor görünüyor isek true yapıyoruz değeri.
-            if (!fleet.IsReturning && currentDate >= halfDateOfFly)
-            {
-                // Filoyu doğruluyoruz.
-                VerifyFleet(fleet);
-
-                // Geri dönecek filo.
-                fleet.IsReturning = true;
-
-            }
-
             // Eğer kaynak gezegene dönüş yapıysak.
-            if (fleet.IsReturning && currentDate >= endDateOfFly)
+            if (currentDate >= fleetEndFlyDate)
             {
-                // Filoyu verify ediyoruz sunucuda.
-                VerifyFleet(fleet);
-
-                // Eğer panel açık ise paneli refresh edeceğiz.
-                if (FleetPanelController.FPC != null)
-                {
-                    // Paneldeki filo bilgisini buluyoruz.
-                    FleetPanelItemController fleetItemInPanel = FleetPanelController.FPC.Fleets.Find(x => x.FleetInfo.FleetId == fleet.FleetId);
-
-                    // Eğer var ise sileceğiz.
-                    if (fleetItemInPanel != null)
-                    {
-                        // Önce listeden siliyoruz.
-                        FleetPanelController.FPC.Fleets.Remove(fleetItemInPanel);
-
-                        // Sonra panelden siliyoruz.
-                        Destroy(fleetItemInPanel.gameObject);
-                    }
-                }
-
-                // Filosunu geri veriyoruz.
-                List<Tuple<Ships, int>> fleetShips = FleetExtends.FleetDataToShipData(fleet.FleetData);
-
-                // Filoyu geri veriyoruz.
-                fleetShips.ForEach(e => ShipyardController.SC.AddShip(fleet.SenderUserPlanetId, e.Item1, e.Item2));
-
-                // PAnel açık ise bütün gemileri yeniden yüklüyoruz.
-                if (ShipyardPanelController.SPC != null)
-                    ShipyardPanelController.SPC.LoadAllShips();
-
                 // Listeden siliyoruz.
                 Fleets.Remove(fleet);
+
+                // Filoyu verify ediyoruz sunucuda.
+                VerifyFleet(fleet);
             }
         }
 
@@ -152,67 +99,98 @@ public class FleetController : MonoBehaviour
 
     public void VerifyFleet(FleetDTO fleet)
     {
+        // Gönderen gezegenin kaynaklarını doğruluyoruz.
         if (fleet.SenderUserId == LoginController.LC.CurrentUser.UserData.UserId)
         {
             LoginController.LC.VerifyUserResources(fleet.SenderUserPlanetId, (UserPlanetDTO userPlanet) =>
              {
-                 // Eğer saldırı yada sök işlemi ise.
-                 if (fleet.FleetActionTypeId == FleetTypes.Saldır || fleet.FleetActionTypeId == FleetTypes.Sök)
+                 // Ve eğer galaksiye bakıyorsak açık olan galaksiyi yenilememiz lazım.
+                 if (GlobalGalaxyController.GGC.IsInGalaxyView && fleet.FleetActionTypeId == FleetTypes.Sök)
                  {
-                     // Ve eğer galaksiye bakıyorsak açık olan galaksiyi yenilememiz lazım.
-                     if (GlobalGalaxyController.GGC.IsInGalaxyView)
-                     {
-                         // Sök panelini yenilememiz lazım. Kapatıyoruz. İsterse yeniden açabilir.
-                         if (fleet.FleetActionTypeId == FleetTypes.Sök)
-                             GlobalPanelController.GPC.ClosePanel(GlobalPanelController.PanelTypes.PlanetActionFooterPanel);
+                     // Sök panelini yenilememiz lazım. Kapatıyoruz. İsterse yeniden açabilir.
+                     GlobalPanelController.GPC.ClosePanel(GlobalPanelController.PanelTypes.PlanetActionFooterPanel);
 
-                         // Paneli yeniliyoruz.
-                         GalaxyChangePanelController.GCPC.GoToCordinate();
-                     }
+                     // Paneli yeniliyoruz.
+                     GalaxyChangePanelController.GCPC.GoToCordinate();
                  }
 
-                 // Eski olanı aktif filodan siliyoruz.
-                 Fleets.Remove(fleet);
+                 // Dönüş filosu var ise yeniliyoruz.
+                 if (!fleet.IsReturnFleet)
+                 {
+                     // Dönüş filosundaki dataları güncelliyoruz.
+                     RefreshReturnFleetData(fleet.ReturnFleetId);
+                 }
+                 else // Dönüş filosunun işlemi.
+                 {
+                     // Filodaki gemiler.
+                     List<Tuple<Ships, int>> ships = FleetExtends.FleetDataToShipData(fleet.FleetData);
 
+                     // Her bir gemiyi dönüyoruz ve envantere ekliyoruz..
+                     ships.ForEach(e => ShipyardController.SC.AddShip(fleet.SenderUserPlanetId, e.Item1, e.Item2));
 
-
-                 //StartCoroutine(ApiService.API.Post("x", new GetLastFleetsDTO { LastFleetId = fleet.FleetId }, (ApiResult response) =>
-                 //{
-                 //    // Eğer response false ise filo yok demektir geri dön.
-                 //    if (!response.IsSuccess)
-                 //        return;
-
-                 //    // Son güncel filo bilgisi.
-                 //    FleetDTO newFleetInfo = response.GetData<FleetDTO>();
-
-                 //    // Eski olanı aktif filodan siliyoruz.
-                 //    Fleets.Remove(fleet);
-
-                 //    // Yeni olanı aktif filoya ekliyoruz.
-                 //    Fleets.Add(newFleetInfo);
-
-                 //    // Panel açık ise bilgiyi güncelliyoruz.
-                 //    if (FleetPanelController.FPC != null)
-                 //    {
-                 //        // Paneldeki filoyu buluyoruz.
-                 //        FleetPanelItemController panelItem = FleetPanelController.FPC.Fleets.Find(x => x.FleetInfo.FleetId == fleet.FleetId);
-
-                 //        // Yok ise geri dön.
-                 //        if (panelItem == null)
-                 //            return;
-
-                 //        // Filo bilgisini güncelliyoruz.
-                 //        panelItem.FleetInfo = newFleetInfo;
-
-                 //        // Paneli refresh ediyoruz.
-                 //        FleetPanelController.FPC.RefreshActiveFleets();
-                 //    }
-                 //}));
+                     // Paneli yeniliyoruz.
+                     if (FleetPanelController.FPC != null)
+                         FleetPanelController.FPC.RefreshActiveFleets();
+                 }
              });
         }
 
-        if (fleet.DestinationUserId == LoginController.LC.CurrentUser.UserData.UserId)
-            LoginController.LC.VerifyUserResources(fleet.DestinationUserPlanetId);
+        // Dönüş gezegeninin kaynaklarını doğruluyoruz.
+        if (fleet.DestinationUserId == LoginController.LC.CurrentUser.UserData.UserId && fleet.SenderUserPlanetId != fleet.DestinationUserPlanetId)
+            LoginController.LC.VerifyUserResources(fleet.DestinationUserPlanetId, (UserPlanetDTO userPlanet) =>
+             {
+                 // Ve eğer galaksiye bakıyorsak açık olan galaksiyi yenilememiz lazım.
+                 if (GlobalGalaxyController.GGC.IsInGalaxyView && fleet.FleetActionTypeId == FleetTypes.Sök)
+                 {
+                     // Sök panelini yenilememiz lazım. Kapatıyoruz. İsterse yeniden açabilir.
+                     GlobalPanelController.GPC.ClosePanel(GlobalPanelController.PanelTypes.PlanetActionFooterPanel);
+
+                     // Paneli yeniliyoruz.
+                     GalaxyChangePanelController.GCPC.GoToCordinate();
+                 }
+
+                 // Dönüş filosu var ise yeniliyoruz.
+                 if (!fleet.IsReturnFleet)
+                 {
+                     // Dönüş filosundaki dataları güncelliyoruz.
+                     RefreshReturnFleetData(fleet.ReturnFleetId);
+                 }
+                 else // Dönüş filosunun işlemi.
+                 {
+                     // Filodaki gemiler.
+                     List<Tuple<Ships, int>> ships = FleetExtends.FleetDataToShipData(fleet.FleetData);
+
+                     // Her bir gemiyi dönüyoruz ve envantere ekliyoruz..
+                     ships.ForEach(e => ShipyardController.SC.AddShip(fleet.SenderUserPlanetId, e.Item1, e.Item2));
+
+                     // Paneli yeniliyoruz.
+                     if (FleetPanelController.FPC != null)
+                         FleetPanelController.FPC.RefreshActiveFleets();
+                 }
+             });
+    }
+
+    public void RefreshReturnFleetData(int returnFleetId)
+    {
+        StartCoroutine(ApiService.API.Post("GetFleetById", new GetLastFleetsDTO { LastFleetId = returnFleetId }, (ApiResult response) =>
+        {
+            // Yanıt başarılı ise.
+            if (response.IsSuccess)
+            {
+                // Öncekini siliyoruz.
+                Fleets.RemoveAll(x => x.FleetId == returnFleetId);
+
+                // Yeni gelen filo bilgilerini alıyoruz.
+                FleetDTO newFleet = response.GetData<FleetDTO>();
+
+                // Listeye ekliyoruz.
+                Fleets.Add(newFleet);
+
+                // Eğer panel açık ise paneli de yeniliyoruz.
+                if (FleetPanelController.FPC != null)
+                    FleetPanelController.FPC.RefreshActiveFleets();
+            }
+        }));
     }
 
 }

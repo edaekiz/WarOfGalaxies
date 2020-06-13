@@ -106,6 +106,7 @@ public class DefenseDetailItemPanel : BasePanelController
             // Butonu kapatıyoruz.
             ProduceButton.interactable = false;
 
+            // Yükleniyor ekranını açıyoruz.
             LoadingController.LC.ShowLoading();
 
             StartCoroutine(ApiService.API.Post("AddDefenseToDefenseQueue", new DefenseAddQueueRequestDTO
@@ -115,7 +116,9 @@ public class DefenseDetailItemPanel : BasePanelController
                 UserPlanetID = GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId
             }, (ApiResult response) =>
             {
+                // Yükleniyor ekranını kapatıyoruz.
                 LoadingController.LC.CloseLoading();
+
                 // Eğer başarılı ise.
                 if (response.IsSuccess)
                 {
