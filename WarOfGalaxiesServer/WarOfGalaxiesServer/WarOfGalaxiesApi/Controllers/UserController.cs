@@ -73,6 +73,7 @@ namespace WarOfGalaxiesApi.Controllers
                     BuildingId = x.BuildingId,
                     BuildingLevel = x.BuildingLevel,
                     LeftTime = (x.EndDate - base.RequestDate).TotalSeconds,
+                    PassedTime = (base.RequestDate - x.BeginDate).TotalSeconds,
                     UserPlanetId = x.UserPlanetId
                 })
                 .ToList();
@@ -87,6 +88,7 @@ namespace WarOfGalaxiesApi.Controllers
             // Devam eden araştırmaları alıyoruz.
             List<UserResearchProgDTO> userResearchProgs = userAndHisPlanets.TblUserResearchUpgs.Select(x => new UserResearchProgDTO
             {
+                PassedTime = (base.RequestDate - x.BeginDate).TotalSeconds,
                 LeftTime = (x.EndDate - base.RequestDate).TotalSeconds,
                 ResearchID = x.ResearchId,
                 ResearchLevel = x.ResearchTargetLevel,

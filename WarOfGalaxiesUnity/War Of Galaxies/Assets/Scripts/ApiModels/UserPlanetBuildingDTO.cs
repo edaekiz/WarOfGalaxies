@@ -20,6 +20,7 @@ namespace Assets.Scripts.ApiModels
         public Buildings BuildingId;
         public int BuildingLevel;
         public double LeftTime;
+        public double PassedTime;
     }
 
     [Serializable]

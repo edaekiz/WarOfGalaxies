@@ -58,10 +58,10 @@ public class LoginController : MonoBehaviour
                 }
 
                 // Başlangıç ve bitiş tarihini ayarlıyoruz.
-                CurrentUser.UserPlanetsBuildingsUpgs.ForEach(e => e.CalculateDates(e.LeftTime));
+                CurrentUser.UserPlanetsBuildingsUpgs.ForEach(e => e.CalculateDates(e.PassedTime, e.LeftTime));
 
                 // Araştırmanın başlangıç ve bitiş tarihlerini de ayarlıyoruz.
-                CurrentUser.UserResearchProgs.ForEach(e => e.CalculateDates(e.LeftTime));
+                CurrentUser.UserResearchProgs.ForEach(e => e.CalculateDates(e.PassedTime, e.LeftTime));
 
                 // Yükleme sayısını 1 arttırıyoruz.
                 LoadingController.LC.IncreaseLoadCount();

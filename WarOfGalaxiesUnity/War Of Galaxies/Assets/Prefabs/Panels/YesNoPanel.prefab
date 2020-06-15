@@ -1197,7 +1197,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PanelType: 0
-  TransitionSpeed: 10
+  TransitionSpeed: 5
   OpenTransition: 4
   CloseTransition: 4
   MainPanel: {fileID: 1425446694130276035}

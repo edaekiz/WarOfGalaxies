@@ -190,7 +190,7 @@
     <value>s</value>
   </data>
   <data name="R1" xml:space="preserve">
-    <value>Weapon Technique</value>
+    <value>Rocket Technique</value>
   </data>
   <data name="SeviyeParantez" xml:space="preserve">
     <value>Level({0})</value>
@@ -212,9 +212,6 @@
   </data>
   <data name="Araştırmalar" xml:space="preserve">
     <value>Researches</value>
-  </data>
-  <data name="RD1" xml:space="preserve">
-    <value>Weapoon Technique description.</value>
   </data>
   <data name="ÜretimSüresi" xml:space="preserve">
     <value>Produce Time</value>
@@ -543,5 +540,31 @@ Fleets return to &lt;color=orange&gt;{SM} [{SC}]&lt;/color&gt; planet.</value>
 
 &lt;color=green&gt;Return Fleet;&lt;/color&gt;
 {SA}</value>
+  </data>
+  <data name="AraştırmaGereksinim" xml:space="preserve">
+    <value>Research Requirements</value>
+  </data>
+  <data name="AraştırmaSüresi" xml:space="preserve">
+    <value>Research Time</value>
+  </data>
+  <data name="RD1" xml:space="preserve">
+    <value>Scientists evolved Rocket Technique to increase accuracy rate and damage power of rockets.</value>
+  </data>
+  <data name="BD1" xml:space="preserve">
+    <value>Produce metal resource that uses almost every thing.
+Construct buildings in your planet.
+Ships and defense structures.</value>
+  </data>
+  <data name="Yık" xml:space="preserve">
+    <value>Demolish</value>
+  </data>
+  <data name="GeriÇağır" xml:space="preserve">
+    <value>Call Back</value>
+  </data>
+  <data name="BD2" xml:space="preserve">
+    <value>Produce crystal resource that uses for many ships, defenses and buildings.</value>
+  </data>
+  <data name="BD3" xml:space="preserve">
+    <value>Produce boron resource that uses for many ships, defenses also you will need this resources as a fuel for your fleet.</value>
   </data>
 </root>

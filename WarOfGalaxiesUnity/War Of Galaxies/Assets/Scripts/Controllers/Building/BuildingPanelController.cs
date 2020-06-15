@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.ApiModels;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
+using Assets.Scripts.Models;
 using System;
 using System.Collections;
 using System.Linq;
@@ -22,6 +23,9 @@ public class BuildingPanelController : BasePanelController
     [Header("Binanın ismini tutuyoruz.")]
     public TMP_Text BuildingName;
 
+    [Header("Binanın açıklaması.")]
+    public TMP_Text BuildingDescription;
+
     [Header("Binanın seviyesini basıyoruz.")]
     public TMP_Text BuildingLevel;
 
@@ -39,7 +43,7 @@ public class BuildingPanelController : BasePanelController
         bool canUpgrade = true;
 
         // Eğer bir bina yükseltiliyor ise true olacak.
-        bool isAlreadyUpgrading = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Count(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId) > 0;
+        bool isAlreadyUpgrading = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Any(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
 
         // Eğer zaten upgrade ediliyor ise upgrade edilemez.
         if (isAlreadyUpgrading)
@@ -72,6 +76,16 @@ public class BuildingPanelController : BasePanelController
         // Binanın ismini basıyoruz.
         BuildingName.text = base.GetLanguageText($"B{(int)building}");
 
+        // Bina açıklamasını basıyoruz.
+        BuildingDescription.text = base.GetLanguageText($"BD{(int)building}");
+
+        // Bina resim bilgisi.
+        BuildingsWithImage buildingImage = GlobalBuildingController.GBC.BuildingWithImages.Find(x => x.Building == building);
+
+        // Eğer resmi var ise resmi basıyoruz.
+        if (buildingImage != null)
+            BuildingImage.sprite = buildingImage.BuildingImage;
+
         // Robot fabrikasını buluyoruz.
         UserPlanetBuildingDTO robotBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.RobotFabrikası);
 
@@ -79,7 +93,7 @@ public class BuildingPanelController : BasePanelController
         double upgradeTime = DataController.DC.CalculateBuildingUpgradeTime(building, nextLevel, robotBuilding == null ? 0 : robotBuilding.BuildingLevel);
 
         // Ekrana basıyoruz.
-        BuildingUpgradeTime.text = $"<color=#C4E5FD>{base.GetLanguageText("YapımSüresi")}:</color> {TimeExtends.GetCountdownText(TimeSpan.FromSeconds(upgradeTime))}";
+        BuildingUpgradeTime.text = $"<color=#FF8B00>{base.GetLanguageText("YapımSüresi")}:</color>{Environment.NewLine}{TimeExtends.GetCountdownText(TimeSpan.FromSeconds(upgradeTime))}";
 
         // Kaynak kontrolü ve koşulları sağlıyor mu kontorlü
         ResourcesDTO resources = DataController.DC.CalculateCostBuilding(building, nextLevel);
@@ -124,6 +138,18 @@ public class BuildingPanelController : BasePanelController
         }
         else
             BoronDetail.gameObject.SetActive(false);
+
+        #endregion
+
+        #region Bina kaynak gereksinimlerini kontrol ediyoruz.
+
+        // Eğer yükseltilebilir ise kaynakları kontrol ediyoruz.
+        if (canUpgrade)
+        {
+            // Gezegendeki kaynaklar yeterli değil ise butonu kapatacağız.
+            if (GlobalPlanetController.GPC.CurrentPlanet.Metal < resources.Metal || GlobalPlanetController.GPC.CurrentPlanet.Crystal < resources.Crystal || GlobalPlanetController.GPC.CurrentPlanet.Boron < resources.Boron)
+                canUpgrade = false;
+        }
 
         #endregion
 
@@ -177,7 +203,7 @@ public class BuildingPanelController : BasePanelController
                 UserPlanetBuildingUpgDTO upgradeInfo = response.GetData<UserPlanetBuildingUpgDTO>();
 
                 // Hesaplamasını yapıyoruz.
-                upgradeInfo.CalculateDates(upgradeInfo.LeftTime);
+                upgradeInfo.CalculateDates(upgradeInfo.PassedTime, upgradeInfo.LeftTime);
 
                 // Gezegeni buluyoruz.
                 UserPlanetDTO userPlanet = LoginController.LC.CurrentUser.UserPlanets.Find(x => x.UserPlanetId == upgradeInfo.UserPlanetId);

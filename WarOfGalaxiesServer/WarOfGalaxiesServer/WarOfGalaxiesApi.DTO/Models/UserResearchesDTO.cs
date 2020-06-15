@@ -15,6 +15,7 @@ namespace WarOfGalaxiesApi.DTO.Models
         public double LeftTime { get; set; }
         public int UserPlanetID { get; set; }
         public ResourcesDTO Resources { get; set; }
+        public double PassedTime { get; set; }
     }
     public class UserResearchUpgRequest
     {

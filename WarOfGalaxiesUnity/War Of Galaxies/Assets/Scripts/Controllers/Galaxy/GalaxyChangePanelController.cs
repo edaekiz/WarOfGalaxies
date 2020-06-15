@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 
 public class GalaxyChangePanelController : MonoBehaviour
@@ -29,6 +30,30 @@ public class GalaxyChangePanelController : MonoBehaviour
 
     [Header("Aktif olan güneş sistemi.")]
     public int CurrentSolarIndex;
+
+    IEnumerator Start()
+    {
+        // Oyun yüklenene kadar bekliyoruz.
+        yield return new WaitUntil(() => LoadingController.LC.IsGameLoaded);
+
+        // Kordinat atılana kadar bekliyoruz.
+        yield return new WaitUntil(() => GlobalPlanetController.GPC.CurrentPlanetCordinate != null);
+
+        // Gezegenin kordinatına gidiyoruz.
+        GoToCordinate(GlobalPlanetController.GPC.CurrentPlanetCordinate.GalaxyIndex, GlobalPlanetController.GPC.CurrentPlanetCordinate.SolarIndex);
+    }
+
+    public void GoToCordinate(int galaxyIndex,int solarIndex)
+    {
+        // Galaksi indexi koyuyoruz.
+        GalaxyIndexField.text = galaxyIndex.ToString();
+
+        // Solar indexi koyuyoruz.
+        SolarIndexField.text = solarIndex.ToString();
+
+        // Hedef kordinata gider.
+        GoToCordinate();
+    }
 
     public void GoToPreviousCordinate()
     {

@@ -167,7 +167,10 @@ public class PlanetActionController : BasePanelController
 
     public void Load(SolarPlanetDTO planetInfo, CordinateDTO cordinateInfo)
     {
+        // Seçilen gezegenin bilgileri.
         CurrentSelectedPlanetInfo = planetInfo;
+
+        // Kordinat bilgisini basıyoruz.
         CurrentCordinate = cordinateInfo;
 
         // Gezegen seçilmiş ise ismini basıyoruz.

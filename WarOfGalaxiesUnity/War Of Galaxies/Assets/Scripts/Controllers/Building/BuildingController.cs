@@ -33,7 +33,7 @@ public class BuildingController : BaseLanguageBehaviour
         LoadBuildingDetails();
 
         // Bina ismini seviye ile basıyoruz.
-        StartCoroutine(UpdateBuildingNameLevelAndTime());
+        InvokeRepeating("UpdateBuildingNameLevelAndTime", 0, 1);
     }
 
     public void LoadBuildingDetails()
@@ -61,7 +61,7 @@ public class BuildingController : BaseLanguageBehaviour
         }
     }
 
-    public IEnumerator UpdateBuildingNameLevelAndTime()
+    public void UpdateBuildingNameLevelAndTime()
     {
         // Kullanıcının binasını buluyoruz.
         UserPlanetBuildingDTO userPlanetBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == BuildingType);
@@ -82,10 +82,6 @@ public class BuildingController : BaseLanguageBehaviour
             if (userPlanetBuildingUpg != null)
                 BuildingInfo.text += $"{Environment.NewLine}<color=green>{TimeExtends.GetCountdownText(userPlanetBuildingUpg.EndDate - DateTime.UtcNow)}</color>";
         }
-
-        yield return new WaitForSeconds(1);
-
-        StartCoroutine(UpdateBuildingNameLevelAndTime());
     }
 
     private void OnMouseDown()

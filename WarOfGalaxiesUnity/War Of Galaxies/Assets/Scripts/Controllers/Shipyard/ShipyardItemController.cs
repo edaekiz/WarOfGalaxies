@@ -46,9 +46,10 @@ public class ShipyardItemController : BaseLanguageBehaviour
         // Üretim var mı?
         UserPlanetShipProgDTO prog = LoginController.LC.CurrentUser.UserPlanetShipProgs.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.ShipId == ship);
 
-        // Eğer üretim var ise süreyi basıyoruz.
-        if (prog != null)
+        // Eğer üretim var ise süreyi basıyoruz. Ancak basmadan önce kontrol ediyoruz gezegendeki şuan üretimi yapılan gemi bu gemi mi?
+        if (prog != null && ReferenceEquals(prog, LoginController.LC.CurrentUser.UserPlanetShipProgs.FirstOrDefault(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId)))
         {
+
             // İkonu ve kalan süreyi basıyoruz.
             if (!CountdownImage.gameObject.activeSelf)
                 CountdownImage.gameObject.SetActive(true);

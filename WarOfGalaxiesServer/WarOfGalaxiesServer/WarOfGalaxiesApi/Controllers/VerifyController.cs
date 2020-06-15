@@ -43,10 +43,8 @@ namespace WarOfGalaxiesApi.Controllers
 
             try
             {
-                DateTime currentDate = DateTime.UtcNow;
-
                 List<TblFleets> fleets = controller.UnitOfWork.GetRepository<TblFleets>()
-                    .Where(x => x.EndDate <= currentDate)
+                    .Where(x => x.EndDate <= verifyData.VerifyDate)
                     .Where(x => x.DestinationUserPlanetId == verifyData.UserPlanetID || x.SenderUserPlanetId == verifyData.UserPlanetID)
                     .OrderBy(x => x.EndDate)
                     .Include(x => x.ReturnFleet)
@@ -55,6 +53,11 @@ namespace WarOfGalaxiesApi.Controllers
                 // Her bir filo hareketini execute ediyoruz.
                 foreach (TblFleets fleet in fleets)
                 {
+                    // Savaş yada casusluk sırasında bütün filo yok edilirse dönecek filo kalmaz ve dönüş filosu silinir.
+                    // Dönüş filosu silindiğinde tekrar o filoya ait işleri yapmamız gerekmez.
+                    if (controller.UnitOfWork.GetRepository<TblFleets>().GetStateOfEntry(fleet) == EntityState.Deleted)
+                        continue;
+
                     TblUserPlanets senderUser = null;
                     TblUserPlanets destinationUser = null;
 
@@ -193,63 +196,60 @@ namespace WarOfGalaxiesApi.Controllers
                     // Metal deposu yükseltiliyor mu?
                     if (planetStorageBuildingUpg != null)
                     {
-                        // Yükseltmenin bittiğinden emin oluyoruz.
-                        if (planetStorageBuildingUpg.EndDate < verifyDate)
+
+                        #region Deponun yükseltilmesinden önceki hesaplama.
+
+                        // Deponun yükseltmeden önceki geçen süre.
+                        double passedSecondsInPrevStorage = (planetStorageBuildingUpg.EndDate - userPlanet.LastUpdateDate).TotalSeconds;
+
+                        // Deponun yükseltmeden önceki kapasitesi.
+                        double metalBuildingCapacityInPrevStorage = controller.StaticValues.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
+
+                        // Metal binasının depo yükseltilene kadar ürettiği toplam miktar.
+                        double metalProduceQuantityInPrevStorage = controller.StaticValues.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSecondsInPrevStorage / 3600);
+
+                        // Gezegendeki kaynağı yükseltiyoruz.
+                        UpdateUserPlanetResources(userPlanet, resourceBuilding, metalBuildingCapacityInPrevStorage, metalProduceQuantityInPrevStorage);
+
+                        #endregion
+
+                        #region Depo yükseltme işlemi.
+
+                        // Yükseltme bilgisini siliyoruz.
+                        controller.UnitOfWork.GetRepository<TblUserPlanetBuildingUpgs>().Delete(planetStorageBuildingUpg);
+
+                        // Metal deposunu inşaa etmemiz gerekiyor ise inşaa edeceğiz.
+                        if (planetStorageBuilding == null)
                         {
-                            #region Deponun yükseltilmesinden önceki hesaplama.
-
-                            // Deponun yükseltmeden önceki geçen süre.
-                            double passedSecondsInPrevStorage = (planetStorageBuildingUpg.EndDate - userPlanet.LastUpdateDate).TotalSeconds;
-
-                            // Deponun yükseltmeden önceki kapasitesi.
-                            double metalBuildingCapacityInPrevStorage = controller.StaticValues.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
-
-                            // Metal binasının depo yükseltilene kadar ürettiği toplam miktar.
-                            double metalProduceQuantityInPrevStorage = controller.StaticValues.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSecondsInPrevStorage / 3600);
-
-                            // Gezegendeki kaynağı yükseltiyoruz.
-                            UpdateUserPlanetResources(userPlanet, resourceBuilding, metalBuildingCapacityInPrevStorage, metalProduceQuantityInPrevStorage);
-
-                            #endregion
-
-                            #region Depo yükseltme işlemi.
-
-                            // Yükseltme bilgisini siliyoruz.
-                            controller.UnitOfWork.GetRepository<TblUserPlanetBuildingUpgs>().Delete(planetStorageBuildingUpg);
-
-                            // Metal deposunu inşaa etmemiz gerekiyor ise inşaa edeceğiz.
-                            if (planetStorageBuilding == null)
+                            // Ve binayı sisteme ekliyoruz.
+                            controller.UnitOfWork.GetRepository<TblUserPlanetBuildings>().Add(new TblUserPlanetBuildings
                             {
-                                // Ve binayı sisteme ekliyoruz.
-                                controller.UnitOfWork.GetRepository<TblUserPlanetBuildings>().Add(new TblUserPlanetBuildings
-                                {
-                                    BuildingLevel = 1,
-                                    BuildingId = (int)resourceStorageBuilding,
-                                    UserPlanetId = userPlanet.UserPlanetId
-                                });
-                            }
-                            else // Zaten kaynak deposu var ise seviyesini yükseltiyoruz.
-                                planetStorageBuilding.BuildingLevel = planetStorageBuildingUpg.BuildingLevel;
-
-                            #endregion
-
-                            #region Deponun yükseltilmesinden sonraki hesaplama.
-
-                            // Deponun yükseltmesinden sonraki geçen süre.
-                            double passedSecondsInNextStorage = (verifyDate - planetStorageBuildingUpg.EndDate).TotalSeconds;
-
-                            // Deponun yükseltmeden sonraki kapasitesi.
-                            double metalBuildingCapacityInNextStorage = controller.StaticValues.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
-
-                            // Metal binasının yükseltmeden sonraki geçen sürede ürettiği metal miktarı.
-                            double metalProduceQuantityInNextStorage = controller.StaticValues.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSecondsInNextStorage / 3600);
-
-                            // Gezegendeki kaynağı yükseltiyoruz.
-                            UpdateUserPlanetResources(userPlanet, resourceBuilding, metalBuildingCapacityInNextStorage, metalProduceQuantityInNextStorage);
-
-                            #endregion
-
+                                BuildingLevel = 1,
+                                BuildingId = (int)resourceStorageBuilding,
+                                UserPlanetId = userPlanet.UserPlanetId
+                            });
                         }
+                        else // Zaten kaynak deposu var ise seviyesini yükseltiyoruz.
+                            planetStorageBuilding.BuildingLevel = planetStorageBuildingUpg.BuildingLevel;
+
+                        #endregion
+
+                        #region Deponun yükseltilmesinden sonraki hesaplama.
+
+                        // Deponun yükseltmesinden sonraki geçen süre.
+                        double passedSecondsInNextStorage = (verifyDate - planetStorageBuildingUpg.EndDate).TotalSeconds;
+
+                        // Deponun yükseltmeden sonraki kapasitesi.
+                        double metalBuildingCapacityInNextStorage = controller.StaticValues.GetBuildingStorage(resourceStorageBuilding, planetStorageBuilding == null ? 0 : planetStorageBuilding.BuildingLevel);
+
+                        // Metal binasının yükseltmeden sonraki geçen sürede ürettiği metal miktarı.
+                        double metalProduceQuantityInNextStorage = controller.StaticValues.GetBuildingProdPerHour(resourceBuilding, planetResourceBuilding == null ? 0 : planetResourceBuilding.BuildingLevel) * (passedSecondsInNextStorage / 3600);
+
+                        // Gezegendeki kaynağı yükseltiyoruz.
+                        UpdateUserPlanetResources(userPlanet, resourceBuilding, metalBuildingCapacityInNextStorage, metalProduceQuantityInNextStorage);
+
+                        #endregion
+
                     }
                     else // Yükseltilmiyor ise standart ekleme çıkarma yapacağız.
                     {
@@ -280,7 +280,7 @@ namespace WarOfGalaxiesApi.Controllers
             TblUserPlanetBuildingUpgs buildingUpgrade = userPlanet.TblUserPlanetBuildingUpgs.FirstOrDefault();
 
             // Eğer yüksletme var ise yükseltiyoruz.
-            if (buildingUpgrade != null)
+            if (buildingUpgrade != null && buildingUpgrade.EndDate <= verifyDate)
             {
                 // Gezegendeki kaynak binasını buluyoruz.
                 TblUserPlanetBuildings building = userPlanet.TblUserPlanetBuildings.FirstOrDefault(x => x.BuildingId == buildingUpgrade.BuildingId);
@@ -652,7 +652,7 @@ namespace WarOfGalaxiesApi.Controllers
             List<string> defaultMailContent = new List<string>()
             {
                 MailEncoder.GetParam(MailEncoder.KEY_ACTION_TYPE_RETURN, userFleet.FleetActionTypeId),
-                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName),
+                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, userPlanet.PlanetName),
                 MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
                 MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETCORDINATE, userFleet.DestinationCordinate),
                 MailEncoder.GetParam(MailEncoder.KEY_NEW_METAL, userFleet.CarriedMetal),
@@ -749,6 +749,7 @@ namespace WarOfGalaxiesApi.Controllers
                 {
                     ships.Add(new SimulationDTO
                     {
+                        IsCivil = shipData.IsCivil,
                         Id = (int)x.Item1,
                         ShipData = shipData,
                         Health = shipData.ShipHealth,
@@ -768,6 +769,7 @@ namespace WarOfGalaxiesApi.Controllers
                 {
                     ships.Add(new SimulationDTO
                     {
+                        IsCivil = shipData.IsCivil,
                         Id = x.ShipId,
                         ShipData = shipData,
                         Health = shipData.ShipHealth,
@@ -787,11 +789,11 @@ namespace WarOfGalaxiesApi.Controllers
                 {
                     defenses.Add(new SimulationDTO
                     {
+                        IsCivil = false,
                         Id = x.DefenseId,
                         Side = SimulationDTO.SimulationSides.DefenderDefense,
                         DefenseData = defenseData,
                         Health = defenseData.DefenseHealth
-
                     });
                 }
                 return defenses;
@@ -830,7 +832,11 @@ namespace WarOfGalaxiesApi.Controllers
                     {
                         // Eğer bir hedef yok ise yada canı 0dan az ise rastgele birisini alıyoruz.
                         if (attackerShip.Target == null || attackerShip.Target.Health <= 0)
-                            attackerShip.Target = defenderShipCombined[randomizer.Next(0, defenderShipCombined.Count)];
+                            attackerShip.Target = defenderShipCombined.OrderBy(x => Guid.NewGuid()).ThenBy(x => !x.IsCivil).FirstOrDefault();
+
+                        // Hedef yok ise döngüyü bitir.
+                        if (attackerShip.Target == null)
+                            break;
 
                         // Şimdi hedefe saldırıyoruz.
                         attackerShip.Target.Health -= attackerShip.ShipData.ShipAttackDamage;
@@ -860,7 +866,10 @@ namespace WarOfGalaxiesApi.Controllers
                     {
                         // Eğer bir hedef yok ise yada canı 0dan az ise rastgele birisini alıyoruz.
                         if (defenderShipOrDefense.Target == null || defenderShipOrDefense.Target.Health <= 0)
-                            defenderShipOrDefense.Target = attackerShipsCombined[randomizer.Next(0, attackerShipsCombined.Count)];
+                            defenderShipOrDefense.Target = attackerShipsCombined.OrderBy(x => Guid.NewGuid()).ThenBy(x => !x.IsCivil).FirstOrDefault();
+
+                        if (defenderShipOrDefense.Target == null)
+                            break;
 
                         // Şimdi hedefe saldırıyoruz.
                         defenderShipOrDefense.Target.Health -= damage;
@@ -1137,7 +1146,7 @@ namespace WarOfGalaxiesApi.Controllers
                 // Enkaz alanına kaynak oluşturuyoruz.
                 shipGarbage.Boron += (sim.LostCount * shipData.CostBoron) * globalGarbageRate;
 
-                //
+                // Kurtarılan gemiler var ise listeye ekliyoruz.
                 if (sim.LostCount < totalLostCount)
                 {
                     // Eğer filo tamamen listeden silinmiş ise listeye ekliyoruz.
@@ -1224,6 +1233,10 @@ namespace WarOfGalaxiesApi.Controllers
             // Filodaki datayı güncelliyoruz.
             userFleet.ReturnFleet.FleetData = FleetController.ShipDataToStringData(newAttackerShips);
 
+            // Eğer dönecek gemi kalmadı ise sistemden siliyoruz. Çünkü filonun bir dönüşü olmayacak.
+            if (newAttackerShips.Count == 0)
+                controller.UnitOfWork.GetRepository<TblFleets>().Delete(userFleet.ReturnFleetId.Value);
+
             #endregion
 
             #region Kordinata enkazı basıyoruz.
@@ -1277,9 +1290,9 @@ namespace WarOfGalaxiesApi.Controllers
             List<string> defaultMailContent = new List<string>()
             {
                 MailEncoder.GetParam(MailEncoder.KEY_ACTION_TYPE_RETURN, userFleet.FleetActionTypeId),
-                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName),
+                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, destinationPlanet.PlanetName),
                 MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
-                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, destinationPlanet.PlanetName),
+                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, userPlanet.PlanetName),
                 MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETCORDINATE, userFleet.DestinationCordinate),
                 MailEncoder.GetParam(MailEncoder.KEY_NEW_METAL,userFleet.CarriedMetal),
                 MailEncoder.GetParam(MailEncoder.KEY_NEW_CRYSTAL,userFleet.CarriedCrystal),
@@ -1439,9 +1452,9 @@ namespace WarOfGalaxiesApi.Controllers
             List<string> defaultMailContent = new List<string>()
             {
                 MailEncoder.GetParam(MailEncoder.KEY_ACTION_TYPE_RETURN, userFleet.FleetActionTypeId),
-                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, userPlanet.PlanetName),
+                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETNAME, destinationPlanet.PlanetName),
                 MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
-                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, destinationPlanet.PlanetName),
+                MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, userPlanet.PlanetName),
                 MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETCORDINATE, userFleet.DestinationCordinate)
             };
 

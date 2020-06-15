@@ -9,6 +9,8 @@ using System;
 using System.Linq;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using Assets.Scripts.Models;
+using static Assets.Scripts.Pluigns.MailEncoder;
 
 public class MailDetailItemOnlySpyController : MonoBehaviour, IMailDetailItem
 {
@@ -36,8 +38,16 @@ public class MailDetailItemOnlySpyController : MonoBehaviour, IMailDetailItem
     [Header("Mail içeriğini buraya basacağız.")]
     public TMP_Text TXT_MailContent;
 
-    public void LoadContent(UserMailDTO mailData, MailEncoder.MailDecodeDTO decodedData)
+    /// <summary>
+    /// Mail datasını tutar.
+    /// </summary>
+    public MailDecodeDTO MailData { get; set; }
+
+    public void LoadContent(UserMailDTO mailData, MailDecodeDTO decodedData)
     {
+        // Mail datası lazım olacak.
+        this.MailData = decodedData;
+
         // Mailin türünü arıyoruz. Ona göre Dil dosyasından alacağız datayı.
         MailTypes mailType = decodedData.GetMailType();
 
@@ -73,7 +83,9 @@ public class MailDetailItemOnlySpyController : MonoBehaviour, IMailDetailItem
         decodedData.GetManyItem<Buildings>(MailEncoder.KEY_BUILDING_DEFENDER).OrderBy(x => x.Item1).ToList().ForEach(e =>
         {
             GameObject item = Instantiate(SpyMailTemplateWithImage, BuildingContent);
-            item.transform.Find("ItemImage").GetComponent<Image>().sprite = GlobalBuildingController.GBC.BuildingWithImages.Find(x => x.Building == e.Item1).BuildingImage;
+            BuildingsWithImage buildingImage = GlobalBuildingController.GBC.BuildingWithImages.Find(x => x.Building == e.Item1);
+            if (buildingImage != null)
+                item.transform.Find("ItemImage").GetComponent<Image>().sprite = buildingImage.BuildingImage;
             item.transform.Find("ItemName").GetComponent<TMP_Text>().text = LanguageController.LC.GetText($"B{(int)e.Item1}");
             item.transform.Find("ItemCount").GetComponent<TMP_Text>().text = e.Item2.ToString();
         });
@@ -82,11 +94,23 @@ public class MailDetailItemOnlySpyController : MonoBehaviour, IMailDetailItem
 
         #region Araştırmalar
 
+        // Raporda yer alana araştırmaları basıyoruz.
         decodedData.GetManyItem<Researches>(MailEncoder.KEY_RESEARCHES).ForEach(e =>
         {
+            // Araştırmayı oluşturuyoruz.
             GameObject item = Instantiate(SpyMailTemplateWithImage, ResearchContent);
-            item.transform.Find("ItemImage").GetComponent<Image>().sprite = ResearchController.RC.ResearchWithImages.Find(x => x.Research == e.Item1).ResearchImage;
+
+            // İkon bilgisini buluyoruz.
+            ResearchImageDTO researchImage = ResearchController.RC.ResearchWithImages.Find(x => x.Research == e.Item1);
+
+            // Eğer bir ikonu var ise ikonu basıyoruz.
+            if (researchImage != null)
+                item.transform.Find("ItemImage").GetComponent<Image>().sprite = researchImage.ResearchImage;
+
+            // Araştırma ismini basıyoruz.
             item.transform.Find("ItemName").GetComponent<TMP_Text>().text = LanguageController.LC.GetText($"R{(int)e.Item1}");
+
+            // Araştırma seviyesini basıyoruz.
             item.transform.Find("ItemCount").GetComponent<TMP_Text>().text = e.Item2.ToString();
         });
 
@@ -119,6 +143,27 @@ public class MailDetailItemOnlySpyController : MonoBehaviour, IMailDetailItem
         });
 
         #endregion
-
     }
+
+    public void OnClickWarButton()
+    {
+        // Hedef kordinat bilgisini açıyoruz.
+        CordinateDTO destinationCordinate = MailData.GetValue(KEY_DESTINATIONPLANETCORDINATE).ToCordinate();
+
+        // Paneli açıyoruz.
+        GameObject panel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.GalaxyPlanetActionPanel);
+
+        // Mail datasını yüklüyoruz.
+        panel.GetComponent<PlanetActionController>().Load(new SolarPlanetDTO
+        {
+            UserPlanet = new UserPlanetDTO
+            {
+                PlanetName = MailData.GetValue(KEY_DESTINATIONPLANETNAME)
+            }
+        }, destinationCordinate);
+
+        // Saldırı seçili olarak açmalıyız.
+        panel.GetComponent<PlanetActionController>().OnActionChanged(FleetTypes.Saldır);
+    }
+
 }

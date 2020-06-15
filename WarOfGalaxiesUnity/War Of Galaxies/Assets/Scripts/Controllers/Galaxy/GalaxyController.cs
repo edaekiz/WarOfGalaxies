@@ -46,23 +46,6 @@ public class GalaxyController : MonoBehaviour
             Destroy(gameObject);
     }
 
-    private void Start()
-    {
-        StartCoroutine(GoCurrentPlanetCordinate());
-    }
-
-    private IEnumerator GoCurrentPlanetCordinate()
-    {
-        // Oyun yüklendiğinde çalışacak.
-        yield return new WaitUntil(() => LoadingController.LC.IsGameLoaded);
-
-        // Kordinatı alıyoruz ilk açılışta.
-        yield return new WaitUntil(() => GlobalPlanetController.GPC.CurrentPlanetCordinate != null);
-
-        // Gezegenin kordinatını yüklüyoruz.
-        LoadSolarSystem(GlobalPlanetController.GPC.CurrentPlanetCordinate.GalaxyIndex, GlobalPlanetController.GPC.CurrentPlanetCordinate.SolarIndex);
-    }
-
     void Update()
     {
         #region Galaxiyi çeviriyoruz.
@@ -77,18 +60,18 @@ public class GalaxyController : MonoBehaviour
         // Loading ekranını açıyoruz.
         LoadingController.LC.ShowLoading();
 
-        // Var ise önceki gezegenleri temizliyoruz.
-        if (currentSun != null)
-        {
-            currentSun.Planets.ForEach(e => Destroy(e.gameObject));
-            Destroy(currentSun.gameObject);
-        }
-
         // Kordinattaki verileri alıyoruz.
         StartCoroutine(ApiService.API.Post("GetCordinateDetails", new GalaxyInfoRequestDTO { GalaxyIndex = galaxyIndex, SolarIndex = solarIndex }, (ApiResult result) =>
         {
             if (result.IsSuccess != true)
                 return;
+            
+            // Var ise önceki gezegenleri temizliyoruz.
+            if (currentSun != null)
+            {
+                currentSun.Planets.ForEach(e => Destroy(e.gameObject));
+                Destroy(currentSun.gameObject);
+            }
 
             // Loading ekranını açıyoruz.
             LoadingController.LC.CloseLoading();

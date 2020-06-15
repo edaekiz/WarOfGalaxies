@@ -2,6 +2,7 @@
 using Assets.Scripts.Controllers.Base;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
+using Assets.Scripts.Models;
 using System;
 using System.Collections;
 using TMPro;
@@ -47,7 +48,12 @@ public class ResearchItemController : BaseLanguageBehaviour
         // Araştırma seviyesi.
         ResearchLevel.text = $"{researchLevel}";
 
+        // Araştırmaya atanan ikonu buluyoruz.
+        ResearchImageDTO researchIcon = ResearchController.RC.ResearchWithImages.Find(x => x.Research == research);
+
         // Araştırma ikonu.
+        if (researchIcon != null)
+            ResearchIcon.sprite = researchIcon.ResearchImage;
 
         // Yükseltmesi var mı?
         UserResearchProgDTO upg = LoginController.LC.CurrentUser.UserResearchProgs.Find(x => x.ResearchID == research);
@@ -58,6 +64,9 @@ public class ResearchItemController : BaseLanguageBehaviour
             // İkonu ve kalan süreyi basıyoruz.
             if (!ResearchCountdownImage.gameObject.activeSelf)
                 ResearchCountdownImage.gameObject.SetActive(true);
+
+            // Yükseltme ikonu progresini hesaplıyoruz.
+            ResearchCountdownImage.fillAmount = Mathf.Clamp((float)((upg.EndDate - currentDate).TotalSeconds / (upg.EndDate - upg.BeginDate).TotalSeconds), 0, 1);
 
             // Araştırma geri sayımını aktif ediyoruz.
             ResearchCountdown.text = $"{base.GetLanguageText("SeviyeParantez", upg.ResearchLevel.ToString())}{Environment.NewLine}{TimeExtends.GetCountdownText(upg.EndDate - currentDate)}";

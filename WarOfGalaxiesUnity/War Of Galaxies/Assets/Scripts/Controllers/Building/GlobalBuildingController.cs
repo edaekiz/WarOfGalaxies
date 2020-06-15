@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.ApiModels;
-using Assets.Scripts.Enums;
+using Assets.Scripts.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,13 +8,6 @@ using UnityEngine;
 
 public class GlobalBuildingController : MonoBehaviour
 {
-    [Serializable]
-    public struct BuildingsWithImage
-    {
-        public Buildings Building;
-        public Sprite BuildingImage;
-    }
-
     public static GlobalBuildingController GBC { get; set; }
     private void Awake()
     {
@@ -42,19 +35,21 @@ public class GlobalBuildingController : MonoBehaviour
 
         foreach (UserPlanetDTO userPlanet in LoginController.LC.CurrentUser.UserPlanets)
         {
-            UserPlanetBuildingUpgDTO UserPlanetBuildingUpg = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.FirstOrDefault(x => x.UserPlanetId == userPlanet.UserPlanetId);
+            // Yükseltme bilgisi bulunamadı.
+            UserPlanetBuildingUpgDTO userPlanetBuildingUpg = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.FirstOrDefault(x => x.UserPlanetId == userPlanet.UserPlanetId);
 
-            if (UserPlanetBuildingUpg == null)
+            // Yükseltme yok ise geri dön.
+            if (userPlanetBuildingUpg == null)
                 continue;
 
             // Eğer tarih tamamlanma tarihinnden az ise tamamlanmıştır.
-            if (DateTime.UtcNow >= UserPlanetBuildingUpg.EndDate)
+            if (DateTime.UtcNow >= userPlanetBuildingUpg.EndDate)
             {
                 // Kullanıcının gezegendeki kaynaklarını verify ediyoruz.
                 LoginController.LC.VerifyUserResources(GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId, (UserPlanetDTO onSuccess) =>
                 {
                     // Var olan binayı buluyoruz.
-                    UserPlanetBuildingDTO userBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == UserPlanetBuildingUpg.UserPlanetId && x.BuildingId == UserPlanetBuildingUpg.BuildingId);
+                    UserPlanetBuildingDTO userBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == userPlanetBuildingUpg.UserPlanetId && x.BuildingId == userPlanetBuildingUpg.BuildingId);
 
                     // Bina ilk kez kuruluyor.
                     if (userBuilding == null)
@@ -62,24 +57,34 @@ public class GlobalBuildingController : MonoBehaviour
                         // Bina listesine ekliyoruz.
                         LoginController.LC.CurrentUser.UserPlanetsBuildings.Add(new UserPlanetBuildingDTO
                         {
-                            BuildingId = UserPlanetBuildingUpg.BuildingId,
-                            BuildingLevel = UserPlanetBuildingUpg.BuildingLevel,
-                            UserPlanetId = UserPlanetBuildingUpg.UserPlanetId
+                            BuildingId = userPlanetBuildingUpg.BuildingId,
+                            BuildingLevel = userPlanetBuildingUpg.BuildingLevel,
+                            UserPlanetId = userPlanetBuildingUpg.UserPlanetId
                         });
                     }
                     else // Eğer bina zaten var ise sadece kaynaklarını güncelliyoruz.
                     {
-                        userBuilding.BuildingLevel = UserPlanetBuildingUpg.BuildingLevel;
+                        userBuilding.BuildingLevel = userPlanetBuildingUpg.BuildingLevel;
                     }
 
-                    // Yükseltmeyi sistemden siliyoruz.
-                    LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Remove(UserPlanetBuildingUpg);
+                    // Binayı buluyoruz.
+                    BuildingController building = FindObjectsOfType<BuildingController>().FirstOrDefault(x => x.BuildingType == userPlanetBuildingUpg.BuildingId);
+
+                    // Binayı bulduktan sonra yeniliyoruz detaylarını.
+                    if (building != null)
+                        building.LoadBuildingDetails();
 
                 });
+
+                // Yükseltmeyi sistemden siliyoruz.
+                LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Remove(userPlanetBuildingUpg);
             }
         }
 
+        // 1 saniye bekliyoruz.
         yield return new WaitForSeconds(1);
+
+        // Sonra tekrar hesaplıyoruz.
         StartCoroutine(ReCalculateBuildings());
     }
 

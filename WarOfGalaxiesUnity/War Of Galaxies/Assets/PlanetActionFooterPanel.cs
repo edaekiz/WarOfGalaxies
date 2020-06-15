@@ -94,6 +94,17 @@ public class PlanetActionFooterPanel : BasePanelController
 
     private void ShowGarbagePanelIfRequired()
     {
+        // Eğer keşfedilmemiş gezegen ise kaynak yoktur.
+        if (this.CurrentShownPlanet == null)
+        {
+            // Paneli kapatıyoruz.
+            if (GarbagePanel.activeSelf)
+                GarbagePanel.SetActive(false);
+
+            // Devamına inmeye gerek yok.
+            return;
+        }
+
         // Eğer enkaz var ise gösteriyoruz.
         if (this.CurrentShownPlanet.GarbageMetal > 0 || this.CurrentShownPlanet.GarbageCrystal > 0 || this.CurrentShownPlanet.GarbageBoron > 0)
             GarbagePanel.SetActive(true);
@@ -333,6 +344,29 @@ public class PlanetActionFooterPanel : BasePanelController
 
     private void ValidateSpyShipCount()
     {
+        // Eğer kullanıcının gezegeni ise ozaman spy butonu kalkacak.
+        if (LoginController.LC.CurrentUser.UserPlanetCordinates.Any(x => x.Same(CurrentShownCordinate)))
+        {
+            // Butonu kaldırıyoruz.
+            FastSpyButton.gameObject.SetActive(false);
+
+            // Geri dönüyoruz.
+            return;
+        }
+
+        // Eğer burası keşfedilmemiş gezegen ise ozaman da casusluk kapalı olacak.
+        if (this.CurrentShownPlanet == null)
+        {
+            // Butonu kaldırıyoruz.
+            FastSpyButton.gameObject.SetActive(false);
+
+            // Geri dönüyoruz.
+            return;
+        }
+
+        // Butonu açıyoruz. Demekki casusluk yapılabilir bir gezegen.
+        FastSpyButton.gameObject.SetActive(true);
+
         // Gemi miktarını basıyoruz.
         int spyShipCount = LoginController.LC.CurrentUser.UserPlanetShips.Count(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.ShipId == Ships.CasusSondası);
 
@@ -340,7 +374,7 @@ public class PlanetActionFooterPanel : BasePanelController
         TXT_FastSpyQuantity.text = spyShipCount.ToString();
 
         // Eğer yeterli miktar yok ise butonu devredışı bırakıyoruz.
-        if (spyShipCount > 0)
+        if (spyShipCount > 0 )
             FastSpyButton.interactable = true;
         else
             FastSpyButton.interactable = false;

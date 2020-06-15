@@ -18,6 +18,7 @@ namespace Assets.Scripts.ApiModels
         public int UserPlanetID;
         public ResourcesDTO Resources;
         public double LeftTime;
+        public double PassedTime;
     }
     [Serializable]
     public class UserResearchUpgRequest

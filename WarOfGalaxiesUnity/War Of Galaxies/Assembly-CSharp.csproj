@@ -63,6 +63,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\AudioController.cs" />
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\AntiAliasing.cs" />
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\FXAA\FXAA.cs" />
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\IAntiAliasing.cs" />
@@ -180,9 +181,11 @@
     <Compile Include="Assets\Scripts\Extends\VectorExtends.cs" />
     <Compile Include="Assets\Scripts\Ignored\IgnoredCodes.cs" />
     <Compile Include="Assets\Scripts\Interfaces\IMailDetailItem.cs" />
+    <Compile Include="Assets\Scripts\Models\BuildingsWithImageDTO.cs" />
     <Compile Include="Assets\Scripts\Models\CordinateDTO.cs" />
     <Compile Include="Assets\Scripts\Models\DefenseImageDTO.cs" />
     <Compile Include="Assets\Scripts\Models\LanguageItem.cs" />
+    <Compile Include="Assets\Scripts\Models\ResearchWithImageDTO.cs" />
     <Compile Include="Assets\Scripts\Models\ShipImageDTO.cs" />
     <Compile Include="Assets\Scripts\Models\SolarSystemDTO.cs" />
     <Compile Include="Assets\Scripts\Pluigns\MailEncoder.cs" />
@@ -239,7 +242,7 @@
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\FXAA\Resources\FXAA.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\Contrast Stretch\Luminance.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlurAndFlares.shader" />
-    <None Include="Assets\Sci-Fi Game Icons\Scifi.txt" />
+    <None Include="Assets\ExternalAssets\Sci-Fi Game Icons\Scifi.txt" />
     <None Include="Assets\Languages\Language.resx" />
     <Reference Include="Unity.Timeline.Editor">
       <HintPath>C:/Users/burak/Documents/Github/WarOfGalaxies/WarOfGalaxiesUnity/War Of Galaxies/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>

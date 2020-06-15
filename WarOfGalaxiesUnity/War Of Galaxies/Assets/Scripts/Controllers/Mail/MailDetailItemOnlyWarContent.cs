@@ -1,6 +1,5 @@
 ﻿using Assets.Scripts.ApiModels;
 using Assets.Scripts.Enums;
-using Assets.Scripts.Extends;
 using Assets.Scripts.Interfaces;
 using Assets.Scripts.Pluigns;
 using System;
@@ -8,6 +7,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static Assets.Scripts.Pluigns.MailEncoder;
 
 public class MailDetailItemOnlyWarContent : MonoBehaviour, IMailDetailItem
 {
@@ -56,8 +56,15 @@ public class MailDetailItemOnlyWarContent : MonoBehaviour, IMailDetailItem
     [Header("Savunana ait savunma ünitelerini buraya basacağız.")]
     public Transform DefenderDefensesContent;
 
-    public void LoadContent(UserMailDTO mailData, MailEncoder.MailDecodeDTO decodedData)
+    /// <summary>
+    /// Mail ile ilgili gönderen bilgisini tutar.
+    /// </summary>
+    public MailDecodeDTO MailData { get; set; }
+
+    public void LoadContent(UserMailDTO mailData, MailDecodeDTO decodedData)
     {
+        this.MailData = decodedData;
+
         // Template yüklüyoruz dil dosyasından.
         string template = LanguageController.LC.GetText($"MT{(int)decodedData.GetMailType()}");
 

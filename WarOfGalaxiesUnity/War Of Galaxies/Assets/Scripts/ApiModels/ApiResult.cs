@@ -31,7 +31,14 @@ namespace Assets.Scripts.ApiModels
         /// <returns></returns>
         public T GetData<T>() where T : class
         {
-            return JsonUtility.FromJson<T>(Data);
+            try
+            {
+                return JsonUtility.FromJson<T>(Data);
+            }
+            catch
+            {
+                return null;
+            }
 
         }
 

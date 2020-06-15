@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -126,5 +127,11 @@ namespace WarOfGalaxiesApi.DAL.Repositories
         {
             return _dbContext.Set<T>().Any(predicate);
         }
+
+        public EntityState GetStateOfEntry(T entity)
+        {
+            return _dbContext.Entry(entity).State;
+        }
+
     }
 }

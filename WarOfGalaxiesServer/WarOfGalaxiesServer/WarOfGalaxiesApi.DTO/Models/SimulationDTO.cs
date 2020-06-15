@@ -11,7 +11,7 @@ namespace WarOfGalaxiesApi.DTO.Models
             DefenderShip,
             DefenderDefense
         }
-
+        public bool IsCivil { get; set; }
         public SimulationSides Side { get; set; }
         public int Id { get; set; }
         public int Health { get; set; }

@@ -181,7 +181,7 @@
     <value>Roketatar kısa açıklaması</value>
   </data>
   <data name="R1" xml:space="preserve">
-    <value>Silah Tekniği</value>
+    <value>Roket Tekniği</value>
   </data>
   <data name="InciSeviye" xml:space="preserve">
     <value>{0}. Seviye</value>
@@ -214,7 +214,7 @@
     <value>Araştırmalar</value>
   </data>
   <data name="RD1" xml:space="preserve">
-    <value>Silah Tekniği açıklaması.</value>
+    <value>Bilim insanları roketlerin isabet oranını ve hasar gücünü arttırmak için Roket Tekniği teknolojisini geliştirdi.</value>
   </data>
   <data name="ÜretimSüresi" xml:space="preserve">
     <value>Üretim Süresi</value>
@@ -544,5 +544,28 @@ Filon &lt;color=orange&gt;{SM} [{SC}]&lt;/color&gt; gezegenine geri dönüyor.</
 
 &lt;color=green&gt;Dönen Filo;&lt;/color&gt;
 {SA}</value>
+  </data>
+  <data name="AraştırmaGereksinim" xml:space="preserve">
+    <value>Araştırma Gereksinimleri</value>
+  </data>
+  <data name="AraştırmaSüresi" xml:space="preserve">
+    <value>Araştırma Süresi</value>
+  </data>
+  <data name="BD1" xml:space="preserve">
+    <value>Nerdeyse her şey de ihtiyaç duyacağın metal hammaddesini üretmeni sağlar.
+Gezegenine bina inşa ederken.
+Gemi ve savunma sistemleri inşa ederken.</value>
+  </data>
+  <data name="Yık" xml:space="preserve">
+    <value>Yık</value>
+  </data>
+  <data name="GeriÇağır" xml:space="preserve">
+    <value>Geri Çağır</value>
+  </data>
+  <data name="BD2" xml:space="preserve">
+    <value>Gemi, savunma üretimlerinde ve bina yükseltmelerinde lazım olacak kristalden üretmeni sağlar.</value>
+  </data>
+  <data name="BD3" xml:space="preserve">
+    <value>Çeşitli gemi ve savunmalar üretmek için bor kaynağına ihtiyacın olacak. Ayrıca filonu uçurmak içinde yine bu kaynağı yakıt olarak kullanman gerekecek.</value>
   </data>
 </root>

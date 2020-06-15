@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -18,5 +19,6 @@ namespace WarOfGalaxiesApi.DAL.Interfaces
         void Delete(int id);
         void Delete(IEnumerable<T> entities);
         T Add(T entity);
+        EntityState GetStateOfEntry(T entity);
     }
 }

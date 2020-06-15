@@ -1,5 +1,5 @@
 ﻿using Assets.Scripts.ApiModels;
-using Assets.Scripts.Enums;
+using Assets.Scripts.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -9,13 +9,6 @@ using static GlobalPanelController;
 
 public class ResearchController : MonoBehaviour
 {
-    [Serializable]
-    public struct ResearchWithImage
-    {
-        public Researches Research;
-        public Sprite ResearchImage;
-    }
-
     public static ResearchController RC { get; set; }
 
     private void Awake()
@@ -27,7 +20,7 @@ public class ResearchController : MonoBehaviour
     }
 
     [Header("Araştırmalar ve ikonları.")]
-    public List<ResearchWithImage> ResearchWithImages;
+    public List<ResearchImageDTO> ResearchWithImages;
 
     private IEnumerator Start()
     {
@@ -53,9 +46,11 @@ public class ResearchController : MonoBehaviour
             DateTime currentDate = DateTime.UtcNow;
             if (currentDate >= researchProg.EndDate)
             {
-                OnResearchCompleted(researchProg);
-
+                // Devam eden araştırmayı siliyoruz.
                 LoginController.LC.CurrentUser.UserResearchProgs.Remove(researchProg);
+
+                // Araştırma tamamlandı deyip verify ediyoruz.
+                OnResearchCompleted(researchProg);
             }
         }
 
@@ -69,24 +64,26 @@ public class ResearchController : MonoBehaviour
         // Sunucuya kaynakları doğrulamak için gönderiyoruz.
         LoginController.LC.VerifyUserResources(GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId, (UserPlanetDTO userPlanet) =>
         {
-            // Yükseltme bilgisi.
-            UserResearchProgDTO upgradeInfo = LoginController.LC.CurrentUser.UserResearchProgs.Find(x => x.ResearchID == researchProg.ResearchID);
-
             // Araştırmayı buluyoruz. Eğer yok ise eklicez var ise güncelleyeceğiz.
             UserResearchesDTO research = LoginController.LC.CurrentUser.UserResearches.Find(x => x.ResearchID == researchProg.ResearchID);
 
             // Yükseltme işlemi ise seviyeyi güncelliyoruz.
             if (research != null)
-                research.ResearchLevel = upgradeInfo.ResearchLevel;
+                research.ResearchLevel = researchProg.ResearchLevel;
             else
             {
                 // Araştırmalara ekliyoruz.
                 LoginController.LC.CurrentUser.UserResearches.Add(new UserResearchesDTO
                 {
-                    ResearchID = upgradeInfo.ResearchID,
-                    ResearchLevel = upgradeInfo.ResearchLevel
+                    ResearchID = researchProg.ResearchID,
+                    ResearchLevel = researchProg.ResearchLevel
                 });
             }
+
+            // Araştırmaları tekrar yüklüyoruz.
+            if (ResearchPanelController.RPC != null)
+                ResearchPanelController.RPC.LoadAllResearchItems();
+
         });
     }
 

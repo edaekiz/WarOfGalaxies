@@ -493,4 +493,25 @@
   <data name="MT8" xml:space="preserve">
     <value></value>
   </data>
+  <data name="AraştırmaGereksinim" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="AraştırmaSüresi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="BD1" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Yık" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GeriÇağır" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="BD2" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="BD3" xml:space="preserve">
+    <value></value>
+  </data>
 </root>

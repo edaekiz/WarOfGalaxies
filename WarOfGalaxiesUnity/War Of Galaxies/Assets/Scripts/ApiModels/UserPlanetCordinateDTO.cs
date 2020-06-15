@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Models;
+using System;
 
 namespace Assets.Scripts.ApiModels
 {
@@ -9,5 +10,11 @@ namespace Assets.Scripts.ApiModels
         public int GalaxyIndex;
         public int SolarIndex;
         public int OrderIndex;
+
+        public bool Same(CordinateDTO obj)
+        {
+            return GalaxyIndex == obj.GalaxyIndex && SolarIndex == obj.SolarIndex && OrderIndex == obj.OrderIndex;
+        }
+
     }
 }

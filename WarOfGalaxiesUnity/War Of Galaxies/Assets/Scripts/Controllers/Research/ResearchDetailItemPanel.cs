@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.ApiModels;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
+using Assets.Scripts.Models;
 using System;
 using System.Collections;
 using TMPro;
@@ -55,22 +56,32 @@ public class ResearchDetailItemPanel : BasePanelController
         int researchLevel = currentResearchLevel == null ? 0 : currentResearchLevel.ResearchLevel;
 
         // Araştırma ismi ve seviyesi.
-        ResearchName.text = $"{base.GetLanguageText($"R{(int)research}")}<color=orange>({base.GetLanguageText("InciSeviye", researchLevel.ToString())})</color>";
+        ResearchName.text = $"{base.GetLanguageText($"R{(int)research}")} <color=orange>({base.GetLanguageText("InciSeviye", researchLevel.ToString())})</color>";
+
+        // Bir sonraki seviye.
+        int nextLevel = researchLevel + 1;
 
         // Araştırma resmi.
         ShortDescription.text = base.GetLanguageText($"RD{(int)research}");
+
+        // Araştırma ikonu.
+        ResearchImageDTO researchIcon = ResearchController.RC.ResearchWithImages.Find(x => x.Research == research);
+
+        // Eğer araştırma ikonu var ise onu da basıyoruz.
+        if (researchIcon != null)
+            Icon.sprite = researchIcon.ResearchImage;
 
         // Araştırmayı buluyoruz.
         UserResearchProgDTO userResearchProg = LoginController.LC.CurrentUser.UserResearchProgs.Find(x => x.ResearchID == research);
 
         // Eğer seçilen araştırma yükleniyor ise süre zamanla azalacak.
         if (userResearchProg == null)
-            UpgradeTime.text = TimeExtends.GetCountdownText(TimeSpan.FromSeconds(DataController.DC.CalculateResearchUpgradeTime(research, researchLevel)));
+            UpgradeTime.text = TimeExtends.GetCountdownText(TimeSpan.FromSeconds(DataController.DC.CalculateResearchUpgradeTime(research, nextLevel)));
         else // Eğer yükseltiliyor ise kalan süreyi basıyoruz.
             UpgradeTime.text = TimeExtends.GetCountdownText(userResearchProg.EndDate - DateTime.UtcNow);
 
         // Maliyeti alıyoruz.
-        ResourcesDTO resources = DataController.DC.CalculateCostResearch(research, researchLevel);
+        ResourcesDTO resources = DataController.DC.CalculateCostResearch(research, nextLevel);
 
         #endregion
 
@@ -125,7 +136,7 @@ public class ResearchDetailItemPanel : BasePanelController
                  UserResearchProgDTO prog = response.GetData<UserResearchProgDTO>();
 
                  // Hesaplamasını yapıyoruz.
-                 prog.CalculateDates(prog.LeftTime);
+                 prog.CalculateDates(prog.PassedTime, prog.LeftTime);
 
                  // Yükseltme bilgisi.
                  LoginController.LC.CurrentUser.UserResearchProgs.Add(prog);

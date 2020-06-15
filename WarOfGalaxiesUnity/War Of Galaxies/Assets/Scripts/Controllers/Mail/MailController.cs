@@ -56,7 +56,7 @@ public class MailController : MonoBehaviour
                 // Eğer miktar sıfırdan büyük ise listeye okunmamışlara ekliyoruz.
                 if (newUnreadedMails.Count > 0)
                 {
-                    IEnumerable<UserMailDTO> mails = newUnreadedMails.Where(x => !UserMails.Any(y => x.UserMailId == y.UserMailId));
+                    List<UserMailDTO> mails = newUnreadedMails.Where(x => !UserMails.Any(y => x.UserMailId == y.UserMailId)).ToList();
 
                     // Okunmamışlara ekliyoruz.
                     UserMails.AddRange(mails);

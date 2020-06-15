@@ -8,9 +8,9 @@ namespace Assets.Scripts.ApiModels.Base
         public DateTime BeginDate;
         public DateTime EndDate;
 
-        public void CalculateDates(double leftTime)
+        public void CalculateDates(double passedTime, double leftTime)
         {
-            BeginDate = DateTime.UtcNow;
+            BeginDate = DateTime.UtcNow.AddSeconds(-passedTime);
             EndDate = BeginDate.AddSeconds(leftTime);
         }
     }

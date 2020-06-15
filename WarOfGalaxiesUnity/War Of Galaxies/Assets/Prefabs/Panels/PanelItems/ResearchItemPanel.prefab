@@ -171,8 +171,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 190, y: 190}
+  m_AnchoredPosition: {x: 0, y: 7}
+  m_SizeDelta: {x: 220, y: 215}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &78235065
 CanvasRenderer:
@@ -1720,6 +1720,7 @@ GameObject:
   - component: {fileID: 694037316}
   - component: {fileID: 694037318}
   - component: {fileID: 694037317}
+  - component: {fileID: 208343803705110334}
   m_Layer: 5
   m_Name: RequirementText
   m_TagString: Untagged
@@ -1866,6 +1867,21 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &208343803705110334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 694037315}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88dd0c5c693a9004aab6916a54bef9f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KEYWORD: "Ara\u015Ft\u0131rmaGereksinim"
+  Append: 
+  Prepend: 
 --- !u!1 &768503060
 GameObject:
   m_ObjectHideFlags: 0
@@ -3627,6 +3643,7 @@ GameObject:
   - component: {fileID: 1680825584}
   - component: {fileID: 1680825586}
   - component: {fileID: 1680825585}
+  - component: {fileID: 199348368315415603}
   m_Layer: 5
   m_Name: ItemUpgradeTimeLabel
   m_TagString: Untagged
@@ -3773,6 +3790,21 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &199348368315415603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1680825583}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88dd0c5c693a9004aab6916a54bef9f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KEYWORD: "Ara\u015Ft\u0131rmaS\xFCresi"
+  Append: 
+  Prepend: 
 --- !u!1 &1750975184
 GameObject:
   m_ObjectHideFlags: 0
@@ -4428,6 +4460,7 @@ MonoBehaviour:
   OpenTransition: 0
   CloseTransition: 0
   MainPanel: {fileID: 797639136814999318}
+  IsPanel: 1
   MetalDetail: {fileID: 1409243576}
   CrystalDetail: {fileID: 1313874636}
   BoronDetail: {fileID: 13321982}

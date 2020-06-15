@@ -184,7 +184,8 @@ public class FleetController : MonoBehaviour
                 FleetDTO newFleet = response.GetData<FleetDTO>();
 
                 // Listeye ekliyoruz.
-                Fleets.Add(newFleet);
+                if (newFleet != null) // Eğer filo yok olmuş ise (Savaş esnasında) ozaman eklemeyeceğiz. Çünkü filo yok. 
+                    Fleets.Add(newFleet);
 
                 // Eğer panel açık ise paneli de yeniliyoruz.
                 if (FleetPanelController.FPC != null)

@@ -1699,6 +1699,7 @@ GameObject:
   - component: {fileID: 2526438857667825663}
   - component: {fileID: 2526438857667825662}
   - component: {fileID: 2124933416373422461}
+  - component: {fileID: 2172026087029685456}
   m_Layer: 5
   m_Name: BTN_CallBackFleet
   m_TagString: Untagged
@@ -1898,6 +1899,21 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2172026087029685456
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2526438857667825660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 88dd0c5c693a9004aab6916a54bef9f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  KEYWORD: "Geri\xC7a\u011F\u0131r"
+  Append: 
+  Prepend: 
 --- !u!1 &2526438857840652617
 GameObject:
   m_ObjectHideFlags: 0

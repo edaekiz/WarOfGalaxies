@@ -14,6 +14,7 @@
         public int BuildingId { get; set; }
         public int BuildingLevel { get; set; }
         public double LeftTime { get; set; }
+        public double PassedTime { get; set; }
     }
 
     public class UserPlanetUpgradeBuildingDTO
