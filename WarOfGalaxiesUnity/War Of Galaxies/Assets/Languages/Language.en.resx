@@ -531,7 +531,7 @@
 Fleets return to &lt;color=orange&gt;{SM} [{SC}]&lt;/color&gt; planet.</value>
   </data>
   <data name="MT8" xml:space="preserve">
-    <value>Harvested resources transferring to &lt;color=orange&gt;{SM}[{SC}] planet.
+    <value>Harvested resources transferring to &lt;color=orange&gt;{DM}[{SC}]&lt;/color&gt; planet.
 
 &lt;color=green&gt;Resources;&lt;/color&gt;
 &lt;color=green&gt;Metal :&lt;/color&gt; {NM},

@@ -535,7 +535,7 @@
 Filon &lt;color=orange&gt;{SM} [{SC}]&lt;/color&gt; gezegenine geri dönüyor.</value>
   </data>
   <data name="MT8" xml:space="preserve">
-    <value>Sökülen kaynaklar {SM}[{SC}] gezegenine aktarılıyor.
+    <value>Sökülen kaynaklar &lt;color=orange&gt;{DM}[{SC}]&lt;/color&gt; gezegenine aktarılıyor.
 
 &lt;color=green&gt;Kaynaklar;&lt;/color&gt;
 &lt;color=green&gt;Metal :&lt;/color&gt; {NM},
