@@ -106,9 +106,7 @@ public class PlanetActionFooterPanel : BasePanelController
         }
 
         // Eğer enkaz var ise gösteriyoruz.
-        if (this.CurrentShownPlanet.GarbageMetal > 0 || this.CurrentShownPlanet.GarbageCrystal > 0 || this.CurrentShownPlanet.GarbageBoron > 0)
-            GarbagePanel.SetActive(true);
-        else
+        if (this.CurrentShownPlanet.GarbageMetal == 0 && this.CurrentShownPlanet.GarbageCrystal == 0 && this.CurrentShownPlanet.GarbageBoron == 0)
         {
             // Paneli kapatıyoruz.
             if (GarbagePanel.activeSelf)
@@ -117,6 +115,9 @@ public class PlanetActionFooterPanel : BasePanelController
             // Devamına inmeye gerek yok.
             return;
         }
+
+        // Çöp panelini açıyoruz.
+        GarbagePanel.SetActive(true);
 
         // Toplanabilir metal miktarını basıyoruz.
         TXT_GarbageMetalQuantity.text = ResourceExtends.ConvertToDottedResource(this.CurrentShownPlanet.GarbageMetal);
@@ -201,7 +202,7 @@ public class PlanetActionFooterPanel : BasePanelController
                 BTN_FastSendGarbage.interactable = true;
 
                 // Yazı rengi de kırmızı olacak belirgin. Turuncu.
-                TXT_GarbageAlreadySendMessage.color = new Color32(255, 134, 0, 1);
+                TXT_GarbageAlreadySendMessage.color = new Color32(255, 134, 0, 255);
             }
         }
     }

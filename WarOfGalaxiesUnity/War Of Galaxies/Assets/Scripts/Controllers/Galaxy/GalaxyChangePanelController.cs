@@ -87,15 +87,23 @@ public class GalaxyChangePanelController : MonoBehaviour
     {
         ValidateInputFields();
 
-        // Aktif değeri alıyoruz.
+        // Yazılı olan solar indexi alıyoruz.
         int currentSolarIndex = int.Parse(SolarIndexField.text);
 
+        // Yazılı olan galaksi değerini alıyoruz.
         int currentGalaxyIndex = int.Parse(GalaxyIndexField.text);
 
+        // Güncel soları tutuyoruz.
         CurrentSolarIndex = currentSolarIndex;
 
+        // Güncel galaksiyi tutuyoruz.
         CurrentGalaxyIndex = currentGalaxyIndex;
 
+        // Footer panelini kapatıyoruz.
+        if (PlanetActionFooterPanel.PAFP != null)
+            PlanetActionFooterPanel.PAFP.ClosePanel();
+
+        // Güneş sistemini yüklüyoruz.
         GalaxyController.GC.LoadSolarSystem(currentGalaxyIndex, currentSolarIndex);
     }
 

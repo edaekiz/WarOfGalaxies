@@ -572,6 +572,24 @@ namespace WarOfGalaxiesApi.Controllers
             // Bu kordinattaki dataları alıyoruz.
             TblCordinates cordinateInfo = controller.UnitOfWork.GetRepository<TblCordinates>().FirstOrDefault(x => x.GalaxyIndex == destinationCordinate.GalaxyIndex && x.SolarIndex == destinationCordinate.SolarIndex && x.OrderIndex == destinationCordinate.OrderIndex);
 
+            // Eğer kordinat var ise bizden önce gelen var ise onu da execute etmeliyiz.
+            if (cordinateInfo != null)
+            {
+                // Kordinatı toplamadan önce kontrol etmeliyiz buraya giden filoları.
+                int[] userPlanetIds = controller.UnitOfWork.GetRepository<TblFleets>()
+                    .Where(x => x.FleetId != userFleet.FleetId)
+                    .Where(x => x.DestinationCordinate == userFleet.DestinationCordinate)
+                    .Where(x => x.ReturnFleetId.HasValue)
+                    .Where(x => x.EndDate <= actionDate)
+                    .Select(x => x.SenderUserPlanetId.Value)
+                    .ToArray();
+
+                // Gezegenleri onaylıyoruz.
+                foreach (int userPlanetId in userPlanetIds)
+                    VerifyAllFleets(controller, new VerifyResourceDTO { UserPlanetID = userPlanetId, VerifyDate = actionDate });
+
+            }
+
             // Kordinatta bir şey yok ise sıfır veriyoruz.
             if (cordinateInfo == null)
             {
@@ -610,6 +628,9 @@ namespace WarOfGalaxiesApi.Controllers
 
             // Taşınamayacak miktarı eşit oranda düşeceğiz.
             double ratio = (garbageSum / totalCost);
+
+            if (double.IsNaN(ratio))
+                ratio = 0;
 
             // Çarpıp taşınacak olan miktarı hesaplıyoruz.
             ownedMetal *= ratio;
@@ -653,8 +674,8 @@ namespace WarOfGalaxiesApi.Controllers
             {
                 MailEncoder.GetParam(MailEncoder.KEY_ACTION_TYPE_RETURN, userFleet.FleetActionTypeId),
                 MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETNAME, userPlanet.PlanetName),
-                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
                 MailEncoder.GetParam(MailEncoder.KEY_DESTINATIONPLANETCORDINATE, userFleet.DestinationCordinate),
+                MailEncoder.GetParam(MailEncoder.KEY_SENDERPLANETCORDINATE, userFleet.SenderCordinate),
                 MailEncoder.GetParam(MailEncoder.KEY_NEW_METAL, userFleet.CarriedMetal),
                 MailEncoder.GetParam(MailEncoder.KEY_NEW_CRYSTAL, userFleet.CarriedCrystal),
                 MailEncoder.GetParam(MailEncoder.KEY_NEW_BORON, userFleet.CarriedBoron)
@@ -1494,7 +1515,7 @@ namespace WarOfGalaxiesApi.Controllers
 
                 // Eğer yok ise oluşturuyoruuz.
                 if (shipInPlanet == null)
-                    userPlanet.TblUserPlanetShips.Add(new TblUserPlanetShips { ShipId = (int)ship.Item1, ShipCount = ship.Item2, UserPlanetId = userFleet.SenderUserPlanetId.Value });
+                    userPlanet.TblUserPlanetShips.Add(new TblUserPlanetShips { ShipId = (int)ship.Item1, ShipCount = ship.Item2, UserPlanetId = userFleet.DestinationUserPlanetId.Value });
                 else // Eğer gezegende zaten var ise miktarıın arttırıyoruz.
                     shipInPlanet.ShipCount += ship.Item2;
             }
