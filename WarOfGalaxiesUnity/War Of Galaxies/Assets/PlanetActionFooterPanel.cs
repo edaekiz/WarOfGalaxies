@@ -295,6 +295,17 @@ public class PlanetActionFooterPanel : BasePanelController
         if (sendShipQuantity <= 0)
             return;
 
+        // Kullanıcının sahip olduğu geri dönüşümcü miktarı.
+        int userShipQuantity = LoginController.LC.CurrentUser.UserPlanetShips
+            .Where(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.ShipId == Ships.GeriDönüşümcü)
+            .Select(x => x.ShipCount)
+            .DefaultIfEmpty(0)
+            .Sum();
+
+        // Eğer sahip olduğumuz gemiden fazla göndermeye çalışıyor isek göndermeyeceğiz.
+        if (sendShipQuantity > userShipQuantity)
+            sendShipQuantity = userShipQuantity;
+
         // Gönderilecek olan geri dönüşümcüler.
         List<Tuple<Ships, int>> shipsToSend = new List<Tuple<Ships, int>> { new Tuple<Ships, int>(Ships.GeriDönüşümcü, sendShipQuantity) };
 
@@ -375,7 +386,7 @@ public class PlanetActionFooterPanel : BasePanelController
         TXT_FastSpyQuantity.text = spyShipCount.ToString();
 
         // Eğer yeterli miktar yok ise butonu devredışı bırakıyoruz.
-        if (spyShipCount > 0 )
+        if (spyShipCount > 0)
             FastSpyButton.interactable = true;
         else
             FastSpyButton.interactable = false;
