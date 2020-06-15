@@ -1,5 +1,4 @@
-﻿using Assets.Scripts.ApiModels;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class GlobalGalaxyController : MonoBehaviour
 {
@@ -10,6 +9,9 @@ public class GlobalGalaxyController : MonoBehaviour
 
     [Header("Gezegene dönüldüğünde açılacak olanlar.")]
     public GameObject PlanetView;
+
+    [Header("Gezegenin etrafındaki maksimum enkaz miktarı.")]
+    public int DebrisMaxQuantity;
 
     private void Awake()
     {

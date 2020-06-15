@@ -4812,6 +4812,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GalaxyView: {fileID: 409939488}
   PlanetView: {fileID: 813495002}
+  DebrisMaxQuantity: 250
 --- !u!114 &515747101
 MonoBehaviour:
   m_ObjectHideFlags: 0

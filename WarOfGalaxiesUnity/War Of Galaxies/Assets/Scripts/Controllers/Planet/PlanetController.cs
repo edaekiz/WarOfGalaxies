@@ -70,7 +70,7 @@ public class PlanetController : MonoBehaviour
                 ParticleSystem.MainModule effect = ps.main;
 
                 // Ne kadar yoğun gösterileceğini hesaplıyoruz.
-                effect.maxParticles = (int)(100 * (sumOfDebris / 100000));
+                effect.maxParticles = (int)(GlobalGalaxyController.GGC.DebrisMaxQuantity * (sumOfDebris / 100000));
             }
         }
     }

@@ -1080,7 +1080,7 @@ namespace WarOfGalaxiesApi.Controllers
                 int destroyedQuantity = e.ShipCount - defenderShipCombined.Count(x => x.Id == e.ShipId && x.Side == sim.Side);
 
                 // Birimleri silerken x olasılıkla yenilenme şansı var.
-                for (int ii = 1; ii <= e.ShipCount; ii++)
+                for (int ii = 1; ii <= destroyedQuantity; ii++)
                 {
                     // Zar atıyoruz.
                     double rate = randomizer.NextDouble();
