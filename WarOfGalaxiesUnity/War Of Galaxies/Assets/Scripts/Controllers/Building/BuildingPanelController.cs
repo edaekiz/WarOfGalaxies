@@ -35,6 +35,10 @@ public class BuildingPanelController : BasePanelController
     [Header("Yükseltme sırasındaki geri sayım.")]
     public TMP_Text BuildingCountdown;
 
+    private void Awake()
+    {
+    }
+
     public IEnumerator LoadData(Buildings building)
     {
         #region Yükseltme yapılabilir mi? Kaynak kontrolü olmadan.

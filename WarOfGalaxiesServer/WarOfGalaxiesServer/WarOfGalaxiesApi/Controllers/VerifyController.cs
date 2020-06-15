@@ -832,7 +832,7 @@ namespace WarOfGalaxiesApi.Controllers
                     {
                         // Eğer bir hedef yok ise yada canı 0dan az ise rastgele birisini alıyoruz.
                         if (attackerShip.Target == null || attackerShip.Target.Health <= 0)
-                            attackerShip.Target = defenderShipCombined.OrderBy(x => Guid.NewGuid()).ThenBy(x => !x.IsCivil).FirstOrDefault();
+                            attackerShip.Target = defenderShipCombined.OrderBy(x => x.IsCivil).OrderBy(x => Guid.NewGuid()).FirstOrDefault();
 
                         // Hedef yok ise döngüyü bitir.
                         if (attackerShip.Target == null)
@@ -866,7 +866,7 @@ namespace WarOfGalaxiesApi.Controllers
                     {
                         // Eğer bir hedef yok ise yada canı 0dan az ise rastgele birisini alıyoruz.
                         if (defenderShipOrDefense.Target == null || defenderShipOrDefense.Target.Health <= 0)
-                            defenderShipOrDefense.Target = attackerShipsCombined.OrderBy(x => Guid.NewGuid()).ThenBy(x => !x.IsCivil).FirstOrDefault();
+                            defenderShipOrDefense.Target = attackerShipsCombined.OrderBy(x => x.IsCivil).OrderBy(x => Guid.NewGuid()).FirstOrDefault();
 
                         if (defenderShipOrDefense.Target == null)
                             break;

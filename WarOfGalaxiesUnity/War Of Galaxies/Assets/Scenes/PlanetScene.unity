@@ -4676,7 +4676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Environment: 1
-  Token: d26fc6fe-f9a7-4fa9-97ee-22ea219cc5f2
+  Token: BF291D90-48E8-46CF-B726-338A621F9ACF
 --- !u!114 &515747093
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11820,10 +11820,10 @@ Light:
   m_Cookie: {fileID: 0}
   m_DrawHalo: 0
   m_Flare: {fileID: 0}
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 791
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0

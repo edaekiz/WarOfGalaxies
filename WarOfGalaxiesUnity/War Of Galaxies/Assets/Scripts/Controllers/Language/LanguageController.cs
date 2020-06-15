@@ -61,7 +61,7 @@ public class LanguageController : MonoBehaviour
             return;
         }
 
-#if UNITY_ANDROID || UNITY_EDITOR
+#if UNITY_ANDROID || UNITY_EDITOR || UNITY_STANDALONE_WIN
         LoadLanguageAndroid();
 #endif
 #if UNITY_IOS
@@ -223,7 +223,14 @@ public class LanguageController : MonoBehaviour
         }
 #elif UNITY_STANDALONE_WIN
         string path = $"{Application.streamingAssetsPath}/Languages/Language.{culture}.txt";
-        return File.ReadAllText(path);
+        using (UnityWebRequest www = UnityWebRequest.Get(path))
+        {
+            UnityWebRequestAsyncOperation request = www.SendWebRequest();
+            while (!request.isDone)
+                continue;
+            string data = www.downloadHandler.text;
+            return data;
+        }
 #elif UNITY_ANDROID
         string path = $"{Application.streamingAssetsPath}/Languages/Language.{culture}.txt";
         using (UnityWebRequest www = UnityWebRequest.Get(path))
