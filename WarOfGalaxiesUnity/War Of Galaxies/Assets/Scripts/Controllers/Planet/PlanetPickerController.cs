@@ -70,8 +70,10 @@ public class PlanetPickerController : BasePanelController
         foreach (BuildingController bc in FindObjectsOfType<BuildingController>())
             bc.LoadBuildingDetails();
 
-        // Son aşama seçili olanın değişmesi için butonları tekrar yüklüyoruz.
-        ReLoadPlanets();
+        // Seçilen gezegeni ekrana basıyoruz.
+        ToastController.TC.ShowToast(LanguageController.LC.GetText("GezegeniSeçildi", GlobalPlanetController.GPC.CurrentPlanet.PlanetName));
+
+        base.ClosePanel();
     }
 
 }

@@ -61,11 +61,8 @@ public class QuantityItemPanel : BasePanelController
 
     public void OnClickOk()
     {
-        // Miktar default değeri 0.
-        int quantity = 0;
-
         // Eğer parse edemezsek sıfır kalacak. Edersek de ettiğimiz değer.
-        int.TryParse(ItemQuantity.text, out quantity);
+        int.TryParse(ItemQuantity.text, out int quantity);
 
         // EĞer çağrılmak istenen var ise buraya ekliyoruz.
         if (OnPanelClose != null)

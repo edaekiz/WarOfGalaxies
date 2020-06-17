@@ -514,4 +514,10 @@
   <data name="BD3" xml:space="preserve">
     <value></value>
   </data>
+  <data name="GezegeniSeçildi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Sil" xml:space="preserve">
+    <value></value>
+  </data>
 </root>

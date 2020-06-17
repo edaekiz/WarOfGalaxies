@@ -11,6 +11,9 @@ public class DefenseController : MonoBehaviour
 {
     public static DefenseController DC { get; set; }
 
+    [Header("Üretimi yapılan savunma olduğunda bu obje aktif edilecek.")]
+    public GameObject DefenseProgressIcon;
+
     [Header("Defans birimin ikonu ile türü.")]
     public List<DefenseImageDTO> DefenseWithImages;
 
@@ -116,10 +119,27 @@ public class DefenseController : MonoBehaviour
             }
         }
 
+        // Her saniye sonunda gerekiyorsa progress ikonunu açacağız ya da kapatacağız.
+        RefreshProgressIcon();
+
         yield return new WaitForSecondsRealtime(1);
 
         StartCoroutine(ReCalculateDefenses());
     }
 
+
+    public void RefreshProgressIcon()
+    {
+        if (LoginController.LC.CurrentUser.UserPlanetDefenseProgs.Exists(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId))
+        {
+            if (!DefenseProgressIcon.activeSelf)
+                DefenseProgressIcon.SetActive(true);
+        }
+        else
+        {
+            if (DefenseProgressIcon.activeSelf)
+                DefenseProgressIcon.SetActive(false);
+        }
+    }
 
 }

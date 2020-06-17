@@ -39,7 +39,7 @@ public class GalaxyController : MonoBehaviour
     private SunController currentSun;
 
     private void Awake()
-    {
+    {   
         if (GC == null)
             GC = this;
         else

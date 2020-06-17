@@ -459,7 +459,7 @@
     <value>Combat Ships</value>
   </data>
   <data name="SivilGemiler" xml:space="preserve">
-    <value>CivilShips</value>
+    <value>Civil Ships</value>
   </data>
   <data name="Saldıran" xml:space="preserve">
     <value>Attacker</value>
@@ -566,5 +566,11 @@ Ships and defense structures.</value>
   </data>
   <data name="BD3" xml:space="preserve">
     <value>Produce boron resource that uses for many ships, defenses also you will need this resources as a fuel for your fleet.</value>
+  </data>
+  <data name="GezegeniSeçildi" xml:space="preserve">
+    <value>{0} planet selected.</value>
+  </data>
+  <data name="Sil" xml:space="preserve">
+    <value>Delete</value>
   </data>
 </root>

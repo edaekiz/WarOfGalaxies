@@ -28,7 +28,7 @@ public class MailPanelController : BasePanelController
     public GameObject MailItem;
 
     [Header("Maillerin basılacağı alan.")]
-    public ScrollRect MailItemContent;
+    public Transform MailItemContent;
 
     [Header("Hiç maili yok ise ozaman ufak texti açıyoruz.")]
     public GameObject NoMailAlert;
@@ -53,17 +53,20 @@ public class MailPanelController : BasePanelController
         });
     }
 
-    public void ShowCategoryDetails(MailCategories lastSelectedCategory)
+    public void ShowCategoryDetails(MailCategories currentCategory)
     {
         // Önceki mailleri temizliyoruz.
         ClearCurrentMails();
 
         // Gösterilen kategori.
-        CurrentShownCategory = lastSelectedCategory;
+        CurrentShownCategory = currentCategory;
+
+        // Son gösterilen kategoriyi güncelliyoruz.
+        MailController.MC.LastSelectedCategory = currentCategory;
 
         // Bütün okunmamış mailleri ekrana basıyoruz.
         foreach (UserMailDTO mail in MailController.MC.UserMails.Where(x => x.MailCategoryId == (int)CurrentShownCategory).Reverse())
-            Instantiate(MailItem, MailItemContent.content).GetComponent<MailPanelItemController>().LoadMailData(mail);
+            Instantiate(MailItem, MailItemContent).GetComponent<MailPanelItemController>().LoadMailData(mail);
 
         // Eğer bu kategoride mail yok ise ekrana uyarıyı gösteriyoruz.
         CheckForNoMessageAlert();
@@ -75,7 +78,7 @@ public class MailPanelController : BasePanelController
     public void ClearCurrentMails()
     {
         // Eskileri siliyoruz.
-        foreach (Transform mailItem in MailItemContent.content)
+        foreach (Transform mailItem in MailItemContent)
             Destroy(mailItem.gameObject);
     }
 

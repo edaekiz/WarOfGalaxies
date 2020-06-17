@@ -568,4 +568,10 @@ Gemi ve savunma sistemleri inşa ederken.</value>
   <data name="BD3" xml:space="preserve">
     <value>Çeşitli gemi ve savunmalar üretmek için bor kaynağına ihtiyacın olacak. Ayrıca filonu uçurmak içinde yine bu kaynağı yakıt olarak kullanman gerekecek.</value>
   </data>
+  <data name="GezegeniSeçildi" xml:space="preserve">
+    <value>{0} gezegeni seçildi.</value>
+  </data>
+  <data name="Sil" xml:space="preserve">
+    <value>Sil</value>
+  </data>
 </root>

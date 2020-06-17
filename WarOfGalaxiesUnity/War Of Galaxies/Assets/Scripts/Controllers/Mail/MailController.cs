@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.ApiModels;
 using Assets.Scripts.Enums;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -38,8 +39,13 @@ public class MailController : MonoBehaviour
 
     public void ShowMailPanel()
     {
+        // Mail panelini açıyoruz.
         GameObject mailPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.MailPanel);
+
+        // Mail panelinin componentini buluyoruz.
         MailPanelController mpc = mailPanel.GetComponent<MailPanelController>();
+
+        // Ve son yüklenen kategoriyi yüklüyoruz.
         mpc.ShowCategoryDetails(LastSelectedCategory);
     }
 
@@ -61,8 +67,13 @@ public class MailController : MonoBehaviour
                     // Okunmamışlara ekliyoruz.
                     UserMails.AddRange(mails);
 
+                    // Okunmamış mail miktarı.
+                    int notReadedQuantity = mails.Where(x => !x.IsReaded).Count();
+
+                    if (notReadedQuantity > 0)
+                        NotificationController.NC.AddNotificationQueue(LanguageController.LC.GetText("XMesajınızVar", notReadedQuantity), () => ShowMailPanel());
+
                     // Bildirimi gösteriyoruz.
-                    ShowNotification(mails.Where(x => !x.IsReaded).Count());
 
                     // Eğer panel açık ise paneli de yeniliyoruz.
                     if (MailPanelController.MPC != null)
@@ -84,7 +95,9 @@ public class MailController : MonoBehaviour
 
     public void RefreshMailIconQuantity()
     {
+        // Okunmamış mail miktarı.
         int unreadMailCount = UserMails.Where(x => !x.IsReaded).Count();
+
         // Eğer okunmamış mesaj var ise ekrana miktarı basıyoruz.
         if (unreadMailCount > 0)
         {
@@ -99,21 +112,40 @@ public class MailController : MonoBehaviour
             UnreadMailCount.SetActive(false);
     }
 
-    public void ShowNotification(int newQuantity)
+
+    public void DeleteMail(UserMailDTO userMail, Action callBack = null)
     {
-        if (newQuantity > 0)
-            NotificationController.NC.AddNotificationQueue(LanguageController.LC.GetText("XMesajınızVar", newQuantity), () => ShowMailPanel());
-    }
+        // Onay panelini açıyoruz.
+        GameObject yesNoPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.YesNoPanel);
 
-    public void DeleteMail(UserMailDTO userMail)
-    {
-        // Öncekini siliyoruz.
-        this.UserMails.Remove(userMail);
+        // Kontrolleri alıyoruz.
+        YesNoPanelController ynpc = yesNoPanel.GetComponent<YesNoPanelController>();
 
-        // Eğer panel açık ise paneli de yeniliyoruz.
-        if (MailPanelController.MPC != null)
-            MailPanelController.MPC.ShowCategoryDetails(MailPanelController.MPC.CurrentShownCategory);
+        // Uyarı paneli açıyoruz. Eğer panelden evet denirse kayıdı siliyoruz sistemden.
+        ynpc.LoadData(LanguageController.LC.GetText("Uyarı"), LanguageController.LC.GetText("Silmekİstemek"), () =>
+        {
+            // Yükleniyor panelini açıyoruz.
+            LoadingController.LC.ShowLoading();
 
+            StartCoroutine(ApiService.API.Post("DeleteMail", new MailDeleteRequestDTO { UserMailId = userMail.UserMailId }, (ApiResult response) =>
+            {
+                // Yükleniyor panelini kapatıyoruz.
+                LoadingController.LC.CloseLoading();
+
+                if (response.IsSuccess)
+                {
+                    // Öncekini siliyoruz.
+                    this.UserMails.Remove(userMail);
+
+                    // Eğer panel açık ise paneli de yeniliyoruz.
+                    if (MailPanelController.MPC != null)
+                        MailPanelController.MPC.ShowCategoryDetails(MailPanelController.MPC.CurrentShownCategory);
+
+                    if (callBack != null)
+                        callBack.Invoke();
+                }
+            }));
+        });
     }
 
 }

@@ -86,6 +86,7 @@
     <Compile Include="Assets\ExternalAssets\Asteroids Pack\Assets\Scripts\RandomRotator.cs" />
     <Compile Include="Assets\ExternalAssets\Hi-Tech Buttons and Panels\Resources\Scripts\JustRotate.cs" />
     <Compile Include="Assets\Languages\Language.Designer.cs" />
+    <Compile Include="Assets\PanelStackController.cs" />
     <Compile Include="Assets\PlanetActionFooterPanel.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ApiResult.cs" />
     <Compile Include="Assets\Scripts\ApiModels\Base\ProgressModel.cs" />
@@ -135,7 +136,6 @@
     <Compile Include="Assets\Scripts\Controllers\Mail\MailDetailItemOnlySpyController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Mail\MailDetailItemOnlyTextController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Mail\MailDetailItemOnlyWarContent.cs" />
-    <Compile Include="Assets\Scripts\Controllers\Mail\MailDetailItemPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Mail\MailPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Mail\MailPanelItemController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Notification\NotificationController.cs" />
@@ -180,7 +180,6 @@
     <Compile Include="Assets\Scripts\Extends\TimeExtends.cs" />
     <Compile Include="Assets\Scripts\Extends\VectorExtends.cs" />
     <Compile Include="Assets\Scripts\Ignored\IgnoredCodes.cs" />
-    <Compile Include="Assets\Scripts\Interfaces\IMailDetailItem.cs" />
     <Compile Include="Assets\Scripts\Models\BuildingsWithImageDTO.cs" />
     <Compile Include="Assets\Scripts\Models\CordinateDTO.cs" />
     <Compile Include="Assets\Scripts\Models\DefenseImageDTO.cs" />

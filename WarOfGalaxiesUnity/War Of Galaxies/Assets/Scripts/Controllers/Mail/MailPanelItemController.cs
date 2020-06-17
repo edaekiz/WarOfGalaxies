@@ -1,7 +1,9 @@
-﻿using Assets.Scripts.ApiModels;
+﻿using Assets.Languages;
+using Assets.Scripts.ApiModels;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using Assets.Scripts.Pluigns;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -54,20 +56,57 @@ public class MailPanelItemController : MonoBehaviour
 
         // Eğer okunduysa okundu olarak değiştiriyoruz.
         if (mailData.IsReaded)
-            SetAsRead();
+            MakeReadColor();
     }
 
-    public void SetAsRead()
+    public void MakeReadColor()
     {
+        // Okundu rengini veriyoruz.
         GetComponent<Image>().color = ReadColor;
+
+        // Sönük hale getiriyoruz. Okunmamış olanlar parlak olacak.
         TXT_MailContent.alpha = .66f;
+
+        // Mail tarihini de saydam yapıyoruz.
         TXT_MailDate.alpha = .66f;
     }
 
     public void ShowMailDetails()
     {
-        GameObject mdp = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.MailDetailPanel);
-        mdp.GetComponent<MailDetailItemPanelController>().LoadMaiLDetails(this.MailData, this.MailDecodedData);
+        // Mail okunmamış ise okundu olarak set ediyoruz.
+        if (!MailData.IsReaded)
+            ReadMail();
+
+        switch (this.MailDecodedData.GetMailType())
+        {
+            case MailTypes.SavaşRaporu:
+                GameObject battlePanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.MailBattleReport);
+                battlePanel.GetComponent<MailDetailItemOnlyWarContent>().LoadContent(this.MailData, this.MailDecodedData);
+                break;
+            case MailTypes.CasusRaporu:
+                GameObject spyPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.MailSpyReport);
+                spyPanel.GetComponent<MailDetailItemOnlySpyController>().LoadContent(this.MailData, this.MailDecodedData);
+                break;
+            default:
+                GameObject textPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.MailTextReport);
+                textPanel.GetComponent<MailDetailItemOnlyTextController>().LoadContent(this.MailData, this.MailDecodedData);
+                break;
+        }
+    }
+
+    public void ReadMail()
+    {
+        StartCoroutine(ApiService.API.Post("SetMailAsRead", new MailReadRequestDTO { UserMailId = this.MailData.UserMailId }, (ApiResult response) =>
+        {
+            if (response.IsSuccess)
+            {
+                // Mail okundu olarak ayarlıyoruz.
+                MailData.IsReaded = true;
+
+                // Tasarımı sönük hale getiriyoruz.
+                MakeReadColor();
+            }
+        }));
     }
 
 }

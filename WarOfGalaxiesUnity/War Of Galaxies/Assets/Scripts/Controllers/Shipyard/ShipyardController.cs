@@ -11,7 +11,12 @@ public class ShipyardController : MonoBehaviour
 {
     public static ShipyardController SC { get; set; }
 
+    [Header("Üretimi yapılan gemi olduğunda bu obje aktif edilecek.")]
+    public GameObject ShipyardProgressIcon;
+
+    [Header("Gemiler ve ikonları.")]
     public List<ShipImageDTO> ShipWithImages;
+
     private void Awake()
     {
         if (SC == null)
@@ -108,9 +113,26 @@ public class ShipyardController : MonoBehaviour
             }
         }
 
+        // Her saniye sonunda gerekiyorsa progress ikonunu açacağız ya da kapatacağız.
+        RefreshProgressIcon();
+
         yield return new WaitForSecondsRealtime(1);
 
         StartCoroutine(ReCalculateShips());
+    }
+
+    public void RefreshProgressIcon()
+    {
+        if (LoginController.LC.CurrentUser.UserPlanetShipProgs.Exists(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId))
+        {
+            if (!ShipyardProgressIcon.activeSelf)
+                ShipyardProgressIcon.SetActive(true);
+        }else
+        {
+            if (ShipyardProgressIcon.activeSelf)
+                ShipyardProgressIcon.SetActive(false);
+        }
+
     }
 
     public void DestroyShip(Ships shipId, int quantity)

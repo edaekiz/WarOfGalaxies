@@ -291,10 +291,26 @@ public class BasePanelController : BaseLanguageBehaviour
 
         // Eğer açılmıyor ise kapatılıyor olarak ayarlıyoruz.
         isClosing = true;
+
+        // Eğer panel ise stackden düşecek.
+        if (this.IsPanel)
+            PanelStackController.PSC.Pop();
+    }
+
+    public void ClosePanelForStack()
+    {
+        // Eğer açılıyor ise geri dön kapatılamaz.
+        if (isOpening)
+            return;
+
+        // Eğer açılmıyor ise kapatılıyor olarak ayarlıyoruz.
+        isClosing = true;
     }
 
     protected virtual void OnTransionCompleted(bool isClosed)
     {
+        if (!isClosed && IsPanel)
+            PanelStackController.PSC.Push(this);
     }
 
     /// <summary>

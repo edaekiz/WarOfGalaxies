@@ -20,17 +20,26 @@ public class GlobalGalaxyController : MonoBehaviour
         else
             Destroy(gameObject);
     }
+    private void Start()
+    {
+        if (GalaxyView.activeSelf)
+            IsInGalaxyView = true;
+        else
+            IsInGalaxyView = false;
+    }
 
     public void ShowGalaxy()
     {
         GalaxyView.SetActive(true);
         PlanetView.SetActive(false);
+        IsInGalaxyView = true;
     }
 
     public void CloseGalaxy()
     {
         GalaxyView.SetActive(false);
         PlanetView.SetActive(true);
+        IsInGalaxyView = false;
     }
 
     public void SwitchView()
@@ -44,12 +53,6 @@ public class GlobalGalaxyController : MonoBehaviour
     /// <summary>
     /// Galaksi ekranında mı?
     /// </summary>
-    public bool IsInGalaxyView
-    {
-        get
-        {
-            return GalaxyView.activeSelf;
-        }
-    }
+    public bool IsInGalaxyView { get; private set; }
 
 }

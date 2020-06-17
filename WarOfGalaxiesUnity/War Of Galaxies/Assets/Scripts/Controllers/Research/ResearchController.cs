@@ -18,6 +18,8 @@ public class ResearchController : MonoBehaviour
         else
             Destroy(gameObject);
     }
+    [Header("Araştırma yapılırken bu obje aktif edilecek.")]
+    public GameObject ResearchProgressIcon;
 
     [Header("Araştırmalar ve ikonları.")]
     public List<ResearchImageDTO> ResearchWithImages;
@@ -53,6 +55,9 @@ public class ResearchController : MonoBehaviour
                 OnResearchCompleted(researchProg);
             }
         }
+        
+        // Her saniye sonunda gerekiyorsa progress ikonunu açacağız ya da kapatacağız.
+        RefreshProgressIcon();
 
         yield return new WaitForSecondsRealtime(1);
 
@@ -85,6 +90,20 @@ public class ResearchController : MonoBehaviour
                 ResearchPanelController.RPC.LoadAllResearchItems();
 
         });
+    }
+
+    public void RefreshProgressIcon()
+    {
+        if (LoginController.LC.CurrentUser.UserResearchProgs.Count > 0)
+        {
+            if (!ResearchProgressIcon.activeSelf)
+                ResearchProgressIcon.SetActive(true);
+        }
+        else
+        {
+            if (ResearchProgressIcon.activeSelf)
+                ResearchProgressIcon.SetActive(false);
+        }
     }
 
 }

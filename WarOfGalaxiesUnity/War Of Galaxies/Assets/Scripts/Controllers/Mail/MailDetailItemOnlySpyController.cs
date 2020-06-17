@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Assets.Scripts.Interfaces;
 using Assets.Scripts.ApiModels;
 using Assets.Scripts.Pluigns;
 using Assets.Scripts.Enums;
@@ -12,8 +11,29 @@ using System.Collections.Generic;
 using Assets.Scripts.Models;
 using static Assets.Scripts.Pluigns.MailEncoder;
 
-public class MailDetailItemOnlySpyController : MonoBehaviour, IMailDetailItem
+public class MailDetailItemOnlySpyController : BasePanelController
 {
+    [Header("Gönderen gezegeni buraya basıyoruz.")]
+    public TMP_Text TXT_SenderPlanetName;
+
+    [Header("Gönderen gezegenin kordinatını buraya basıyoruz.")]
+    public TMP_Text TXT_SenderPlanetCordinate;
+
+    [Header("Aksiyon türünü basıyoruz.")]
+    public TMP_Text TXT_ActionName;
+
+    [Header("Hedef gezegeni buraya basıyoruz.")]
+    public TMP_Text TXT_DestinationPlanetName;
+
+    [Header("Hedef gezgenin kordinatı.")]
+    public TMP_Text TXT_DestinationCordinate;
+
+    [Header("Posta tarihi.")]
+    public TMP_Text TXT_MailDate;
+
+    [Header("Mail içeriği buraya basılacak.")]
+    public TMP_Text TXT_MailContent;
+
     [Header("Dataları basarken kullanılacak olan template resimli metin.")]
     public GameObject SpyMailTemplateWithImage;
 
@@ -35,18 +55,48 @@ public class MailDetailItemOnlySpyController : MonoBehaviour, IMailDetailItem
     [Header("Savunmaları basacağımız alan.")]
     public Transform DefensesContent;
 
-    [Header("Mail içeriğini buraya basacağız.")]
-    public TMP_Text TXT_MailContent;
-
     /// <summary>
     /// Mail datasını tutar.
     /// </summary>
     public MailDecodeDTO MailData { get; set; }
 
+    /// <summary>
+    /// Tutulan mail bilgisi.
+    /// </summary>
+    public UserMailDTO UserMail { get; set; }
+
     public void LoadContent(UserMailDTO mailData, MailDecodeDTO decodedData)
     {
         // Mail datası lazım olacak.
         this.MailData = decodedData;
+
+        // Kullanıcı maili.
+        this.UserMail = mailData;
+
+        // Gönderen gezenin ismini basıyoruz.
+        TXT_SenderPlanetName.text = TextExtends.MakeItColorize(base.GetLanguageText("Gönderen"), ":", "orange", decodedData.GetValue(MailEncoder.KEY_SENDERPLANETNAME));
+
+        // Gönderen gezegenin kordinatını basıyoruz.
+        TXT_SenderPlanetCordinate.text = TextExtends.MakeItColorize(base.GetLanguageText("Koordinat"), ":", "orange", decodedData.GetValue(MailEncoder.KEY_SENDERPLANETCORDINATE));
+
+        // Mail tarihini basıyoruz.
+        TXT_MailDate.text = TextExtends.MakeItColorize(base.GetLanguageText("PostaTarihi"), ":", "orange", TimeExtends.UTCDateToString(mailData.MailDate));
+
+        // Hedef gezegenin ismini basıyoruz.
+        TXT_DestinationPlanetName.text = TextExtends.MakeItColorize(base.GetLanguageText("Hedef"), ":", "orange", decodedData.GetValue(MailEncoder.KEY_DESTINATIONPLANETNAME));
+
+        // Gönderen gezegenin kordinatını basıyoruz.
+        TXT_DestinationCordinate.text = TextExtends.MakeItColorize(base.GetLanguageText("Koordinat"), ":", "orange", decodedData.GetValue(MailEncoder.KEY_DESTINATIONPLANETCORDINATE));
+
+        // Hareket türünü basıyoruz.
+        TXT_ActionName.text = $"{base.GetLanguageText($"FT{(int)decodedData.GetMailAction()}")}";
+
+        // Eğer dönüş maili ise devamına dönüş yazıyoruz.
+        if (decodedData.IsReturnMail())
+        {
+            TXT_ActionName.text += Environment.NewLine;
+            TXT_ActionName.text += TextExtends.MakeItColorize($"({base.GetLanguageText("Dönüş")})", "green");
+        }
 
         // Mailin türünü arıyoruz. Ona göre Dil dosyasından alacağız datayı.
         MailTypes mailType = decodedData.GetMailType();
@@ -145,7 +195,7 @@ public class MailDetailItemOnlySpyController : MonoBehaviour, IMailDetailItem
         #endregion
     }
 
-    public void OnClickWarButton()
+    public void OnClickAction()
     {
         // Hedef kordinat bilgisini açıyoruz.
         CordinateDTO destinationCordinate = MailData.GetValue(KEY_DESTINATIONPLANETCORDINATE).ToCordinate();
@@ -164,6 +214,14 @@ public class MailDetailItemOnlySpyController : MonoBehaviour, IMailDetailItem
 
         // Saldırı seçili olarak açmalıyız.
         panel.GetComponent<PlanetActionController>().OnActionChanged(FleetTypes.Saldır);
+    }
+
+    public void OnClickDelete()
+    {
+        MailController.MC.DeleteMail(this.UserMail, () =>
+        {
+            base.ClosePanel();
+        });
     }
 
 }

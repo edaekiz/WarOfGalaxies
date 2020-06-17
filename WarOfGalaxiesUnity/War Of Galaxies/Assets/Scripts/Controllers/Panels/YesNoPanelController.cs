@@ -20,6 +20,13 @@ public class YesNoPanelController : BasePanelController
     /// </summary>
     public Action OnClickNo;
 
+    private void Awake()
+    {
+        foreach (YesNoPanelController yesNo in FindObjectsOfType<YesNoPanelController>())
+            if (yesNo != this)
+                yesNo.ClosePanel();
+    }
+
     public void OnYes()
     {
         if (OnClickYes != null)
