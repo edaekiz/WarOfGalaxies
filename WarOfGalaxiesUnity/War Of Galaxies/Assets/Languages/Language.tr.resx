@@ -596,4 +596,7 @@ Gemi ve savunma sistemleri inşa ederken.</value>
   <data name="AraştırmaLabYok" xml:space="preserve">
     <value>Araştıram yapabilmek için Labaratuvar inşa etmelisin!</value>
   </data>
+  <data name="TersaneYok" xml:space="preserve">
+    <value>*Gemi üretmek için önce tersane inşa etmelisin!</value>
+  </data>
 </root>

@@ -44,6 +44,10 @@ namespace WarOfGalaxiesApi.Controllers
             if (userPlanet == null)
                 return ResponseHelper.GetError("Kullanıcıya ait gezegen bulunamadı!");
 
+            // Eğer gezegende tersane yok ise geri dön.
+            if (!base.UnitOfWork.GetRepository<TblUserPlanetBuildings>().Any(x=>x.UserPlanetId == userPlanet.UserPlanetId && x.BuildingId == (int)Buildings.Tersane))
+                return ResponseHelper.GetError("Bu gezegende tersane bulunmuyor!");
+
             // Eğer gezegen de yükseltme var ise dönüyoruz.
             if (base.UnitOfWork.GetRepository<TblUserPlanetBuildingUpgs>().Any(x => x.UserPlanetId == userPlanet.UserPlanetId && x.BuildingId == (int)Buildings.Tersane))
                 return ResponseHelper.GetError("Bu gezegende tersane yükseltiliyor!");

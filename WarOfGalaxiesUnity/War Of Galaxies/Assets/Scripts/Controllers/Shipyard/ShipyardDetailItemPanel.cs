@@ -32,7 +32,7 @@ public class ShipyardDetailItemPanel : BasePanelController
     public TMP_InputField QuantityField;
 
     [Header("Eğer yükseltme yapılamaz ise buradaki uyarı açılacak")]
-    public GameObject TXT_Alert;
+    public TMP_Text TXT_Alert;
 
     [Header("Sunucuya istek gönderiliyor mu?")]
     public bool IsSending;
@@ -93,26 +93,19 @@ public class ShipyardDetailItemPanel : BasePanelController
         // Üretim süresini basıyoruz.
         ItemCountdown.text = TimeExtends.GetCountdownText(TimeSpan.FromSeconds(countdown));
 
-        #region Tersane yükseltiliyor ise gemi üretilemez.
+        #region Araştırma Lab Seviyesine ve var mı diye kontrol ediyoruz.
 
-        // Eğer tersane yükseltiliyor ise bu buton açılacak.
-        bool isTersaneUpgrading = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Exists(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.Tersane);
-
-        // Tersane yükseltiliyor ise uyarı panelini açacağız.
-        if (isTersaneUpgrading)
+        // Yükseltebiliyor muyuz diye kontrol ediyoruz.
+        if (!ShipyardPanelController.SPC.CanProduceShip())
         {
-            // Tabiki açık olmadığı durumda açıyoruz.
-            if (!TXT_Alert.activeSelf)
-                TXT_Alert.SetActive(true);
-
-            // Üretim yapılamaz.
+            // Yükseltemiyoruz demekki.
             canProduce = false;
-        }else
-        {
-            // Tabiki açık olmadığı durumda açıyoruz.
-            if (TXT_Alert.activeSelf)
-                TXT_Alert.SetActive(false);
+
+            // Uyarıyı da buraya basacağız.
+            TXT_Alert.text = ShipyardPanelController.SPC.TXT_Alert.text;
         }
+        else
+            TXT_Alert.text = string.Empty;
 
         #endregion
 

@@ -48,7 +48,7 @@ public class GlobalBuildingController : MonoBehaviour
             if (DateTime.UtcNow >= userPlanetBuildingUpg.EndDate)
             {
                 // Kullanıcının gezegendeki kaynaklarını verify ediyoruz.
-                LoginController.LC.VerifyUserResources(GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId, (UserPlanetDTO onSuccess) =>
+                LoginController.LC.VerifyUserResources(userPlanet.UserPlanetId, (UserPlanetDTO onSuccess) =>
                 {
                     // Var olan binayı buluyoruz.
                     UserPlanetBuildingDTO userBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == userPlanetBuildingUpg.UserPlanetId && x.BuildingId == userPlanetBuildingUpg.BuildingId);

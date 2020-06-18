@@ -595,4 +595,7 @@ Ships and defense structures.</value>
   <data name="AraştırmaLabYok" xml:space="preserve">
     <value>You have to build a research lab to do research!</value>
   </data>
+  <data name="TersaneYok" xml:space="preserve">
+    <value>*You have to build shipyard to produce ship!</value>
+  </data>
 </root>
