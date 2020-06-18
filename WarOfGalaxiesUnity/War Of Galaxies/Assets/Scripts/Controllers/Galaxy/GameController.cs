@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Linq;
 using UnityEngine;
+#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
 using UnityEngine.SceneManagement;
+#endif
 
 public class GameController : MonoBehaviour
 {
     private DateTime focusOutDate;
     private void OnApplicationFocus(bool focus)
     {
-        #if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
+#if (UNITY_ANDROID || UNITY_IOS) && !UNITY_EDITOR
         if (focus)
         {
             if ((DateTime.Now - focusOutDate).TotalSeconds > 30)
@@ -18,6 +19,6 @@ public class GameController : MonoBehaviour
         {
             focusOutDate = DateTime.Now;
         }
-        #endif
+#endif
     }
 }

@@ -1,7 +1,6 @@
 ﻿using Assets.Scripts.ApiModels;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Models;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 

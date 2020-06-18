@@ -131,44 +131,8 @@ public class FleetController : MonoBehaviour
 
     public void VerifyFleet(FleetDTO fleet)
     {
-        // Gönderen gezegenin kaynaklarını doğruluyoruz.
-        if (fleet.SenderUserId == LoginController.LC.CurrentUser.UserData.UserId)
-        {
-            LoginController.LC.VerifyUserResources(fleet.SenderUserPlanetId, (UserPlanetDTO userPlanet) =>
-             {
-                 // Ve eğer galaksiye bakıyorsak açık olan galaksiyi yenilememiz lazım.
-                 if (GlobalGalaxyController.GGC.IsInGalaxyView && fleet.FleetActionTypeId == FleetTypes.Sök)
-                 {
-                     // Sök panelini yenilememiz lazım. Kapatıyoruz. İsterse yeniden açabilir.
-                     GlobalPanelController.GPC.ClosePanel(GlobalPanelController.PanelTypes.PlanetActionFooterPanel);
-
-                     // Paneli yeniliyoruz.
-                     GalaxyChangePanelController.GCPC.GoToCordinate();
-                 }
-
-                 // Dönüş filosu var ise yeniliyoruz.
-                 if (!fleet.IsReturnFleet)
-                 {
-                     // Dönüş filosundaki dataları güncelliyoruz.
-                     RefreshReturnFleetData(fleet.ReturnFleetId);
-                 }
-                 else // Dönüş filosunun işlemi.
-                 {
-                     // Filodaki gemiler.
-                     List<Tuple<Ships, int>> ships = FleetExtends.FleetDataToShipData(fleet.FleetData);
-
-                     // Her bir gemiyi dönüyoruz ve envantere ekliyoruz..
-                     ships.ForEach(e => ShipyardController.SC.AddShip(fleet.SenderUserPlanetId, e.Item1, e.Item2));
-
-                     // Paneli yeniliyoruz.
-                     if (FleetPanelController.FPC != null)
-                         FleetPanelController.FPC.RefreshActiveFleets();
-                 }
-             });
-        }
-
         // Dönüş gezegeninin kaynaklarını doğruluyoruz.
-        if (fleet.DestinationUserId == LoginController.LC.CurrentUser.UserData.UserId && fleet.SenderUserPlanetId != fleet.DestinationUserPlanetId)
+        if (fleet.DestinationUserId == LoginController.LC.CurrentUser.UserData.UserId)
             LoginController.LC.VerifyUserResources(fleet.DestinationUserPlanetId, (UserPlanetDTO userPlanet) =>
              {
                  // Ve eğer galaksiye bakıyorsak açık olan galaksiyi yenilememiz lazım.
@@ -181,7 +145,7 @@ public class FleetController : MonoBehaviour
                      GalaxyChangePanelController.GCPC.GoToCordinate();
                  }
 
-                 // Dönüş filosu var ise yeniliyoruz.
+                 // Hedefe gidiyor ise.
                  if (!fleet.IsReturnFleet)
                  {
                      // Dönüş filosundaki dataları güncelliyoruz.
