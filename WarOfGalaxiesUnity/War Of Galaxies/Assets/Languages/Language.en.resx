@@ -598,4 +598,7 @@ Ships and defense structures.</value>
   <data name="TersaneYok" xml:space="preserve">
     <value>*You have to build shipyard to produce ship!</value>
   </data>
+  <data name="RobotFabYok" xml:space="preserve">
+    <value>*You have to build robot factory to produce defense!</value>
+  </data>
 </root>

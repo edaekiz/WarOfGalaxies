@@ -37,20 +37,12 @@ public class ShipyardDetailItemPanel : BasePanelController
     [Header("Sunucuya istek gönderiliyor mu?")]
     public bool IsSending;
 
-    protected override void Start()
-    {
-        base.Start();
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-    }
-
     public IEnumerator LoadShipDetals(Ships ship)
     {
         // Gemi bilgisi.
         CurrentShip = ship;
+
+        #region Dataları basıyoruz.
 
         // Aktif gemi miktarı.
         UserPlanetShipDTO currentShipCount = LoginController.LC.CurrentUser.UserPlanetShips.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.ShipId == ship);
@@ -70,6 +62,19 @@ public class ShipyardDetailItemPanel : BasePanelController
         // Maliyeti.
         ShipDataDTO shipInfo = DataController.DC.GetShip(ship);
 
+        // Tersaneyi buluyoruz.
+        UserPlanetBuildingDTO shipyard = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.BuildingId == Buildings.Tersane && x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
+
+        // Üretim süresini basıyoruz.
+        double countdown = DataController.DC.CalculateShipCountdown(ship, shipyard == null ? 0 : shipyard.BuildingLevel);
+
+        // Üretim süresini basıyoruz.
+        ItemCountdown.text = TimeExtends.GetCountdownText(TimeSpan.FromSeconds(countdown));
+
+        #endregion
+
+        #region Üreim koşulları sağlanıyor mu?
+
         // Eğer üretim yapılabiliyor ise true olacak.
         bool canProduce = true;
 
@@ -84,16 +89,7 @@ public class ShipyardDetailItemPanel : BasePanelController
         if (!isMathEnough)
             canProduce = false;
 
-        // Tersaneyi buluyoruz.
-        UserPlanetBuildingDTO shipyard = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.BuildingId == Buildings.Tersane && x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
-
-        // Üretim süresini basıyoruz.
-        double countdown = DataController.DC.CalculateShipCountdown(ship, shipyard == null ? 0 : shipyard.BuildingLevel);
-
-        // Üretim süresini basıyoruz.
-        ItemCountdown.text = TimeExtends.GetCountdownText(TimeSpan.FromSeconds(countdown));
-
-        #region Araştırma Lab Seviyesine ve var mı diye kontrol ediyoruz.
+        #region Tersane var mı? Varsa seviyesine bakıyoruz.
 
         // Yükseltebiliyor muyuz diye kontrol ediyoruz.
         if (!ShipyardPanelController.SPC.CanProduceShip())
@@ -114,6 +110,8 @@ public class ShipyardDetailItemPanel : BasePanelController
             ProduceButton.interactable = true;
         else
             ProduceButton.interactable = false;
+
+        #endregion
 
         // 1 saniye bekliyoruz tekrar yenileyeceğiz.
         yield return new WaitForSecondsRealtime(1);

@@ -40,20 +40,6 @@ public class ResearchDetailItemPanel : BasePanelController
         // Aktif araştırmayı değiştiriyoruz.
         CurrentResearch = research;
 
-        #region Yükseltme yapılabilir mi? Kaynak kontrolü olmadan.
-
-        // Yükseltebilir mi?
-        bool canUpgrade = true;
-
-        // Eğer bir araştırma yükseltiliyor ise true olacak.
-        bool isAlreadyUpgrading = LoginController.LC.CurrentUser.UserResearchProgs.Count > 0;
-
-        // Eğer zaten upgrade ediliyor ise upgrade edilemez.
-        if (isAlreadyUpgrading)
-            canUpgrade = false;
-
-        #endregion
-
         #region Araştırma Detayları.
 
         // Araştırma seviyesini tutuyoruz.
@@ -78,6 +64,9 @@ public class ResearchDetailItemPanel : BasePanelController
         // Maliyeti alıyoruz.
         ResourcesDTO resources = DataController.DC.CalculateCostResearch(research, nextLevel);
 
+        // Kaynakları set ediyoruz.
+        base.SetResources(resources);
+
         // Toplam araştırma lab seviyesi.
         int totalResearchLevel = LoginController.LC.CurrentUser.UserPlanetsBuildings.Where(x => x.BuildingId == Buildings.ArastirmaLab).Select(x => x.BuildingLevel).DefaultIfEmpty(0).Sum();
 
@@ -92,7 +81,17 @@ public class ResearchDetailItemPanel : BasePanelController
 
         #endregion
 
-        #region Araştırma Lab Seviyesine ve var mı diye kontrol ediyoruz.
+        #region Araştırma koşulları sağlanıyor mu?
+
+        // Yükseltebilir mi?
+        bool canUpgrade = true;
+
+        // Eğer bir araştırma yükseltiliyor ise true olacak.
+        bool isAlreadyUpgrading = LoginController.LC.CurrentUser.UserResearchProgs.Count > 0;
+
+        // Eğer zaten upgrade ediliyor ise upgrade edilemez.
+        if (isAlreadyUpgrading)
+            canUpgrade = false;
 
         // Yükseltebiliyor muyuz diye kontrol ediyoruz.
         if (!ResearchPanelController.RPC.CanDoResearch())
@@ -105,13 +104,6 @@ public class ResearchDetailItemPanel : BasePanelController
         }
         else
             TXT_Alert.text = string.Empty;
-
-        #endregion
-
-        // Kaynakları set ediyoruz.
-        base.SetResources(resources);
-
-        #region Yükseltme kontrolü yapılıyor ise zaten yapılıyor yazacak. Aksi durumda butonu açacağız ya da kapatacağız.
 
         // Eğer zaten yükseltiliyor ise butonu kapat ve texti güncelle.
         if (!canUpgrade)

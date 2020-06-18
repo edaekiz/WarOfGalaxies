@@ -4,6 +4,7 @@ using System.ComponentModel;
 using WarOfGalaxiesApi.Controllers.Base;
 using WarOfGalaxiesApi.DAL.Interfaces;
 using WarOfGalaxiesApi.DAL.Models;
+using WarOfGalaxiesApi.DTO.Enums;
 using WarOfGalaxiesApi.DTO.Helpers;
 using WarOfGalaxiesApi.DTO.Models;
 using WarOfGalaxiesApi.Statics;
@@ -42,6 +43,14 @@ namespace WarOfGalaxiesApi.Controllers
             // Eğer gezegen yok ise hata dön.
             if (userPlanet == null)
                 return ResponseHelper.GetError("Kullanıcıya ait gezegen bulunamadı!");
+            
+            // Eğer gezegende robot fabrikası yok ise geri dön.
+            if (!base.UnitOfWork.GetRepository<TblUserPlanetBuildings>().Any(x => x.UserPlanetId == userPlanet.UserPlanetId && x.BuildingId == (int)Buildings.RobotFabrikası))
+                return ResponseHelper.GetError("Bu gezegende robot fabrikası bulunmuyor!");
+
+            // Eğer gezegen de robot fabrikası yükseltmesi var ise dönüyoruz.
+            if (base.UnitOfWork.GetRepository<TblUserPlanetBuildingUpgs>().Any(x => x.UserPlanetId == userPlanet.UserPlanetId && x.BuildingId == (int)Buildings.RobotFabrikası))
+                return ResponseHelper.GetError("Bu gezegende robot fabrikası yükseltiliyor!");
 
             // Gezegendeki kaynakları dönüştürüyoruz.
             ResourcesDTO planetRes = new ResourcesDTO(userPlanet.Metal, userPlanet.Crystal, userPlanet.Boron);

@@ -599,4 +599,7 @@ Gemi ve savunma sistemleri inşa ederken.</value>
   <data name="TersaneYok" xml:space="preserve">
     <value>*Gemi üretmek için önce tersane inşa etmelisin!</value>
   </data>
+  <data name="RobotFabYok" xml:space="preserve">
+    <value>*Savunma üretmek için önce robot fabrikası kurmalısın!</value>
+  </data>
 </root>

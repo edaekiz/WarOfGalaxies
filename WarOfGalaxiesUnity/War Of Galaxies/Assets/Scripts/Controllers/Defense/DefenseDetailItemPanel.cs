@@ -33,25 +33,17 @@ public class DefenseDetailItemPanel : BasePanelController
     public TMP_InputField QuantityField;
 
     [Header("Eğer yükseltme yapılamaz ise buradaki uyarı açılacak")]
-    public GameObject TXT_Alert;
+    public TMP_Text TXT_Alert;
 
     [Header("Sunucuya istek gönderiliyor mu?")]
     public bool IsSending;
-
-    protected override void Start()
-    {
-        base.Start();
-    }
-
-    protected override void Update()
-    {
-        base.Update();
-    }
 
     public IEnumerator LoadDefenseDetails(Defenses defense)
     {
         // Gemi bilgisi.
         CurrentDefense = defense;
+
+        #region Dataları yüklüyoruz.
 
         // Savunma açıklaması.
         ItemDescription.text = base.GetLanguageText($"DD{(int)defense}");
@@ -71,6 +63,19 @@ public class DefenseDetailItemPanel : BasePanelController
         // Maliyeti.
         DefenseDataDTO defenseInfo = DataController.DC.GetDefense(defense);
 
+        // Robot fab buluyoruz.
+        UserPlanetBuildingDTO robotFac = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.BuildingId == Buildings.RobotFabrikası && x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
+
+        // Üretim süresini basıyoruz.
+        double countdown = DataController.DC.CalculateDefenseCountdown(defense, robotFac == null ? 0 : robotFac.BuildingLevel);
+
+        // Üretim süresini basıyoruz.
+        ItemCountdown.text = TimeExtends.GetCountdownText(TimeSpan.FromSeconds(countdown));
+
+        #endregion
+
+        #region Üretim koşulları sağlanıyor mu?
+
         // Eğer üretim yapılabiliyor ise true olacak.
         bool canProduce = true;
 
@@ -85,27 +90,19 @@ public class DefenseDetailItemPanel : BasePanelController
         if (!isMathEnough)
             canProduce = false;
 
-        #region Robot fabrikası yükseltiliyor ise savunma üretilemez.
+        #region Robot Fabrikası var mı? Varsa seviyesine bakıyoruz.
 
-        // Eğer robot fabrikası yükseltiliyor ise bu buton açılacak.
-        bool isRobotFactoryUpg = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Exists(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.RobotFabrikası);
-
-        // Robot fabrikası yükseltiliyor ise uyarı panelini açacağız.
-        if (isRobotFactoryUpg)
+        // Yükseltebiliyor muyuz diye kontrol ediyoruz.
+        if (!DefensePanelController.DPC.CanProduceDefense())
         {
-            // Tabiki açık olmadığı durumda açıyoruz.
-            if (!TXT_Alert.activeSelf)
-                TXT_Alert.SetActive(true);
-
-            // Üretim yapılamaz.
+            // Yükseltemiyoruz demekki.
             canProduce = false;
+
+            // Uyarıyı da buraya basacağız.
+            TXT_Alert.text = DefensePanelController.DPC.TXT_Alert.text;
         }
         else
-        {
-            // Tabiki açık olmadığı durumda açıyoruz.
-            if (TXT_Alert.activeSelf)
-                TXT_Alert.SetActive(false);
-        }
+            TXT_Alert.text = string.Empty;
 
         #endregion
 
@@ -115,14 +112,7 @@ public class DefenseDetailItemPanel : BasePanelController
         else
             ProduceButton.interactable = false;
 
-        // Robot fab buluyoruz.
-        UserPlanetBuildingDTO robotFac = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.BuildingId == Buildings.RobotFabrikası && x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
-
-        // Üretim süresini basıyoruz.
-        double countdown = DataController.DC.CalculateDefenseCountdown(defense, robotFac == null ? 0 : robotFac.BuildingLevel);
-
-        // Üretim süresini basıyoruz.
-        ItemCountdown.text = TimeExtends.GetCountdownText(TimeSpan.FromSeconds(countdown));
+        #endregion
 
         // 1 saniye bekliyoruz tekrar yenileyeceğiz.
         yield return new WaitForSecondsRealtime(1);
@@ -134,9 +124,8 @@ public class DefenseDetailItemPanel : BasePanelController
     public void AddToQueue()
     {
         string quantityStr = QuantityField.text;
-        int quantity = 0;
 
-        if (int.TryParse(quantityStr, out quantity))
+        if (int.TryParse(quantityStr, out int quantity))
         {
             // Gönderiliyor mu?
             IsSending = true;
