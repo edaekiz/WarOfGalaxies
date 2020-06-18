@@ -160,7 +160,8 @@
     <value>Rocket Launcher</value>
   </data>
   <data name="DD1" xml:space="preserve">
-    <value>Rocket Launcher short description</value>
+    <value>Rocket Launcher is a low level defense structure.
+Its cost is really low.</value>
   </data>
   <data name="S1" xml:space="preserve">
     <value>Light Hunter</value>
@@ -268,7 +269,7 @@
     <value>Colony</value>
   </data>
   <data name="KeşfedilmemişGezegen" xml:space="preserve">
-    <value>Unexplored Planet</value>
+    <value>Unexp. Planet</value>
   </data>
   <data name="Casusluk" xml:space="preserve">
     <value>Spy</value>
@@ -572,5 +573,26 @@ Ships and defense structures.</value>
   </data>
   <data name="Sil" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="TersaneYükseltmeVar" xml:space="preserve">
+    <value>*You cant produce ship while shipyard is upgrading!</value>
+  </data>
+  <data name="AraştırmaDevamEdiyor" xml:space="preserve">
+    <value>*You cant upgrade Research lab while you research!</value>
+  </data>
+  <data name="GemiÜretimiMevcut" xml:space="preserve">
+    <value>*You cant upgrade shipyard while you produce ship!</value>
+  </data>
+  <data name="SavunmaÜretimiMevcut" xml:space="preserve">
+    <value>*You cant upgrade robot factory while you produce defense!</value>
+  </data>
+  <data name="RobotFabYükseltmeVar" xml:space="preserve">
+    <value>*You cant produce defense while you upgrade robot factory!</value>
+  </data>
+  <data name="AraştırmaLabYükseltmeVar" xml:space="preserve">
+    <value>*You cant do research while you upgrade research lab!</value>
+  </data>
+  <data name="AraştırmaLabYok" xml:space="preserve">
+    <value>You have to build a research lab to do research!</value>
   </data>
 </root>

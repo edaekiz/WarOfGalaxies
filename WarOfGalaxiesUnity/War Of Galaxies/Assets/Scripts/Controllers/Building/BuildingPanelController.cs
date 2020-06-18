@@ -5,6 +5,7 @@ using Assets.Scripts.Models;
 using System;
 using System.Collections;
 using System.Linq;
+using System.Net.Http.Headers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -35,9 +36,8 @@ public class BuildingPanelController : BasePanelController
     [Header("Yükseltme sırasındaki geri sayım.")]
     public TMP_Text BuildingCountdown;
 
-    private void Awake()
-    {
-    }
+    [Header("Bir uyarı vereceğimiz de burayı kullanacağız.")]
+    public TMP_Text TXT_Alert;
 
     public IEnumerator LoadData(Buildings building)
     {
@@ -75,7 +75,20 @@ public class BuildingPanelController : BasePanelController
         else
             BuildingLevel.text = base.GetLanguageText("Kademe", userBuilding.BuildingLevel.ToString());
 
+        // Bir sonraki seviye.
         int nextLevel = userBuilding == null ? 1 : userBuilding.BuildingLevel + 1;
+
+        // Eğer bir sonraki seviye 1 ise bu bina henüz kurulmamıştır. Kurulmadıysa yıkamayız o yüzden butonu kapatıyoruz.
+        if (nextLevel == 1)
+            DowngradeButton.interactable = false;
+        else
+        {
+            // EĞer yükseltilmiyor ise butonu açabiliriz. Ancak aksi durumda kapatacağız.
+            if (upgrade == null)
+                DowngradeButton.interactable = true;
+            else
+                DowngradeButton.interactable = false;
+        }
 
         // Binanın ismini basıyoruz.
         BuildingName.text = base.GetLanguageText($"B{(int)building}");
@@ -159,6 +172,59 @@ public class BuildingPanelController : BasePanelController
 
         // Kaynakları atıyoruz.
         base.SetResources(resources);
+
+        #region Tersane | Araştırma Lab | Robot Fabrikası.
+
+        // Tersane araştırma ve robot fabrikasını yükseltirken üretimleri mevcut mu diye kontrol etmeliyiz.
+        if (building == Buildings.Tersane || building == Buildings.ArastirmaLab || building == Buildings.RobotFabrikası)
+        {
+            bool isProgExits = false;
+            string textMessage = string.Empty;
+
+            switch (building)
+            {
+                case Buildings.RobotFabrikası:
+                    isProgExits = LoginController.LC.CurrentUser.UserPlanetDefenseProgs.Exists(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
+                    textMessage = base.GetLanguageText("SavunmaÜretimiMevcut");
+                    break;
+                case Buildings.Tersane:
+                    isProgExits = LoginController.LC.CurrentUser.UserPlanetShipProgs.Exists(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId); ;
+                    textMessage = base.GetLanguageText("GemiÜretimiMevcut");
+                    break;
+                case Buildings.ArastirmaLab:
+                    isProgExits = LoginController.LC.CurrentUser.UserResearchProgs.Count > 0;
+                    textMessage = base.GetLanguageText("AraştırmaDevamEdiyor");
+                    break;
+            }
+
+            // Eğer bir üretim mevcut ise bina yükseltilemz.
+            if (isProgExits)
+            {
+                // Artık bu yükseltme yapılamaz.
+                canUpgrade = false;
+
+                // Eğer uyarı açık değil ise açıyoruz uyarıyı açıyoruz.
+                if (!TXT_Alert.gameObject.activeSelf)
+                {
+                    // Uyarıyı açıyoruz.
+                    TXT_Alert.gameObject.SetActive(true);
+
+                    // Uyarıyı basıyoruz.
+                    TXT_Alert.text = textMessage;
+                }
+            }
+            else // Eğer mevcut değil ise ve uyarı paneli açık ise paneli kapatıyoruz.
+            {
+                // Eğer uyarı açık ise kapatıyoruz.
+                if (TXT_Alert.gameObject.activeSelf)
+                {
+                    // Uyarıyı açıyoruz.
+                    TXT_Alert.gameObject.SetActive(false);
+                }
+            }
+        }
+
+        #endregion
 
         #region Yükseltme kontrolü yapılıyor ise zaten yapılıyor yazacak. Aksi durumda butonu açacağız ya da kapatacağız.
 

@@ -23,6 +23,8 @@ public class GlobalBuildingController : MonoBehaviour
     [Header("Seçili olan bina.")]
     public BuildingController CurrentSelectedBuilding;
 
+    [Header("Oyundaki binalar.")]
+    public List<BuildingController> BuildingsInGame;
     IEnumerator Start()
     {
         yield return new WaitUntil(() => LoadingController.LC.IsGameLoaded);
@@ -103,7 +105,7 @@ public class GlobalBuildingController : MonoBehaviour
     public void DeSelectBuilding()
     {
         // Bütün seçimleri kaldırıyoruz.
-        foreach (BuildingController bc in FindObjectsOfType<BuildingController>())
+        foreach (BuildingController bc in BuildingsInGame)
             bc.SelectionMesh.SetActive(false);
     }
 }

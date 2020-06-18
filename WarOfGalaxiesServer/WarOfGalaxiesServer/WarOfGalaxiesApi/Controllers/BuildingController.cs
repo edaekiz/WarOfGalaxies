@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System;
 using System.ComponentModel;
 using WarOfGalaxiesApi.Controllers.Base;
@@ -37,6 +38,51 @@ namespace WarOfGalaxiesApi.Controllers
             // Zaten yükseltme de ise geri dön.
             if (isAlreadyInProg)
                 return ResponseHelper.GetError("Zaten bir yükseltme yapılıyor.");
+
+            #region Eğer gemi üretimi yapıyor isek tersane üretemeyiz.
+
+            // Tersaneyi yükseltirken kontrol etmeliyiz, gemi üretimi var mı?
+            if (request.BuildingID == (int)Buildings.Tersane)
+            {
+                // Gezegende gemi üretimi yapıyor muyuz?
+                bool isThereShipProduce = base.UnitOfWork.GetRepository<TblUserPlanetShipProgs>().Any(x => x.UserPlanetId == request.UserPlanetID);
+
+                // Eğer yapıyor isek hata döneceğiz.
+                if (isThereShipProduce)
+                    return ResponseHelper.GetError("Bu gezgende gemi üretimi mevcut!");
+            }
+
+            #endregion
+
+            #region Eğer araştırma yapıyorsak labratuvar yükseltilemez.
+
+            // Araştırma yükseltirken kontrol etmeliyiz, yükseltme var mı?
+            if (request.BuildingID == (int)Buildings.ArastirmaLab)
+            {
+                // Gezegende araştırma yapıyor muyuz?
+                bool isThereResearchUpg = base.UnitOfWork.GetRepository<TblUserResearchUpgs>().Any(x => x.UserId == DBUser.UserId);
+
+                // Eğer yapıyor isek hata döneceğiz.
+                if (isThereResearchUpg)
+                    return ResponseHelper.GetError("Bu gezgende araştırma yükseltmesi mevcut!");
+            }
+
+            #endregion
+
+            #region Eğer savunma birimi üretiyorsak robot fabrikası yükseltilemez.
+
+            // Robot fabrikasını yükseltirken kontrol ediyoruz savunma sistemi üretliyor mu?
+            if (request.BuildingID == (int)Buildings.RobotFabrikası)
+            {
+                // Gezegende savunma üretimi yapıyor muyuz?
+                bool isThereDefenseProg = base.UnitOfWork.GetRepository<TblUserPlanetDefenseProgs>().Any(x => x.UserPlanetId == request.UserPlanetID);
+
+                // Eğer yapıyor isek hata döneceğiz.
+                if (isThereDefenseProg)
+                    return ResponseHelper.GetError("Bu gezgende savunma üretimi mevcut!");
+            }
+
+            #endregion
 
             // Gezegenin sahip olduğu binayı buluyoruz.
             TblUserPlanetBuildings userPlanetBuilding = base.UnitOfWork.GetRepository<TblUserPlanetBuildings>().FirstOrDefault(x => x.UserPlanetId == request.UserPlanetID && x.BuildingId == request.BuildingID);

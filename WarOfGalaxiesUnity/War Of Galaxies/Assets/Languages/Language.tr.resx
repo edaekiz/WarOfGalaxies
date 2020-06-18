@@ -178,7 +178,8 @@
     <value>Roketatar</value>
   </data>
   <data name="DD1" xml:space="preserve">
-    <value>Roketatar kısa açıklaması</value>
+    <value>Roketatar düşük seviye bir savunma birimidir.
+Ucuz maliyeti sebebiyle tercih edilir.</value>
   </data>
   <data name="R1" xml:space="preserve">
     <value>Roket Tekniği</value>
@@ -271,7 +272,7 @@
     <value>Sömürgeleştir</value>
   </data>
   <data name="KeşfedilmemişGezegen" xml:space="preserve">
-    <value>Keşfedilmemiş Gezegen</value>
+    <value>Keşf. Gezegen</value>
   </data>
   <data name="Casusluk" xml:space="preserve">
     <value>Casusluk</value>
@@ -573,5 +574,26 @@ Gemi ve savunma sistemleri inşa ederken.</value>
   </data>
   <data name="Sil" xml:space="preserve">
     <value>Sil</value>
+  </data>
+  <data name="TersaneYükseltmeVar" xml:space="preserve">
+    <value>*Tersane yükseltiliyorken gemi üretimi yapamazsın!</value>
+  </data>
+  <data name="AraştırmaDevamEdiyor" xml:space="preserve">
+    <value>*Araştırma yaparken Labratuvarı yükseltemezsin!</value>
+  </data>
+  <data name="GemiÜretimiMevcut" xml:space="preserve">
+    <value>*Gemi üretimi yaparken tersaneyi yükseltemezsin!</value>
+  </data>
+  <data name="SavunmaÜretimiMevcut" xml:space="preserve">
+    <value>*Savunma üretirken robot fabrikasını yükseltemezsin!</value>
+  </data>
+  <data name="RobotFabYükseltmeVar" xml:space="preserve">
+    <value>*Robot fabrikası yükseltirken savunma üretimi yapamazsın!</value>
+  </data>
+  <data name="AraştırmaLabYükseltmeVar" xml:space="preserve">
+    <value>*Araştırma labaratuvarı yükseltirken araştırma yapamazsın!</value>
+  </data>
+  <data name="AraştırmaLabYok" xml:space="preserve">
+    <value>Araştıram yapabilmek için Labaratuvar inşa etmelisin!</value>
   </data>
 </root>

@@ -11,6 +11,13 @@ public class FleetController : MonoBehaviour
 {
     public static FleetController FC { get; set; }
 
+    [Header("Eğer düşmanca bir saldırı var ise bu uyarı açılacak.")]
+    public GameObject EnemyFleetAlert;
+
+    [Header("Eğer düşmanca bir saldırı yok ise ancak filo hareketi var ise bu uyarı açılacak.")]
+    public GameObject AnyFleetAlert;
+
+
     [Header("Filoları tutar.")]
     public List<FleetDTO> Fleets = new List<FleetDTO>();
 
@@ -55,6 +62,9 @@ public class FleetController : MonoBehaviour
                      // Eğer panel açık ise paneli de yeniliyoruz.
                      if (FleetPanelController.FPC != null)
                          FleetPanelController.FPC.RefreshActiveFleets();
+
+                     // Bildirimleri yeniliyoruz.
+                     RefreshProgressIcon();
                  }
              }
          }));
@@ -87,6 +97,9 @@ public class FleetController : MonoBehaviour
                 // Listeden siliyoruz.
                 Fleets.Remove(fleet);
 
+                // Bildirim ışığını yeniliyoruz.
+                RefreshProgressIcon();
+
                 // Filoyu verify ediyoruz sunucuda.
                 VerifyFleet(fleet);
             }
@@ -95,6 +108,25 @@ public class FleetController : MonoBehaviour
         yield return new WaitForSecondsRealtime(1);
 
         StartCoroutine(CheckDoneFleets());
+    }
+
+    public void RefreshProgressIcon()
+    {
+        // Uyarıları başlangıç da kapatıyoruz.
+        EnemyFleetAlert.SetActive(false);
+        AnyFleetAlert.SetActive(false);
+
+        // Kullanıcının sahip olduğu gezegenlerin idlerini alıyoruz.
+        int[] userPlanetIds = LoginController.LC.CurrentUser.UserPlanets.Select(x => x.UserPlanetId).ToArray();
+
+        // Ve Kontrol ediyoruz kullanıcıya bir saldırı var mı?
+        bool isEnemyActionExists = Fleets.Exists(x => userPlanetIds.Contains(x.DestinationUserPlanetId) && x.FleetActionTypeId == FleetTypes.Saldır && !x.IsReturnFleet);
+
+        // Eğer düşmanca bir saldırı var ise uyarıyı açıyoruz.
+        if (isEnemyActionExists)
+            EnemyFleetAlert.SetActive(true);
+        else
+            AnyFleetAlert.SetActive(true);
     }
 
     public void VerifyFleet(FleetDTO fleet)

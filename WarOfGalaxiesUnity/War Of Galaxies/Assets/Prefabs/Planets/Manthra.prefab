@@ -62,13 +62,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Sun: {fileID: 0}
-  SolarPlanetInfo:
-    UserPlanetID: 0
-    UserName: 
-    PlanetName: 
-    PlanetCordinate: 
-    PlanetType: 0
   RotateSunsAroundSpeed: 6
+  UserPlanetInfo: {fileID: 0}
+  DebrisEffect: {fileID: 0}
 --- !u!96 &-4837035788693400427
 TrailRenderer:
   serializedVersion: 2

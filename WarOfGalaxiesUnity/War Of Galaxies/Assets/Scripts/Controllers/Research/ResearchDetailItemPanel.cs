@@ -4,6 +4,7 @@ using Assets.Scripts.Extends;
 using Assets.Scripts.Models;
 using System;
 using System.Collections;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,6 +25,9 @@ public class ResearchDetailItemPanel : BasePanelController
 
     [Header("Yükseltme butonu.")]
     public Button UpgradeButton;
+
+    [Header("Araştırma binası yükseltiliyor ise uyarı açacağız.")]
+    public TMP_Text TXT_Alert;
 
     [Header("Aktif araştırma bilgisi")]
     public Researches CurrentResearch;
@@ -71,17 +75,36 @@ public class ResearchDetailItemPanel : BasePanelController
         if (researchIcon != null)
             Icon.sprite = researchIcon.ResearchImage;
 
+        // Maliyeti alıyoruz.
+        ResourcesDTO resources = DataController.DC.CalculateCostResearch(research, nextLevel);
+
+        // Toplam araştırma lab seviyesi.
+        int totalResearchLevel = LoginController.LC.CurrentUser.UserPlanetsBuildings.Where(x => x.BuildingId == Buildings.ArastirmaLab).Select(x => x.BuildingLevel).DefaultIfEmpty(0).Sum();
+
         // Araştırmayı buluyoruz.
         UserResearchProgDTO userResearchProg = LoginController.LC.CurrentUser.UserResearchProgs.Find(x => x.ResearchID == research);
 
         // Eğer seçilen araştırma yükleniyor ise süre zamanla azalacak.
         if (userResearchProg == null)
-            UpgradeTime.text = TimeExtends.GetCountdownText(TimeSpan.FromSeconds(DataController.DC.CalculateResearchUpgradeTime(research, nextLevel)));
+            UpgradeTime.text = TimeExtends.GetCountdownText(TimeSpan.FromSeconds(DataController.DC.CalculateResearchUpgradeTime(resources, totalResearchLevel)));
         else // Eğer yükseltiliyor ise kalan süreyi basıyoruz.
             UpgradeTime.text = TimeExtends.GetCountdownText(userResearchProg.EndDate - DateTime.UtcNow);
 
-        // Maliyeti alıyoruz.
-        ResourcesDTO resources = DataController.DC.CalculateCostResearch(research, nextLevel);
+        #endregion
+
+        #region Araştırma Lab Seviyesine ve var mı diye kontrol ediyoruz.
+
+        // Yükseltebiliyor muyuz diye kontrol ediyoruz.
+        if (!ResearchPanelController.RPC.CanDoResearch())
+        {
+            // Yükseltemiyoruz demekki.
+            canUpgrade = false;
+
+            // Uyarıyı da buraya basacağız.
+            TXT_Alert.text = ResearchPanelController.RPC.TXT_Alert.text;
+        }
+        else
+            TXT_Alert.text = string.Empty;
 
         #endregion
 
@@ -147,6 +170,8 @@ public class ResearchDetailItemPanel : BasePanelController
                  // Gezegenin kaynaklarını yeniliyoruz.
                  userPlanet.SetPlanetResources(prog.Resources);
 
+                 // Yükselt panelini kapatıyoruz. 
+                 base.ClosePanel();
              }
          }));
     }

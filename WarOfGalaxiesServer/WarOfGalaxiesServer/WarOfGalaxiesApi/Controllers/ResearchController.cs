@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.ComponentModel;
+using System.Linq;
 using WarOfGalaxiesApi.Controllers.Base;
 using WarOfGalaxiesApi.DAL.Interfaces;
 using WarOfGalaxiesApi.DAL.Models;
+using WarOfGalaxiesApi.DTO.Enums;
 using WarOfGalaxiesApi.DTO.Helpers;
 using WarOfGalaxiesApi.DTO.Models;
 using WarOfGalaxiesApi.Statics;
@@ -30,6 +32,13 @@ namespace WarOfGalaxiesApi.Controllers
             if (userPlanet == null)
                 return ResponseHelper.GetError("Kullanıcının gezegeni yok ise geri dön.");
 
+            // Kullanıcının toplam araştırma seviyesi.
+            int totalResearchBuildingLevel = base.UnitOfWork.GetRepository<TblUserPlanetBuildings>().Where(x => x.UserPlanet.UserId == DBUser.UserId && x.BuildingId == (int)Buildings.ArastirmaLab).Select(x => x.BuildingLevel).DefaultIfEmpty(0).Sum();
+
+            // Toplam araştırma seviyesi.
+            if (totalResearchBuildingLevel == 0)
+                return ResponseHelper.GetError("Araştırma binası yok ise hata dönüyoruz.!");
+
             // Zaten bir yükseltme yapılıyor mu?
             bool isAlreadyInUpg = base.UnitOfWork.GetRepository<TblUserResearchUpgs>().Any(x => x.UserId == base.DBUser.UserId);
 
@@ -37,20 +46,28 @@ namespace WarOfGalaxiesApi.Controllers
             if (isAlreadyInUpg)
                 return ResponseHelper.GetError("Zaten bir yükseltme yapılıyor.");
 
+            // Eğer araştırma binası yükseltiliyor ise geri dönüyoruz.
+            bool isResearchBuildingUpg = base.UnitOfWork.GetRepository<TblUserPlanetBuildingUpgs>().Any(x => x.UserPlanet.UserId == DBUser.UserId && x.BuildingId == (int)Buildings.ArastirmaLab);
+
+            // Eğer araştırma binası yükseltiliyor ise hata dön.
+            if (isResearchBuildingUpg)
+                return ResponseHelper.GetError("Araştırma binası yükseltiliyor!");
+
             // Kullanıcının araştırmasını alıyoruz.
             TblUserResearches userExistsResearch = base.UnitOfWork.GetRepository<TblUserResearches>().FirstOrDefault(x => x.UserId == base.DBUser.UserId && x.ResearchId == (int)request.ResearchID);
 
+            // Sonraki seviyeyi ayarlıyoruz.
             int nextResearchLevel = userExistsResearch == null ? 1 : userExistsResearch.ResearchLevel + 1;
 
             // Kullanıcı daha önce araştırmış ise araştırma seviyesini araştırmamış ise 1.seviyeye göre kaynakları hesaplıyoruz.
-            ResourcesDTO researchCost = StaticValues.CalculateCostResearch(request.ResearchID, nextResearchLevel);
+            ResourcesDTO researchCost = StaticValues.CalculateCostResearch(request.ResearchID, totalResearchBuildingLevel);
 
             // Eğer kullanıcının gezegeninde yeterli kaynak yok ise geri dön.
             if (userPlanet.Metal < researchCost.Metal || userPlanet.Crystal < researchCost.Crystal || userPlanet.Boron < researchCost.Boron)
                 return ResponseHelper.GetError("Yetersiz hammadde.");
 
             // Yükseltme süresi
-            double researchUpgTime = StaticValues.CalculateResearchUpgradeTime(request.ResearchID, nextResearchLevel);
+            double researchUpgTime = StaticValues.CalculateResearchUpgradeTime(researchCost, totalResearchBuildingLevel);
 
             // Eğer var ise yükseltmeyi başlatabiliriz.
             TblUserResearchUpgs upgradeData = base.UnitOfWork.GetRepository<TblUserResearchUpgs>().Add(new TblUserResearchUpgs

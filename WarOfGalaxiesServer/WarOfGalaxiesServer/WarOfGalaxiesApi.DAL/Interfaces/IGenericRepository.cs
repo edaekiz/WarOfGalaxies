@@ -20,5 +20,6 @@ namespace WarOfGalaxiesApi.DAL.Interfaces
         void Delete(IEnumerable<T> entities);
         T Add(T entity);
         EntityState GetStateOfEntry(T entity);
+        int Count(Expression<Func<T, bool>> predicate);
     }
 }

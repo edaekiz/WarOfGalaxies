@@ -4,6 +4,7 @@ using System.ComponentModel;
 using WarOfGalaxiesApi.Controllers.Base;
 using WarOfGalaxiesApi.DAL.Interfaces;
 using WarOfGalaxiesApi.DAL.Models;
+using WarOfGalaxiesApi.DTO.Enums;
 using WarOfGalaxiesApi.DTO.Helpers;
 using WarOfGalaxiesApi.DTO.Models;
 using WarOfGalaxiesApi.Statics;
@@ -34,7 +35,7 @@ namespace WarOfGalaxiesApi.Controllers
             ResourcesDTO shipCost = new ResourcesDTO(shipInfo.CostMetal, shipInfo.CostCrystal, shipInfo.CostBoron);
 
             // Üretilmek istenen miktar ile gereksinimi çarpıyoruz. genel toplamı buluyoruz.
-            ResourcesDTO totalCalculatedRes =  shipCost* request.Quantity;
+            ResourcesDTO totalCalculatedRes = shipCost * request.Quantity;
 
             // Gezegenin kaynaklarını alıyoruz.
             TblUserPlanets userPlanet = base.UnitOfWork.GetRepository<TblUserPlanets>().FirstOrDefault(x => x.UserPlanetId == request.UserPlanetID && x.UserId == base.DBUser.UserId);
@@ -42,6 +43,10 @@ namespace WarOfGalaxiesApi.Controllers
             // Eğer gezegen yok ise hata dön.
             if (userPlanet == null)
                 return ResponseHelper.GetError("Kullanıcıya ait gezegen bulunamadı!");
+
+            // Eğer gezegen de yükseltme var ise dönüyoruz.
+            if (base.UnitOfWork.GetRepository<TblUserPlanetBuildingUpgs>().Any(x => x.UserPlanetId == userPlanet.UserPlanetId && x.BuildingId == (int)Buildings.Tersane))
+                return ResponseHelper.GetError("Bu gezegende tersane yükseltiliyor!");
 
             // Gezegendeki kaynakları dönüştürüyoruz.
             ResourcesDTO planetRes = new ResourcesDTO(userPlanet.Metal, userPlanet.Crystal, userPlanet.Boron);

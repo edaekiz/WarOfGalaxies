@@ -132,7 +132,6 @@ public class ShipyardController : MonoBehaviour
             if (ShipyardProgressIcon.activeSelf)
                 ShipyardProgressIcon.SetActive(false);
         }
-
     }
 
     public void DestroyShip(Ships shipId, int quantity)

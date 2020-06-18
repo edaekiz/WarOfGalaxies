@@ -121,6 +121,7 @@
     <Compile Include="Assets\Scripts\Controllers\Fleet\FleetPanelItemController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Galaxy\GalaxyChangePanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Galaxy\GalaxyController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Galaxy\GameController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Galaxy\SunController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Galaxy\ZoomPanController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Game\LoadingController.cs" />

@@ -123,6 +123,11 @@ namespace WarOfGalaxiesApi.DAL.Repositories
             return updatedItem.Entity;
         }
 
+        /// <summary>
+        /// Eşleşen bir kayıt var mı?
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
         public bool Any(Func<T, bool> predicate)
         {
             return _dbContext.Set<T>().Any(predicate);
@@ -133,5 +138,14 @@ namespace WarOfGalaxiesApi.DAL.Repositories
             return _dbContext.Entry(entity).State;
         }
 
+        /// <summary>
+        /// Eşleşen kaç kayıt var?
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public int Count(Expression<Func<T, bool>> predicate)
+        {
+            return _dbContext.Set<T>().Count(predicate);
+        }
     }
 }

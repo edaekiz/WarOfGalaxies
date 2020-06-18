@@ -520,4 +520,25 @@
   <data name="Sil" xml:space="preserve">
     <value></value>
   </data>
+  <data name="TersaneYükseltmeVar" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="AraştırmaDevamEdiyor" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GemiÜretimiMevcut" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SavunmaÜretimiMevcut" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="RobotFabYükseltmeVar" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="AraştırmaLabYükseltmeVar" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="AraştırmaLabYok" xml:space="preserve">
+    <value></value>
+  </data>
 </root>

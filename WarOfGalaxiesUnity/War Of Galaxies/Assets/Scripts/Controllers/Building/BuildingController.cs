@@ -26,8 +26,14 @@ public class BuildingController : BaseLanguageBehaviour
 
     IEnumerator Start()
     {
+        // Oyun yüklendiğinden emin oluyoruz.
         yield return new WaitUntil(() => LoadingController.LC.IsGameLoaded);
+
+        // Default gezegenini seçildiğinden emin oluyoruz.
         yield return new WaitUntil(() => GlobalPlanetController.GPC.CurrentPlanet != null);
+
+        // Ve oyundaki binalar listesin ekliyoruz.
+        GlobalBuildingController.GBC.BuildingsInGame.Add(this);
 
         // Bina detaylarını yükler.
         LoadBuildingDetails();
@@ -101,5 +107,10 @@ public class BuildingController : BaseLanguageBehaviour
 
         // Bina yükseltme bilgisini yüklüyoruz.
         bpc.StartCoroutine(bpc.LoadData(BuildingType));
+    }
+
+    private void OnDestroy()
+    {
+        GlobalBuildingController.GBC.BuildingsInGame.Remove(this);
     }
 }

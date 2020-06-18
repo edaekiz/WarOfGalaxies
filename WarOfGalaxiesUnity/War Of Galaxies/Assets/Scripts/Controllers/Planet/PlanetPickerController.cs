@@ -67,7 +67,7 @@ public class PlanetPickerController : BasePanelController
         GlobalPlanetController.GPC.SelectPlanet(LoginController.LC.CurrentUser.UserPlanets.Find(x => x.UserPlanetId == userPlanetId));
 
         // Gezegendeki binaları tekrar yüklüyoruz.
-        foreach (BuildingController bc in FindObjectsOfType<BuildingController>())
+        foreach (BuildingController bc in GlobalBuildingController.GBC.BuildingsInGame)
             bc.LoadBuildingDetails();
 
         // Seçilen gezegeni ekrana basıyoruz.

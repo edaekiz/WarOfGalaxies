@@ -32,6 +32,9 @@ public class DefenseDetailItemPanel : BasePanelController
     [Header("Üretilecek miktar")]
     public TMP_InputField QuantityField;
 
+    [Header("Eğer yükseltme yapılamaz ise buradaki uyarı açılacak")]
+    public GameObject TXT_Alert;
+
     [Header("Sunucuya istek gönderiliyor mu?")]
     public bool IsSending;
 
@@ -68,11 +71,46 @@ public class DefenseDetailItemPanel : BasePanelController
         // Maliyeti.
         DefenseDataDTO defenseInfo = DataController.DC.GetDefense(defense);
 
+        // Eğer üretim yapılabiliyor ise true olacak.
+        bool canProduce = true;
+
+        // Eğer gönderim var ise butonu kapatıyoruz.
+        if (IsSending)
+            canProduce = false;
+
         // Maliyeti set ediyoruz.
         bool isMathEnough = base.SetResources(new ResourcesDTO(defenseInfo.CostMetal, defenseInfo.CostCrystal, defenseInfo.CostBoron));
 
         // Eğer materyal yeterli ise butonu açıyoruz değil ise kapatıyoruz.
-        if (isMathEnough && !IsSending)
+        if (!isMathEnough)
+            canProduce = false;
+
+        #region Robot fabrikası yükseltiliyor ise savunma üretilemez.
+
+        // Eğer robot fabrikası yükseltiliyor ise bu buton açılacak.
+        bool isRobotFactoryUpg = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Exists(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.RobotFabrikası);
+
+        // Robot fabrikası yükseltiliyor ise uyarı panelini açacağız.
+        if (isRobotFactoryUpg)
+        {
+            // Tabiki açık olmadığı durumda açıyoruz.
+            if (!TXT_Alert.activeSelf)
+                TXT_Alert.SetActive(true);
+
+            // Üretim yapılamaz.
+            canProduce = false;
+        }
+        else
+        {
+            // Tabiki açık olmadığı durumda açıyoruz.
+            if (TXT_Alert.activeSelf)
+                TXT_Alert.SetActive(false);
+        }
+
+        #endregion
+
+        // Üretim yapılabiliyor ise butonu açıyoruz.
+        if (canProduce)
             ProduceButton.interactable = true;
         else
             ProduceButton.interactable = false;

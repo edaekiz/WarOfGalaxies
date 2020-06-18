@@ -31,6 +31,9 @@ public class ShipyardDetailItemPanel : BasePanelController
     [Header("Üretilecek miktar")]
     public TMP_InputField QuantityField;
 
+    [Header("Eğer yükseltme yapılamaz ise buradaki uyarı açılacak")]
+    public GameObject TXT_Alert;
+
     [Header("Sunucuya istek gönderiliyor mu?")]
     public bool IsSending;
 
@@ -67,14 +70,19 @@ public class ShipyardDetailItemPanel : BasePanelController
         // Maliyeti.
         ShipDataDTO shipInfo = DataController.DC.GetShip(ship);
 
+        // Eğer üretim yapılabiliyor ise true olacak.
+        bool canProduce = true;
+
+        // Eğer gönderim var ise butonu kapatıyoruz.
+        if (IsSending)
+            canProduce = false;
+
         // Maliyeti set ediyoruz.
         bool isMathEnough = base.SetResources(new ResourcesDTO(shipInfo.CostMetal, shipInfo.CostCrystal, shipInfo.CostBoron));
 
         // Eğer materyal yeterli ise butonu açıyoruz değil ise kapatıyoruz.
-        if (isMathEnough && !IsSending)
-            ProduceButton.interactable = true;
-        else
-            ProduceButton.interactable = false;
+        if (!isMathEnough)
+            canProduce = false;
 
         // Tersaneyi buluyoruz.
         UserPlanetBuildingDTO shipyard = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.BuildingId == Buildings.Tersane && x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
@@ -84,6 +92,35 @@ public class ShipyardDetailItemPanel : BasePanelController
 
         // Üretim süresini basıyoruz.
         ItemCountdown.text = TimeExtends.GetCountdownText(TimeSpan.FromSeconds(countdown));
+
+        #region Tersane yükseltiliyor ise gemi üretilemez.
+
+        // Eğer tersane yükseltiliyor ise bu buton açılacak.
+        bool isTersaneUpgrading = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Exists(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.Tersane);
+
+        // Tersane yükseltiliyor ise uyarı panelini açacağız.
+        if (isTersaneUpgrading)
+        {
+            // Tabiki açık olmadığı durumda açıyoruz.
+            if (!TXT_Alert.activeSelf)
+                TXT_Alert.SetActive(true);
+
+            // Üretim yapılamaz.
+            canProduce = false;
+        }else
+        {
+            // Tabiki açık olmadığı durumda açıyoruz.
+            if (TXT_Alert.activeSelf)
+                TXT_Alert.SetActive(false);
+        }
+
+        #endregion
+
+        // Üretim yapılabiliyor ise butonu açıyoruz.
+        if (canProduce)
+            ProduceButton.interactable = true;
+        else
+            ProduceButton.interactable = false;
 
         // 1 saniye bekliyoruz tekrar yenileyeceğiz.
         yield return new WaitForSecondsRealtime(1);

@@ -86,11 +86,17 @@ namespace WarOfGalaxiesApi.Statics
             return new ResourcesDTO(Math.Pow(2, researchLevel) * researchItem.BaseCostMetal, Math.Pow(2, researchLevel) * researchItem.BaseCostCrystal, Math.Pow(2, researchLevel) * researchItem.BaseCostBoron);
         }
 
-        public double CalculateResearchUpgradeTime(Researches research, int researchLevel)
+        public double CalculateResearchUpgradeTime(Researches research, int totalResearchLevel, int researchLevel)
         {
             ResourcesDTO cost = CalculateCostResearch(research, researchLevel);
-            return ((cost.Metal + cost.Crystal) / (UniverseResearchSpeed * 1000 * (1 + researchLevel))) * 3600;
+            return ((cost.Metal + cost.Crystal) / (UniverseResearchSpeed * 1000 * (1 + totalResearchLevel))) * 3600;
         }
+
+        public double CalculateResearchUpgradeTime(ResourcesDTO cost, int totalResearchLevel)
+        {
+            return ((cost.Metal + cost.Crystal) / (UniverseResearchSpeed * 1000 * (1 + totalResearchLevel))) * 3600;
+        }
+
 
         #endregion
 
