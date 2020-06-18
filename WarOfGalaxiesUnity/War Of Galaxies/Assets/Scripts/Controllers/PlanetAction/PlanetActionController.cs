@@ -265,7 +265,7 @@ public class PlanetActionController : BasePanelController
             CarriedBoron = carriedResources.Boron,
             CarriedCrystal = carriedResources.Crystal,
             CarriedMetal = carriedResources.Metal,
-            FleetSpeed = SLIDER_ShipSpeed.value / 100,
+            FleetSpeed = SLIDER_ShipSpeed.value/100,
             FleetType = (int)CurrentFleetType,
             DestinationGalaxyIndex = CurrentCordinate.GalaxyIndex,
             DestinationSolarIndex = CurrentCordinate.SolarIndex,

@@ -2217,7 +2217,7 @@ MonoBehaviour:
   TXT_LeftTime: {fileID: 6703510184783100960}
   SLIDER_FlightProgress: {fileID: 2526438856218726088}
   TXT_ActionType: {fileID: 2526438857090033422}
-  BallBackButton: {fileID: 2124933416373422461}
+  CallbackButton: {fileID: 2124933416373422461}
 --- !u!1 &2526438858135023237
 GameObject:
   m_ObjectHideFlags: 0

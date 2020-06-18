@@ -48,9 +48,29 @@ public class MailPanelController : BasePanelController
         // Butonlara görevlerini yüklüyoruz.
         ButtonWithCategories.ForEach(e =>
         {
+            // Kategori seçme görevini ekliyoruz.
             e.CategoryButton.onClick.AddListener(() => ShowCategoryDetails(e.Category));
-            e.CategoryButton.GetComponentInChildren<TMP_Text>().text = base.GetLanguageText($"MC{(int)e.Category}");
         });
+
+        // Butonların isimlerini güncelliyoruz.
+        RefreshCategoryButtonNames();
+    }
+
+    public void RefreshCategoryButtonNames()
+    {
+        // Butonlara görevlerini yüklüyoruz.
+        ButtonWithCategories.ForEach(e =>
+        {
+            // Okunmamış olan bu kategorideki mail miktarını alıyoruz.
+            int unreadedMailQuantity = MailController.MC.UserMails.Count(x => x.MailCategoryId == (int)e.Category && !x.IsReaded);
+
+            // Eğer sıfır ise sadece butonun ismini basıyoruz.
+            if (unreadedMailQuantity == 0)
+                e.CategoryButton.GetComponentInChildren<TMP_Text>().text = base.GetLanguageText($"MC{(int)e.Category}");
+            else // Aksi durumda miktarı da basmalıyız.
+                e.CategoryButton.GetComponentInChildren<TMP_Text>().text = $"{base.GetLanguageText($"MC{(int)e.Category}")} ({unreadedMailQuantity})";
+        });
+
     }
 
     public void ShowCategoryDetails(MailCategories currentCategory)

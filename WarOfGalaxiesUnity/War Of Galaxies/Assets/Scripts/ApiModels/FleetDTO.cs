@@ -26,6 +26,7 @@ namespace Assets.Scripts.ApiModels
         public double CarriedCrystal;
         public double CarriedBoron;
         public string FleetData;
+        public double FleetSpeed;
         public DateTime FleetLoadDate;
 
         /// <summary>
@@ -63,4 +64,11 @@ namespace Assets.Scripts.ApiModels
         /// </summary>
         public float FleetSpeed;
     }
+
+    [Serializable]
+    public class CallbackFleetDTO
+    {
+        public int FleetId;
+    }
+
 }

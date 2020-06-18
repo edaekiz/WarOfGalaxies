@@ -125,7 +125,7 @@ public class FleetController : MonoBehaviour
         // Eğer düşmanca bir saldırı var ise uyarıyı açıyoruz.
         if (isEnemyActionExists)
             EnemyFleetAlert.SetActive(true);
-        else
+        else if (Fleets.Count > 0)
             AnyFleetAlert.SetActive(true);
     }
 
@@ -193,7 +193,7 @@ public class FleetController : MonoBehaviour
                      List<Tuple<Ships, int>> ships = FleetExtends.FleetDataToShipData(fleet.FleetData);
 
                      // Her bir gemiyi dönüyoruz ve envantere ekliyoruz..
-                     ships.ForEach(e => ShipyardController.SC.AddShip(fleet.SenderUserPlanetId, e.Item1, e.Item2));
+                     ships.ForEach(e => ShipyardController.SC.AddShip(fleet.DestinationUserPlanetId, e.Item1, e.Item2));
 
                      // Paneli yeniliyoruz.
                      if (FleetPanelController.FPC != null)

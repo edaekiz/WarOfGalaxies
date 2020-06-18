@@ -24,10 +24,10 @@ namespace Assets.Scripts.Extends
 
         public static string UTCDateToString(string oldDate)
         {
-            int dotIndex = oldDate.IndexOf('.');
-            if (dotIndex == -1)
+            if (DateTime.TryParse(oldDate, out DateTime dt))
+                return dt.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss");
+            else
                 return oldDate;
-            return oldDate.Replace("T", " ").Remove(dotIndex, oldDate.Length - dotIndex);
         }
 
     }

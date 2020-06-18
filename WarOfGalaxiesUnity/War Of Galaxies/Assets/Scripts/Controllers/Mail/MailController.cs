@@ -112,7 +112,6 @@ public class MailController : MonoBehaviour
             UnreadMailCount.SetActive(false);
     }
 
-
     public void DeleteMail(UserMailDTO userMail, Action callBack = null)
     {
         // Onay panelini açıyoruz.

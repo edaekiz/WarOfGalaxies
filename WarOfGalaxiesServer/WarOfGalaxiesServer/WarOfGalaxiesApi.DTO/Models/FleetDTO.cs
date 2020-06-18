@@ -23,6 +23,7 @@ namespace WarOfGalaxiesApi.DTO.Models
         public double CarriedCrystal { get; set; }
         public double CarriedBoron { get; set; }
         public string FleetData { get; set; }
+        public double FleetSpeed { get; set; }
     }
 
     public class GetLastFleetsDTO
@@ -42,5 +43,9 @@ namespace WarOfGalaxiesApi.DTO.Models
         public double CarriedCrystal { get; set; }
         public double CarriedBoron { get; set; }
         public float FleetSpeed { get; set; }
+    }
+    public class CallbackFleetDTO
+    {
+        public int FleetId { get; set; }
     }
 }

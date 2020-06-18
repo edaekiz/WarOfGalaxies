@@ -43,7 +43,7 @@ public class FleetPanelItemController : BaseLanguageBehaviour
     public TMP_Text TXT_ActionType;
 
     [Header("Filoyu geri çağırmak için")]
-    public Button BallBackButton;
+    public Button CallbackButton;
 
     /// <summary>
     /// Gösterdiği filo bilgisi.
@@ -127,9 +127,10 @@ public class FleetPanelItemController : BaseLanguageBehaviour
             quantityOfCircleInProg = Mathf.FloorToInt((float)(leftTimeToReturn / each));
 
             // Eğer buton açık ise kapatıyoruz.
-            if (BallBackButton.gameObject.activeSelf)
-                BallBackButton.gameObject.SetActive(false);
-        }else
+            if (CallbackButton.gameObject.activeSelf)
+                CallbackButton.gameObject.SetActive(false);
+        }
+        else
         {
             quantityOfCircleInProg = (int)countOfCircle;
         }
@@ -143,6 +144,17 @@ public class FleetPanelItemController : BaseLanguageBehaviour
         // Tersine çevirip on of effekti yapııyoruz.
         sliderHandlerImage.enabled = !sliderHandlerImage.enabled;
 
+        // Eğer gönderen kullanıcı ise ve filo geri dönmüyor ise butonu gösterebiliriz.
+        if (LoginController.LC.CurrentUser.UserData.UserId == this.FleetInfo.SenderUserId && !this.FleetInfo.IsReturnFleet)
+        {
+            if (!CallbackButton.gameObject.activeSelf)
+                CallbackButton.gameObject.SetActive(true);
+        }else // Eğer geri dönüş filosu ya da kendisine gelen bir düşman ise geri dön butonu kapalı olacak.
+        {
+            if (CallbackButton.gameObject.activeSelf)
+                CallbackButton.gameObject.SetActive(false);
+        }
+
         // 1 saniye sonra kendisini çağırıp yeniliyoruz.
         yield return new WaitForSecondsRealtime(1f);
 
@@ -152,7 +164,25 @@ public class FleetPanelItemController : BaseLanguageBehaviour
 
     public void OnClickCallBackFleet()
     {
+        // Butonu kapatıyoruz.
+        CallbackButton.interactable = false;
 
+        // Geri çağırıyoruz.
+        StartCoroutine(ApiService.API.Post("CallBackFlyFleet", new CallbackFleetDTO { FleetId = this.FleetInfo.FleetId }, (ApiResult response) =>
+        {
+            // Butonu tekrar açıyoruz.
+            CallbackButton.interactable = true;
+
+            // Yanıt başarılı ise.
+            if (response.IsSuccess)
+            {
+                // Geri döndüğüne göre gidiş filosunu silebiliriz.
+                FleetController.FC.Fleets.Remove(this.FleetInfo);
+
+                // Datalarını geri getiriyoruz.
+                FleetController.FC.RefreshReturnFleetData(this.FleetInfo.ReturnFleetId);
+            }
+        }));
     }
 
 }

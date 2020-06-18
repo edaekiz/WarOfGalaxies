@@ -49,7 +49,8 @@ namespace WarOfGalaxiesApi.Controllers
                     DestinationPlanetTypeId = x.DestinationUserPlanetId.HasValue ? x.DestinationUserPlanet.PlanetType : 0,
                     SenderPlanetTypeId = x.SenderUserPlanet.PlanetType,
                     FleetData = x.FleetData,
-                    ReturnFleetId = x.ReturnFleetId
+                    ReturnFleetId = x.ReturnFleetId,
+                    FleetSpeed = x.FleetSpeed
                 }).ToList();
 
             return ResponseHelper.GetSuccess(lastFleets);
@@ -83,12 +84,12 @@ namespace WarOfGalaxiesApi.Controllers
                     DestinationPlanetTypeId = x.DestinationUserPlanetId.HasValue ? x.DestinationUserPlanet.PlanetType : 0,
                     SenderPlanetTypeId = x.SenderUserPlanet.PlanetType,
                     FleetData = x.FleetData,
-                    ReturnFleetId = x.ReturnFleetId
+                    ReturnFleetId = x.ReturnFleetId,
+                    FleetSpeed = x.FleetSpeed
                 }).FirstOrDefault();
 
             return ResponseHelper.GetSuccess(lastFleet);
         }
-
 
         [HttpPost("FlyNewFleet")]
         [Description("Gezegenden filo çıkarma.")]
@@ -133,7 +134,7 @@ namespace WarOfGalaxiesApi.Controllers
             #endregion
 
             // Filo hızının geçerliliğini kontrol ediyoruz.
-            if (request.FleetSpeed <= 0 || request.FleetSpeed > 1)
+            if (request.FleetSpeed < 0.01f || request.FleetSpeed > 1.0f)
                 return ResponseHelper.GetError("Geçersiz filo hızı!");
 
             // Gelen gemilerin bilsini anlaşılır formata çeviriyoruz.
@@ -247,7 +248,7 @@ namespace WarOfGalaxiesApi.Controllers
             // Uçuş süresi saniye cinsinden.
             double flyDistance = CalculateDistance(senderCordinateDTO, destinationCordinateDTO);
 
-            var totalFlightTime = CalculateFlightTime(flyDistance, request.FleetSpeed, minSpeed);
+            double totalFlightTime = CalculateFlightTime(flyDistance, request.FleetSpeed, minSpeed);
 
             // Toplam uçuş süresi.
             DateTime arriveDate = base.RequestDate.AddSeconds(totalFlightTime / 2);
@@ -300,7 +301,51 @@ namespace WarOfGalaxiesApi.Controllers
             return ResponseHelper.GetSuccess();
         }
 
+        [HttpPost("CallBackFlyFleet")]
+        [Description("Gidiş yolunda olan bir filoyu geri çağırır.")]
+        public ApiResult CallBackFlyFleet(CallbackFleetDTO request)
+        {
+            // Hedefe giden gemiler sadece döndürülebilir bir de sadece kullanıcıya ait olan gemileri geri çağırabiliriz.
+            TblFleets fleet = base.UnitOfWork.GetRepository<TblFleets>()
+                .Where(x => x.FleetId == request.FleetId && x.SenderUserPlanet.UserId == DBUser.UserId && x.ReturnFleetId.HasValue)
+                .Include(x => x.ReturnFleet)
+                .FirstOrDefault();
+
+            // Filo yok ise geri dönüyoruz.
+            if (fleet == null)
+                return ResponseHelper.GetError("Filo bulunamadı!");
+
+            // Toplam geçmiş olan süreyi alıyoruz.
+            double passedDate = (RequestDate - fleet.BeginDate).TotalSeconds;
+
+            // Başlangıç tarihimizi güncelliyoruz.
+            fleet.ReturnFleet.BeginDate = fleet.BeginDate.AddSeconds(passedDate);
+
+            // Dönüş süresi kısalmış oluyor güncelliyoruz.
+            fleet.ReturnFleet.EndDate = fleet.ReturnFleet.BeginDate.AddSeconds(passedDate);
+
+            // Gidiş filosunu siliyoruz.
+            base.UnitOfWork.GetRepository<TblFleets>().Delete(fleet);
+
+            // Değişiklikleri kayıt ediyoruz.
+            base.UnitOfWork.SaveChanges();
+
+            // Başarılı sonucunu dönüyoruz.
+            return ResponseHelper.GetSuccess();
+        }
+
+        /// <summary>
+        /// Gemi listesini string formata çevirir.
+        /// </summary>
+        /// <param name="fleet"></param>
+        /// <returns></returns>
         public static string ShipDataToStringData(IEnumerable<Tuple<Ships, int>> fleet) => string.Join(",", fleet.Select(x => $"{(int)x.Item1}:{x.Item2}"));
+
+        /// <summary>
+        /// Gemi datasını listeye dönüştürür.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
         public static List<Tuple<Ships, int>> FleetDataToShipData(string data)
         {
             try

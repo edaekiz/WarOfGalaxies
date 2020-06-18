@@ -105,6 +105,13 @@ public class MailPanelItemController : MonoBehaviour
 
                 // Tasarımı sönük hale getiriyoruz.
                 MakeReadColor();
+
+                // Eğer bir mail okunduysa ozaman kategori de yazan okunmamış miktarı güncelliyoruz.
+                if (MailPanelController.MPC != null)
+                    MailPanelController.MPC.RefreshCategoryButtonNames();
+
+                // Mail Miktarını yeniliyoruz.
+                MailController.MC.RefreshMailIconQuantity();
             }
         }));
     }
