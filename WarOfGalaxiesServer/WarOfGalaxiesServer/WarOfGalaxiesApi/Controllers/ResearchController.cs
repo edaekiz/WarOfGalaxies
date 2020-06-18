@@ -32,8 +32,11 @@ namespace WarOfGalaxiesApi.Controllers
             if (userPlanet == null)
                 return ResponseHelper.GetError("Kullanıcının gezegeni yok ise geri dön.");
 
+            // Araştırma bina seviyeleri.
+            int[] resBuildings = base.UnitOfWork.GetRepository<TblUserPlanetBuildings>().Where(x => x.UserPlanet.UserId == DBUser.UserId && x.BuildingId == (int)Buildings.ArastirmaLab).Select(x => x.BuildingLevel).ToArray();
+
             // Kullanıcının toplam araştırma seviyesi.
-            int totalResearchBuildingLevel = base.UnitOfWork.GetRepository<TblUserPlanetBuildings>().Where(x => x.UserPlanet.UserId == DBUser.UserId && x.BuildingId == (int)Buildings.ArastirmaLab).Select(x => x.BuildingLevel).DefaultIfEmpty(0).Sum();
+            int totalResearchBuildingLevel = resBuildings.DefaultIfEmpty(0).Sum();
 
             // Toplam araştırma seviyesi.
             if (totalResearchBuildingLevel == 0)
