@@ -13,6 +13,9 @@ public class FleetPanelController : BasePanelController
     [Header("Filoların yükleneceği alan.")]
     public ScrollRect FleetItemContent;
 
+    [Header("Filo hareketi yok ise uyarı vericez.")]
+    public GameObject TXT_NoFleetAlert;
+
     private void Awake()
     {
         if (FPC == null)
@@ -54,5 +57,11 @@ public class FleetPanelController : BasePanelController
             // Ve hesaplamalara başlıyoruz.
             fpic.StartCoroutine(fpic.LoadData(fleet));
         }
+
+        // Eğer filo hareketi yok ise uyarıyı göstericez.
+        if (FleetController.FC.Fleets.Count > 0)
+            TXT_NoFleetAlert.SetActive(false);
+        else
+            TXT_NoFleetAlert.SetActive(true);
     }
 }
