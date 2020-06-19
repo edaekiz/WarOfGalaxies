@@ -21,5 +21,6 @@ namespace WarOfGalaxiesApi.DAL.Interfaces
         T Add(T entity);
         EntityState GetStateOfEntry(T entity);
         int Count(Expression<Func<T, bool>> predicate);
+        IQueryable<TResult> Select<TResult>(Expression<Func<T, TResult>> predicate);
     }
 }

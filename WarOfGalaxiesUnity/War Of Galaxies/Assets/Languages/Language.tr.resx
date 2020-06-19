@@ -602,4 +602,13 @@ Gemi ve savunma sistemleri inşa ederken.</value>
   <data name="RobotFabYok" xml:space="preserve">
     <value>*Savunma üretmek için önce robot fabrikası kurmalısın!</value>
   </data>
+  <data name="XTeknolojiAğacı" xml:space="preserve">
+    <value>&lt;color=orange&gt;{0}&lt;/color&gt;{1}Teknoloji Ağacı</value>
+  </data>
+  <data name="TeknolojiGereksinimiYok" xml:space="preserve">
+    <value>Teknoloji gereksinimi bulunmuyor.</value>
+  </data>
+  <data name="TeknolojiGereksinimler" xml:space="preserve">
+    <value>Teknoloji Gereksinimleri</value>
+  </data>
 </root>

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using TMPro.EditorUtilities;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -164,4 +165,13 @@ public class PanelStackController : MonoBehaviour
         }
     }
 
+    public BasePanelController GetCurrentPanel()
+    {
+        // Eğer hiç panel açık değil ise dön.
+        if (OpenPanels.Count == 0)
+            return null;
+
+        // Son paneli döner.
+        return OpenPanels.LastOrDefault();
+    }
 }

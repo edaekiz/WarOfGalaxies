@@ -547,4 +547,13 @@
   <data name="RobotFabYok" xml:space="preserve">
     <value></value>
   </data>
+  <data name="XTeknolojiAğacı" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TeknolojiGereksinimiYok" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="TeknolojiGereksinimler" xml:space="preserve">
+    <value></value>
+  </data>
 </root>

@@ -19,7 +19,7 @@ namespace WarOfGalaxiesApi.Statics
         public List<TblDefenses> DBDefenses { get; set; }
         public List<TblBuildings> DBBuildings { get; set; }
         public List<TblResearches> DbResearches { get; set; }
-
+        public List<TblTechnology> DbTechnologies { get; set; }
         #endregion
 
         #region Constructor
@@ -32,6 +32,7 @@ namespace WarOfGalaxiesApi.Statics
             LoadDefenses();
             LoadBuildings();
             LoadResearches();
+            LoadTechnologies();
             UOW.Dispose();
         }
 
@@ -178,6 +179,12 @@ namespace WarOfGalaxiesApi.Statics
         public void LoadParameters() => DBParameters = UOW.GetRepository<TblParameters>().ToList();
 
         public TblParameters GetParameter(ParameterTypes parameter) => DBParameters.Find(x => x.ParameterId == (int)parameter);
+
+        #endregion
+
+        #region Technology
+
+        public void LoadTechnologies() => DbTechnologies = UOW.GetRepository<TblTechnology>().ToList();
 
         #endregion
 

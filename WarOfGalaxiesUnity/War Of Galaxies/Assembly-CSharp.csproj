@@ -97,6 +97,7 @@
     <Compile Include="Assets\Scripts\ApiModels\LoginStuffDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ResourcesDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ShipyardDTO.cs" />
+    <Compile Include="Assets\Scripts\ApiModels\TechnologyDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserMailDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserPlanetBuildingDTO.cs" />
@@ -172,6 +173,7 @@
     <Compile Include="Assets\Scripts\Enums\Researches.cs" />
     <Compile Include="Assets\Scripts\Enums\ResourceTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\Ships.cs" />
+    <Compile Include="Assets\Scripts\Enums\TechnologyCategories.cs" />
     <Compile Include="Assets\Scripts\Extends\CordinateExtends.cs" />
     <Compile Include="Assets\Scripts\Extends\FleetExtends.cs" />
     <Compile Include="Assets\Scripts\Extends\JsonHelper.cs" />
@@ -188,8 +190,12 @@
     <Compile Include="Assets\Scripts\Models\ResearchWithImageDTO.cs" />
     <Compile Include="Assets\Scripts\Models\ShipImageDTO.cs" />
     <Compile Include="Assets\Scripts\Models\SolarSystemDTO.cs" />
+    <Compile Include="Assets\Scripts\Models\TechnologyWithCategoryDTO.cs" />
     <Compile Include="Assets\Scripts\Pluigns\MailEncoder.cs" />
     <Compile Include="Assets\Scripts\Services\ApiService.cs" />
+    <Compile Include="Assets\TechnologyController.cs" />
+    <Compile Include="Assets\TechnologyDetailPanelController.cs" />
+    <Compile Include="Assets\TechnologyPanelController.cs" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Ring.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MultiPassHollywoodFlares.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\Blend.shader" />

@@ -24,6 +24,8 @@ namespace WarOfGalaxiesApi.DAL.Models
         public virtual DbSet<TblParameters> TblParameters { get; set; }
         public virtual DbSet<TblResearches> TblResearches { get; set; }
         public virtual DbSet<TblShips> TblShips { get; set; }
+        public virtual DbSet<TblTechnology> TblTechnology { get; set; }
+        public virtual DbSet<TblTechnologyCategories> TblTechnologyCategories { get; set; }
         public virtual DbSet<TblUserMailCategories> TblUserMailCategories { get; set; }
         public virtual DbSet<TblUserMails> TblUserMails { get; set; }
         public virtual DbSet<TblUserPlanetBuildingUpgs> TblUserPlanetBuildingUpgs { get; set; }
@@ -195,7 +197,6 @@ namespace WarOfGalaxiesApi.DAL.Models
                 entity.HasOne(d => d.SenderUserPlanet)
                     .WithMany(p => p.TblFleetsSenderUserPlanet)
                     .HasForeignKey(d => d.SenderUserPlanetId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_tbl_fleets_tbl_user_planets_sender");
             });
 
@@ -242,6 +243,48 @@ namespace WarOfGalaxiesApi.DAL.Models
                     .ValueGeneratedNever();
 
                 entity.Property(e => e.ShipName)
+                    .IsRequired()
+                    .HasMaxLength(30);
+            });
+
+            modelBuilder.Entity<TblTechnology>(entity =>
+            {
+                entity.HasNoKey();
+
+                entity.ToTable("tbl_technology");
+
+                entity.Property(e => e.IndexId).HasColumnName("IndexID");
+
+                entity.Property(e => e.RequiredIndexId).HasColumnName("RequiredIndexID");
+
+                entity.Property(e => e.RequiredTechnologyCategoryId).HasColumnName("RequiredTechnologyCategoryID");
+
+                entity.Property(e => e.TechnologyCategoryId).HasColumnName("TechnologyCategoryID");
+
+                entity.HasOne(d => d.RequiredTechnologyCategory)
+                    .WithMany()
+                    .HasForeignKey(d => d.RequiredTechnologyCategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_technology_tbl_technology_required_technology");
+
+                entity.HasOne(d => d.TechnologyCategory)
+                    .WithMany()
+                    .HasForeignKey(d => d.TechnologyCategoryId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_tbl_technology_tbl_technology_categories");
+            });
+
+            modelBuilder.Entity<TblTechnologyCategories>(entity =>
+            {
+                entity.HasKey(e => e.TechnologyCategoryId);
+
+                entity.ToTable("tbl_technology_categories");
+
+                entity.Property(e => e.TechnologyCategoryId)
+                    .HasColumnName("TechnologyCategoryID")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.TechnologyCategoryName)
                     .IsRequired()
                     .HasMaxLength(30);
             });

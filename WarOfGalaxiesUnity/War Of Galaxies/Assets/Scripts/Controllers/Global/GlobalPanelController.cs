@@ -29,7 +29,9 @@ public class GlobalPanelController : MonoBehaviour
         PlanetActionFooterPanel,
         MailBattleReport,
         MailSpyReport,
-        MailTextReport
+        MailTextReport,
+        TechnologyPanel,
+        TechnologyDetailPanel
     }
 
     [Serializable]

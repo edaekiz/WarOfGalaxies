@@ -63,7 +63,7 @@ namespace WarOfGalaxiesApi.Controllers
             int nextResearchLevel = userExistsResearch == null ? 1 : userExistsResearch.ResearchLevel + 1;
 
             // Kullanıcı daha önce araştırmış ise araştırma seviyesini araştırmamış ise 1.seviyeye göre kaynakları hesaplıyoruz.
-            ResourcesDTO researchCost = StaticValues.CalculateCostResearch(request.ResearchID, totalResearchBuildingLevel);
+            ResourcesDTO researchCost = StaticValues.CalculateCostResearch(request.ResearchID,nextResearchLevel);
 
             // Eğer kullanıcının gezegeninde yeterli kaynak yok ise geri dön.
             if (userPlanet.Metal < researchCost.Metal || userPlanet.Crystal < researchCost.Crystal || userPlanet.Boron < researchCost.Boron)

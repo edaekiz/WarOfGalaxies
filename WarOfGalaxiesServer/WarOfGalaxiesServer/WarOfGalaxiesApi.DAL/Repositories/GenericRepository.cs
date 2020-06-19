@@ -147,5 +147,10 @@ namespace WarOfGalaxiesApi.DAL.Repositories
         {
             return _dbContext.Set<T>().Count(predicate);
         }
+
+        public IQueryable<TResult> Select<TResult>(Expression<Func<T, TResult>> predicate)
+        {
+            return _dbContext.Set<T>().Select(predicate);
+        }
     }
 }
