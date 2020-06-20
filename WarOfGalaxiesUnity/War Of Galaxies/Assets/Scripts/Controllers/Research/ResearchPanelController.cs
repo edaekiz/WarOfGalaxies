@@ -81,7 +81,7 @@ public class ResearchPanelController : BasePanelController
         bool isResearchLabExists = LoginController.LC.CurrentUser.UserPlanetsBuildings.Exists(x => x.BuildingId == Buildings.ArastirmaLab);
 
         // Eğer araştırma yapılamıyor ise tekrar kontrol ediyoruz.
-        if (!CanDoResearch())
+        if (!CheckLabBuilding())
         {
             // 1 saniye beklemeliyiz.
             yield return new WaitForSecondsRealtime(1);
@@ -91,7 +91,7 @@ public class ResearchPanelController : BasePanelController
         }
     }
 
-    public bool CanDoResearch()
+    public bool CheckLabBuilding()
     {
        
         // Eğer araştırma lab yükseltiliyor ise bu buton açılacak.

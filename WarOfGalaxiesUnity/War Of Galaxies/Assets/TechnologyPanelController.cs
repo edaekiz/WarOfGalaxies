@@ -41,6 +41,9 @@ public class TechnologyPanelController : BasePanelController
 
     public void LoadTechnologies(TechnologyCategories category)
     {
+        // Son kategoriyi gösteriyoruz.
+        TechnologyController.TC.LastSelectedCategory = category;
+
         // Önceki dataları temizliyoruzç
         ClearOldData();
 

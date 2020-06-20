@@ -556,4 +556,16 @@
   <data name="TeknolojiGereksinimler" xml:space="preserve">
     <value></value>
   </data>
+  <data name="BinaKoşulOlumsuz" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SavunmaKoşulOlumsuz" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GemiKoşulOlumsuz" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="AraştırmaKoşulOlumsuz" xml:space="preserve">
+    <value></value>
+  </data>
 </root>

@@ -84,7 +84,7 @@ public class ShipyardPanelController : BasePanelController
         bool isResearchLabExists = LoginController.LC.CurrentUser.UserPlanetsBuildings.Exists(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.Tersane);
 
         // Eğer gemi üretemiyor isek bir hatadan dolayı 1 saniye sonra tekrar kontrol ediyoruz.
-        if (!CanProduceShip())
+        if (!CheckShipyardBuilding())
         {
             // 1 saniye beklemeliyiz.
             yield return new WaitForSecondsRealtime(1);
@@ -94,7 +94,7 @@ public class ShipyardPanelController : BasePanelController
         }
     }
 
-    public bool CanProduceShip()
+    public bool CheckShipyardBuilding()
     {
         // Eğer tersane yükseltiliyor ise bu buton açılacak.
         bool isTersaneUpgrading = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Exists(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.Tersane);

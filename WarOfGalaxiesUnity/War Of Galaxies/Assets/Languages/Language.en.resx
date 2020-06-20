@@ -610,4 +610,16 @@ Ships and defense structures.</value>
   <data name="TeknolojiGereksinimler" xml:space="preserve">
     <value>Technology Requirements</value>
   </data>
+  <data name="BinaKoşulOlumsuz" xml:space="preserve">
+    <value>Conditions are not ready to build this building!</value>
+  </data>
+  <data name="SavunmaKoşulOlumsuz" xml:space="preserve">
+    <value>Conditions are not ready to produce this defense unit!</value>
+  </data>
+  <data name="GemiKoşulOlumsuz" xml:space="preserve">
+    <value>Conditions are not ready to produce this ship!</value>
+  </data>
+  <data name="AraştırmaKoşulOlumsuz" xml:space="preserve">
+    <value>Conditions are not ready to research!</value>
+  </data>
 </root>

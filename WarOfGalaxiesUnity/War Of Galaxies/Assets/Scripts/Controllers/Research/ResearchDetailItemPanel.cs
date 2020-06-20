@@ -93,18 +93,42 @@ public class ResearchDetailItemPanel : BasePanelController
         if (isAlreadyUpgrading)
             canUpgrade = false;
 
-        // Yükseltebiliyor muyuz diye kontrol ediyoruz.
-        if (!ResearchPanelController.RPC.CanDoResearch())
+        #region Koşullar sağlanıyor mu?
+
+        // Koşullar sağlanıyor mu?
+        bool isCondionsTrue = TechnologyController.TC.IsInvented(TechnologyCategories.Araştırmalar, (int)CurrentResearch);
+
+        // Eğer şartlar uygun değil ise.
+        if (!isCondionsTrue)
         {
-            // Yükseltemiyoruz demekki.
+            // Butonu kapatıyoruz.
             canUpgrade = false;
 
-            // Uyarıyı da buraya basacağız.
-            TXT_Alert.text = ResearchPanelController.RPC.TXT_Alert.text;
+            // Texti de ekrana basıyoruz.
+            TXT_Alert.text = base.GetLanguageText("AraştırmaKoşulOlumsuz");
         }
-        else
-            TXT_Alert.text = string.Empty;
 
+        #endregion
+
+        #region Bunu araştırabiliyor muyuz?
+        
+        // Sadece şartları yerine getirdiğimiz de kontrol ediyoruz.
+        if (isCondionsTrue)
+        {
+            // Yükseltebiliyor muyuz diye kontrol ediyoruz.
+            if (!ResearchPanelController.RPC.CheckLabBuilding())
+            {
+                // Yükseltemiyoruz demekki.
+                canUpgrade = false;
+
+                // Uyarıyı da buraya basacağız.
+                TXT_Alert.text = ResearchPanelController.RPC.TXT_Alert.text;
+            }
+            else
+                TXT_Alert.text = string.Empty;
+        }
+
+        #endregion
         // Eğer zaten yükseltiliyor ise butonu kapat ve texti güncelle.
         if (!canUpgrade)
         {
@@ -167,5 +191,7 @@ public class ResearchDetailItemPanel : BasePanelController
              }
          }));
     }
+
+    public void ShowConditions() => TechnologyController.TC.ShowTechnologyPanelWithItem(TechnologyCategories.Araştırmalar, (int)CurrentResearch);
 
 }

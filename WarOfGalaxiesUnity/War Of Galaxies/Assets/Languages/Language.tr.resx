@@ -611,4 +611,16 @@ Gemi ve savunma sistemleri inşa ederken.</value>
   <data name="TeknolojiGereksinimler" xml:space="preserve">
     <value>Teknoloji Gereksinimleri</value>
   </data>
+  <data name="BinaKoşulOlumsuz" xml:space="preserve">
+    <value>Bu binayı kurmak için şartlar uygun değil!</value>
+  </data>
+  <data name="SavunmaKoşulOlumsuz" xml:space="preserve">
+    <value>Bu savunma birini üretmek için koşullar uygun değil!</value>
+  </data>
+  <data name="GemiKoşulOlumsuz" xml:space="preserve">
+    <value>Bu gemiyi üretmek için koşullar uygun değil!</value>
+  </data>
+  <data name="AraştırmaKoşulOlumsuz" xml:space="preserve">
+    <value>Bu araştırmayı yapmak için koşullar uygun değil!</value>
+  </data>
 </root>

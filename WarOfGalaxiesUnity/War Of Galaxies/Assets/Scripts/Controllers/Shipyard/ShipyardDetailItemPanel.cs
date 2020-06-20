@@ -89,20 +89,40 @@ public class ShipyardDetailItemPanel : BasePanelController
         if (!isMathEnough)
             canProduce = false;
 
-        #region Tersane var mı? Varsa seviyesine bakıyoruz.
+        #region Koşullar sağlanıyor mu?
 
-        // Yükseltebiliyor muyuz diye kontrol ediyoruz.
-        if (!ShipyardPanelController.SPC.CanProduceShip())
+        // Koşullar sağlanıyor mu?
+        bool isCondionsTrue = TechnologyController.TC.IsInvented(TechnologyCategories.Gemiler, (int)CurrentShip);
+
+        // Eğer şartlar uygun değil ise.
+        if (!isCondionsTrue)
         {
-            // Yükseltemiyoruz demekki.
+            // Butonu kapatıyoruz.
             canProduce = false;
 
-            // Uyarıyı da buraya basacağız.
-            TXT_Alert.text = ShipyardPanelController.SPC.TXT_Alert.text;
+            // Texti de ekrana basıyoruz.
+            TXT_Alert.text = base.GetLanguageText("GemiKoşulOlumsuz");
         }
-        else
-            TXT_Alert.text = string.Empty;
 
+        #endregion
+
+        #region Tersane var mı? Varsa seviyesine bakıyoruz.
+
+        // Şartlar uygun ise burayı kontrol edeceğiz.
+        if (isCondionsTrue)
+        {
+            // Yükseltebiliyor muyuz diye kontrol ediyoruz.
+            if (!ShipyardPanelController.SPC.CheckShipyardBuilding())
+            {
+                // Yükseltemiyoruz demekki.
+                canProduce = false;
+
+                // Uyarıyı da buraya basacağız.
+                TXT_Alert.text = ShipyardPanelController.SPC.TXT_Alert.text;
+            }
+            else
+                TXT_Alert.text = string.Empty;
+        }
         #endregion
 
         // Üretim yapılabiliyor ise butonu açıyoruz.
@@ -173,5 +193,8 @@ public class ShipyardDetailItemPanel : BasePanelController
             }));
         }
     }
+
+    public void ShowConditions() => TechnologyController.TC.ShowTechnologyPanelWithItem(TechnologyCategories.Gemiler, (int)CurrentShip);
+
 
 }

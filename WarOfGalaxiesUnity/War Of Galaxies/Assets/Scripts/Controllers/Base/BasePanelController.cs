@@ -26,8 +26,8 @@ public class BasePanelController : BaseLanguageBehaviour
     [Header("Bütün nesnelerin içinde bulunduğu panel.")]
     public RectTransform MainPanel;
 
-    [Header("Bu bir panel mi? yoksa mini pop up gibi bir şey mi?")]
-    public bool IsPanel = true;
+    [Header("Bu panel full screen mi?")]
+    public bool IsStackPanel = true;
 
     [Header("Gereken metal detayı.")]
     public ResourceDetailController MetalDetail;
@@ -293,7 +293,7 @@ public class BasePanelController : BaseLanguageBehaviour
         isClosing = true;
 
         // Eğer panel ise stackden düşecek.
-        if (this.IsPanel)
+        if (IsStackPanel)
             PanelStackController.PSC.Pop();
     }
 
@@ -309,7 +309,7 @@ public class BasePanelController : BaseLanguageBehaviour
 
     protected virtual void OnTransionCompleted(bool isClosed)
     {
-        if (!isClosed && IsPanel)
+        if (!isClosed && IsStackPanel)
             PanelStackController.PSC.Push(this);
     }
 

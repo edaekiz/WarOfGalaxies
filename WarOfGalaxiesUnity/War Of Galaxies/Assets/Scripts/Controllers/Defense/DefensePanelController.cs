@@ -84,7 +84,7 @@ public class DefensePanelController : BasePanelController
         bool isResearchLabExists = LoginController.LC.CurrentUser.UserPlanetsBuildings.Exists(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.RobotFabrikası);
 
         // Eğer savunma üretemiyor isek bir hatadan dolayı, 1 saniye sonra tekrar kontrol ediyoruz.
-        if (!CanProduceDefense())
+        if (!CheckRobotFactoryBuilding())
         {
             // 1 saniye beklemeliyiz.
             yield return new WaitForSecondsRealtime(1);
@@ -94,7 +94,7 @@ public class DefensePanelController : BasePanelController
         }
     }
 
-    public bool CanProduceDefense()
+    public bool CheckRobotFactoryBuilding()
     {
         // Eğer tersane yükseltiliyor ise bu buton açılacak.
         bool isRobFacUpgrading = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Exists(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.RobotFabrikası);

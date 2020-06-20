@@ -129,6 +129,6 @@ public class GlobalPanelController : MonoBehaviour
     /// Eğer açık panel var ise değer true döner.
     /// </summary>
     /// <returns></returns>
-    public bool IsAnyPanelOpen => OpenPanels.Count(x => x.Item2.IsPanel) > 0;
+    public bool IsAnyPanelOpen => OpenPanels.Count(x => x.Item2.IsStackPanel) > 0;
 
 }
