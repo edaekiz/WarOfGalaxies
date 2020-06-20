@@ -106,7 +106,7 @@ public class BuildingController : BaseLanguageBehaviour
         BuildingPanelController bpc = buildingPanel.GetComponent<BuildingPanelController>();
 
         // Bina yükseltme bilgisini yüklüyoruz.
-        bpc.StartCoroutine(bpc.LoadData(BuildingType));
+        bpc.LoadBuildingDetails(BuildingType);
     }
 
     private void OnDestroy()

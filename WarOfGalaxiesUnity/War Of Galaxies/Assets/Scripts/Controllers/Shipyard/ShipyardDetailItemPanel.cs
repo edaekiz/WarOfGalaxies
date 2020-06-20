@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.ApiModels;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
+using Assets.Scripts.Models;
 using System;
 using System.Collections;
 using System.Linq;
@@ -37,36 +38,56 @@ public class ShipyardDetailItemPanel : BasePanelController
     [Header("Sunucuya istek gönderiliyor mu?")]
     public bool IsSending;
 
-    public IEnumerator LoadShipDetals(Ships ship)
+    /// <summary>
+    /// Gemi bilgisini tutuyoruz.
+    /// </summary>
+    public ShipDataDTO ShipInfo { get; set; }
+
+    protected override void Start()
+    {
+        base.Start();
+        InvokeRepeating("RefreshState", 0, 1);
+    }
+
+    public void LoadShipDetals(Ships ship)
     {
         // Gemi bilgisi.
         CurrentShip = ship;
 
+        // Açıklamasını basıyoruz.
+        ItemDescription.text = base.GetLanguageText($"SD{(int)ship}");
+
+        // Geminin resimini buluyoruz.
+        ShipImageDTO shipImage = ShipyardController.SC.ShipWithImages.Find(x => x.Ship == ship);
+
+        // Geminin resmini basıyoruz.
+        if (shipImage != null)
+            ItemImage.sprite = shipImage.ShipImage;
+
+        // Maliyeti.
+        this.ShipInfo = DataController.DC.GetShip(ship);
+
+    }
+
+    public void RefreshState()
+    {
+
         #region Dataları basıyoruz.
 
         // Aktif gemi miktarı.
-        UserPlanetShipDTO currentShipCount = LoginController.LC.CurrentUser.UserPlanetShips.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.ShipId == ship);
+        UserPlanetShipDTO currentShipCount = LoginController.LC.CurrentUser.UserPlanetShips.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.ShipId == CurrentShip);
 
         // Gemiye sahip ise miktarı değil ise 0.
         string quantity = currentShipCount == null ? "0" : currentShipCount.ShipCount.ToString();
 
         // Eğer yok ise gemisi 0 var ise miktarı basıyoruz.
-        ItemNameWithQuantity.text = $"{base.GetLanguageText($"S{(int)ship}")} <color=orange>({quantity})</color>";
-
-        // Açıklamasını basıyoruz.
-        ItemDescription.text = base.GetLanguageText($"SD{(int)ship}");
-
-        // Geminin resmini basıyoruz.
-        ItemImage.sprite = ShipyardController.SC.ShipWithImages.Find(x => x.Ship == ship).ShipImage;
-
-        // Maliyeti.
-        ShipDataDTO shipInfo = DataController.DC.GetShip(ship);
+        ItemNameWithQuantity.text = $"{base.GetLanguageText($"S{(int)CurrentShip}")} <color=orange>({quantity})</color>";
 
         // Tersaneyi buluyoruz.
         UserPlanetBuildingDTO shipyard = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.BuildingId == Buildings.Tersane && x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
 
         // Üretim süresini basıyoruz.
-        double countdown = DataController.DC.CalculateShipCountdown(ship, shipyard == null ? 0 : shipyard.BuildingLevel);
+        double countdown = DataController.DC.CalculateShipCountdown(CurrentShip, shipyard == null ? 0 : shipyard.BuildingLevel);
 
         // Üretim süresini basıyoruz.
         ItemCountdown.text = TimeExtends.GetCountdownText(TimeSpan.FromSeconds(countdown));
@@ -83,7 +104,7 @@ public class ShipyardDetailItemPanel : BasePanelController
             canProduce = false;
 
         // Maliyeti set ediyoruz.
-        bool isMathEnough = base.SetResources(new ResourcesDTO(shipInfo.CostMetal, shipInfo.CostCrystal, shipInfo.CostBoron));
+        bool isMathEnough = base.SetResources(new ResourcesDTO(ShipInfo.CostMetal, ShipInfo.CostCrystal, ShipInfo.CostBoron));
 
         // Eğer materyal yeterli ise butonu açıyoruz değil ise kapatıyoruz.
         if (!isMathEnough)
@@ -132,12 +153,6 @@ public class ShipyardDetailItemPanel : BasePanelController
             ProduceButton.interactable = false;
 
         #endregion
-
-        // 1 saniye bekliyoruz tekrar yenileyeceğiz.
-        yield return new WaitForSecondsRealtime(1);
-
-        // Gemi bilgisini yüklüyoruz.
-        StartCoroutine(LoadShipDetals(ship));
     }
 
     public void AddToQueue()

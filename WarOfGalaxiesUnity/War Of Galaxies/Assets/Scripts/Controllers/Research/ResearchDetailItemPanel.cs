@@ -32,24 +32,17 @@ public class ResearchDetailItemPanel : BasePanelController
     [Header("Aktif araştırma bilgisi")]
     public Researches CurrentResearch;
 
-    public IEnumerator LoadReserchDetails(Researches research)
+    protected override void Start()
     {
-        // Kullanıcının araştırması.
-        UserResearchesDTO currentResearchLevel = LoginController.LC.CurrentUser.UserResearches.Find(x => x.ResearchID == research);
+        base.Start();
 
+        InvokeRepeating("RefreshState", 0, 1);
+    }
+
+    public void LoadReserchDetails(Researches research)
+    {
         // Aktif araştırmayı değiştiriyoruz.
-        CurrentResearch = research;
-
-        #region Araştırma Detayları.
-
-        // Araştırma seviyesini tutuyoruz.
-        int researchLevel = currentResearchLevel == null ? 0 : currentResearchLevel.ResearchLevel;
-
-        // Araştırma ismi ve seviyesi.
-        ResearchName.text = $"{base.GetLanguageText($"R{(int)research}")} <color=orange>({base.GetLanguageText("InciSeviye", researchLevel.ToString())})</color>";
-
-        // Bir sonraki seviye.
-        int nextLevel = researchLevel + 1;
+        this.CurrentResearch = research;
 
         // Araştırma resmi.
         ShortDescription.text = base.GetLanguageText($"RD{(int)research}");
@@ -60,9 +53,26 @@ public class ResearchDetailItemPanel : BasePanelController
         // Eğer araştırma ikonu var ise onu da basıyoruz.
         if (researchIcon != null)
             Icon.sprite = researchIcon.ResearchImage;
+    }
+
+    public void RefreshState()
+    {
+        // Kullanıcının araştırması.
+        UserResearchesDTO currentResearchLevel = LoginController.LC.CurrentUser.UserResearches.Find(x => x.ResearchID == CurrentResearch);
+
+        #region Araştırma Detayları.
+
+        // Araştırma seviyesini tutuyoruz.
+        int researchLevel = currentResearchLevel == null ? 0 : currentResearchLevel.ResearchLevel;
+
+        // Araştırma ismi ve seviyesi.
+        ResearchName.text = $"{base.GetLanguageText($"R{(int)CurrentResearch}")} <color=orange>({base.GetLanguageText("InciSeviye", researchLevel.ToString())})</color>";
+
+        // Bir sonraki seviye.
+        int nextLevel = researchLevel + 1;
 
         // Maliyeti alıyoruz.
-        ResourcesDTO resources = DataController.DC.CalculateCostResearch(research, nextLevel);
+        ResourcesDTO resources = DataController.DC.CalculateCostResearch(CurrentResearch, nextLevel);
 
         // Kaynakları set ediyoruz.
         base.SetResources(resources);
@@ -71,7 +81,7 @@ public class ResearchDetailItemPanel : BasePanelController
         int totalResearchLevel = LoginController.LC.CurrentUser.UserPlanetsBuildings.Where(x => x.BuildingId == Buildings.ArastirmaLab).Select(x => x.BuildingLevel).DefaultIfEmpty(0).Sum();
 
         // Araştırmayı buluyoruz.
-        UserResearchProgDTO userResearchProg = LoginController.LC.CurrentUser.UserResearchProgs.Find(x => x.ResearchID == research);
+        UserResearchProgDTO userResearchProg = LoginController.LC.CurrentUser.UserResearchProgs.Find(x => x.ResearchID == CurrentResearch);
 
         // Eğer seçilen araştırma yükleniyor ise süre zamanla azalacak.
         if (userResearchProg == null)
@@ -80,7 +90,6 @@ public class ResearchDetailItemPanel : BasePanelController
             UpgradeTime.text = TimeExtends.GetCountdownText(userResearchProg.EndDate - DateTime.UtcNow);
 
         #endregion
-
         #region Araştırma koşulları sağlanıyor mu?
 
         // Yükseltebilir mi?
@@ -111,7 +120,7 @@ public class ResearchDetailItemPanel : BasePanelController
         #endregion
 
         #region Bunu araştırabiliyor muyuz?
-        
+
         // Sadece şartları yerine getirdiğimiz de kontrol ediyoruz.
         if (isCondionsTrue)
         {
@@ -151,12 +160,6 @@ public class ResearchDetailItemPanel : BasePanelController
         }
 
         #endregion
-
-        // Bir saniye bekliyoruz.
-        yield return new WaitForSecondsRealtime(1);
-
-        // Kendisini yeniden çağırıyoruz.
-        StartCoroutine(LoadReserchDetails(research));
     }
 
     public void UpgradeResearch()
@@ -190,18 +193,6 @@ public class ResearchDetailItemPanel : BasePanelController
                  base.ClosePanel();
              }
          }));
-    }
-
-    protected override void OnTransionCompleted(bool isClosed)
-    {
-        base.OnTransionCompleted(isClosed);
-
-        // Araştırmaları yeniliyoruz.
-        if (isClosed)
-        {
-            // Arkadaki paneli yeniliyoruz.
-            ResearchPanelController.RPC.LoadAllResearchItems();
-        }
     }
 
     public void ShowConditions() => TechnologyController.TC.ShowTechnologyPanelWithItem(TechnologyCategories.Araştırmalar, (int)CurrentResearch);

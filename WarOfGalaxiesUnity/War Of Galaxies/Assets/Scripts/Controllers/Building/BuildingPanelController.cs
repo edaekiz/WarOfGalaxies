@@ -3,7 +3,6 @@ using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using Assets.Scripts.Models;
 using System;
-using System.Collections;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -38,10 +37,72 @@ public class BuildingPanelController : BasePanelController
     [Header("Gösterilen bina bilgisi.")]
     public Buildings CurrentBuilding;
 
-    public IEnumerator LoadData(Buildings building)
+    protected override void Start()
+    {
+        base.Start();
+        InvokeRepeating("RefreshState", 0, 1);
+    }
+
+    public void LoadBuildingDetails(Buildings building)
     {
         // Bina bilgisini basıyoruz.
         this.CurrentBuilding = building;
+
+        // Binanın ismini basıyoruz.
+        BuildingName.text = base.GetLanguageText($"B{(int)building}");
+
+        // Bina açıklamasını basıyoruz.
+        BuildingDescription.text = base.GetLanguageText($"BD{(int)building}");
+
+        // Bina resim bilgisi.
+        BuildingsWithImage buildingImage = GlobalBuildingController.GBC.BuildingWithImages.Find(x => x.Building == building);
+
+        // Eğer resmi var ise resmi basıyoruz.
+        if (buildingImage != null)
+            BuildingImage.sprite = buildingImage.BuildingImage;
+    }
+
+    public void RefreshState()
+    {
+        #region Bina detaylarını basıyoruz.
+
+        // Yükseltilen bina aktif bina ise değer dolu olacak.
+        UserPlanetBuildingUpgDTO upgrade = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == CurrentBuilding);
+
+        // Eğer seçili olan bina yükseltiliyor ise ekrana geri sayımı basacağız.
+        if (upgrade == null)
+            BuildingCountdown.text = string.Empty;
+        else
+            BuildingCountdown.text = TimeExtends.GetCountdownText((upgrade.EndDate - DateTime.UtcNow));
+
+        // Kullanıcının binassı.
+        UserPlanetBuildingDTO userBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == CurrentBuilding);
+
+        // Kullanıcının binası yok ise 0. kademe yazacak var ise tesisin seviyesini yazacak.
+        if (userBuilding == null)
+            BuildingLevel.text = base.GetLanguageText("Kademe", "0");
+        else
+            BuildingLevel.text = base.GetLanguageText("Kademe", userBuilding.BuildingLevel.ToString());
+
+        // Bir sonraki seviye.
+        int nextLevel = userBuilding == null ? 1 : userBuilding.BuildingLevel + 1;
+
+        // Robot fabrikasını buluyoruz.
+        UserPlanetBuildingDTO robotBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.RobotFabrikası);
+
+        // Yükseltme süresi.
+        double upgradeTime = DataController.DC.CalculateBuildingUpgradeTime(CurrentBuilding, nextLevel, robotBuilding == null ? 0 : robotBuilding.BuildingLevel);
+
+        // Ekrana basıyoruz.
+        BuildingUpgradeTime.text = $"<color=#FF8B00>{base.GetLanguageText("YapımSüresi")}:</color>{Environment.NewLine}{TimeExtends.GetCountdownText(TimeSpan.FromSeconds(upgradeTime))}";
+
+        // Kaynak kontrolü ve koşulları sağlıyor mu kontorlü
+        ResourcesDTO resources = DataController.DC.CalculateCostBuilding(CurrentBuilding, nextLevel);
+
+        // Kaynakları atıyoruz.
+        base.SetResources(resources);
+
+        #endregion
 
         #region Yükseltme yapılabilir mi? Kaynak kontrolü olmadan.
 
@@ -57,97 +118,6 @@ public class BuildingPanelController : BasePanelController
 
         #endregion
 
-        #region Bina detaylarını basıyoruz.
-
-        // Yükseltilen bina aktif bina ise değer dolu olacak.
-        UserPlanetBuildingUpgDTO upgrade = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == building);
-
-        // Eğer seçili olan bina yükseltiliyor ise ekrana geri sayımı basacağız.
-        if (upgrade == null)
-            BuildingCountdown.text = string.Empty;
-        else
-            BuildingCountdown.text = TimeExtends.GetCountdownText((upgrade.EndDate - DateTime.UtcNow));
-
-        // Kullanıcının binassı.
-        UserPlanetBuildingDTO userBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == building);
-
-        // Kullanıcının binası yok ise 0. kademe yazacak var ise tesisin seviyesini yazacak.
-        if (userBuilding == null)
-            BuildingLevel.text = base.GetLanguageText("Kademe", "0");
-        else
-            BuildingLevel.text = base.GetLanguageText("Kademe", userBuilding.BuildingLevel.ToString());
-
-        // Bir sonraki seviye.
-        int nextLevel = userBuilding == null ? 1 : userBuilding.BuildingLevel + 1;
-
-        // Binanın ismini basıyoruz.
-        BuildingName.text = base.GetLanguageText($"B{(int)building}");
-
-        // Bina açıklamasını basıyoruz.
-        BuildingDescription.text = base.GetLanguageText($"BD{(int)building}");
-
-        // Bina resim bilgisi.
-        BuildingsWithImage buildingImage = GlobalBuildingController.GBC.BuildingWithImages.Find(x => x.Building == building);
-
-        // Eğer resmi var ise resmi basıyoruz.
-        if (buildingImage != null)
-            BuildingImage.sprite = buildingImage.BuildingImage;
-
-        // Robot fabrikasını buluyoruz.
-        UserPlanetBuildingDTO robotBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.RobotFabrikası);
-
-        // Yükseltme süresi.
-        double upgradeTime = DataController.DC.CalculateBuildingUpgradeTime(building, nextLevel, robotBuilding == null ? 0 : robotBuilding.BuildingLevel);
-
-        // Ekrana basıyoruz.
-        BuildingUpgradeTime.text = $"<color=#FF8B00>{base.GetLanguageText("YapımSüresi")}:</color>{Environment.NewLine}{TimeExtends.GetCountdownText(TimeSpan.FromSeconds(upgradeTime))}";
-
-        // Kaynak kontrolü ve koşulları sağlıyor mu kontorlü
-        ResourcesDTO resources = DataController.DC.CalculateCostBuilding(building, nextLevel);
-
-        #endregion
-
-        #region Kaynak ikonları üstüne tıklandığında yazacak olan detaylar.
-
-        // Eğer metal kaynağı 0 dan fazla ise yazabiliriz. Ancak değil ise kapatacağız.
-        if (resources.Metal > 0)
-        {
-            // Metal miktarını basıyoruz.
-            MetalDetail.ContentField.text = ResourceExtends.ConvertToDottedResource(resources.Metal);
-
-            // Açık ise açmaya gerek yok paneli
-            if (!MetalDetail.gameObject.activeSelf)
-                MetalDetail.gameObject.SetActive(true);
-        }
-        else // Aksi durumda kapatıyoruz.
-            MetalDetail.gameObject.SetActive(false);
-
-        // Eğer kristal kaynağı 0 dan fazla ise yazabiliriz. Ancak değil ise kapatacağız.
-        if (resources.Crystal > 0)
-        {
-            CrystalDetail.ContentField.text = ResourceExtends.ConvertToDottedResource(resources.Crystal);
-
-            // Açık değil ise açacağız.
-            if (!CrystalDetail.gameObject.activeSelf)
-                CrystalDetail.gameObject.SetActive(true);
-        }
-        else
-            CrystalDetail.gameObject.SetActive(false);
-
-        if (resources.Boron > 0)
-        {
-            // Boron miktarını basıyoruz.
-            BoronDetail.ContentField.text = ResourceExtends.ConvertToDottedResource(resources.Boron);
-
-            // Açık ise açmaya gerek yok paneli
-            if (!BoronDetail.gameObject.activeSelf)
-                BoronDetail.gameObject.SetActive(true);
-        }
-        else
-            BoronDetail.gameObject.SetActive(false);
-
-        #endregion
-
         #region Bina kaynak gereksinimlerini kontrol ediyoruz.
 
         // Eğer yükseltilebilir ise kaynakları kontrol ediyoruz.
@@ -159,9 +129,6 @@ public class BuildingPanelController : BasePanelController
         }
 
         #endregion
-
-        // Kaynakları atıyoruz.
-        base.SetResources(resources);
 
         #region Koşullar sağlanıyor mu?
 
@@ -186,11 +153,11 @@ public class BuildingPanelController : BasePanelController
         if (isCondionsTrue)
         {
             // Tersane araştırma ve robot fabrikasını yükseltirken üretimleri mevcut mu diye kontrol etmeliyiz.
-            if (building == Buildings.Tersane || building == Buildings.ArastirmaLab || building == Buildings.RobotFabrikası)
+            if (CurrentBuilding == Buildings.Tersane || CurrentBuilding == Buildings.ArastirmaLab || CurrentBuilding == Buildings.RobotFabrikası)
             {
                 bool isProgExits = false;
 
-                switch (building)
+                switch (CurrentBuilding)
                 {
                     case Buildings.RobotFabrikası:
                         isProgExits = LoginController.LC.CurrentUser.UserPlanetDefenseProgs.Exists(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
@@ -240,13 +207,8 @@ public class BuildingPanelController : BasePanelController
         }
 
         #endregion
-
-        // 1 saniye bekliyoruz sonra kendisini yeniden çağıracağız.
-        yield return new WaitForSecondsRealtime(1);
-
-        // Tekrar çağırıyoruz.
-        StartCoroutine(LoadData(building));
     }
+
 
     public void UpgradeBuilding()
     {

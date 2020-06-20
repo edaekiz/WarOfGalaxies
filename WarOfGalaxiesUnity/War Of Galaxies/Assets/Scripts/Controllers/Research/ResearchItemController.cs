@@ -29,24 +29,18 @@ public class ResearchItemController : BaseLanguageBehaviour
     [Header("Aktif araştırma")]
     public Researches CurrentResearch;
 
-    public IEnumerator LoadResearchData(Researches research)
+    private void Start()
     {
-        DateTime currentDate = DateTime.UtcNow;
+        InvokeRepeating("RefreshState", 0, 1);
+    }
 
+    public void LoadResearchData(Researches research)
+    {
         // Aktif tuttuğu araştırma bilgisi.
         CurrentResearch = research;
 
-        // Kullanıcının araştırmasını buluyoruz.
-        UserResearchesDTO userResearch = LoginController.LC.CurrentUser.UserResearches.Find(x => x.ResearchID == research);
-
-        // Araştırma şuanki seviyesi.
-        int researchLevel = userResearch == null ? 0 : userResearch.ResearchLevel;
-
         // Araştırmanın ismini basıyoruz.
         ResearchName.text = base.GetLanguageText($"R{(int)research}");
-
-        // Araştırma seviyesi.
-        ResearchLevel.text = $"{researchLevel}";
 
         // Araştırmaya atanan ikonu buluyoruz.
         ResearchImageDTO researchIcon = ResearchController.RC.ResearchWithImages.Find(x => x.Research == research);
@@ -54,9 +48,24 @@ public class ResearchItemController : BaseLanguageBehaviour
         // Araştırma ikonu.
         if (researchIcon != null)
             ResearchIcon.sprite = researchIcon.ResearchImage;
+    }
+
+    public void RefreshState()
+    {
+        // Sistem tarihi.
+        DateTime currentDate = DateTime.UtcNow;
+
+        // Kullanıcının araştırmasını buluyoruz.
+        UserResearchesDTO userResearch = LoginController.LC.CurrentUser.UserResearches.Find(x => x.ResearchID == CurrentResearch);
+
+        // Araştırma şuanki seviyesi.
+        int researchLevel = userResearch == null ? 0 : userResearch.ResearchLevel;
+
+        // Araştırma seviyesi.
+        ResearchLevel.text = $"{researchLevel}";
 
         // Yükseltmesi var mı?
-        UserResearchProgDTO upg = LoginController.LC.CurrentUser.UserResearchProgs.Find(x => x.ResearchID == research);
+        UserResearchProgDTO upg = LoginController.LC.CurrentUser.UserResearchProgs.Find(x => x.ResearchID == CurrentResearch);
 
         // Eğer yükseltmesi var ise yükseltme metnini açıyoruz.
         if (upg != null)
@@ -77,10 +86,6 @@ public class ResearchItemController : BaseLanguageBehaviour
             if (ResearchCountdownImage.gameObject.activeSelf)
                 ResearchCountdownImage.gameObject.SetActive(false);
         }
-
-        yield return new WaitForSecondsRealtime(1);
-
-        StartCoroutine(LoadResearchData(research));
     }
 
     public void ShowResearchDetail()
@@ -95,7 +100,7 @@ public class ResearchItemController : BaseLanguageBehaviour
         UserResearchesDTO userResearch = LoginController.LC.CurrentUser.UserResearches.Find(x => x.ResearchID == CurrentResearch);
 
         // Ve çağırıyoruz.
-        rdip.StartCoroutine(rdip.LoadReserchDetails(CurrentResearch));
+        rdip.LoadReserchDetails(CurrentResearch);
     }
 
 }

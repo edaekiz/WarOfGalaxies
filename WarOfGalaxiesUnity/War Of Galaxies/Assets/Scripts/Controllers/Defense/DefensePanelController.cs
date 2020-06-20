@@ -61,7 +61,7 @@ public class DefensePanelController : BasePanelController
             DefenseItemController dic = defenseItem.GetComponent<DefenseItemController>();
 
             // Detayları yükle.
-            dic.StartCoroutine(dic.LoadDefenseDetails((Defenses)defense.DefenseId));
+            dic.LoadDefenseDetails((Defenses)defense.DefenseId);
 
             // Listeye ekle
             _defenseItems.Add(dic);

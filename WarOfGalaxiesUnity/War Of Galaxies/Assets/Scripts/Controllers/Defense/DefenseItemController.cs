@@ -29,7 +29,12 @@ public class DefenseItemController : BaseLanguageBehaviour
     [Header("Geri sayım süresi.")]
     public TMP_Text CountdownText;
 
-    public IEnumerator LoadDefenseDetails(Defenses defense)
+    private void Start()
+    {
+        InvokeRepeating("RefreshState", 0, 1);
+    }
+
+    public void LoadDefenseDetails(Defenses defense)
     {
         // Savunma bilgisi.
         CurrentDefense = defense;
@@ -37,14 +42,18 @@ public class DefenseItemController : BaseLanguageBehaviour
         // İsmini basıyoruz.
         DefenseName.text = base.GetLanguageText($"D{(int)defense}");
 
-        // Aktif savunma miktarı.
-        UserPlanetDefenseDTO currentDefenseCount = LoginController.LC.CurrentUser.UserPlanetDefenses.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.DefenseId == defense);
-
         // Resmi yüklüyoruz.
         DefenseImage.sprite = DefenseController.DC.DefenseWithImages.Find(x => x.Defense == defense).DefenseImage;
 
+    }
+
+    public void RefreshState()
+    {
+        // Aktif savunma miktarı.
+        UserPlanetDefenseDTO currentDefenseCount = LoginController.LC.CurrentUser.UserPlanetDefenses.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.DefenseId == CurrentDefense);
+
         // Üretim var mı?
-        UserPlanetDefenseProgDTO prog = LoginController.LC.CurrentUser.UserPlanetDefenseProgs.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.DefenseId == defense);
+        UserPlanetDefenseProgDTO prog = LoginController.LC.CurrentUser.UserPlanetDefenseProgs.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.DefenseId == CurrentDefense);
 
         // Eğer üretim var ise süreyi basıyoruz. Eğer gezegende şuan üretilen üretim bu ise ozaman göstereceğiz ilerlemeyi.
         if (prog != null && ReferenceEquals(prog, LoginController.LC.CurrentUser.UserPlanetDefenseProgs.FirstOrDefault(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId)))
@@ -57,7 +66,7 @@ public class DefenseItemController : BaseLanguageBehaviour
             UserPlanetBuildingDTO robotFac = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == Buildings.RobotFabrikası);
 
             // Bir savunmanın üretimi için gereken süre.
-            double countdownOneItem = DataController.DC.CalculateDefenseCountdown(defense, robotFac == null ? 0 : robotFac.BuildingLevel);
+            double countdownOneItem = DataController.DC.CalculateDefenseCountdown(CurrentDefense, robotFac == null ? 0 : robotFac.BuildingLevel);
 
             // Birim başına baktıktan sonra tamamlanmasına kalan süreye bakıyoruz.
             DateTime completeTime = prog.LastVerifyDate.Value.AddSeconds(-prog.OffsetTime).AddSeconds(countdownOneItem);
@@ -80,19 +89,13 @@ public class DefenseItemController : BaseLanguageBehaviour
             // Eğer yok ise gemisi 0 var ise miktarı basıyoruz.
             DefenseCount.text = currentDefenseCount == null ? $"{0}" : $"{currentDefenseCount.DefenseCount}";
         }
-
-        // 1 saniye bekleyip tekrar çağırıyoruz.
-        yield return new WaitForSecondsRealtime(1);
-
-        // Tekrar çağırıyoruz.
-        StartCoroutine(LoadDefenseDetails(defense));
     }
 
     public void ShowDefenseDetail()
     {
         GameObject defenseDetailPanel = GlobalPanelController.GPC.ShowPanel(PanelTypes.DefenseDetailPanel);
         DefenseDetailItemPanel ddip = defenseDetailPanel.GetComponent<DefenseDetailItemPanel>();
-        ddip.StartCoroutine(ddip.LoadDefenseDetails(CurrentDefense));
+        ddip.LoadDefenseDetails(CurrentDefense);
     }
 
 }

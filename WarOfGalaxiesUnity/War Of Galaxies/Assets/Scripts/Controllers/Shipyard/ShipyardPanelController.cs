@@ -62,7 +62,7 @@ public class ShipyardPanelController : BasePanelController
             ShipyardItemController sic = shipyardItem.GetComponent<ShipyardItemController>();
 
             // Detayları yükle.
-            sic.StartCoroutine(sic.LoadShipDetails((Ships)ship.ShipId));
+            sic.LoadShipDetails((Ships)ship.ShipId);
 
             // Listeye ekle
             _shipyardItems.Add(sic);

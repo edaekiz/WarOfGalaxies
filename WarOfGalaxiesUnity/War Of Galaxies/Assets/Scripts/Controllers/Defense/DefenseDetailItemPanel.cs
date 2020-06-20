@@ -37,7 +37,18 @@ public class DefenseDetailItemPanel : BasePanelController
     [Header("Sunucuya istek gönderiliyor mu?")]
     public bool IsSending;
 
-    public IEnumerator LoadDefenseDetails(Defenses defense)
+    /// <summary>
+    /// Defans bilgisini tutuyoruz.
+    /// </summary>
+    DefenseDataDTO DefenseInfo { get; set; }
+
+    protected override void Start()
+    {
+        base.Start();
+        InvokeRepeating("RefreshState", 0, 1);
+    }
+
+    public void LoadDefenseDetails(Defenses defense)
     {
         // Gemi bilgisi.
         CurrentDefense = defense;
@@ -60,18 +71,21 @@ public class DefenseDetailItemPanel : BasePanelController
         ItemImage.sprite = DefenseController.DC.DefenseWithImages.Find(x => x.Defense == defense).DefenseImage;
 
         // Maliyeti.
-        DefenseDataDTO defenseInfo = DataController.DC.GetDefense(defense);
+        this.DefenseInfo = DataController.DC.GetDefense(defense);
 
+        #endregion
+    }
+
+    public void RefreshState()
+    {
         // Robot fab buluyoruz.
         UserPlanetBuildingDTO robotFac = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.BuildingId == Buildings.RobotFabrikası && x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
 
         // Üretim süresini basıyoruz.
-        double countdown = DataController.DC.CalculateDefenseCountdown(defense, robotFac == null ? 0 : robotFac.BuildingLevel);
+        double countdown = DataController.DC.CalculateDefenseCountdown(CurrentDefense, robotFac == null ? 0 : robotFac.BuildingLevel);
 
         // Üretim süresini basıyoruz.
         ItemCountdown.text = TimeExtends.GetCountdownText(TimeSpan.FromSeconds(countdown));
-
-        #endregion
 
         #region Üretim koşulları sağlanıyor mu?
 
@@ -83,7 +97,7 @@ public class DefenseDetailItemPanel : BasePanelController
             canProduce = false;
 
         // Maliyeti set ediyoruz.
-        bool isMathEnough = base.SetResources(new ResourcesDTO(defenseInfo.CostMetal, defenseInfo.CostCrystal, defenseInfo.CostBoron));
+        bool isMathEnough = base.SetResources(new ResourcesDTO(DefenseInfo.CostMetal, DefenseInfo.CostCrystal, DefenseInfo.CostBoron));
 
         // Eğer materyal yeterli ise butonu açıyoruz değil ise kapatıyoruz.
         if (!isMathEnough)
@@ -107,7 +121,7 @@ public class DefenseDetailItemPanel : BasePanelController
         #endregion
 
         #region Robot Fabrikası var mı? Varsa seviyesine bakıyoruz.
-        
+
         // Şartlar uygun olduğunda bu kontrolü yapacağız.
         if (isCondionsTrue)
         {
@@ -133,12 +147,6 @@ public class DefenseDetailItemPanel : BasePanelController
             ProduceButton.interactable = false;
 
         #endregion
-
-        // 1 saniye bekliyoruz tekrar yenileyeceğiz.
-        yield return new WaitForSecondsRealtime(1);
-
-        // Gemi bilgisini yüklüyoruz.
-        StartCoroutine(LoadDefenseDetails(defense));
     }
 
     public void AddToQueue()
@@ -199,15 +207,6 @@ public class DefenseDetailItemPanel : BasePanelController
 
             }));
         }
-    }
-
-    protected override void OnTransionCompleted(bool isClosed)
-    {
-        base.OnTransionCompleted(isClosed);
-
-        // Panel kapandığında savunmaları yeniden yüklüyoruz.
-        if (isClosed)
-            DefensePanelController.DPC.LoadAllDefenses();
     }
 
     public void ShowConditions() => TechnologyController.TC.ShowTechnologyPanelWithItem(TechnologyCategories.Savunmalar, (int)CurrentDefense);

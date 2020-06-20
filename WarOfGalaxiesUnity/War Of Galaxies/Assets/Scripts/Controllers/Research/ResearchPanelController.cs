@@ -61,7 +61,7 @@ public class ResearchPanelController : BasePanelController
             ResearchItemController ric = researchItem.GetComponent<ResearchItemController>();
 
             // Araştırma bilgisini yüklüyoruz.
-            ric.StartCoroutine(ric.LoadResearchData((Researches)research.ResearchId));
+            ric.LoadResearchData((Researches)research.ResearchId);
 
             // Oluşturulan araştırmayı listeye ekliyoruz.
             _researchItems.Add(ric);
