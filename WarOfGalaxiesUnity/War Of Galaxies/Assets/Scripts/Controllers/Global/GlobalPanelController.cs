@@ -9,6 +9,9 @@ public class GlobalPanelController : MonoBehaviour
 {
     public static GlobalPanelController GPC { get; set; }
 
+    [Header("Panel açılış sesi.")]
+    public string SND_PanelOpen;
+
     private void Awake()
     {
         if (GPC == null)

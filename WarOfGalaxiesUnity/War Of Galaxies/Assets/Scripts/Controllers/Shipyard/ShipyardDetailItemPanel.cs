@@ -3,7 +3,6 @@ using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using Assets.Scripts.Models;
 using System;
-using System.Collections;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -34,6 +33,9 @@ public class ShipyardDetailItemPanel : BasePanelController
 
     [Header("Eğer yükseltme yapılamaz ise buradaki uyarı açılacak")]
     public TMP_Text TXT_Alert;
+
+    [Header("Üretim başladığında çalacak olan ses.")]
+    public string SND_BeginProduce;
 
     [Header("Sunucuya istek gönderiliyor mu?")]
     public bool IsSending;
@@ -181,6 +183,7 @@ public class ShipyardDetailItemPanel : BasePanelController
                     // Gelen datayı alıyoruz.
                     ShipyardAddQueueResponseDTO responseData = response.GetData<ShipyardAddQueueResponseDTO>();
 
+                    // İlerlemeyi oluşturuyoruz.
                     UserPlanetShipProgDTO progress = new UserPlanetShipProgDTO
                     {
                         ShipCount = responseData.Quantity,
@@ -203,6 +206,9 @@ public class ShipyardDetailItemPanel : BasePanelController
 
                     // Detay panelini kapatıyoruz.
                     base.ClosePanel();
+
+                    // Sesi çalıyoruz.
+                    AudioController.AC.PlaySoundOnCamera(SND_BeginProduce);
                 }
 
             }));

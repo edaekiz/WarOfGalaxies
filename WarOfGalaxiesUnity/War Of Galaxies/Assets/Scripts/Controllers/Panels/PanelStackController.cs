@@ -44,7 +44,7 @@ public class PanelStackController : MonoBehaviour
             if (OpenPanels.Count > 0)
             {
                 // Son eklenen kayıt ekranda gözüküyor bu yüzden onu kapatıp yenisini eklemeliyiz.
-                BasePanelController lastItem = OpenPanels.LastOrDefault();
+                BasePanelController lastItem = OpenPanels.FirstOrDefault();
 
                 // Eğer var ise kapatıyoruz.
                 lastItem.gameObject.SetActive(false);
@@ -74,6 +74,8 @@ public class PanelStackController : MonoBehaviour
 
             // Son paneli çıkartıyoruz.
             BasePanelController closedPanel = OpenPanels.Pop();
+
+            // Paneli kapatıyoruz.
             closedPanel.ClosePanelForStack();
 
             // Eğer hiç panel açık değil ise dön.
@@ -81,7 +83,7 @@ public class PanelStackController : MonoBehaviour
                 return;
 
             // Var ise sonrakini aktif etmemiz gerekiyor.
-            BasePanelController lastItem = OpenPanels.LastOrDefault();
+            BasePanelController lastItem = OpenPanels.FirstOrDefault();
 
             // Tabiki kontrol ediyoruz var mı diye?
             if (lastItem != null)
@@ -109,6 +111,7 @@ public class PanelStackController : MonoBehaviour
                     openPanel.gameObject.SetActive(true);
                 openPanel.ClosePanelForStack();
             }
+
             // Panel stack listesini temizliyoruz.
             OpenPanels.Clear();
         }

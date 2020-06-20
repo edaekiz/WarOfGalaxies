@@ -115,16 +115,16 @@ public class FleetPanelItemController : BaseLanguageBehaviour
             // Tamamlanmış olan yuvarlak miktarı.
             quantityOfCircleInProg = (int)countOfCircle - Mathf.FloorToInt((float)(leftTimeToArrive / each));
         }
-        else if (fleetInfo.IsReturnFleet)
+        else if (fleetInfo.IsReturnFleet && currentDate < fleetEndFlyDate)
         {
             // Kalan süre.
-            double leftTimeToReturn = (fleetEndFlyDate - currentDate).TotalSeconds;
+            double leftTimeToArrive = (fleetEndFlyDate - currentDate).TotalSeconds;
 
             // Bu kadar saniyede bir yuvarlak tamamlanacak.
             double each = flightTime / countOfCircle;
 
             // Tamamlanmış olan yuvarlak miktarı.
-            quantityOfCircleInProg = Mathf.FloorToInt((float)(leftTimeToReturn / each));
+            quantityOfCircleInProg = (int)countOfCircle - Mathf.FloorToInt((float)(leftTimeToArrive / each));
 
             // Eğer buton açık ise kapatıyoruz.
             if (CallbackButton.gameObject.activeSelf)

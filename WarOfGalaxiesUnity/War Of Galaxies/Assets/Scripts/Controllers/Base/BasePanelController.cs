@@ -59,6 +59,9 @@ public class BasePanelController : BaseLanguageBehaviour
 
     protected virtual void Start()
     {
+        // Açılış sesi.
+        AudioController.AC.PlaySoundOnCamera(GlobalPanelController.GPC.SND_PanelOpen);
+
         // Varsayılan olarak canvas da yer alıyor panel.
         Canvas canvas = GetComponent<Canvas>();
 
@@ -305,6 +308,9 @@ public class BasePanelController : BaseLanguageBehaviour
         if (isOpening)
             return;
 
+        // Kapanış sesi.
+        AudioController.AC.PlaySoundOnCamera(GlobalPanelController.GPC.SND_PanelOpen);
+
         // Eğer açılmıyor ise kapatılıyor olarak ayarlıyoruz.
         isClosing = true;
 
@@ -318,6 +324,9 @@ public class BasePanelController : BaseLanguageBehaviour
         // Eğer açılıyor ise geri dön kapatılamaz.
         if (isOpening)
             return;
+
+        // Kapanış sesi.
+        AudioController.AC.PlaySoundOnCamera(GlobalPanelController.GPC.SND_PanelOpen);
 
         // Eğer açılmıyor ise kapatılıyor olarak ayarlıyoruz.
         isClosing = true;

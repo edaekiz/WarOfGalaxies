@@ -5352,4 +5352,5 @@ MonoBehaviour:
   CurrentShip: 0
   QuantityField: {fileID: 4421806089200322899}
   TXT_Alert: {fileID: 5036857091419563666}
+  SND_BeginProduce: Sounds/SND_BeginProduce
   IsSending: 0

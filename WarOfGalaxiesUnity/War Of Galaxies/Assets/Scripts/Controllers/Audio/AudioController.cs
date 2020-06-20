@@ -175,7 +175,7 @@ public class AudioController : MonoBehaviour
             return;
 
         // Sesi biraz kısıyoruz.
-        audioSource.volume = 0.7f;
+        audioSource.volume = 0.1f;
 
         // Sesi yüklüyoruz.
         AudioClip clip = Resources.Load<AudioClip>(musicName);

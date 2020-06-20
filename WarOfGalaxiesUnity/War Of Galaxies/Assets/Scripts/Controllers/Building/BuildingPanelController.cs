@@ -37,6 +37,9 @@ public class BuildingPanelController : BasePanelController
     [Header("Gösterilen bina bilgisi.")]
     public Buildings CurrentBuilding;
 
+    [Header("Bina yükseltme sesi.")]
+    public string SND_BuildingUpgrade;
+
     protected override void Start()
     {
         base.Start();
@@ -238,6 +241,9 @@ public class BuildingPanelController : BasePanelController
 
                 // Seçilen binanın datalarını yeniler.
                 GlobalBuildingController.GBC.CurrentSelectedBuilding.LoadBuildingDetails();
+
+                // Yükseltme sesini çalıyoruz.
+                AudioController.AC.PlaySoundOnCamera(SND_BuildingUpgrade);
 
                 // Paneli kapatıyoruz.
                 base.ClosePanel();

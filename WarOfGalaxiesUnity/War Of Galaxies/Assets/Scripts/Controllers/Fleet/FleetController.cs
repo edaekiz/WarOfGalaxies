@@ -131,8 +131,32 @@ public class FleetController : MonoBehaviour
 
     public void VerifyFleet(FleetDTO fleet)
     {
+        // Filo hedefe ulaştığında burası çalışacak.
+        if (fleet.SenderUserId == LoginController.LC.CurrentUser.UserData.UserId)
+        {
+            LoginController.LC.VerifyUserResources(fleet.SenderUserPlanetId, (UserPlanetDTO userPlanet) =>
+            {
+                // Ve eğer galaksiye bakıyorsak açık olan galaksiyi yenilememiz lazım.
+                if (GlobalGalaxyController.GGC.IsInGalaxyView && fleet.FleetActionTypeId == FleetTypes.Sök)
+                {
+                    // Sök panelini yenilememiz lazım. Kapatıyoruz. İsterse yeniden açabilir.
+                    GlobalPanelController.GPC.ClosePanel(PanelTypes.PlanetActionFooterPanel);
+
+                    // Paneli yeniliyoruz.
+                    GalaxyChangePanelController.GCPC.GoToCordinate();
+                }
+
+                // Hedefe gidiyor ise.
+                if (!fleet.IsReturnFleet)
+                    RefreshReturnFleetData(fleet.ReturnFleetId);
+
+                // Mailleri güncelliyoruz.
+                MailController.MC.GetLatestMails();
+            });
+        }
+
         // Dönüş gezegeninin kaynaklarını doğruluyoruz.
-        if (fleet.DestinationUserId == LoginController.LC.CurrentUser.UserData.UserId)
+        if (fleet.DestinationUserId == LoginController.LC.CurrentUser.UserData.UserId && fleet.SenderUserId != LoginController.LC.CurrentUser.UserData.UserId)
         {
             LoginController.LC.VerifyUserResources(fleet.DestinationUserPlanetId, (UserPlanetDTO userPlanet) =>
              {
@@ -148,27 +172,26 @@ public class FleetController : MonoBehaviour
 
                  // Hedefe gidiyor ise.
                  if (!fleet.IsReturnFleet)
-                 {
-                     // Dönüş filosundaki dataları güncelliyoruz.
                      RefreshReturnFleetData(fleet.ReturnFleetId);
-                 }
-                 else // Dönüş filosunun işlemi.
-                 {
-                     // Filodaki gemiler.
-                     List<Tuple<Ships, int>> ships = FleetExtends.FleetDataToShipData(fleet.FleetData);
-
-                     // Her bir gemiyi dönüyoruz ve envantere ekliyoruz..
-                     ships.ForEach(e => ShipyardController.SC.AddShip(fleet.DestinationUserPlanetId, e.Item1, e.Item2));
-
-                     // Paneli yeniliyoruz.
-                     if (FleetPanelController.FPC != null)
-                         FleetPanelController.FPC.RefreshActiveFleets();
-                 }
-
+                 
                  // Mailleri güncelliyoruz.
                  MailController.MC.GetLatestMails();
              });
         }
+
+        if (fleet.IsReturnFleet)
+        {
+            // Filodaki gemiler.
+            List<Tuple<Ships, int>> ships = FleetExtends.FleetDataToShipData(fleet.FleetData);
+
+            // Her bir gemiyi dönüyoruz ve envantere ekliyoruz..
+            ships.ForEach(e => ShipyardController.SC.AddShip(fleet.DestinationUserPlanetId, e.Item1, e.Item2));
+
+            // Paneli yeniliyoruz.
+            if (FleetPanelController.FPC != null)
+                FleetPanelController.FPC.RefreshActiveFleets();
+        }
+
     }
 
     public void RefreshReturnFleetData(int returnFleetId)

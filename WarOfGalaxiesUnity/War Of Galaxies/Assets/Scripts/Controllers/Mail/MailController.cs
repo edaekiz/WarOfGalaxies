@@ -23,6 +23,9 @@ public class MailController : MonoBehaviour
     [Header("Default seçili olan kategori.")]
     public MailCategories LastSelectedCategory = MailCategories.Casusluk;
 
+    [Header("Posta silindiğinde çalınacak olan ses.")]
+    public string SND_DeleteMail;
+
     private void Awake()
     {
         if (MC == null)
@@ -139,6 +142,9 @@ public class MailController : MonoBehaviour
 
                 if (response.IsSuccess)
                 {
+                    // Ses çalıyoruz.
+                    AudioController.AC.PlaySoundOnCamera(SND_DeleteMail);
+
                     // Öncekini siliyoruz.
                     this.UserMails.Remove(userMail);
 

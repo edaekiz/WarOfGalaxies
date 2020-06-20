@@ -5361,6 +5361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4358508b62b545942b20bea28e960fab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  SND_PanelOpen: Sounds/SND_Transition
   OffsetSortingValue: 10
   Panels:
   - PanelType: 0
@@ -5680,6 +5681,7 @@ MonoBehaviour:
   UserMails: []
   UnreadMailCount: {fileID: 1553015223}
   LastSelectedCategory: 1
+  SND_DeleteMail: Sounds/SND_RemoveMail
 --- !u!114 &515747106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15319,7 +15321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ZoomPanEnabled: 1
-  ZoomOutMin: 0.3
+  ZoomOutMin: 1.5
   ZoomOutMax: 4
   DefaultZoomRate: 3.8
   MainCameraOffset: {fileID: 887374342}

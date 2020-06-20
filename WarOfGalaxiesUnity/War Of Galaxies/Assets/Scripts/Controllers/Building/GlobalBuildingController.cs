@@ -25,6 +25,7 @@ public class GlobalBuildingController : MonoBehaviour
 
     [Header("Oyundaki binalar.")]
     public List<BuildingController> BuildingsInGame;
+
     IEnumerator Start()
     {
         yield return new WaitUntil(() => LoadingController.LC.IsGameLoaded);

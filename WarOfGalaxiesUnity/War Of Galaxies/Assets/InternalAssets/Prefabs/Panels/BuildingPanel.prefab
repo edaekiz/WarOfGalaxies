@@ -3087,6 +3087,7 @@ MonoBehaviour:
   BuildingCountdown: {fileID: 8734965622187518230}
   TXT_Alert: {fileID: 7357967941851159180}
   CurrentBuilding: 0
+  SND_BuildingUpgrade: Sounds/SND_BeginProduce
 --- !u!1 &8734965623188823528
 GameObject:
   m_ObjectHideFlags: 0

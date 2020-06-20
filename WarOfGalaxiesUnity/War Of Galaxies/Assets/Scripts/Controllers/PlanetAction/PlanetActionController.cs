@@ -160,11 +160,6 @@ public class PlanetActionController : BasePanelController
         });
     }
 
-    protected override void Update()
-    {
-        base.Update();
-    }
-
     public void Load(SolarPlanetDTO planetInfo, CordinateDTO cordinateInfo)
     {
         // Seçilen gezegenin bilgileri.
