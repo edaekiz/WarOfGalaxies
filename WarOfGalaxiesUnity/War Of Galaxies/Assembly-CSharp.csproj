@@ -63,7 +63,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\AudioController.cs" />
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\AntiAliasing.cs" />
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\FXAA\FXAA.cs" />
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\AntiAliasing\IAntiAliasing.cs" />
@@ -86,8 +85,6 @@
     <Compile Include="Assets\ExternalAssets\Asteroids Pack\Assets\Scripts\RandomRotator.cs" />
     <Compile Include="Assets\ExternalAssets\Hi-Tech Buttons and Panels\Resources\Scripts\JustRotate.cs" />
     <Compile Include="Assets\Languages\Language.Designer.cs" />
-    <Compile Include="Assets\PanelStackController.cs" />
-    <Compile Include="Assets\PlanetActionFooterPanel.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ApiResult.cs" />
     <Compile Include="Assets\Scripts\ApiModels\Base\ProgressModel.cs" />
     <Compile Include="Assets\Scripts\ApiModels\DataDTO.cs" />
@@ -105,6 +102,7 @@
     <Compile Include="Assets\Scripts\ApiModels\UserPlanetDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\UserResearchesDTO.cs" />
     <Compile Include="Assets\Scripts\ApiModels\VerifyResourceDTO.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Audio\AudioController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Base\BaseLanguageBehaviour.cs" />
     <Compile Include="Assets\Scripts\Controllers\Base\BasePanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Base\BaseStepController.cs" />
@@ -143,12 +141,14 @@
     <Compile Include="Assets\Scripts\Controllers\Notification\NotificationController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Notification\NotificationPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\OtherPanels\QuantityItemPanel.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Panels\PanelStackController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Panels\YesNoPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetPickerController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetRotateController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Planet\PlanetZoomController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlanetAction\PlanetActionController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\PlanetAction\PlanetActionFooterPanel.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlanetAction\ShipItemCanSendController.cs" />
     <Compile Include="Assets\Scripts\Controllers\PlanetAction\ShipItemToSendController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Research\ResearchController.cs" />
@@ -162,6 +162,9 @@
     <Compile Include="Assets\Scripts\Controllers\Shipyard\ShipyardItemController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Shipyard\ShipyardPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Shipyard\ShipyardQueueController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Tech\TechnologyController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Tech\TechnologyDetailPanelController.cs" />
+    <Compile Include="Assets\Scripts\Controllers\Tech\TechnologyPanelController.cs" />
     <Compile Include="Assets\Scripts\Controllers\Toast\ToastController.cs" />
     <Compile Include="Assets\Scripts\Enums\Buildings.cs" />
     <Compile Include="Assets\Scripts\Enums\Defenses.cs" />
@@ -195,9 +198,6 @@
     <Compile Include="Assets\Scripts\Models\TechnologyWithCategoryDTO.cs" />
     <Compile Include="Assets\Scripts\Pluigns\MailEncoder.cs" />
     <Compile Include="Assets\Scripts\Services\ApiService.cs" />
-    <Compile Include="Assets\TechnologyController.cs" />
-    <Compile Include="Assets\TechnologyDetailPanelController.cs" />
-    <Compile Include="Assets\TechnologyPanelController.cs" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Ring.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MultiPassHollywoodFlares.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\Blend.shader" />

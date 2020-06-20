@@ -3,7 +3,6 @@ using Assets.Scripts.Enums;
 using Assets.Scripts.Models;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -79,9 +78,9 @@ public class TechnologyDetailPanelController : BasePanelController
 
         // Yalnızca gereksinimler basılacak. Content değeri basılan alan referansı ile aynı değil ise tıklama eventi olmayacak.
         if (ReferenceEquals(content, SelectedTechReqsContent))
-            techItem.GetComponent<Button>().onClick.AddListener(() => TechnologyPanelController.TPC.ShowTechnologyDetail(TechnologyCategories.Gemiler, indexId));
+            techItem.GetComponent<Button>().onClick.AddListener(() => TechnologyController.TC.ShowTechnologyPanelWithItem(TechnologyCategories.Gemiler, indexId));
         else // Eğer tıklanabilir değil ise teknoloji ağacı metnini basıcaz.
-            TXT_TechName.text = base.GetLanguageText("XTeknolojiAğacı", base.GetLanguageText($"S{indexId}"),Environment.NewLine);
+            TXT_TechName.text = base.GetLanguageText("XTeknolojiAğacı", base.GetLanguageText($"S{indexId}"), Environment.NewLine);
 
         // Teknolojinin ismini basacağız.
         techItem.transform.Find("ItemName").GetComponent<TMP_Text>().text = base.GetLanguageText($"S{indexId}");
@@ -104,7 +103,7 @@ public class TechnologyDetailPanelController : BasePanelController
 
         // Yalnızca gereksinimler basılacak. Content değeri basılan alan referansı ile aynı değil ise tıklama eventi olmayacak.
         if (ReferenceEquals(content, SelectedTechReqsContent))
-            techItem.GetComponent<Button>().onClick.AddListener(() => TechnologyPanelController.TPC.ShowTechnologyDetail(TechnologyCategories.Savunmalar, indexId));
+            techItem.GetComponent<Button>().onClick.AddListener(() => TechnologyController.TC.ShowTechnologyPanelWithItem(TechnologyCategories.Savunmalar, indexId));
         else // Eğer tıklanabilir değil ise teknoloji ağacı metnini basıcaz.
             TXT_TechName.text = base.GetLanguageText("XTeknolojiAğacı", base.GetLanguageText($"D{indexId}"), Environment.NewLine);
 
@@ -129,12 +128,15 @@ public class TechnologyDetailPanelController : BasePanelController
 
         // Yalnızca gereksinimler basılacak. Content değeri basılan alan referansı ile aynı değil ise tıklama eventi olmayacak.
         if (ReferenceEquals(content, SelectedTechReqsContent))
-            techItem.GetComponent<Button>().onClick.AddListener(() => TechnologyPanelController.TPC.ShowTechnologyDetail(TechnologyCategories.Binalar, indexId));
+            techItem.GetComponent<Button>().onClick.AddListener(() => TechnologyController.TC.ShowTechnologyPanelWithItem(TechnologyCategories.Binalar, indexId));
         else // Eğer tıklanabilir değil ise teknoloji ağacı metnini basıcaz.
             TXT_TechName.text = base.GetLanguageText("XTeknolojiAğacı", base.GetLanguageText($"B{indexId}"), Environment.NewLine);
 
         // Teknolojinin ismini basacağız.
         techItem.transform.Find("ItemName").GetComponent<TMP_Text>().text = base.GetLanguageText($"B{indexId}");
+
+        // Seviye yeterli mi?
+        bool isLevelEnough = true;
 
         // Eğer gereken seviye 0dan büyük ise yazacağızç
         if (reqLevel > 0)
@@ -153,7 +155,13 @@ public class TechnologyDetailPanelController : BasePanelController
 
             // Eğer seviye yeterli değil ise o renge boyuyoruz.
             if (userOwnedLevel < reqLevel)
+            {
+                // Metni kırmızıya boyuyoruz.
                 techReqLevel.faceColor = CLR_NotEnoughLevel;
+
+                // Öğrenilmedi!
+                isLevelEnough = false;
+            }
         }
 
         // Resim bilgisini buluyoruz.
@@ -164,7 +172,8 @@ public class TechnologyDetailPanelController : BasePanelController
             techItem.transform.Find("ItemImage").GetComponent<Image>().sprite = buildingImage.BuildingImage;
 
         // Keşfedildi mi?
-        techItem.transform.Find("IsInvented").gameObject.SetActive(TechnologyController.TC.IsInvented(TechnologyCategories.Binalar, indexId));
+        if (isLevelEnough)
+            techItem.transform.Find("IsInvented").gameObject.SetActive(TechnologyController.TC.IsInvented(TechnologyCategories.Binalar, indexId));
     }
 
     public void PutResearchToContent(int indexId, int reqLevel, Transform content)
@@ -174,12 +183,15 @@ public class TechnologyDetailPanelController : BasePanelController
 
         // Yalnızca gereksinimler basılacak. Content değeri basılan alan referansı ile aynı değil ise tıklama eventi olmayacak.
         if (ReferenceEquals(content, SelectedTechReqsContent))
-            techItem.GetComponent<Button>().onClick.AddListener(() => TechnologyPanelController.TPC.ShowTechnologyDetail(TechnologyCategories.Araştırmalar, indexId));
+            techItem.GetComponent<Button>().onClick.AddListener(() => TechnologyController.TC.ShowTechnologyPanelWithItem(TechnologyCategories.Araştırmalar, indexId));
         else
             TXT_TechName.text = base.GetLanguageText("XTeknolojiAğacı", base.GetLanguageText($"R{indexId}"), Environment.NewLine);
 
         // Teknolojinin ismini basacağız.
         techItem.transform.Find("ItemName").GetComponent<TMP_Text>().text = base.GetLanguageText($"R{indexId}");
+
+        // Seviye yeterli mi?
+        bool isLevelEnough = true;
 
         // Eğer gereken seviye 0dan büyük ise yazacağızç
         if (reqLevel > 0)
@@ -198,7 +210,13 @@ public class TechnologyDetailPanelController : BasePanelController
 
             // Eğer seviye yeterli değil ise o renge boyuyoruz.
             if (userOwnedLevel < reqLevel)
+            {
+                // Metni kırmızıya boyuyoruz.
                 techReqLevel.faceColor = CLR_NotEnoughLevel;
+
+                // Öğrenilmedi!
+                isLevelEnough = false;
+            }
         }
 
         // Resim bilgisini buluyoruz.
@@ -209,7 +227,8 @@ public class TechnologyDetailPanelController : BasePanelController
             techItem.transform.Find("ItemImage").GetComponent<Image>().sprite = researchImage.ResearchImage;
 
         // Keşfedildi mi?
-        techItem.transform.Find("IsInvented").gameObject.SetActive(TechnologyController.TC.IsInvented(TechnologyCategories.Araştırmalar, indexId));
+        if (isLevelEnough)
+            techItem.transform.Find("IsInvented").gameObject.SetActive(TechnologyController.TC.IsInvented(TechnologyCategories.Araştırmalar, indexId));
     }
 
 }

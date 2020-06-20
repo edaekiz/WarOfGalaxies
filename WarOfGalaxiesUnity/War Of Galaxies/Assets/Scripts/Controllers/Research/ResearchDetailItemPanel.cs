@@ -192,6 +192,18 @@ public class ResearchDetailItemPanel : BasePanelController
          }));
     }
 
+    protected override void OnTransionCompleted(bool isClosed)
+    {
+        base.OnTransionCompleted(isClosed);
+
+        // Araştırmaları yeniliyoruz.
+        if (isClosed)
+        {
+            // Arkadaki paneli yeniliyoruz.
+            ResearchPanelController.RPC.LoadAllResearchItems();
+        }
+    }
+
     public void ShowConditions() => TechnologyController.TC.ShowTechnologyPanelWithItem(TechnologyCategories.Araştırmalar, (int)CurrentResearch);
 
 }

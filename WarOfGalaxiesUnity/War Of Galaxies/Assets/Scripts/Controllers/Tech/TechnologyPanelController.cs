@@ -1,10 +1,7 @@
 ﻿using Assets.Scripts.ApiModels;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Models;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Security.Policy;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -188,9 +185,6 @@ public class TechnologyPanelController : BasePanelController
     {
         // Paneli açıyoruz.
         GameObject panel = GlobalPanelController.GPC.ShowPanel(PanelTypes.TechnologyDetailPanel);
-
-        // Toplam açık olan panel sayısı kadar ekliyoruz.
-        panel.GetComponent<Canvas>().sortingOrder += FindObjectsOfType<TechnologyDetailPanelController>().Length;
 
         // Panele detayları yüklüyoruz.
         panel.GetComponent<TechnologyDetailPanelController>().LoadDetails(category, indexId);

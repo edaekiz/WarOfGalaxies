@@ -194,6 +194,15 @@ public class ShipyardDetailItemPanel : BasePanelController
         }
     }
 
+    protected override void OnTransionCompleted(bool isClosed)
+    {
+        base.OnTransionCompleted(isClosed);
+
+        // Panel kapandığında hepsini yeniden yüklüyoruz.
+        if (isClosed)
+            ShipyardPanelController.SPC.LoadAllShips();
+    }
+
     public void ShowConditions() => TechnologyController.TC.ShowTechnologyPanelWithItem(TechnologyCategories.Gemiler, (int)CurrentShip);
 
 

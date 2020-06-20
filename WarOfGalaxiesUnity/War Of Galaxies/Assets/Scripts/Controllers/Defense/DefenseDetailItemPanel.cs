@@ -201,6 +201,15 @@ public class DefenseDetailItemPanel : BasePanelController
         }
     }
 
+    protected override void OnTransionCompleted(bool isClosed)
+    {
+        base.OnTransionCompleted(isClosed);
+
+        // Panel kapandığında savunmaları yeniden yüklüyoruz.
+        if (isClosed)
+            DefensePanelController.DPC.LoadAllDefenses();
+    }
+
     public void ShowConditions() => TechnologyController.TC.ShowTechnologyPanelWithItem(TechnologyCategories.Savunmalar, (int)CurrentDefense);
 
 }

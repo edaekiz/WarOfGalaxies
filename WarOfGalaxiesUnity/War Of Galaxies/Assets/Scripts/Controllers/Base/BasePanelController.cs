@@ -3,6 +3,7 @@ using Assets.Scripts.Controllers.Base;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using System;
+using System.Linq;
 using UnityEngine;
 
 public class BasePanelController : BaseLanguageBehaviour
@@ -67,8 +68,12 @@ public class BasePanelController : BaseLanguageBehaviour
 
         // Bulduysak order veriyoruz.
         if (canvas != null)
+        {
             canvas.sortingOrder += GlobalPanelController.GPC.GetPanelSortingOrder(PanelType);
 
+            // Aynı türde toplam açık olan panel sayısı kadar ekliyoruz.
+            canvas.sortingOrder += FindObjectsOfType<BasePanelController>().Where(x => x.PanelType == PanelType).Count();
+        }
         // Panelin açılıyor olduğunu söylüyoruz.
         isOpening = true;
 
