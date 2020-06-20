@@ -86,7 +86,7 @@ public class ResearchItemController : BaseLanguageBehaviour
     public void ShowResearchDetail()
     {
         // Paneli açıyoruz.
-        GameObject showedPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.ResearchDetailPanel);
+        GameObject showedPanel = GlobalPanelController.GPC.ShowPanel(PanelTypes.ResearchDetailPanel);
 
         // Detaylarını buluyoruz.
         ResearchDetailItemPanel rdip = showedPanel.GetComponent<ResearchDetailItemPanel>();

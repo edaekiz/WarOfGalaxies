@@ -90,7 +90,7 @@ public class DefenseItemController : BaseLanguageBehaviour
 
     public void ShowDefenseDetail()
     {
-        GameObject defenseDetailPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.DefenseDetailPanel);
+        GameObject defenseDetailPanel = GlobalPanelController.GPC.ShowPanel(PanelTypes.DefenseDetailPanel);
         DefenseDetailItemPanel ddip = defenseDetailPanel.GetComponent<DefenseDetailItemPanel>();
         ddip.StartCoroutine(ddip.LoadDefenseDetails(CurrentDefense));
     }

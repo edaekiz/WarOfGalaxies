@@ -187,7 +187,10 @@ public class TechnologyPanelController : BasePanelController
     public void ShowTechnologyDetail(TechnologyCategories category, int indexId)
     {
         // Paneli açıyoruz.
-        GameObject panel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.TechnologyDetailPanel);
+        GameObject panel = GlobalPanelController.GPC.ShowPanel(PanelTypes.TechnologyDetailPanel);
+
+        // Toplam açık olan panel sayısı kadar ekliyoruz.
+        panel.GetComponent<Canvas>().sortingOrder += FindObjectsOfType<TechnologyDetailPanelController>().Length;
 
         // Panele detayları yüklüyoruz.
         panel.GetComponent<TechnologyDetailPanelController>().LoadDetails(category, indexId);

@@ -503,7 +503,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 50
+  m_SortingOrder: 0
   m_TargetDisplay: 0
 --- !u!114 &4941049406936920816
 MonoBehaviour:
@@ -561,7 +561,7 @@ MonoBehaviour:
   OpenTransition: 2
   CloseTransition: 1
   MainPanel: {fileID: 4941049407235889658}
-  IsPanel: 1
+  IsStackPanel: 1
   MetalDetail: {fileID: 0}
   CrystalDetail: {fileID: 0}
   BoronDetail: {fileID: 0}

@@ -168,6 +168,7 @@
     <Compile Include="Assets\Scripts\Enums\FleetTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\MailCategories.cs" />
     <Compile Include="Assets\Scripts\Enums\MailTypes.cs" />
+    <Compile Include="Assets\Scripts\Enums\PanelTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\ParameterTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\PlanetTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\Researches.cs" />
@@ -187,6 +188,7 @@
     <Compile Include="Assets\Scripts\Models\CordinateDTO.cs" />
     <Compile Include="Assets\Scripts\Models\DefenseImageDTO.cs" />
     <Compile Include="Assets\Scripts\Models\LanguageItem.cs" />
+    <Compile Include="Assets\Scripts\Models\PanelData.cs" />
     <Compile Include="Assets\Scripts\Models\ResearchWithImageDTO.cs" />
     <Compile Include="Assets\Scripts\Models\ShipImageDTO.cs" />
     <Compile Include="Assets\Scripts\Models\SolarSystemDTO.cs" />
@@ -817,12 +819,6 @@
     <Reference Include="Boo.Lang">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.0f6/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="Assembly-CSharp-firstpass.csproj">
-      <Project>{066BC4B0-4A2E-D3C2-6881-4632CD90E992}</Project>
-      <Name>Assembly-CSharp-firstpass</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

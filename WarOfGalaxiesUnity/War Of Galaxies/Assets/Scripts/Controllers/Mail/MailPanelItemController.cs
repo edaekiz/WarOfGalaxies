@@ -80,15 +80,15 @@ public class MailPanelItemController : MonoBehaviour
         switch (this.MailDecodedData.GetMailType())
         {
             case MailTypes.SavaşRaporu:
-                GameObject battlePanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.MailBattleReport);
+                GameObject battlePanel = GlobalPanelController.GPC.ShowPanel(PanelTypes.MailBattleReport);
                 battlePanel.GetComponent<MailDetailItemOnlyWarContent>().LoadContent(this.MailData, this.MailDecodedData);
                 break;
             case MailTypes.CasusRaporu:
-                GameObject spyPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.MailSpyReport);
+                GameObject spyPanel = GlobalPanelController.GPC.ShowPanel(PanelTypes.MailSpyReport);
                 spyPanel.GetComponent<MailDetailItemOnlySpyController>().LoadContent(this.MailData, this.MailDecodedData);
                 break;
             default:
-                GameObject textPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.MailTextReport);
+                GameObject textPanel = GlobalPanelController.GPC.ShowPanel(PanelTypes.MailTextReport);
                 textPanel.GetComponent<MailDetailItemOnlyTextController>().LoadContent(this.MailData, this.MailDecodedData);
                 break;
         }

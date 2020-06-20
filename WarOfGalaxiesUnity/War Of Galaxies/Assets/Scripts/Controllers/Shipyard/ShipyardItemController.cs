@@ -91,7 +91,7 @@ public class ShipyardItemController : BaseLanguageBehaviour
 
     public void ShowShipDetail()
     {
-        GameObject shipyardDetailPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.ShipyardDetailPanel);
+        GameObject shipyardDetailPanel = GlobalPanelController.GPC.ShowPanel(PanelTypes.ShipyardDetailPanel);
         ShipyardDetailItemPanel sdip = shipyardDetailPanel.GetComponent<ShipyardDetailItemPanel>();
         sdip.StartCoroutine(sdip.LoadShipDetals(CurrentShip));
     }

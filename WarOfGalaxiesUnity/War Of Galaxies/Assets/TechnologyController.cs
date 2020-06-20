@@ -47,14 +47,14 @@ public class TechnologyController : MonoBehaviour
 
     public void ShowTechnologyPanel()
     {
-        GameObject techPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.TechnologyPanel);
+        GameObject techPanel = GlobalPanelController.GPC.ShowPanel(PanelTypes.TechnologyPanel);
         techPanel.GetComponent<TechnologyPanelController>().LoadTechnologies(LastSelectedCategory);
     }
 
     public void ShowTechnologyPanelWithItem(TechnologyCategories category,int indexId)
     {
         // Hemen ardından seçilen teknolojiyi açıyoruz.
-        GameObject techPanelDetail = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.TechnologyDetailPanel);
+        GameObject techPanelDetail = GlobalPanelController.GPC.ShowPanel(PanelTypes.TechnologyDetailPanel);
 
         // Ve detayını gösteriyoruz.
         techPanelDetail.GetComponent<TechnologyDetailPanelController>().LoadDetails(category, indexId);

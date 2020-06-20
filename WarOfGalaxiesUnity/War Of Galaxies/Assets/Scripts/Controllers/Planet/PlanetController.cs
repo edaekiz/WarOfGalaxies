@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Enums;
 using Assets.Scripts.Models;
 using TMPro;
 using UnityEngine;
@@ -114,10 +115,10 @@ public class PlanetController : MonoBehaviour
         //    PlanetZoomController.PZC.BeginZoom(this);
 
         // Önceden açık var ise kapatıyoruz.
-        GlobalPanelController.GPC.ClosePanel(GlobalPanelController.PanelTypes.PlanetActionFooterPanel);
+        GlobalPanelController.GPC.ClosePanel(PanelTypes.PlanetActionFooterPanel);
 
         //Paneli açıyoruz.
-        GameObject actionPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.PlanetActionFooterPanel);
+        GameObject actionPanel = GlobalPanelController.GPC.ShowPanel(PanelTypes.PlanetActionFooterPanel);
 
         // Filo hareketini belirliyoruz.
         actionPanel.GetComponent<PlanetActionFooterPanel>().ShowCordinate(this.SolarPlanetInfo, this.CordinateInfo);

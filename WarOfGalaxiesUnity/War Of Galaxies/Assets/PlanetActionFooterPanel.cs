@@ -210,7 +210,7 @@ public class PlanetActionFooterPanel : BasePanelController
     public void ClickAllAction()
     {
         // Paneli açıyoruz.
-        GameObject gpap = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.GalaxyPlanetActionPanel);
+        GameObject gpap = GlobalPanelController.GPC.ShowPanel(PanelTypes.GalaxyPlanetActionPanel);
 
         // Panele dataları yüklüyoruz.
         gpap.GetComponent<PlanetActionController>().Load(this.CurrentShownPlanet, this.CurrentShownCordinate);

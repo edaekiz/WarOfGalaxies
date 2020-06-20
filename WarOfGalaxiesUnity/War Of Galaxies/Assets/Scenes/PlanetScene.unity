@@ -5361,61 +5361,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4358508b62b545942b20bea28e960fab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OffsetSortingValue: 10
   Panels:
   - PanelType: 0
-    Prefab: {fileID: 8734965623041127629, guid: b8b010892966d6f40a320a31378a7a5c,
-      type: 3}
-  - PanelType: 1
-    Prefab: {fileID: 990496957505793030, guid: 913cade0a26cba74e8e1651a2a8562a5, type: 3}
-  - PanelType: 2
-    Prefab: {fileID: 9169019502093364654, guid: ed8049b863ed19c4288cc9558e141f92,
-      type: 3}
-  - PanelType: 3
-    Prefab: {fileID: 990496957505793030, guid: 70092ff2cf0398449a76f07371f961f6, type: 3}
-  - PanelType: 4
-    Prefab: {fileID: 9169019502093364654, guid: 7feb208a3a5e7774aad1df17cb7a2951,
-      type: 3}
-  - PanelType: 5
-    Prefab: {fileID: 990496957505793030, guid: 3d87754be4190434c9ae6b861e5ca4fb, type: 3}
-  - PanelType: 6
-    Prefab: {fileID: 9169019502093364654, guid: 117dd970b2ec948439851770e7215ca9,
-      type: 3}
-  - PanelType: 8
     Prefab: {fileID: 7715971045841992211, guid: ead4a45c120c5d24eb0075b0cc78d512,
       type: 3}
-  - PanelType: 7
-    Prefab: {fileID: 1898201824284612136, guid: e01a65f56f11dec43a72deb81d18b397,
-      type: 3}
-  - PanelType: 11
-    Prefab: {fileID: 371627565951962526, guid: 29e4315bec2624d499fa1fb4dad514cb, type: 3}
-  - PanelType: 10
-    Prefab: {fileID: 4893189643688104890, guid: 73ccb6b6fa72eca48833288a92899cae,
-      type: 3}
-  - PanelType: 12
-    Prefab: {fileID: 6371090977824068585, guid: 7da32fb4e8b562649937ea548809ed94,
-      type: 3}
-  - PanelType: 13
-    Prefab: {fileID: 5255950974089213480, guid: 7ef5fcc0da404e4478ebff1541ea68ee,
-      type: 3}
-  - PanelType: 15
-    Prefab: {fileID: 1425446694950270894, guid: f94bee878e764bd49b571f8049707917,
-      type: 3}
-  - PanelType: 16
+  - PanelType: 1
     Prefab: {fileID: 7784632557100716320, guid: df1fdc10530c54141b117f4effd1e6a4,
       type: 3}
-  - PanelType: 17
+  - PanelType: 2
+    Prefab: {fileID: 8734965623041127629, guid: b8b010892966d6f40a320a31378a7a5c,
+      type: 3}
+  - PanelType: 3
+    Prefab: {fileID: 990496957505793030, guid: 913cade0a26cba74e8e1651a2a8562a5, type: 3}
+  - PanelType: 4
+    Prefab: {fileID: 9169019502093364654, guid: ed8049b863ed19c4288cc9558e141f92,
+      type: 3}
+  - PanelType: 5
+    Prefab: {fileID: 990496957505793030, guid: 70092ff2cf0398449a76f07371f961f6, type: 3}
+  - PanelType: 6
+    Prefab: {fileID: 9169019502093364654, guid: 7feb208a3a5e7774aad1df17cb7a2951,
+      type: 3}
+  - PanelType: 7
+    Prefab: {fileID: 990496957505793030, guid: 3d87754be4190434c9ae6b861e5ca4fb, type: 3}
+  - PanelType: 8
+    Prefab: {fileID: 9169019502093364654, guid: 117dd970b2ec948439851770e7215ca9,
+      type: 3}
+  - PanelType: 11
+    Prefab: {fileID: 5255950974089213480, guid: 7ef5fcc0da404e4478ebff1541ea68ee,
+      type: 3}
+  - PanelType: 10
+    Prefab: {fileID: 371627565951962526, guid: 29e4315bec2624d499fa1fb4dad514cb, type: 3}
+  - PanelType: 12
     Prefab: {fileID: 7619140004591594058, guid: 897ae2b86c7a51a46b66a71071d08789,
       type: 3}
-  - PanelType: 18
+  - PanelType: 13
     Prefab: {fileID: 7619140004591594058, guid: 333a828ec349314469e1a962e0d3b627,
       type: 3}
-  - PanelType: 20
-    Prefab: {fileID: 92979857703379773, guid: 3e2d1e5912939c54db59b7a6886ffa90, type: 3}
-  - PanelType: 19
+  - PanelType: 14
     Prefab: {fileID: 7619140004591594058, guid: 686f8864b59736b4780fcb910ad02d6c,
       type: 3}
-  - PanelType: 21
+  - PanelType: 15
+    Prefab: {fileID: 92979857703379773, guid: 3e2d1e5912939c54db59b7a6886ffa90, type: 3}
+  - PanelType: 16
     Prefab: {fileID: 4941049406936920846, guid: 8815629235d6a42429fcf988bdd9903c,
+      type: 3}
+  - PanelType: 17
+    Prefab: {fileID: 1425446694950270894, guid: f94bee878e764bd49b571f8049707917,
+      type: 3}
+  - PanelType: 18
+    Prefab: {fileID: 6371090977824068585, guid: 7da32fb4e8b562649937ea548809ed94,
+      type: 3}
+  - PanelType: 19
+    Prefab: {fileID: 4893189643688104890, guid: 73ccb6b6fa72eca48833288a92899cae,
       type: 3}
 --- !u!4 &515747090
 Transform:

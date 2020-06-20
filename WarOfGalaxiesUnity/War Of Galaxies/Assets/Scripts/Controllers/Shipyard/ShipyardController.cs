@@ -34,7 +34,7 @@ public class ShipyardController : MonoBehaviour
     public void ShowShipyardPanel()
     {
         // Paneli açıyoruz.
-        GameObject panel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.ShipyardPanel);
+        GameObject panel = GlobalPanelController.GPC.ShowPanel(PanelTypes.ShipyardPanel);
 
         // Paneldeki gemileri yüklüyoruz.
         panel.GetComponent<ShipyardPanelController>().LoadAllShips();

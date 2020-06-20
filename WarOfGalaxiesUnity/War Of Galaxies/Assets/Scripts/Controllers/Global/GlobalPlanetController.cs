@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using Assets.Scripts.Models;
 using System.Collections;
@@ -51,7 +52,7 @@ public class GlobalPlanetController : MonoBehaviour
 
     public void ShowPlanetPickerPanel()
     {
-        GameObject panel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.PlanetPickerPanel);
+        GameObject panel = GlobalPanelController.GPC.ShowPanel(PanelTypes.PlanetPickerPanel);
         panel.GetComponent<PlanetPickerController>().ReLoadPlanets();
     }
 

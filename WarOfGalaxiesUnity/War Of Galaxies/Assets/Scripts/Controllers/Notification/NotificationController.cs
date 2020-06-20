@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -44,7 +45,7 @@ public class NotificationController : MonoBehaviour
         Tuple<string, Action> nextAction = WaitingActions.FirstOrDefault();
 
         // Notificationı açıyoruz.
-        GameObject notificationPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.NotificationPanel);
+        GameObject notificationPanel = GlobalPanelController.GPC.ShowPanel(PanelTypes.NotificationPanel);
 
         // Notification panelini buluyoruz.
         NotificationPanelController npc = notificationPanel.GetComponent<NotificationPanelController>();

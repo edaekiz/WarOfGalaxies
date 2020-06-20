@@ -201,7 +201,7 @@ public class MailDetailItemOnlySpyController : BasePanelController
         CordinateDTO destinationCordinate = MailData.GetValue(KEY_DESTINATIONPLANETCORDINATE).ToCordinate();
 
         // Paneli açıyoruz.
-        GameObject panel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.GalaxyPlanetActionPanel);
+        GameObject panel = GlobalPanelController.GPC.ShowPanel(PanelTypes.GalaxyPlanetActionPanel);
 
         // Mail datasını yüklüyoruz.
         panel.GetComponent<PlanetActionController>().Load(new SolarPlanetDTO

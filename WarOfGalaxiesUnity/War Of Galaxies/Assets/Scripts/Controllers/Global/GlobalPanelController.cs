@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Assets.Scripts.Enums;
+using Assets.Scripts.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,40 +9,6 @@ public class GlobalPanelController : MonoBehaviour
 {
     public static GlobalPanelController GPC { get; set; }
 
-    [Serializable]
-    public enum PanelTypes
-    {
-        BuildingPanel,
-        ResearchPanel,
-        ResearchDetailPanel,
-        ShipyardPanel,
-        ShipyardDetailPanel,
-        DefensePanel,
-        DefenseDetailPanel,
-        PlanetPickerPanel,
-        GalaxyPlanetActionPanel,
-        PlanetActionShipSelectionStep,
-        QuantityPanel,
-        FleetPanel,
-        NotificationPanel,
-        MailPanel,
-        MailDetailPanel,
-        YesNoPanel,
-        PlanetActionFooterPanel,
-        MailBattleReport,
-        MailSpyReport,
-        MailTextReport,
-        TechnologyPanel,
-        TechnologyDetailPanel
-    }
-
-    [Serializable]
-    public class PanelData
-    {
-        public PanelTypes PanelType;
-        public GameObject Prefab;
-    }
-
     private void Awake()
     {
         if (GPC == null)
@@ -48,6 +16,37 @@ public class GlobalPanelController : MonoBehaviour
         else
             Destroy(gameObject);
     }
+
+    [Header("Canvasları sıralarken buradaki değer kadar kaydıracağız.")]
+    public int OffsetSortingValue;
+
+    /// <summary>
+    /// Panel sıralaması.
+    /// </summary>
+    [NonSerialized]
+    public List<PanelTypes> PanelOrders = new List<PanelTypes>()
+    {
+        PanelTypes.PlanetActionFooterPanel,
+        PanelTypes.BuildingPanel,
+        PanelTypes.ResearchPanel,
+        PanelTypes.ResearchDetailPanel,
+        PanelTypes.ShipyardPanel,
+        PanelTypes.ShipyardDetailPanel,
+        PanelTypes.DefensePanel,
+        PanelTypes.DefenseDetailPanel,
+        PanelTypes.PlanetPickerPanel,
+        PanelTypes.FleetPanel,
+        PanelTypes.MailPanel,
+        PanelTypes.MailBattleReport,
+        PanelTypes.MailSpyReport,
+        PanelTypes.MailTextReport,
+        PanelTypes.GalaxyPlanetActionPanel,
+        PanelTypes.TechnologyPanel,
+        PanelTypes.TechnologyDetailPanel,
+        PanelTypes.YesNoPanel,
+        PanelTypes.NotificationPanel,
+        PanelTypes.QuantityPanel,
+    };
 
     [Header("Oyundaki bütün panellerin listesi.")]
     public List<PanelData> Panels;
@@ -130,5 +129,7 @@ public class GlobalPanelController : MonoBehaviour
     /// </summary>
     /// <returns></returns>
     public bool IsAnyPanelOpen => OpenPanels.Count(x => x.Item2.IsStackPanel) > 0;
+
+    public int GetPanelSortingOrder(PanelTypes panel) => OffsetSortingValue + PanelOrders.IndexOf(panel);
 
 }

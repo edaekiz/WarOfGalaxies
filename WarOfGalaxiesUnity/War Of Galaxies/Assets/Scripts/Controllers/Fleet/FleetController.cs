@@ -72,7 +72,7 @@ public class FleetController : MonoBehaviour
 
     public void ShowFleetPanel()
     {
-        GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.FleetPanel);
+        GlobalPanelController.GPC.ShowPanel(PanelTypes.FleetPanel);
     }
 
     /// <summary>
@@ -139,7 +139,7 @@ public class FleetController : MonoBehaviour
                  if (GlobalGalaxyController.GGC.IsInGalaxyView && fleet.FleetActionTypeId == FleetTypes.Sök)
                  {
                      // Sök panelini yenilememiz lazım. Kapatıyoruz. İsterse yeniden açabilir.
-                     GlobalPanelController.GPC.ClosePanel(GlobalPanelController.PanelTypes.PlanetActionFooterPanel);
+                     GlobalPanelController.GPC.ClosePanel(PanelTypes.PlanetActionFooterPanel);
 
                      // Paneli yeniliyoruz.
                      GalaxyChangePanelController.GCPC.GoToCordinate();

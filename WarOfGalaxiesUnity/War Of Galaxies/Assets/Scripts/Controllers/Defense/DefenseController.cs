@@ -37,7 +37,7 @@ public class DefenseController : MonoBehaviour
     public void ShowDefensePanel()
     {
         // Paneli buluyoruz.
-        GameObject panel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.DefensePanel);
+        GameObject panel = GlobalPanelController.GPC.ShowPanel(PanelTypes.DefensePanel);
 
         // Paneli açıyoruz.
         panel.GetComponent<DefensePanelController>().LoadAllDefenses();

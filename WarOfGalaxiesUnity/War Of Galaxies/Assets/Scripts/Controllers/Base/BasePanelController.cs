@@ -1,9 +1,9 @@
 ﻿using Assets.Scripts.ApiModels;
 using Assets.Scripts.Controllers.Base;
+using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using System;
 using UnityEngine;
-using static GlobalPanelController;
 
 public class BasePanelController : BaseLanguageBehaviour
 {
@@ -58,6 +58,17 @@ public class BasePanelController : BaseLanguageBehaviour
 
     protected virtual void Start()
     {
+        // Varsayılan olarak canvas da yer alıyor panel.
+        Canvas canvas = GetComponent<Canvas>();
+
+        // Eğer main de yok ise parentinebaksın.
+        if (canvas == null)
+            canvas = GetComponentInParent<Canvas>();
+
+        // Bulduysak order veriyoruz.
+        if (canvas != null)
+            canvas.sortingOrder += GlobalPanelController.GPC.GetPanelSortingOrder(PanelType);
+
         // Panelin açılıyor olduğunu söylüyoruz.
         isOpening = true;
 

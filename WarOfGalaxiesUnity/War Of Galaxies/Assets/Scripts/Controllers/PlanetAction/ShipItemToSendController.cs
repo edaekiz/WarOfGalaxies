@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using Assets.Scripts.ApiModels;
+using Assets.Scripts.Enums;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -66,7 +67,7 @@ public class ShipItemToSendController : MonoBehaviour
     public void OnClickItem()
     {
         // İptal etmek için miktar panelini açıyoruz.
-        GameObject quantityPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.QuantityPanel);
+        GameObject quantityPanel = GlobalPanelController.GPC.ShowPanel(PanelTypes.QuantityPanel);
 
         // Panele dataları yüklüyoruz.
         quantityPanel.GetComponent<QuantityItemPanel>().LoadData(ShipImage.sprite, ShipName.text, Quantity);

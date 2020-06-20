@@ -100,7 +100,7 @@ public class BuildingController : BaseLanguageBehaviour
         GlobalBuildingController.GBC.SelectBuilding(this);
 
         // Paneli gösteriyoruz.
-        GameObject buildingPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.BuildingPanel);
+        GameObject buildingPanel = GlobalPanelController.GPC.ShowPanel(PanelTypes.BuildingPanel);
 
         // Oluşan paneldeki panel kontrol.
         BuildingPanelController bpc = buildingPanel.GetComponent<BuildingPanelController>();

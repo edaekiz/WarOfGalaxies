@@ -40,7 +40,7 @@ public class MailController : MonoBehaviour
     public void ShowMailPanel()
     {
         // Mail panelini açıyoruz.
-        GameObject mailPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.MailPanel);
+        GameObject mailPanel = GlobalPanelController.GPC.ShowPanel(PanelTypes.MailPanel);
 
         // Mail panelinin componentini buluyoruz.
         MailPanelController mpc = mailPanel.GetComponent<MailPanelController>();
@@ -115,7 +115,7 @@ public class MailController : MonoBehaviour
     public void DeleteMail(UserMailDTO userMail, Action callBack = null)
     {
         // Onay panelini açıyoruz.
-        GameObject yesNoPanel = GlobalPanelController.GPC.ShowPanel(GlobalPanelController.PanelTypes.YesNoPanel);
+        GameObject yesNoPanel = GlobalPanelController.GPC.ShowPanel(PanelTypes.YesNoPanel);
 
         // Kontrolleri alıyoruz.
         YesNoPanelController ynpc = yesNoPanel.GetComponent<YesNoPanelController>();

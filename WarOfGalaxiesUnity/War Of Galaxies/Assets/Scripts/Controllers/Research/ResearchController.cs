@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.ApiModels;
+using Assets.Scripts.Enums;
 using Assets.Scripts.Models;
 using System;
 using System.Collections;
