@@ -98,13 +98,10 @@ namespace WarOfGalaxiesApi.Controllers
             #region Gönderen gezegeni.
 
             // Kullanıcının gezegeni.
-            TblUserPlanets userPlanet = base.UnitOfWork.GetRepository<TblUserPlanets>()
-                .Where(x => x.UserPlanetId == request.SenderUserPlanetId && x.UserId == DBUser.UserId)
-                .Include(x => x.TblCordinates)
-                .FirstOrDefault();
+            TblUserPlanets userPlanet = VerifyController.VerifyAllFleets(this, new VerifyResourceDTO { UserPlanetID = request.SenderUserPlanetId });
 
             // Gezegen yok ise hata dön.
-            if (userPlanet == null)
+            if (userPlanet == null || userPlanet.UserId != base.DBUser.UserId)
                 return ResponseHelper.GetError("Gezegeni bulamadık!");
 
             #endregion
@@ -182,13 +179,6 @@ namespace WarOfGalaxiesApi.Controllers
                     }
                     break;
             }
-
-            #endregion
-
-            #region Kaynak onaylama
-
-            // Doğrulama tamamlandı mı?
-            VerifyController.VerifyAllFleets(this, new VerifyResourceDTO { UserPlanetID = request.SenderUserPlanetId });
 
             #endregion
 

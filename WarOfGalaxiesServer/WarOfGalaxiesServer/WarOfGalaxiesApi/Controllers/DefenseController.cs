@@ -22,7 +22,11 @@ namespace WarOfGalaxiesApi.Controllers
         public ApiResult AddDefenseToDefenseQueue(DefenseAddQueueRequestDTO request)
         {
             // Kaynakları doğruluyoruz.
-            VerifyController.VerifyAllFleets(this, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
+            TblUserPlanets userPlanet = VerifyController.VerifyAllFleets(this, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
+
+            // Eğer kullanıcıya ait bir gezegen yok ise geri dön.
+            if (userPlanet == null || userPlanet.UserId != base.DBUser.UserId)
+                return ResponseHelper.GetError("Kullanıcıya ait gezegen bulunamadı!");
 
             // Savunma bilgisini buluyoruz.
             TblDefenses defenseInfo = StaticValues.GetDefense(request.DefenseID);
@@ -31,19 +35,18 @@ namespace WarOfGalaxiesApi.Controllers
             if (defenseInfo == null)
                 return ResponseHelper.GetError("Savunma bulunamadı!");
 
+            // Bu teknoloji keşfedildi mi?
+            bool isInvented = StaticValues.IsTechInvented(userPlanet, TechnologyCategories.Savunmalar, defenseInfo.DefenseId);
+
+            if (!isInvented)
+                return ResponseHelper.GetError("Teknoloji henüz keşfedilmedi!");
+
             // Savunma maliyeti.
             ResourcesDTO defenseCost = new ResourcesDTO(defenseInfo.CostMetal, defenseInfo.CostCrystal, defenseInfo.CostBoron);
 
             // Üretilmek istenen miktar ile gereksinimi çarpıyoruz. genel toplamı buluyoruz.
             ResourcesDTO totalCalculatedRes = defenseCost * request.Quantity;
 
-            // Gezegenin kaynaklarını alıyoruz.
-            TblUserPlanets userPlanet = base.UnitOfWork.GetRepository<TblUserPlanets>().FirstOrDefault(x => x.UserPlanetId == request.UserPlanetID && x.UserId == base.DBUser.UserId);
-
-            // Eğer gezegen yok ise hata dön.
-            if (userPlanet == null)
-                return ResponseHelper.GetError("Kullanıcıya ait gezegen bulunamadı!");
-            
             // Eğer gezegende robot fabrikası yok ise geri dön.
             if (!base.UnitOfWork.GetRepository<TblUserPlanetBuildings>().Any(x => x.UserPlanetId == userPlanet.UserPlanetId && x.BuildingId == (int)Buildings.RobotFabrikası))
                 return ResponseHelper.GetError("Bu gezegende robot fabrikası bulunmuyor!");

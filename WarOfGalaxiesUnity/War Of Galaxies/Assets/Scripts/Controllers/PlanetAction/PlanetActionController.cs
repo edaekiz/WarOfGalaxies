@@ -256,6 +256,27 @@ public class PlanetActionController : BasePanelController
     /// </summary>
     public void SendFleet()
     {
+        #region Casusluk Kontrolü
+
+        // Casusluk hareketinde yalnızca casusluk gemisi gönderebilir.
+        if (CurrentFleetType == FleetTypes.Casusluk)
+        {
+            // Başka bir gemi varsa filo da ozaman uyarı veriyoruz.
+            bool isOtherShipExists = ShipsToSend.Any(x => x.UserPlanetShip.ShipId != Ships.CasusSondası);
+
+            // Eğer başka gemi var ise hata dönüyoruz.
+            if (isOtherShipExists)
+            {
+                // Uyarı çıkıyoruz.
+                ToastController.TC.ShowToast(base.GetLanguageText("GeçersizGemiCasusluk"));
+
+                // Geri dönüyoruz.
+                return;
+            }
+        }
+
+        #endregion
+
         string shipData = FleetExtends.ShipDataToStringData(ShipsToSend.Select(x => new Tuple<Ships, int>(x.UserPlanetShip.ShipId, x.Quantity)));
 
         // Uçuş bilgileri.
@@ -265,7 +286,7 @@ public class PlanetActionController : BasePanelController
             CarriedBoron = carriedResources.Boron,
             CarriedCrystal = carriedResources.Crystal,
             CarriedMetal = carriedResources.Metal,
-            FleetSpeed = SLIDER_ShipSpeed.value/100,
+            FleetSpeed = SLIDER_ShipSpeed.value / 100,
             FleetType = (int)CurrentFleetType,
             DestinationGalaxyIndex = CurrentCordinate.GalaxyIndex,
             DestinationSolarIndex = CurrentCordinate.SolarIndex,

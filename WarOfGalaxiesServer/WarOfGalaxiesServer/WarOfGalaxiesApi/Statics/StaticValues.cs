@@ -186,6 +186,45 @@ namespace WarOfGalaxiesApi.Statics
 
         public void LoadTechnologies() => DbTechnologies = UOW.GetRepository<TblTechnology>().ToList();
 
+        public bool IsTechInvented(TblUserPlanets allUserPlanetData, TechnologyCategories category, int indexId)
+        {
+            // Gereksinimleri buluyoruz.
+            List<TblTechnology> techReqs = DbTechnologies.Where(x => x.TechnologyCategoryId == (int)category && x.IndexId == indexId).ToList();
+
+            // Eğer teknoloji yok ise true dönüyoruz.
+            if (techReqs.Count == 0)
+                return true;
+
+            // Her bir gereksinimi dönüyoruz.
+            foreach (TblTechnology techReq in techReqs)
+            {
+                // Teknoloji.
+                TechnologyCategories techCat = (TechnologyCategories)techReq.RequiredTechnologyCategoryId;
+
+                // Gereksinimi kontrol ediyoruz.
+                switch (techCat)
+                {
+                    case TechnologyCategories.Araştırmalar:
+                        // Kullanıcının bu araştırması mevcut mu?
+                        if (!allUserPlanetData.User.TblUserResearches.Any(x => x.ResearchId == techReq.RequiredIndexId && x.ResearchLevel >= techReq.RequiredLevel))
+                            return false;
+                        break;
+                    case TechnologyCategories.Binalar:
+                        if (!allUserPlanetData.TblUserPlanetBuildings.Any(x => x.BuildingId == techReq.RequiredIndexId && x.BuildingLevel >= techReq.RequiredLevel))
+                            return false;
+                        break;
+                }
+
+                // Döngüdeki teknoloji keşfedilebilir mi?
+                if (!IsTechInvented(allUserPlanetData, (TechnologyCategories)techReq.RequiredTechnologyCategoryId, techReq.RequiredIndexId))
+                    return false;
+
+            }
+
+            // Eğer buraya kadar gelirse keşfedilebilir demek oluyor.
+            return true;
+        }
+
         #endregion
 
         #endregion

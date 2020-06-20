@@ -29,20 +29,21 @@ namespace WarOfGalaxiesApi.Controllers
 
         private static List<int> LockedPlanets = new List<int>();
 
-        public static void VerifyAllFleets(MainController controller, VerifyResourceDTO verifyData)
+        public static TblUserPlanets VerifyAllFleets(MainController controller, VerifyResourceDTO verifyData)
         {
-            lock (LockedPlanets)
-            {
-                // Eğer zaten verify ediliyor ise geri dön.
-                if (LockedPlanets.Contains(verifyData.UserPlanetID))
-                    return;
-
-                // Verify listesine ekle.
-                LockedPlanets.Add(verifyData.UserPlanetID);
-            }
-
             try
             {
+                lock (LockedPlanets)
+                {
+                    // Eğer zaten verify ediliyor ise geri dön.
+                    if (LockedPlanets.Contains(verifyData.UserPlanetID))
+                        throw new Exception("Gezegen zaten doğrulanıyor.");
+
+                    // Verify listesine ekle.
+                    LockedPlanets.Add(verifyData.UserPlanetID);
+                }
+
+                // Gezegendeki filoları alıyoruz.
                 List<TblFleets> fleets = controller.UnitOfWork.GetRepository<TblFleets>()
                     .Where(x => x.EndDate <= verifyData.VerifyDate)
                     .Where(x => x.DestinationUserPlanetId == verifyData.UserPlanetID || x.SenderUserPlanetId == verifyData.UserPlanetID)
@@ -77,13 +78,17 @@ namespace WarOfGalaxiesApi.Controllers
                 }
 
                 // Son olarak gezegendeki diğer kaynakları ayarlıyoruz.
-                VerifyPlanetResources(controller, verifyData);
+                TblUserPlanets userPlanet = VerifyPlanetResources(controller, verifyData);
 
                 // Değişiklikleri kayıt ediyoruz.
                 controller.UnitOfWork.SaveChanges();
+
+                // Sonucu dönüyoruz.
+                return userPlanet;
             }
             catch (Exception exc)
             {
+                throw;
             }
             finally
             {
@@ -105,6 +110,7 @@ namespace WarOfGalaxiesApi.Controllers
                 .Include(x => x.TblUserResearchUpgs)
                 .Include(x => x.User)
                 .ThenInclude(x => x.TblUserResearches)
+                .Include(x=>x.TblCordinates)
                 .FirstOrDefault();
 
             // En son yine bütün kaynakları o saat için doğruluyoruz..

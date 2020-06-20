@@ -133,6 +133,7 @@ public class FleetController : MonoBehaviour
     {
         // Dönüş gezegeninin kaynaklarını doğruluyoruz.
         if (fleet.DestinationUserId == LoginController.LC.CurrentUser.UserData.UserId)
+        {
             LoginController.LC.VerifyUserResources(fleet.DestinationUserPlanetId, (UserPlanetDTO userPlanet) =>
              {
                  // Ve eğer galaksiye bakıyorsak açık olan galaksiyi yenilememiz lazım.
@@ -163,7 +164,11 @@ public class FleetController : MonoBehaviour
                      if (FleetPanelController.FPC != null)
                          FleetPanelController.FPC.RefreshActiveFleets();
                  }
+
+                 // Mailleri güncelliyoruz.
+                 MailController.MC.GetLatestMails();
              });
+        }
     }
 
     public void RefreshReturnFleetData(int returnFleetId)

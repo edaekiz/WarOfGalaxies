@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UIElements;
 
 public class LoadingController : MonoBehaviour
 {
@@ -24,6 +25,14 @@ public class LoadingController : MonoBehaviour
     [Header("Oyunun hazır hale gelmesi için anlık yükleme sayısı.")]
     public int CurrentLoadItemCount;
 
+    /// <summary>
+    /// Panel açık mı değil mi?
+    /// </summary>
+    public bool IsLoadingPanelOpen { get
+        {
+            return LoadingCanvas.activeSelf;
+        }
+    }
     private void Start()
     {
         // Yükleme panelini açıyoruz.

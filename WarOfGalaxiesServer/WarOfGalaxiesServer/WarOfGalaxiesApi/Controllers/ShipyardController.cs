@@ -22,7 +22,11 @@ namespace WarOfGalaxiesApi.Controllers
         public ApiResult AddShipToShipyardQueue(ShipyardAddQueueRequestDTO request)
         {
             // Kaynakları doğruluyoruz.
-            VerifyController.VerifyAllFleets(this, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
+            TblUserPlanets userPlanet = VerifyController.VerifyAllFleets(this, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
+
+            // Eğer gezegen yok ise hata dön.
+            if (userPlanet == null || userPlanet.UserId != base.DBUser.UserId)
+                return ResponseHelper.GetError("Kullanıcıya ait gezegen bulunamadı!");
 
             // Gemi bilgisini buluyoruz.
             TblShips shipInfo = StaticValues.GetShip(request.ShipID);
@@ -31,21 +35,21 @@ namespace WarOfGalaxiesApi.Controllers
             if (shipInfo == null)
                 return ResponseHelper.GetError("Gemi bulunamadı!");
 
+            // Bu teknoloji keşfedildi mi?
+            bool isInvented = StaticValues.IsTechInvented(userPlanet, TechnologyCategories.Gemiler, shipInfo.ShipId);
+
+            // Teknoloji henüz keşfedilmedi uyarısı dönüyoruz.
+            if (!isInvented)
+                return ResponseHelper.GetError("Teknoloji henüz keşfedilmedi!");
+
             // Gemi maliyeti.
             ResourcesDTO shipCost = new ResourcesDTO(shipInfo.CostMetal, shipInfo.CostCrystal, shipInfo.CostBoron);
 
             // Üretilmek istenen miktar ile gereksinimi çarpıyoruz. genel toplamı buluyoruz.
             ResourcesDTO totalCalculatedRes = shipCost * request.Quantity;
 
-            // Gezegenin kaynaklarını alıyoruz.
-            TblUserPlanets userPlanet = base.UnitOfWork.GetRepository<TblUserPlanets>().FirstOrDefault(x => x.UserPlanetId == request.UserPlanetID && x.UserId == base.DBUser.UserId);
-
-            // Eğer gezegen yok ise hata dön.
-            if (userPlanet == null)
-                return ResponseHelper.GetError("Kullanıcıya ait gezegen bulunamadı!");
-
             // Eğer gezegende tersane yok ise geri dön.
-            if (!base.UnitOfWork.GetRepository<TblUserPlanetBuildings>().Any(x=>x.UserPlanetId == userPlanet.UserPlanetId && x.BuildingId == (int)Buildings.Tersane))
+            if (!base.UnitOfWork.GetRepository<TblUserPlanetBuildings>().Any(x => x.UserPlanetId == userPlanet.UserPlanetId && x.BuildingId == (int)Buildings.Tersane))
                 return ResponseHelper.GetError("Bu gezegende tersane bulunmuyor!");
 
             // Eğer gezegen de yükseltme var ise dönüyoruz.

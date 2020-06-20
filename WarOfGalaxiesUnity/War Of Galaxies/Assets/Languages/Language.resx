@@ -568,4 +568,7 @@
   <data name="AraştırmaKoşulOlumsuz" xml:space="preserve">
     <value></value>
   </data>
+  <data name="GeçersizGemiCasusluk" xml:space="preserve">
+    <value></value>
+  </data>
 </root>

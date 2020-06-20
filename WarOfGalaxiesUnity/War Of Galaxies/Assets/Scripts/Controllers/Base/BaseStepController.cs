@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UnityEngine;
 
 public class BaseStepController : MonoBehaviour
@@ -16,14 +17,23 @@ public class BaseStepController : MonoBehaviour
     [Header("Geçiş Hızı")]
     public int TransitionSpeed;
 
+    [Header("Toplam adım miktarı, otomatik hesaplanacak.")]
     private int stepCount;
+
+    [Header("Her bir adımın başlangıç konumları.")]
     private Vector2[] beginPositions;
+
+    [Header("Transformlarını tutuyoruz yürütmek için.")]
     private RectTransform[] steps;
+
+    [Header("Toplam offset değeri stepper hareket ederken.")]
     private int offsetValue;
 
+    /// <summary>
+    /// Step değiştiğinde burası tetiklenecek.
+    /// </summary>
     public EventHandler<StepEventArgs> OnStepChanged;
 
-    // Start is called before the first frame update
     protected virtual void Start()
     {
         stepCount = StepParent.childCount;
@@ -36,9 +46,26 @@ public class BaseStepController : MonoBehaviour
             beginPositions[ii] = stepRect.anchoredPosition;
             steps[ii] = stepRect;
         }
+
+        // Değişen step.
+        if (stepCount > 0)
+        {
+            // Panel değiştiğinde diğerini kapatıyoruz.
+            OnStepChanged += new EventHandler<StepEventArgs>((s, o) =>
+            {
+                for (int ii = 0; ii < steps.Length; ii++)
+                {
+                    if (ii != o.CurrentStep - 1)
+                        steps[ii].gameObject.SetActive(false);
+                    else
+                        steps[ii].gameObject.SetActive(true);
+                }
+            });
+
+            OnStepChanged.Invoke(this, new StepEventArgs { CurrentStep = this.CurrentStep });
+        }
     }
 
-    // Update is called once per frame
     protected virtual void Update()
     {
         if (offsetValue == 0)
@@ -91,11 +118,18 @@ public class BaseStepController : MonoBehaviour
         // Sonraki adıma geçiyoruz.
         CurrentStep += 1;
 
-        // Sonraki adıma geçişi başlatıyoruz.
-        offsetValue = (int)steps[CurrentStep - 1].sizeDelta.x;
+        // Bir sonraki stepper.
+        RectTransform nextStep = steps[CurrentStep - 1];
 
+        // Bir sonraki stepi açıyoruz.
+        nextStep.gameObject.SetActive(true);
+
+        // Sonraki adıma geçişi başlatıyoruz.
+        offsetValue = (int)nextStep.sizeDelta.x;
+
+        // Değişimi bekleyenleri tetikliyoruz.
         if (OnStepChanged != null)
-            OnStepChanged.Invoke(this, new StepEventArgs { CurrentStep = CurrentStep });
+            OnStepChanged.Invoke(this, new StepEventArgs { CurrentStep = this.CurrentStep });
     }
 
     public void GoToPrevStep()
@@ -107,12 +141,14 @@ public class BaseStepController : MonoBehaviour
         // Bir önceki adıma dönüyoruz.
         CurrentStep -= 1;
 
+        // Bir önceki stepper.
+        RectTransform prevStep = steps[CurrentStep - 1];
+
         // Önceki adıma geçişi başlatıyoruz.
-        offsetValue = (int)-steps[CurrentStep - 1].sizeDelta.x;
+        offsetValue = (int)-prevStep.sizeDelta.x;
 
+        // Değişimi bekleyenleri tetikliyoruz.
         if (OnStepChanged != null)
-            OnStepChanged.Invoke(this, new StepEventArgs { CurrentStep = CurrentStep });
+            OnStepChanged.Invoke(this, new StepEventArgs { CurrentStep = this.CurrentStep });
     }
-
-
 }

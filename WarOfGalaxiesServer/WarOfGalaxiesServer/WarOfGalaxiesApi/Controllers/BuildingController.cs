@@ -20,17 +20,21 @@ namespace WarOfGalaxiesApi.Controllers
 
         [HttpPost("UpgradeUserPlanetBuilding")]
         [Description("Gezegendeki bina yükseltmesini yapar.")]
-        public ApiResult UpgradeUserPlanetBuilding([FromForm]UserPlanetUpgradeBuildingDTO request)
+        public ApiResult UpgradeUserPlanetBuilding([FromForm] UserPlanetUpgradeBuildingDTO request)
         {
             // Verify İşlemini gerçekleştiriyoruz.
-            VerifyController.VerifyAllFleets(this, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
-
-            // İlk iş gezegeni buluyoruz.
-            TblUserPlanets userPlanet = base.UnitOfWork.GetRepository<TblUserPlanets>().FirstOrDefault(x => x.UserPlanetId == request.UserPlanetID && x.UserId == base.DBUser.UserId);
+            TblUserPlanets userPlanet = VerifyController.VerifyAllFleets(this, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
 
             // Eğer kullanıcıya ait bir gezegen yok ise geri dön.
-            if (userPlanet == null)
+            if (userPlanet == null || userPlanet.UserId != base.DBUser.UserId)
                 return ResponseHelper.GetError("Kullanıcıya ait gezegen bulunamadı!");
+
+            // Bu teknoloji keşfedildi mi?
+            bool isInvented = StaticValues.IsTechInvented(userPlanet, TechnologyCategories.Binalar, request.BuildingID);
+
+            // Teknoloji henüz keşfedilmedi uyarısı dönüyoruz.
+            if (!isInvented)
+                return ResponseHelper.GetError("Teknoloji henüz keşfedilmedi!");
 
             // Yükseltme yapılıyor mu?
             bool isAlreadyInProg = base.UnitOfWork.GetRepository<TblUserPlanetBuildingUpgs>().Any(x => x.UserPlanetId == request.UserPlanetID);

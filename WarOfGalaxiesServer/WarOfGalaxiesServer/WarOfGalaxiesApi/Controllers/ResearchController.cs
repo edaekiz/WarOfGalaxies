@@ -22,15 +22,19 @@ namespace WarOfGalaxiesApi.Controllers
         [Description("Kullanıcının verilen araştırmasını yükseltir.")]
         public ApiResult UpgradeUserResearch(UserResearchUpgRequest request)
         {
-            // Yapılacak ilk iş kaynakları doğrulamak.
-            VerifyController.VerifyAllFleets(this, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
-
             // Kullanıcının hangi gezegendeki kaynakları kullanılacak.
-            TblUserPlanets userPlanet = base.UnitOfWork.GetRepository<TblUserPlanets>().FirstOrDefault(x => x.UserPlanetId == request.UserPlanetID && x.UserId == base.DBUser.UserId);
+            TblUserPlanets userPlanet = VerifyController.VerifyAllFleets(this, new VerifyResourceDTO { UserPlanetID = request.UserPlanetID });
 
             // Kullanıcının gezegeni yok ise geri dön.
-            if (userPlanet == null)
+            if (userPlanet == null || userPlanet.UserId != base.DBUser.UserId)
                 return ResponseHelper.GetError("Kullanıcının gezegeni yok ise geri dön.");
+
+            // Bu teknoloji keşfedildi mi?
+            bool isInvented = StaticValues.IsTechInvented(userPlanet, TechnologyCategories.Araştırmalar, (int)request.ResearchID);
+
+            // Teknoloji henüz keşfedilmedi uyarısı dönüyoruz.
+            if (!isInvented)
+                return ResponseHelper.GetError("Teknoloji henüz keşfedilmedi!");
 
             // Araştırma bina seviyeleri.
             int[] resBuildings = base.UnitOfWork.GetRepository<TblUserPlanetBuildings>().Where(x => x.UserPlanet.UserId == DBUser.UserId && x.BuildingId == (int)Buildings.ArastirmaLab).Select(x => x.BuildingLevel).ToArray();

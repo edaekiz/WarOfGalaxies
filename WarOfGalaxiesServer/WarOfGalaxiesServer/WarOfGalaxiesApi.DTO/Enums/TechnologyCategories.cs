@@ -1,6 +1,6 @@
 ﻿namespace WarOfGalaxiesApi.DTO.Enums
 {
-    public enum TechonologyCategories
+    public enum TechnologyCategories
     {
         Araştırmalar = 1,
         Gemiler = 2,

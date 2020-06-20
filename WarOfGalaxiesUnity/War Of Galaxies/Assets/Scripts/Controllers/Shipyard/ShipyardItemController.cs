@@ -30,6 +30,12 @@ public class ShipyardItemController : BaseLanguageBehaviour
     [Header("Geri sayım süresi.")]
     public TMP_Text CountdownText;
 
+    [Header("Keşfedilmemiş gemilerin rengi")]
+    public Color32 NotInventedItemColor;
+
+    [Header("Keşfedilmemiş gemilerin üstünde olacak ikon.")]
+    public GameObject LockedIcon;
+    
     private void Start()
     {
         InvokeRepeating("RefreshState", 0, 1);
@@ -49,6 +55,20 @@ public class ShipyardItemController : BaseLanguageBehaviour
         // Resmi yüklüyoruz.
         if (shipImage != null)
             ShipImage.sprite = shipImage.ShipImage;
+
+        // Keşfedilmedi ise keşfedilmedi uyarısını çıkaraağız.
+        if (!TechnologyController.TC.IsInvented(TechnologyCategories.Gemiler, (int)ship))
+        {
+            // Disabled rengine boyuyoruz.
+            GetComponent<Image>().color = NotInventedItemColor;
+
+            // Disabled rengine boyuyoruz gemiyi.
+            ShipImage.color = NotInventedItemColor;
+
+            // Kilitli ikonunu açıyoruz.
+            LockedIcon.SetActive(true);
+        }
+
     }
 
     public void RefreshState()

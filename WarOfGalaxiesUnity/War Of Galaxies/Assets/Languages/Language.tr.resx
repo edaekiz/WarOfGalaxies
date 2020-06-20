@@ -623,4 +623,7 @@ Gemi ve savunma sistemleri inşa ederken.</value>
   <data name="AraştırmaKoşulOlumsuz" xml:space="preserve">
     <value>Bu araştırmayı yapmak için koşullar uygun değil!</value>
   </data>
+  <data name="GeçersizGemiCasusluk" xml:space="preserve">
+    <value>Bu hareketi yalnızca casusluk gemisi ile gerçekleştirebilirsin!</value>
+  </data>
 </root>

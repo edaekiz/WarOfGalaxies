@@ -280,6 +280,7 @@ MonoBehaviour:
   BoronDetail: {fileID: 0}
   NotificationMessage: {fileID: 6371090977704016657}
   TriggerButton: {fileID: 6624327724737296500}
+  NotificationSounds: Sounds/SND_Notification
 --- !u!1 &6371090978148818863
 GameObject:
   m_ObjectHideFlags: 0
@@ -388,7 +389,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 785.8, y: -58}
+  m_AnchoredPosition: {x: 785.8, y: -60}
   m_SizeDelta: {x: 600, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6371090978437704969

@@ -34,7 +34,7 @@ public class MailController : MonoBehaviour
     IEnumerator Start()
     {
         yield return new WaitUntil(() => LoadingController.LC.IsGameLoaded);
-        StartCoroutine(GetLatestMails());
+        StartCoroutine(GetLatestMailsJob());
     }
 
     public void ShowMailPanel()
@@ -49,7 +49,19 @@ public class MailController : MonoBehaviour
         mpc.ShowCategoryDetails(LastSelectedCategory);
     }
 
-    public IEnumerator GetLatestMails()
+    public IEnumerator GetLatestMailsJob()
+    {
+        // Son mailleri alıyoruz.
+        GetLatestMails();
+
+        // Saniye kadar bekliyoruz.
+        yield return new WaitForSecondsRealtime(5);
+
+        // Saniye sonra tekrar çağırıyoruz.
+        StartCoroutine(GetLatestMailsJob());
+    }
+
+    public void GetLatestMails()
     {
         // Son gelen mailleri alıyoruz.
         StartCoroutine(ApiService.API.Post("GetLatestUnReadedMails", new LatestUnReadedUserMailRequestDTO { LastUnReadedMailId = UserMails.Select(x => x.UserMailId).DefaultIfEmpty(0).Max() }, (ApiResult response) =>
@@ -85,12 +97,6 @@ public class MailController : MonoBehaviour
             }
 
         }));
-
-        // Saniye kadar bekliyoruz.
-        yield return new WaitForSecondsRealtime(5);
-
-        // Saniye sonra tekrar çağırıyoruz.
-        StartCoroutine(GetLatestMails());
     }
 
     public void RefreshMailIconQuantity()

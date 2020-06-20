@@ -12,6 +12,9 @@ public class NotificationPanelController : BasePanelController
     [Header("Tıklandığında çalışacak olan methot.")]
     public Button TriggerButton;
 
+    [Header("Bildirim geldiğinde çalınabilecek olan seslerin listesi.")]
+    public string NotificationSounds;
+
     /// <summary>
     /// Panel kapandığında tetiklenecek olan methot.
     /// </summary>
@@ -20,7 +23,12 @@ public class NotificationPanelController : BasePanelController
     protected override void Start()
     {
         base.Start();
+
+        // Süre sonra kapatacağız.
         StartCoroutine(CloseAuto());
+        
+        // Rastgele bir ses oynatıyoruz.
+        AudioController.AC.PlaySoundOnCamera(NotificationSounds);
     }
 
     public void LoadData(string message, Action onClick)

@@ -28,6 +28,12 @@ public class DefenseItemController : BaseLanguageBehaviour
 
     [Header("Geri sayım süresi.")]
     public TMP_Text CountdownText;
+    
+    [Header("Keşfedilmemiş savunmaların rengi")]
+    public Color32 NotInventedItemColor;
+
+    [Header("Keşfedilmemiş savunmaların üstünde olacak ikon.")]
+    public GameObject LockedIcon;
 
     private void Start()
     {
@@ -45,6 +51,18 @@ public class DefenseItemController : BaseLanguageBehaviour
         // Resmi yüklüyoruz.
         DefenseImage.sprite = DefenseController.DC.DefenseWithImages.Find(x => x.Defense == defense).DefenseImage;
 
+        // Keşfedilmedi ise keşfedilmedi uyarısını çıkaraağız.
+        if (!TechnologyController.TC.IsInvented(TechnologyCategories.Savunmalar, (int)defense))
+        {
+            // Disabled rengine boyuyoruz.
+            GetComponent<Image>().color = NotInventedItemColor;
+
+            // Disabled rengine boyuyoruz gemiyi.
+            DefenseImage.color = NotInventedItemColor;
+
+            // Kilitli ikonunu açıyoruz.
+            LockedIcon.SetActive(true);
+        }
     }
 
     public void RefreshState()

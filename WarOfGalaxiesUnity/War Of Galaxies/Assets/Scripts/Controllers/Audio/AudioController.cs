@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -13,17 +14,21 @@ public class AudioController : MonoBehaviour
     /// </summary>
     public bool IsSoundActive = true;
 
-    private AudioSource audioSource;
+    [Header("Herhangi bir ui a tıklandığında çıkacak tıklama sesi.")]
+    public string ClickAudio;
 
-    /// <summary>
-    /// Müziklerin listesi.
-    /// </summary>
+    [Header("Oyunda çalacak müziklerin listesi.")]
     public string[] Musics;
 
     /// <summary>
     /// Son çalınan müziği tutuyoruz.
     /// </summary>
     private string lastPlayedMusic;
+
+    /// <summary>
+    /// Seslerin çalınacağı source
+    /// </summary>
+    private AudioSource audioSource;
 
     private void Awake()
     {
@@ -98,11 +103,9 @@ public class AudioController : MonoBehaviour
     /// <param name="audioName">Çalınacak ses.</param>
     public void PlaySound(MonoBehaviour go, string audioName, float volume = 1f)
     {
-
         // Eğer ses dosyası boş ise geri dön.
         if (string.IsNullOrEmpty(audioName))
             return;
-
 
         // Sesi çalacak olan item.
         AudioSource audioSource = go.GetComponent<AudioSource>();
@@ -136,6 +139,23 @@ public class AudioController : MonoBehaviour
     }
 
     /// <summary>
+    /// Verilen sesi kamera üzerinden çalar.
+    /// </summary>
+    /// <param name="audioName">Çalınacak ses.</param>
+    public void PlaySoundOnCameraRandom(string[] audioNames, float volume = 1)
+    {
+
+        // Eğer ses dosyası boş ise geri dön.
+        if (audioNames.Length == 0)
+            return;
+
+        AudioClip audio = Resources.Load<AudioClip>(audioNames.OrderBy(x => Guid.NewGuid()).FirstOrDefault());
+
+        // Eğer ses yüklendiyse çalıyoruz.
+        audioSource.PlayOneShot(audio, volume);
+    }
+
+    /// <summary>
     /// Müziği kapatır.
     /// </summary>
     public void StopMusic()
@@ -157,8 +177,9 @@ public class AudioController : MonoBehaviour
         // Sesi biraz kısıyoruz.
         audioSource.volume = 0.7f;
 
+        // Sesi yüklüyoruz.
         AudioClip clip = Resources.Load<AudioClip>(musicName);
-        
+
         // Klibi değiştiriyoruz.
         audioSource.clip = clip;
 
@@ -180,11 +201,8 @@ public class AudioController : MonoBehaviour
         if (audioNames == null || audioNames.Length == 0)
             return;
 
-        // Rastgele bir ses seçiyoruz.
-        int audioIndex = Random.Range(0, audioNames.Length);
-
         // Sesi çalıyoruz.
-        PlaySound(go, audioNames[audioIndex], volume);
+        PlaySound(go, audioNames.OrderBy(x => Guid.NewGuid()).FirstOrDefault(), volume);
     }
 
     private void Update()
@@ -193,7 +211,7 @@ public class AudioController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             if (EventSystem.current.currentSelectedGameObject != null)
-                PlaySoundOnCamera("GameJoystickButton6");
+                PlaySoundOnCamera(ClickAudio);
 
             // Eğer ses çalmıyor ise bir ses çal.
             if (!audioSource.isPlaying)
@@ -213,11 +231,11 @@ public class AudioController : MonoBehaviour
         else if (Musics.Length > 1)
         {
             // Rastgele bir ses alıyoruz.
-            string musicname = Musics[Random.Range(0, Musics.Length)];
+            string musicname = Musics.OrderBy(x => Guid.NewGuid()).FirstOrDefault();
 
             // Eğer random olarak alınan ses listede var ise yeni bir tane bul.
             while (musicname == lastPlayedMusic)
-                musicname = Musics[Random.Range(0, Musics.Length)];
+                musicname = Musics.OrderBy(x => Guid.NewGuid()).FirstOrDefault();
 
             // Yeni sesi dön.
             return musicname;

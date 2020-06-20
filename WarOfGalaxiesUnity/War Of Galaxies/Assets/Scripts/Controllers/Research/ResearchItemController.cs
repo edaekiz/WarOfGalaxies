@@ -29,6 +29,12 @@ public class ResearchItemController : BaseLanguageBehaviour
     [Header("Aktif araştırma")]
     public Researches CurrentResearch;
 
+    [Header("Keşfedilmemiş araştırmaların rengi")]
+    public Color32 NotInventedItemColor;
+
+    [Header("Keşfedilmemiş araştırmaların üstünde olacak ikon.")]
+    public GameObject LockedIcon;
+
     private void Start()
     {
         InvokeRepeating("RefreshState", 0, 1);
@@ -48,6 +54,19 @@ public class ResearchItemController : BaseLanguageBehaviour
         // Araştırma ikonu.
         if (researchIcon != null)
             ResearchIcon.sprite = researchIcon.ResearchImage;
+
+        // Keşfedilmedi ise keşfedilmedi uyarısını çıkaraağız.
+        if (!TechnologyController.TC.IsInvented(TechnologyCategories.Araştırmalar, (int)research))
+        {
+            // Disabled rengine boyuyoruz.
+            GetComponent<Image>().color = NotInventedItemColor;
+
+            // Disabled rengine boyuyoruz gemiyi.
+            ResearchIcon.color = NotInventedItemColor;
+
+            // Kilitli ikonunu açıyoruz.
+            LockedIcon.SetActive(true);
+        }
     }
 
     public void RefreshState()

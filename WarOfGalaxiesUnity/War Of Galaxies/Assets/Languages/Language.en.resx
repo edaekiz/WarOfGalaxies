@@ -622,4 +622,7 @@ Ships and defense structures.</value>
   <data name="AraştırmaKoşulOlumsuz" xml:space="preserve">
     <value>Conditions are not ready to research!</value>
   </data>
+  <data name="GeçersizGemiCasusluk" xml:space="preserve">
+    <value>Only spy ship can send in this action!</value>
+  </data>
 </root>

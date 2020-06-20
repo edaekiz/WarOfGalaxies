@@ -67,7 +67,7 @@ public class ZoomPanController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GlobalPanelController.GPC.IsAnyPanelOpen)
+        if (GlobalPanelController.GPC.IsAnyPanelOpen || LoadingController.LC.IsLoadingPanelOpen)
             return;
 
         // Eğer zoom pan yani zoom etme yada hareket ettirme kapalı ise geri dön.

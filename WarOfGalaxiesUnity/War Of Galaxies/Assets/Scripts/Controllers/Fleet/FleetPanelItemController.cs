@@ -145,7 +145,7 @@ public class FleetPanelItemController : BaseLanguageBehaviour
         sliderHandlerImage.enabled = !sliderHandlerImage.enabled;
 
         // Eğer gönderen kullanıcı ise ve filo geri dönmüyor ise butonu gösterebiliriz.
-        if (LoginController.LC.CurrentUser.UserData.UserId == this.FleetInfo.SenderUserId && !this.FleetInfo.IsReturnFleet)
+        if (currentDate <= fleetEndFlyDate && LoginController.LC.CurrentUser.UserData.UserId == this.FleetInfo.SenderUserId && !this.FleetInfo.IsReturnFleet)
         {
             if (!CallbackButton.gameObject.activeSelf)
                 CallbackButton.gameObject.SetActive(true);
