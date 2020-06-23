@@ -62,21 +62,6 @@ public class BasePanelController : BaseLanguageBehaviour
         // Açılış sesi.
         AudioController.AC.PlaySoundOnCamera(GlobalPanelController.GPC.SND_PanelOpen);
 
-        // Varsayılan olarak canvas da yer alıyor panel.
-        Canvas canvas = GetComponent<Canvas>();
-
-        // Eğer main de yok ise parentinebaksın.
-        if (canvas == null)
-            canvas = GetComponentInParent<Canvas>();
-
-        // Bulduysak order veriyoruz.
-        if (canvas != null)
-        {
-            canvas.sortingOrder += GlobalPanelController.GPC.GetPanelSortingOrder(PanelType);
-
-            // Aynı türde toplam açık olan panel sayısı kadar ekliyoruz.
-            canvas.sortingOrder += FindObjectsOfType<BasePanelController>().Where(x => x.PanelType == PanelType).Count();
-        }
         // Panelin açılıyor olduğunu söylüyoruz.
         isOpening = true;
 
@@ -302,11 +287,14 @@ public class BasePanelController : BaseLanguageBehaviour
 
     #endregion
 
-    public void ClosePanel()
+    public void ClosePanel(bool isForced = false)
     {
         // Eğer açılıyor ise geri dön kapatılamaz.
-        if (isOpening)
+        if (isOpening && !isForced)
             return;
+
+        if (isForced)
+            isOpening = false;
 
         // Kapanış sesi.
         AudioController.AC.PlaySoundOnCamera(GlobalPanelController.GPC.SND_PanelOpen);

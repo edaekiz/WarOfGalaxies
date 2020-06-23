@@ -323,6 +323,9 @@ MonoBehaviour:
   TechnologyItem: {fileID: 3296714133899217758, guid: 28ad3591c35ba0048acdbfd781cd40e7,
     type: 3}
   TechnologyContent: {fileID: 92979858125474940}
+  NotInventedItemColor:
+    serializedVersion: 2
+    rgba: 2161958108
 --- !u!1 &92979857836625900
 GameObject:
   m_ObjectHideFlags: 0

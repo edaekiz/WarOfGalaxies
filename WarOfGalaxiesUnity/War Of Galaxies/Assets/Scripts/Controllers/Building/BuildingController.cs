@@ -90,7 +90,7 @@ public class BuildingController : BaseLanguageBehaviour
         }
     }
 
-    private void OnMouseDown()
+    private void OnMouseUp()
     {
         // Eğer zaten bir panel açık ise geri dön.
         if (GlobalPanelController.GPC.IsAnyPanelOpen)

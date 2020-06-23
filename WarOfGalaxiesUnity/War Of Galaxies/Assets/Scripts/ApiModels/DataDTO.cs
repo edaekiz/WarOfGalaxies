@@ -55,6 +55,9 @@ namespace Assets.Scripts.ApiModels
         public int ShipFuelt;
         public int CargoCapacity;
         public bool IsCivil;
+        public int ShipAttackDamage;
+        public int ShipAttackQuantity;
+        public int ShipHealth;
     }
 
     [Serializable]

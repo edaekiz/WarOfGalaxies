@@ -226,5 +226,10 @@ public class ShipyardDetailItemPanel : BasePanelController
 
     public void ShowConditions() => TechnologyController.TC.ShowTechnologyPanelWithItem(TechnologyCategories.Gemiler, (int)CurrentShip);
 
+    public void ShowDetailInfo()
+    {
+        GameObject infoPanel = GlobalPanelController.GPC.ShowPanel(PanelTypes.ShipInfoPanel);
+        infoPanel.GetComponent<ShipInfoPanelController>().LoadShipData(CurrentShip);
+    }
 
 }

@@ -25,5 +25,7 @@ namespace Assets.Scripts.Enums
         YesNoPanel,
         NotificationPanel,
         QuantityPanel,
+        ShipInfoPanel,
+        InfoPanel
     }
 }

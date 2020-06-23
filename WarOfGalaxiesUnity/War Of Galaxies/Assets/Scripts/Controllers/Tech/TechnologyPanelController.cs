@@ -27,6 +27,9 @@ public class TechnologyPanelController : BasePanelController
     [Header("Teknoloji itemlerini buraya basacağız.")]
     public ScrollRect TechnologyContent;
 
+    [Header("Keşfedilmemiş ise bu renge boyuyacağız ikonu.")]
+    public Color32 NotInventedItemColor;
+
     protected override void Start()
     {
         base.Start();
@@ -77,21 +80,27 @@ public class TechnologyPanelController : BasePanelController
             // Teknolojiyi ekrana basıyoruz.
             GameObject techItem = Instantiate(TechnologyItem, TechnologyContent.content);
 
+            // Butonu buluyoruz.
+            Button button = techItem.GetComponent<Button>();
+
             // Butona tıkladığımız da panel açılacak.
-            techItem.GetComponent<Button>().onClick.AddListener(() => ShowTechnologyDetail(TechnologyCategories.Gemiler, ship.ShipId));
+            button.onClick.AddListener(() => ShowTechnologyDetail(TechnologyCategories.Gemiler, ship.ShipId));
 
             // İsmini basıyoruz.
             techItem.transform.Find("ItemName").GetComponent<TMP_Text>().text = base.GetLanguageText($"S{ship.ShipId}");
 
             // Resim bilgisini buluyoruz.
             ShipImageDTO shipImage = ShipyardController.SC.ShipWithImages.Find(x => x.Ship == (Ships)ship.ShipId);
+            
+            // Resmi buraya yükleyeceğiz.
+            Image targetImage = techItem.transform.Find("ItemImage").GetComponent<Image>();
 
             // Resmi var ise resmi yüklüyoruz.
             if (shipImage != null)
-                techItem.transform.Find("ItemImage").GetComponent<Image>().sprite = shipImage.ShipImage;
+                targetImage.sprite = shipImage.ShipImage;
 
-            // Keşfedildi mi?
-            techItem.transform.Find("IsInvented").gameObject.SetActive(TechnologyController.TC.IsInvented(TechnologyCategories.Gemiler, ship.ShipId));
+            // Eğer keşfedilmemiş ise uyarı çıkartacağız.
+            SetColorIfNotInvented(TechnologyCategories.Gemiler, ship.ShipId, button, targetImage);
         }
     }
 
@@ -102,8 +111,11 @@ public class TechnologyPanelController : BasePanelController
             // Teknolojiyi ekrana basıyoruz.
             GameObject techItem = Instantiate(TechnologyItem, TechnologyContent.content);
 
+            // Butonu buluyoruz.
+            Button button = techItem.GetComponent<Button>();
+
             // Butona tıkladığımız da panel açılacak.
-            techItem.GetComponent<Button>().onClick.AddListener(() => ShowTechnologyDetail(TechnologyCategories.Savunmalar, defense.DefenseId));
+            button.onClick.AddListener(() => ShowTechnologyDetail(TechnologyCategories.Savunmalar, defense.DefenseId));
 
             // İsmini basıyoruz.
             techItem.transform.Find("ItemName").GetComponent<TMP_Text>().text = base.GetLanguageText($"D{defense.DefenseId}");
@@ -111,12 +123,15 @@ public class TechnologyPanelController : BasePanelController
             // Resim bilgisini buluyoruz.
             DefenseImageDTO defenseImage = DefenseController.DC.DefenseWithImages.Find(x => x.Defense == (Defenses)defense.DefenseId);
 
+            // Resmi buraya yükleyeceğiz.
+            Image targetImage = techItem.transform.Find("ItemImage").GetComponent<Image>();
+
             // Resmi var ise resmi yüklüyoruz.
             if (defenseImage != null)
-                techItem.transform.Find("ItemImage").GetComponent<Image>().sprite = defenseImage.DefenseImage;
+                targetImage.sprite = defenseImage.DefenseImage;
 
-            // Keşfedildi mi?
-            techItem.transform.Find("IsInvented").gameObject.SetActive(TechnologyController.TC.IsInvented(TechnologyCategories.Savunmalar, defense.DefenseId));
+            // Eğer keşfedilmemiş ise uyarı çıkartacağız.
+            SetColorIfNotInvented(TechnologyCategories.Savunmalar, defense.DefenseId, button, targetImage);
         }
     }
 
@@ -127,8 +142,11 @@ public class TechnologyPanelController : BasePanelController
             // Teknolojiyi ekrana basıyoruz.
             GameObject techItem = Instantiate(TechnologyItem, TechnologyContent.content);
 
+            // Butonu buluyoruz.
+            Button button = techItem.GetComponent<Button>();
+
             // Butona tıkladığımız da panel açılacak.
-            techItem.GetComponent<Button>().onClick.AddListener(() => ShowTechnologyDetail(TechnologyCategories.Binalar, building.BuildingId));
+            button.onClick.AddListener(() => ShowTechnologyDetail(TechnologyCategories.Binalar, building.BuildingId));
 
             // İsmini basıyoruz.
             techItem.transform.Find("ItemName").GetComponent<TMP_Text>().text = base.GetLanguageText($"B{building.BuildingId}");
@@ -136,12 +154,15 @@ public class TechnologyPanelController : BasePanelController
             // Resim bilgisini buluyoruz.
             BuildingsWithImage buildingImage = GlobalBuildingController.GBC.BuildingWithImages.Find(x => x.Building == (Buildings)building.BuildingId);
 
+            // Resmi buraya yükleyeceğiz.
+            Image targetImage = techItem.transform.Find("ItemImage").GetComponent<Image>();
+
             // Resmi var ise resmi yüklüyoruz.
             if (buildingImage != null)
-                techItem.transform.Find("ItemImage").GetComponent<Image>().sprite = buildingImage.BuildingImage;
+                targetImage.GetComponent<Image>().sprite = buildingImage.BuildingImage;
 
-            // Keşfedildi mi?
-            techItem.transform.Find("IsInvented").gameObject.SetActive(TechnologyController.TC.IsInvented(TechnologyCategories.Binalar, building.BuildingId));
+            // Eğer keşfedilmemiş ise uyarı çıkartacağız.
+            SetColorIfNotInvented(TechnologyCategories.Binalar, building.BuildingId, button, targetImage);
         }
     }
 
@@ -152,8 +173,11 @@ public class TechnologyPanelController : BasePanelController
             // Teknolojiyi ekrana basıyoruz.
             GameObject techItem = Instantiate(TechnologyItem, TechnologyContent.content);
 
-            // Butona tıkladığımız da panel açılacak.
-            techItem.GetComponent<Button>().onClick.AddListener(() => ShowTechnologyDetail(TechnologyCategories.Araştırmalar, researches.ResearchId));
+            // Buton componentini alıyoruz.
+            Button button = techItem.GetComponent<Button>();
+
+            // Butona görev ekliyoruz.
+            button.onClick.AddListener(() => ShowTechnologyDetail(TechnologyCategories.Araştırmalar, researches.ResearchId));
 
             // İsmini basıyoruz.
             techItem.transform.Find("ItemName").GetComponent<TMP_Text>().text = base.GetLanguageText($"R{researches.ResearchId}");
@@ -161,12 +185,31 @@ public class TechnologyPanelController : BasePanelController
             // Resim bilgisini buluyoruz.
             ResearchImageDTO researchImage = ResearchController.RC.ResearchWithImages.Find(x => x.Research == (Researches)researches.ResearchId);
 
+            // Resmi buraya yükleyeceğiz.
+            Image targetImage = techItem.transform.Find("ItemImage").GetComponent<Image>();
+
             // Resmi var ise resmi yüklüyoruz.
             if (researchImage != null)
-                techItem.transform.Find("ItemImage").GetComponent<Image>().sprite = researchImage.ResearchImage;
+                targetImage.sprite = researchImage.ResearchImage;
 
-            // Keşfedildi mi?
-            techItem.transform.Find("IsInvented").gameObject.SetActive(TechnologyController.TC.IsInvented(TechnologyCategories.Araştırmalar, researches.ResearchId));
+            // Eğer keşfedilmemiş ise uyarı çıkartacağız.
+            SetColorIfNotInvented(TechnologyCategories.Araştırmalar, researches.ResearchId, button, targetImage);
+        }
+    }
+
+    public void SetColorIfNotInvented(TechnologyCategories category, int indexId, Button itemButton, Image itemImage)
+    {
+        // Keşfedilmedi ise keşfedilmedi uyarısını çıkaraağız.
+        if (!TechnologyController.TC.IsInvented(category, indexId))
+        {
+            // Disabled rengine boyuyoruz.
+            itemButton.GetComponent<Image>().color = NotInventedItemColor;
+
+            // Disabled rengine boyuyoruz gemiyi.
+            itemImage.color = NotInventedItemColor;
+
+            // Kilitli ikonunu açıyoruz.
+            itemButton.transform.Find("Locked").gameObject.SetActive(true);
         }
     }
 

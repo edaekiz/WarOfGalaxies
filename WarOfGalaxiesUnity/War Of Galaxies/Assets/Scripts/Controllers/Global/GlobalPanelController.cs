@@ -23,44 +23,24 @@ public class GlobalPanelController : MonoBehaviour
     [Header("Canvasları sıralarken buradaki değer kadar kaydıracağız.")]
     public int OffsetSortingValue;
 
-    /// <summary>
-    /// Panel sıralaması.
-    /// </summary>
-    [NonSerialized]
-    public List<PanelTypes> PanelOrders = new List<PanelTypes>()
-    {
-        PanelTypes.PlanetActionFooterPanel,
-        PanelTypes.BuildingPanel,
-        PanelTypes.ResearchPanel,
-        PanelTypes.ResearchDetailPanel,
-        PanelTypes.ShipyardPanel,
-        PanelTypes.ShipyardDetailPanel,
-        PanelTypes.DefensePanel,
-        PanelTypes.DefenseDetailPanel,
-        PanelTypes.PlanetPickerPanel,
-        PanelTypes.FleetPanel,
-        PanelTypes.MailPanel,
-        PanelTypes.MailBattleReport,
-        PanelTypes.MailSpyReport,
-        PanelTypes.MailTextReport,
-        PanelTypes.GalaxyPlanetActionPanel,
-        PanelTypes.TechnologyPanel,
-        PanelTypes.TechnologyDetailPanel,
-        PanelTypes.YesNoPanel,
-        PanelTypes.NotificationPanel,
-        PanelTypes.QuantityPanel,
-    };
+    [Header("Son basılan panelin sorting order değerini tutar.")]
+    public int LastOrderIndex = 0;
 
     [Header("Oyundaki bütün panellerin listesi.")]
     public List<PanelData> Panels;
 
-    // Açık olan panellerin listesi.
+    /// <summary>
+    /// Açık olan panellerin listesi.
+    /// </summary>
     public List<Tuple<PanelData, BasePanelController>> OpenPanels;
 
     private void Start()
     {
         // Açık panelleri burada tutacağız.
         OpenPanels = new List<Tuple<PanelData, BasePanelController>>();
+
+        // Sıralam indexini sıfırlıyoruz.
+        ResetSortingOrder();
     }
 
     /// <summary>
@@ -85,6 +65,9 @@ public class GlobalPanelController : MonoBehaviour
         // Paneli açıyoruz.
         GameObject panelObject = Instantiate(panelData.Prefab, Vector3.zero, Quaternion.identity);
 
+        // Panelin order değerini güncelliyoruz.
+        panelObject.GetComponent<Canvas>().sortingOrder = LastOrderIndex;
+
         // Base paneli var mı kontrol ediyoruz.
         BasePanelController basePanel = panelObject.GetComponent<BasePanelController>();
 
@@ -107,6 +90,9 @@ public class GlobalPanelController : MonoBehaviour
         // Açık panellerin listesine ekliyoruz.
         OpenPanels.Add(new Tuple<PanelData, BasePanelController>(panelData, basePanel));
 
+        // Panel orderi 1 arttırıyoruz.
+        LastOrderIndex++;
+
         return panelObject;
     }
 
@@ -125,6 +111,10 @@ public class GlobalPanelController : MonoBehaviour
 
         // Ancak yinede listeden siliyoruz.
         OpenPanels.Remove(panel);
+
+        // Eğer bütün paneller kapalı ise eski haline getiriyoruz.
+        if (OpenPanels.Count == 0)
+            ResetSortingOrder();
     }
 
     /// <summary>
@@ -133,6 +123,9 @@ public class GlobalPanelController : MonoBehaviour
     /// <returns></returns>
     public bool IsAnyPanelOpen => OpenPanels.Count(x => x.Item2.IsStackPanel) > 0;
 
-    public int GetPanelSortingOrder(PanelTypes panel) => OffsetSortingValue + PanelOrders.IndexOf(panel);
+    public void ResetSortingOrder()
+    {
+        LastOrderIndex = OffsetSortingValue;
+    }
 
 }

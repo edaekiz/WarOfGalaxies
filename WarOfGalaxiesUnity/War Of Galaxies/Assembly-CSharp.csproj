@@ -84,7 +84,10 @@
     <Compile Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Utility\FPSCounter.cs" />
     <Compile Include="Assets\ExternalAssets\Asteroids Pack\Assets\Scripts\RandomRotator.cs" />
     <Compile Include="Assets\ExternalAssets\Hi-Tech Buttons and Panels\Resources\Scripts\JustRotate.cs" />
+    <Compile Include="Assets\ExternalAssets\SpaceShip\Basic_controller.cs" />
+    <Compile Include="Assets\InfoPanelController.cs" />
     <Compile Include="Assets\Languages\Language.Designer.cs" />
+    <Compile Include="Assets\PlanetCameraController.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ApiResult.cs" />
     <Compile Include="Assets\Scripts\ApiModels\Base\ProgressModel.cs" />
     <Compile Include="Assets\Scripts\ApiModels\DataDTO.cs" />
@@ -169,6 +172,7 @@
     <Compile Include="Assets\Scripts\Enums\Buildings.cs" />
     <Compile Include="Assets\Scripts\Enums\Defenses.cs" />
     <Compile Include="Assets\Scripts\Enums\FleetTypes.cs" />
+    <Compile Include="Assets\Scripts\Enums\InfoIconTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\MailCategories.cs" />
     <Compile Include="Assets\Scripts\Enums\MailTypes.cs" />
     <Compile Include="Assets\Scripts\Enums\PanelTypes.cs" />
@@ -193,13 +197,16 @@
     <Compile Include="Assets\Scripts\Models\LanguageItem.cs" />
     <Compile Include="Assets\Scripts\Models\PanelData.cs" />
     <Compile Include="Assets\Scripts\Models\ResearchWithImageDTO.cs" />
+    <Compile Include="Assets\Scripts\Models\ShipIconInfoDTO.cs" />
     <Compile Include="Assets\Scripts\Models\ShipImageDTO.cs" />
     <Compile Include="Assets\Scripts\Models\SolarSystemDTO.cs" />
     <Compile Include="Assets\Scripts\Models\TechnologyWithCategoryDTO.cs" />
     <Compile Include="Assets\Scripts\Pluigns\MailEncoder.cs" />
     <Compile Include="Assets\Scripts\Services\ApiService.cs" />
+    <Compile Include="Assets\ShipInfoPanelController.cs" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Ring.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\MultiPassHollywoodFlares.shader" />
+    <None Include="Assets\ExternalAssets\Robo's turret (free)\Shaders\SDR_Force field_ LWRP.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\Blend.shader" />
     <None Include="Assets\ExternalAssets\Exo planets\READ ME.txt" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\SunShaftsComposite.shader" />
@@ -227,6 +234,7 @@
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\Planet lava.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\_BloomAndFlares\BlendForBloom.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Textures\README - Copyright.txt" />
+    <None Include="Assets\ExternalAssets\Robo's turret (free)\Shaders\SDR_Force field.shader" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\Atmosphere sun.shader" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\Atmosphere ASE.shader" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Atmosphere - Copy.shader" />
@@ -243,6 +251,7 @@
     <None Include="Assets\StreamingAssets\Languages\Language.txt" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\Shader\PlanetRingShader.shader" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\planet shader.shader" />
+    <None Include="Assets\ExternalAssets\Robo's turret (free)\Shaders\SDR_Structures_ LWRP.shader" />
     <None Include="Assets\ExternalAssets\Exo planets\Shaders\old shaders\Planet - Transparency.shader" />
     <None Include="Assets\ExternalAssets\AHProxy\PlanetShader\DemoScene\Standard Assets\Effects\ImageEffects\Shaders\BlendModesOverlay.shader" />
     <None Include="Assets\StreamingAssets\Languages\Language.en.txt" />
@@ -819,6 +828,16 @@
     <Reference Include="Boo.Lang">
       <HintPath>C:/Program Files/Unity/Hub/Editor/2019.3.0f6/Editor/Data/MonoBleedingEdge/lib/mono/unityscript/Boo.Lang.dll</HintPath>
     </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="LeanCommon.csproj">
+      <Project>{A383CF56-B034-1B09-DFBE-5CDA5CD1C522}</Project>
+      <Name>LeanCommon</Name>
+    </ProjectReference>
+    <ProjectReference Include="LeanTouch.csproj">
+      <Project>{13023B82-30C2-F1AA-8079-4817BE757865}</Project>
+      <Name>LeanTouch</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

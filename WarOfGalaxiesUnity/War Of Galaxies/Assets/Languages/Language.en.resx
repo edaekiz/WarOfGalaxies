@@ -625,4 +625,46 @@ Ships and defense structures.</value>
   <data name="GeçersizGemiCasusluk" xml:space="preserve">
     <value>Only spy ship can send in this action!</value>
   </data>
+  <data name="Özelleştir" xml:space="preserve">
+    <value>Customize</value>
+  </data>
+  <data name="ID1" xml:space="preserve">
+    <value>Shows the health point of the ship.</value>
+  </data>
+  <data name="ID2" xml:space="preserve">
+    <value>Shows the attack point of the ship for per shoot.</value>
+  </data>
+  <data name="ID3" xml:space="preserve">
+    <value>Shows the shoot count for each attack.</value>
+  </data>
+  <data name="ID4" xml:space="preserve">
+    <value>Shows the speed of ship.</value>
+  </data>
+  <data name="ID5" xml:space="preserve">
+    <value>Shows the fuel cost of ship.</value>
+  </data>
+  <data name="ID6" xml:space="preserve">
+    <value>Shows the cargo capacity of ship.</value>
+  </data>
+  <data name="FiloHareketiYok" xml:space="preserve">
+    <value>There is no fleet action!</value>
+  </data>
+  <data name="Kalkan" xml:space="preserve">
+    <value>Armor</value>
+  </data>
+  <data name="Saldırı" xml:space="preserve">
+    <value>Attack</value>
+  </data>
+  <data name="AtışSayısı" xml:space="preserve">
+    <value>Shoot Count</value>
+  </data>
+  <data name="Hız" xml:space="preserve">
+    <value>Speed</value>
+  </data>
+  <data name="Yakıt" xml:space="preserve">
+    <value>Fuel</value>
+  </data>
+  <data name="Depo" xml:space="preserve">
+    <value>Storage</value>
+  </data>
 </root>

@@ -3,6 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp", "Assembly-CSharp.csproj", "{68EBC2CE-7B3E-3D83-5E3E-D1BED417E212}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeanTouch", "LeanTouch.csproj", "{13023B82-30C2-F1AA-8079-4817BE757865}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LeanCommon", "LeanCommon.csproj", "{A383CF56-B034-1B09-DFBE-5CDA5CD1C522}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Assembly-CSharp-Editor", "Assembly-CSharp-Editor.csproj", "{A6064D2E-4DCC-D558-78A2-76B419C41DFA}"
 EndProject
 Global
@@ -15,6 +19,14 @@ Global
 		{68EBC2CE-7B3E-3D83-5E3E-D1BED417E212}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{68EBC2CE-7B3E-3D83-5E3E-D1BED417E212}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{68EBC2CE-7B3E-3D83-5E3E-D1BED417E212}.Release|Any CPU.Build.0 = Release|Any CPU
+		{13023B82-30C2-F1AA-8079-4817BE757865}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{13023B82-30C2-F1AA-8079-4817BE757865}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{13023B82-30C2-F1AA-8079-4817BE757865}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{13023B82-30C2-F1AA-8079-4817BE757865}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A383CF56-B034-1B09-DFBE-5CDA5CD1C522}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A383CF56-B034-1B09-DFBE-5CDA5CD1C522}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A383CF56-B034-1B09-DFBE-5CDA5CD1C522}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A383CF56-B034-1B09-DFBE-5CDA5CD1C522}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A6064D2E-4DCC-D558-78A2-76B419C41DFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A6064D2E-4DCC-D558-78A2-76B419C41DFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A6064D2E-4DCC-D558-78A2-76B419C41DFA}.Release|Any CPU.ActiveCfg = Release|Any CPU

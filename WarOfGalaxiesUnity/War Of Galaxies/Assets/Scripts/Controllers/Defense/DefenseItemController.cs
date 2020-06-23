@@ -3,7 +3,6 @@ using Assets.Scripts.Controllers.Base;
 using Assets.Scripts.Enums;
 using Assets.Scripts.Extends;
 using System;
-using System.Collections;
 using System.Linq;
 using TMPro;
 using UnityEngine;

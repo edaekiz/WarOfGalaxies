@@ -248,6 +248,20 @@ namespace WarOfGalaxiesApi.Controllers
 
             #endregion
 
+            #region Uçuş Maliyeti
+
+            // Uçuş maliyetini hesaplıyoruz.
+            double fuelCost = CalculateFuelCost(shipsInData, flyDistance, request.FleetSpeed);
+
+            // Gezegendeki kaynakları kontrol ediyoruz yetersiz ise hata dönüyoruz.
+            if (userPlanet.Boron < fuelCost)
+                return ResponseHelper.GetError("Uçuş için yeterli hammadde bulunamadı!");
+
+            // Uçuş maliyetini düşüyoruz.
+            userPlanet.Boron -= fuelCost;
+
+            #endregion
+
             // Filoyu oluşturuyoruz.
             TblFleets fleet = base.UnitOfWork.GetRepository<TblFleets>().Add(new TblFleets
             {

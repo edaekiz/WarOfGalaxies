@@ -272,7 +272,11 @@ public class PlanetActionController : BasePanelController
 
         #endregion
 
-        string shipData = FleetExtends.ShipDataToStringData(ShipsToSend.Select(x => new Tuple<Ships, int>(x.UserPlanetShip.ShipId, x.Quantity)));
+        // Gemi listesi.
+        IEnumerable<Tuple<Ships, int>> shipList = ShipsToSend.Select(x => new Tuple<Ships, int>(x.UserPlanetShip.ShipId, x.Quantity));
+
+        // Gemi datası.
+        string shipData = FleetExtends.ShipDataToStringData(shipList);
 
         // Uçuş bilgileri.
         SendFleetFromPlanetDTO requestData = new SendFleetFromPlanetDTO
@@ -307,6 +311,22 @@ public class PlanetActionController : BasePanelController
 
                 // Taşınan kaynakları depodan çıkıyoruz.
                 GlobalPlanetController.GPC.CurrentPlanet.ReducePlanetResources(carriedResources);
+
+                #region Yakıtı da azaltıyoruz.
+
+                // Gemi gidiş hızı.
+                float shipSpeed = SLIDER_ShipSpeed.value / 100;
+
+                // Gezegenler arasındaki mesafe.
+                double distance = FleetExtends.CalculateDistance(GlobalPlanetController.GPC.CurrentPlanetCordinate, CurrentCordinate);
+
+                // Yakıtı hesaplıyoruz.
+                double fuelCost = FleetExtends.CalculateFuelCost(shipList, distance, shipSpeed);
+
+                // Boru da düşüyoruz.
+                GlobalPlanetController.GPC.CurrentPlanet.Boron -= fuelCost;
+
+                #endregion
 
                 // Toast mesajını basıyoruz ekrana.
                 ToastController.TC.ShowToast(base.GetLanguageText("FilonYolaÇıktı"));
@@ -434,45 +454,57 @@ public class PlanetActionController : BasePanelController
         // Filo kapasitesini ekrana basıyoruz.
         double fleetCapacity = FleetExtends.CalculateShipCapacity(shipsWithQuantity);
 
+        // Gemi gidiş hızı.
+        float shipSpeed = SLIDER_ShipSpeed.value / 100;
+
+        // Gezegenler arasındaki mesafe.
+        double distance = FleetExtends.CalculateDistance(GlobalPlanetController.GPC.CurrentPlanetCordinate, CurrentCordinate);
+
+        // Yakıtı hesaplıyoruz.
+        double fuelCost = FleetExtends.CalculateFuelCost(shipsWithQuantity, distance, shipSpeed);
+
         #region Gönderilecek metali kontrol ediyoruz.
 
-        double metal = 0;
+        double.TryParse(INP_CarryMetal.text, out double metal);
 
-        double.TryParse(INP_CarryMetal.text, out metal);
+        if (metal > GlobalPlanetController.GPC.CurrentPlanet.Metal)
+            metal = GlobalPlanetController.GPC.CurrentPlanet.Metal;
 
-        if (metal != carriedResources.Metal)
-        {
-            if (metal + carriedResources.Crystal + carriedResources.Boron > fleetCapacity)
-                metal = fleetCapacity - (carriedResources.Crystal + carriedResources.Boron);
-        }
+        if (metal + carriedResources.Crystal + carriedResources.Boron > fleetCapacity)
+            metal = fleetCapacity - (carriedResources.Crystal + carriedResources.Boron);
 
         #endregion
 
         #region Gönderilecek kristali kontrol ediyoruz.
 
-        double crystal = 0;
+        double.TryParse(INP_CarryCrystal.text, out double crystal);
 
-        double.TryParse(INP_CarryCrystal.text, out crystal);
+        if (crystal > GlobalPlanetController.GPC.CurrentPlanet.Crystal)
+            crystal = GlobalPlanetController.GPC.CurrentPlanet.Crystal;
 
-        if (crystal != carriedResources.Crystal)
-        {
-            if (crystal + carriedResources.Metal + carriedResources.Boron > fleetCapacity)
-                crystal = fleetCapacity - (carriedResources.Metal + carriedResources.Boron);
-        }
+        if (crystal + carriedResources.Metal + carriedResources.Boron > fleetCapacity)
+            crystal = fleetCapacity - (carriedResources.Metal + carriedResources.Boron);
 
         #endregion
 
         #region Gönderilecek boronu kontrol ediyoruz.
 
-        double boron = 0;
+        // Taşınacak olan bor miktarı.
+        double.TryParse(INP_CarryBoron.text, out double boron);
 
-        double.TryParse(INP_CarryBoron.text, out boron);
+        if (boron > GlobalPlanetController.GPC.CurrentPlanet.Boron)
+            boron = GlobalPlanetController.GPC.CurrentPlanet.Boron;
 
-        if (boron != carriedResources.Boron)
-        {
-            if (boron + carriedResources.Metal + carriedResources.Crystal > fleetCapacity)
-                boron = fleetCapacity - (carriedResources.Metal + carriedResources.Crystal);
-        }
+        // Taşınan kaynak sınırları kontrolü.
+        if (boron + carriedResources.Metal + carriedResources.Crystal > fleetCapacity)
+            boron = fleetCapacity - (carriedResources.Metal + carriedResources.Crystal);
+
+        // Bordan yakıtı çıkarıyoruz.
+        boron -= fuelCost;
+
+        // Bor miktarı 0 dan küçük olamaz.
+        if (boron <= 0)
+            boron = 0;
 
         #endregion
 
@@ -496,7 +528,6 @@ public class PlanetActionController : BasePanelController
         #endregion
 
         #region İmleci kaydırıyoruz.
-
 
         INP_CarryMetal.caretPosition += INP_CarryMetal.text.Length > metalTextLength ? INP_CarryMetal.text.Length - metalTextLength : metalTextLength - INP_CarryMetal.text.Length;
         INP_CarryCrystal.caretPosition += INP_CarryCrystal.text.Length > crystalTextLength ? INP_CarryCrystal.text.Length - crystalTextLength : crystalTextLength - INP_CarryCrystal.text.Length;

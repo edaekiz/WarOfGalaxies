@@ -626,4 +626,46 @@ Gemi ve savunma sistemleri inşa ederken.</value>
   <data name="GeçersizGemiCasusluk" xml:space="preserve">
     <value>Bu hareketi yalnızca casusluk gemisi ile gerçekleştirebilirsin!</value>
   </data>
+  <data name="Özelleştir" xml:space="preserve">
+    <value>Özelleştir</value>
+  </data>
+  <data name="ID1" xml:space="preserve">
+    <value>Geminin savunma puanını gösterir.</value>
+  </data>
+  <data name="ID2" xml:space="preserve">
+    <value>Her bir atış için verdiği hasar değerini gösterir.</value>
+  </data>
+  <data name="ID3" xml:space="preserve">
+    <value>Her bir saldırı için kaç kere atış yapacağını gösterir.</value>
+  </data>
+  <data name="ID4" xml:space="preserve">
+    <value>Geminin hızını gösterir.</value>
+  </data>
+  <data name="ID5" xml:space="preserve">
+    <value>Geminin yakıt tüketimini gösterir.</value>
+  </data>
+  <data name="ID6" xml:space="preserve">
+    <value>Geminin taşıma kapasitesini gösterir.</value>
+  </data>
+  <data name="FiloHareketiYok" xml:space="preserve">
+    <value>Herhangi bir filo hareketi yok!</value>
+  </data>
+  <data name="Kalkan" xml:space="preserve">
+    <value>Kalkan</value>
+  </data>
+  <data name="Saldırı" xml:space="preserve">
+    <value>Saldırı</value>
+  </data>
+  <data name="AtışSayısı" xml:space="preserve">
+    <value>Atış Sayısı</value>
+  </data>
+  <data name="Hız" xml:space="preserve">
+    <value>Hız</value>
+  </data>
+  <data name="Yakıt" xml:space="preserve">
+    <value>Yakıt</value>
+  </data>
+  <data name="Depo" xml:space="preserve">
+    <value>Depo</value>
+  </data>
 </root>

@@ -15,7 +15,7 @@ public class ResourceDetailController : MonoBehaviour, IPointerUpHandler
     [Header("Detayların basılacağı alan.")]
     public TMP_Text ContentField;
 
-    [Header("Gereken metal miktarını buraya basacağız.")]
+    [Header("Miktarı buraya basacağız.")]
     public TMP_Text QuantityText;
 
     private bool isOpening;
