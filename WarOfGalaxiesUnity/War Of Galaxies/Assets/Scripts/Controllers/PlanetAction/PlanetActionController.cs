@@ -544,19 +544,19 @@ public class PlanetActionController : BasePanelController
 
     public void LoadAllMetals()
     {
-        INP_CarryMetal.text = ResourceExtends.ConvertToDottedResource(GlobalPlanetController.GPC.CurrentPlanet.Metal);
+        INP_CarryMetal.text = GlobalPlanetController.GPC.CurrentPlanet.Metal.ToString();
         OnResourceEdit();
     }
 
     public void LoadAllCrystals()
     {
-        INP_CarryCrystal.text = ResourceExtends.ConvertToDottedResource(GlobalPlanetController.GPC.CurrentPlanet.Crystal);
+        INP_CarryCrystal.text = GlobalPlanetController.GPC.CurrentPlanet.Crystal.ToString();
         OnResourceEdit();
     }
 
     public void LoadAllBorons()
     {
-        INP_CarryBoron.text = ResourceExtends.ConvertToDottedResource(GlobalPlanetController.GPC.CurrentPlanet.Boron);
+        INP_CarryBoron.text = GlobalPlanetController.GPC.CurrentPlanet.Boron.ToString();
         OnResourceEdit();
     }
 

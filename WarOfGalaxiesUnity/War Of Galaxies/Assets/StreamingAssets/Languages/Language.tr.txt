@@ -178,10 +178,11 @@
     <value>Roketatar</value>
   </data>
   <data name="DD1" xml:space="preserve">
-    <value>Roketatar kısa açıklaması</value>
+    <value>Roketatar düşük seviye bir savunma birimidir.
+Ucuz maliyeti sebebiyle tercih edilir.</value>
   </data>
   <data name="R1" xml:space="preserve">
-    <value>Roket Tekniği</value>
+    <value>Casusluk Tekniği</value>
   </data>
   <data name="InciSeviye" xml:space="preserve">
     <value>{0}. Seviye</value>
@@ -196,7 +197,7 @@
     <value>Seviye({0})</value>
   </data>
   <data name="S1" xml:space="preserve">
-    <value>Hafif Avcı</value>
+    <value>Avcı</value>
   </data>
   <data name="SD1" xml:space="preserve">
     <value>Hafif Avcı açıklaması</value>
@@ -214,7 +215,9 @@
     <value>Araştırmalar</value>
   </data>
   <data name="RD1" xml:space="preserve">
-    <value>Bilim insanları roketlerin isabet oranını ve hasar gücünü arttırmak için Roket Tekniği teknolojisini geliştirdi.</value>
+    <value>Casusluk Tekniği ile diğer oyunculara ait gezegenlerden daha fazla bilgi edinebilirsin. 
+Hedef gezegen ile aranızdaki casusluk teknolojisine bağlı olarak fazla bilgi toplayabilir yada daha az bilgi toplayabilirsin.
+Ayrıca hedef gezegen ile aranızdaki Casusluk Tekniğine farkına bağlı olarak tespit edilme olasılığınız artar yada azalır.</value>
   </data>
   <data name="ÜretimSüresi" xml:space="preserve">
     <value>Üretim Süresi</value>
@@ -271,7 +274,7 @@
     <value>Sömürgeleştir</value>
   </data>
   <data name="KeşfedilmemişGezegen" xml:space="preserve">
-    <value>Keşfedilmemiş Gezegen</value>
+    <value>Keşf. Gezegen</value>
   </data>
   <data name="Casusluk" xml:space="preserve">
     <value>Casusluk</value>
@@ -364,7 +367,7 @@
     <value>Dönüş</value>
   </data>
   <data name="S2" xml:space="preserve">
-    <value>Küçük Nakliye</value>
+    <value>Küçük Nakliye Gemisi</value>
   </data>
   <data name="SD2" xml:space="preserve">
     <value>Küçük ancak çok hızlı bir nakliye gemisi.</value>
@@ -421,7 +424,7 @@
     <value>Posta Tarihi</value>
   </data>
   <data name="S3" xml:space="preserve">
-    <value>Casus Dronu</value>
+    <value>Casus Uçağı</value>
   </data>
   <data name="SD3" xml:space="preserve">
     <value>Casus dronu galaksideki en hızlı gemidir. Ayrıca hedef gezegendeki savunmalara yaklanmaz.</value>
@@ -440,9 +443,6 @@
   </data>
   <data name="Uyarı" xml:space="preserve">
     <value>Uyarı</value>
-  </data>
-  <data name="Silmekİstemek" xml:space="preserve">
-    <value>Silmek istediğine emin misin?</value>
   </data>
   <data name="GezegenVeKoloniler" xml:space="preserve">
     <value>Gezegenlerin ve Kolonilerin</value>
@@ -535,7 +535,7 @@
 Filon &lt;color=orange&gt;{SM} [{SC}]&lt;/color&gt; gezegenine geri dönüyor.</value>
   </data>
   <data name="MT8" xml:space="preserve">
-    <value>Sökülen kaynaklar {SM}[{SC}] gezegenine aktarılıyor.
+    <value>Sökülen kaynaklar &lt;color=orange&gt;{DM}[{SC}]&lt;/color&gt; gezegenine aktarılıyor.
 
 &lt;color=green&gt;Kaynaklar;&lt;/color&gt;
 &lt;color=green&gt;Metal :&lt;/color&gt; {NM},
@@ -567,5 +567,229 @@ Gemi ve savunma sistemleri inşa ederken.</value>
   </data>
   <data name="BD3" xml:space="preserve">
     <value>Çeşitli gemi ve savunmalar üretmek için bor kaynağına ihtiyacın olacak. Ayrıca filonu uçurmak içinde yine bu kaynağı yakıt olarak kullanman gerekecek.</value>
+  </data>
+  <data name="GezegeniSeçildi" xml:space="preserve">
+    <value>{0} gezegeni seçildi.</value>
+  </data>
+  <data name="Sil" xml:space="preserve">
+    <value>Sil</value>
+  </data>
+  <data name="TersaneYükseltmeVar" xml:space="preserve">
+    <value>*Tersane yükseltiliyorken gemi üretimi yapamazsın!</value>
+  </data>
+  <data name="AraştırmaDevamEdiyor" xml:space="preserve">
+    <value>*Araştırma yaparken Labratuvarı yükseltemezsin!</value>
+  </data>
+  <data name="GemiÜretimiMevcut" xml:space="preserve">
+    <value>*Gemi üretimi yaparken tersaneyi yükseltemezsin!</value>
+  </data>
+  <data name="SavunmaÜretimiMevcut" xml:space="preserve">
+    <value>*Savunma üretirken robot fabrikasını yükseltemezsin!</value>
+  </data>
+  <data name="RobotFabYükseltmeVar" xml:space="preserve">
+    <value>*Robot fabrikası yükseltirken savunma üretimi yapamazsın!</value>
+  </data>
+  <data name="AraştırmaLabYükseltmeVar" xml:space="preserve">
+    <value>*Araştırma labaratuvarı yükseltirken araştırma yapamazsın!</value>
+  </data>
+  <data name="AraştırmaLabYok" xml:space="preserve">
+    <value>Araştıram yapabilmek için Labaratuvar inşa etmelisin!</value>
+  </data>
+  <data name="TersaneYok" xml:space="preserve">
+    <value>*Gemi üretmek için önce tersane inşa etmelisin!</value>
+  </data>
+  <data name="RobotFabYok" xml:space="preserve">
+    <value>*Savunma üretmek için önce robot fabrikası kurmalısın!</value>
+  </data>
+  <data name="XTeknolojiAğacı" xml:space="preserve">
+    <value>&lt;color=orange&gt;{0}&lt;/color&gt;{1}Teknoloji Ağacı</value>
+  </data>
+  <data name="TeknolojiGereksinimiYok" xml:space="preserve">
+    <value>Teknoloji gereksinimi bulunmuyor.</value>
+  </data>
+  <data name="TeknolojiGereksinimler" xml:space="preserve">
+    <value>Teknoloji Gereksinimleri</value>
+  </data>
+  <data name="BinaKoşulOlumsuz" xml:space="preserve">
+    <value>Bu binayı kurmak için şartlar uygun değil!</value>
+  </data>
+  <data name="SavunmaKoşulOlumsuz" xml:space="preserve">
+    <value>Bu savunma birini üretmek için koşullar uygun değil!</value>
+  </data>
+  <data name="GemiKoşulOlumsuz" xml:space="preserve">
+    <value>Bu gemiyi üretmek için koşullar uygun değil!</value>
+  </data>
+  <data name="AraştırmaKoşulOlumsuz" xml:space="preserve">
+    <value>Bu araştırmayı yapmak için koşullar uygun değil!</value>
+  </data>
+  <data name="GeçersizGemiCasusluk" xml:space="preserve">
+    <value>Bu hareketi yalnızca casusluk gemisi ile gerçekleştirebilirsin!</value>
+  </data>
+  <data name="Özelleştir" xml:space="preserve">
+    <value>Özelleştir</value>
+  </data>
+  <data name="ID1" xml:space="preserve">
+    <value>Geminin savunma puanını gösterir.</value>
+  </data>
+  <data name="ID2" xml:space="preserve">
+    <value>Her bir atış için verdiği hasar değerini gösterir.</value>
+  </data>
+  <data name="ID3" xml:space="preserve">
+    <value>Her bir saldırı için kaç kere atış yapacağını gösterir.</value>
+  </data>
+  <data name="ID4" xml:space="preserve">
+    <value>Geminin hızını gösterir.</value>
+  </data>
+  <data name="ID5" xml:space="preserve">
+    <value>Geminin yakıt tüketimini gösterir.</value>
+  </data>
+  <data name="ID6" xml:space="preserve">
+    <value>Geminin taşıma kapasitesini gösterir.</value>
+  </data>
+  <data name="FiloHareketiYok" xml:space="preserve">
+    <value>Herhangi bir filo hareketi yok!</value>
+  </data>
+  <data name="Kalkan" xml:space="preserve">
+    <value>Kalkan</value>
+  </data>
+  <data name="Saldırı" xml:space="preserve">
+    <value>Saldırı</value>
+  </data>
+  <data name="AtışSayısı" xml:space="preserve">
+    <value>Atış Sayısı</value>
+  </data>
+  <data name="Hız" xml:space="preserve">
+    <value>Hız</value>
+  </data>
+  <data name="Yakıt" xml:space="preserve">
+    <value>Yakıt</value>
+  </data>
+  <data name="Depo" xml:space="preserve">
+    <value>Depo</value>
+  </data>
+  <data name="S5" xml:space="preserve">
+    <value>Ağır Avcı</value>
+  </data>
+  <data name="SD5" xml:space="preserve">
+    <value>Ağır avcı, hafif avcılardan çok daha güçlü ve dayanıklıdır.</value>
+  </data>
+  <data name="S6" xml:space="preserve">
+    <value>Anadolu Savaş Gemisi</value>
+  </data>
+  <data name="Silmekİstemek" xml:space="preserve">
+    <value>Bu kaydı silmek istediğine emin misin?</value>
+  </data>
+  <data name="S7" xml:space="preserve">
+    <value>Komuta Gemisi</value>
+  </data>
+  <data name="S8" xml:space="preserve">
+    <value>Turgut Reis Savaş Gemisi</value>
+  </data>
+  <data name="S9" xml:space="preserve">
+    <value>Muavenet Bombardıman Gemisi</value>
+  </data>
+  <data name="S10" xml:space="preserve">
+    <value>Fatih Savaş Gemisi</value>
+  </data>
+  <data name="S11" xml:space="preserve">
+    <value>Büyük Nakliye Gemisi</value>
+  </data>
+  <data name="S12" xml:space="preserve">
+    <value>Koloni Gemisi</value>
+  </data>
+  <data name="R2" xml:space="preserve">
+    <value>Keşif Tekniği</value>
+  </data>
+  <data name="RD2" xml:space="preserve">
+    <value>Yapılan her keşif araştırması sana evrenin daha uzak noktalarını keşfetme imkanı sunuyor.
+Ayrıca, keşif tekniğin ne kadar yüksek ise keşiflerden kazanacağın ödüller de artacaktır.</value>
+  </data>
+  <data name="R3" xml:space="preserve">
+    <value>Uzay Gemisi Zırhı</value>
+  </data>
+  <data name="RD3" xml:space="preserve">
+    <value>Uzay Gemisi Zırhı ile artık daha güçlü zırhlar üretebilirsin. 
+Bu teknoloji seni savaşlarda bir adım öne geçirebilir.
+Bu teknolojinin her bir seviyesi, uzay gemilerinin dayanıklılığını %10 arttırır.</value>
+  </data>
+  <data name="R4" xml:space="preserve">
+    <value>Savunma Zırhı</value>
+  </data>
+  <data name="RD4" xml:space="preserve">
+    <value>Savunma Zırhı, savunma sistemlerinin düşman gemilerine karşı daha dayanıklı olmasını sağlar.
+Bu teknolojinin her bir seviyesi, savunma sistemlerinin dayanıklılığını %10 arttırır.</value>
+  </data>
+  <data name="R5" xml:space="preserve">
+    <value>Depolama Teknolojisi</value>
+  </data>
+  <data name="RD5" xml:space="preserve">
+    <value>Depolama Teknolojisi, gemilerin daha fazla kaynak taşımaları için, depo kapasitelerini yükseltir.
+Her bir Depoloma Teknoloji seviyesi gemilerin depo kapasitesini %5 arttırır.</value>
+  </data>
+  <data name="R6" xml:space="preserve">
+    <value>Gemi Motoru</value>
+  </data>
+  <data name="RD6" xml:space="preserve">
+    <value>Gemi Motoru, gemi motorlarının gücünü arttırmak için bu teknolojiye ihtiyacın olacak.
+Bu teknolojinin her bir seviyesi gemilerin hızını %5 arttırır.</value>
+  </data>
+  <data name="R7" xml:space="preserve">
+    <value>İtki Motoru</value>
+  </data>
+  <data name="RD7" xml:space="preserve">
+    <value>İtki Motoru, savaş gemilerinin hızlı olması düşmanı hazırlıksız yakalamak olmazsa olmaz.
+Bu teknoloj ile aşağıda yer alan gemilerin hızları %25 artar.
+&lt;color=white&gt;Avcı, Ağır Avcı, Anadolu Savaş Gemisi, Komuta Gemisi, Turgut Reis Savaş Gemisi, Muavenet Bombardıman Gemisi, Fatih Savaş Gemisi, Turgut Reis Savaş Gemisi&lt;/color&gt;.</value>
+  </data>
+  <data name="R8" xml:space="preserve">
+    <value>Füze Teknolojisi</value>
+  </data>
+  <data name="RD8" xml:space="preserve">
+    <value>Füze teknolojisi, füze kullanan savunma ve gemilerin saldırı gücünün yükseltir.
+Bu teknolojinin her bir seviyesi aşağıdaki birimlerin saldırı gücünü %5 yükseltir.
+&lt;color=white&gt;Avcı, Ağır Avcı, Muavenet Bombardıman Gemisi&lt;/color&gt;.</value>
+  </data>
+  <data name="R9" xml:space="preserve">
+    <value>Lazer Teknolojisi</value>
+  </data>
+  <data name="RD9" xml:space="preserve">
+    <value>Lazer teknolojisi, lazer silahları kullanan savunma ve gemilerin saldırı değerini yükseltir.
+Yapılan her Lazer teknolojisi araştırması aşağıdaki birimlerin saldırı değerini %5 arttırır.
+&lt;color=white&gt;Anadolu Savaş Gemisi, Komuta Gemisi, Turgut Reis Savaş Gemisi, Fatih Savaş Gemisi&lt;/color&gt;.</value>
+  </data>
+  <data name="R10" xml:space="preserve">
+    <value>Silah Teknolojisi</value>
+  </data>
+  <data name="RD10" xml:space="preserve">
+    <value>Silah Teknolojisi, tüm savunma ve saldırı gemilerinin saldırı gücünün arttırır.
+Bu teknolojinin her bir seviyesi tüm birimlerin saldırı gücünü %5 arttırır.</value>
+  </data>
+  <data name="R11" xml:space="preserve">
+    <value>Bilgisayar Ağları</value>
+  </data>
+  <data name="RD11" xml:space="preserve">
+    <value>Bilgisayar Ağları ile aynı anda yapabileceğin filo hareketlerini kontrol edebilirsin.
+Bu teknolojinin her bir seviyesi, sana +1 filo hareketi sağlar.</value>
+  </data>
+  <data name="R12" xml:space="preserve">
+    <value>Atom Teknolojisi</value>
+  </data>
+  <data name="RD12" xml:space="preserve">
+    <value>Atom teknoloji, bütün teknolojilerin temeline dayanmaktadır. Bu teknolojiye ne kadar hakimsen farklı teknolojileri o kadar araştırabilirsin demektir.</value>
+  </data>
+  <data name="R13" xml:space="preserve">
+    <value>Yakıt Teknolojisi</value>
+  </data>
+  <data name="RD13" xml:space="preserve">
+    <value>Savaş gemileri, yolculuk için çok fazla yakıt tüketiyorlardı. Bilim insanları da Yakıt Teknolojisini geliştiriler. Böylece artık gemiler daha az yakıt yakacaktı.
+Bu teknolojinin her bir seviyesi gemilerin yakıt tüketimini %5 azaltır.</value>
+  </data>
+  <data name="R14" xml:space="preserve">
+    <value>Gaus Teknolojisi</value>
+  </data>
+  <data name="RD14" xml:space="preserve">
+    <value>Gaus tekniği ölümcül toplar üretmek için kullanılır. Bu devasa toplar o kadar güçlü ki gemileri tek seferde öldürebilir.
+Bu teknolojinin her bir seviyesi bu teknolojiyi kullanan savunma sistemlerinin atış gücünü arttırır.
+Aşağıda yer alan savunma birimlerinin atış gücünü seviye başına %10 arttırır.</value>
   </data>
 </root>
