@@ -67,7 +67,7 @@ public class MailController : MonoBehaviour
     public void GetLatestMails()
     {
         // Son gelen mailleri alıyoruz.
-        StartCoroutine(ApiService.API.Post("GetLatestUnReadedMails", new LatestUnReadedUserMailRequestDTO { LastUnReadedMailId = UserMails.Select(x => x.UserMailId).DefaultIfEmpty(0).Max() }, (ApiResult response) =>
+        ApiService.API.Post("GetLatestUnReadedMails", new LatestUnReadedUserMailRequestDTO { LastUnReadedMailId = UserMails.Select(x => x.UserMailId).DefaultIfEmpty(0).Max() }, (ApiResult response) =>
         {
             if (response.IsSuccess)
             {
@@ -99,7 +99,7 @@ public class MailController : MonoBehaviour
                 RefreshMailIconQuantity();
             }
 
-        }));
+        });
     }
 
     public void RefreshMailIconQuantity()
@@ -135,7 +135,7 @@ public class MailController : MonoBehaviour
             // Yükleniyor panelini açıyoruz.
             LoadingController.LC.ShowLoading();
 
-            StartCoroutine(ApiService.API.Post("DeleteMail", new MailDeleteRequestDTO { UserMailId = userMail.UserMailId }, (ApiResult response) =>
+            ApiService.API.Post("DeleteMail", new MailDeleteRequestDTO { UserMailId = userMail.UserMailId }, (ApiResult response) =>
             {
                 // Yükleniyor panelini kapatıyoruz.
                 LoadingController.LC.CloseLoading();
@@ -155,7 +155,7 @@ public class MailController : MonoBehaviour
                     if (callBack != null)
                         callBack.Invoke();
                 }
-            }));
+            });
         });
     }
 

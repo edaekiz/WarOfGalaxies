@@ -31,7 +31,7 @@ public class LoginController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(ApiService.API.Post("Login", null, (ApiResult response) =>
+        ApiService.API.Post("Login", null, (ApiResult response) =>
         {
             // Eğer başarılı ise.
             if (response.IsSuccess)
@@ -73,12 +73,12 @@ public class LoginController : MonoBehaviour
             {
                 Debug.LogWarning(response.Message);
             }
-        }));
+        });
     }
 
     public void VerifyUserResources(int userPlanetId, Action<UserPlanetDTO> onSuccess = null, Action<string> onError = null)
     {
-        StartCoroutine(ApiService.API.Post("VerifyUserData", new VerifyResourceDTO { UserPlanetID = userPlanetId }, (ApiResult result) =>
+        ApiService.API.Post("VerifyUserData", new VerifyResourceDTO { UserPlanetID = userPlanetId }, (ApiResult result) =>
            {
                if (result.IsSuccess)
                {
@@ -103,6 +103,6 @@ public class LoginController : MonoBehaviour
                    if (onError != null)
                        onError.Invoke(result.Message);
                }
-           }));
+           });
     }
 }

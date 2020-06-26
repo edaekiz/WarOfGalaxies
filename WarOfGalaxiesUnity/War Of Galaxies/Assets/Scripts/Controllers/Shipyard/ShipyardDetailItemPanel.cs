@@ -159,10 +159,7 @@ public class ShipyardDetailItemPanel : BasePanelController
 
     public void AddToQueue()
     {
-        string quantityStr = QuantityField.text;
-        int quantity = 0;
-
-        if (int.TryParse(quantityStr, out quantity))
+        if (int.TryParse(QuantityField.text, out int quantity))
         {
             // Gönderiliyor mu?
             IsSending = true;
@@ -170,13 +167,19 @@ public class ShipyardDetailItemPanel : BasePanelController
             // Butonu kapatıyoruz.
             ProduceButton.interactable = false;
 
-            StartCoroutine(ApiService.API.Post("AddShipToShipyardQueue", new ShipyardAddQueueRequestDTO
+            // YÜkleniyor panelini gösteriyoruz.
+            LoadingController.LC.ShowLoading();
+
+            ApiService.API.Post("AddShipToShipyardQueue", new ShipyardAddQueueRequestDTO
             {
                 Quantity = quantity,
                 ShipID = CurrentShip,
                 UserPlanetID = GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId
             }, (ApiResult response) =>
             {
+                // YÜkleniyor panelini gösteriyoruz.
+                LoadingController.LC.CloseLoading();
+
                 // Eğer başarılı ise.
                 if (response.IsSuccess)
                 {
@@ -211,7 +214,7 @@ public class ShipyardDetailItemPanel : BasePanelController
                     AudioController.AC.PlaySoundOnCamera(SND_BeginProduce);
                 }
 
-            }));
+            });
         }
     }
 

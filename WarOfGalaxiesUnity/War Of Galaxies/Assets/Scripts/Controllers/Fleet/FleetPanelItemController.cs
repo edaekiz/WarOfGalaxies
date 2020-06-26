@@ -168,7 +168,7 @@ public class FleetPanelItemController : BaseLanguageBehaviour
         CallbackButton.interactable = false;
 
         // Geri çağırıyoruz.
-        StartCoroutine(ApiService.API.Post("CallBackFlyFleet", new CallbackFleetDTO { FleetId = this.FleetInfo.FleetId }, (ApiResult response) =>
+        ApiService.API.Post("CallBackFlyFleet", new CallbackFleetDTO { FleetId = this.FleetInfo.FleetId }, (ApiResult response) =>
         {
             // Butonu tekrar açıyoruz.
             CallbackButton.interactable = true;
@@ -182,7 +182,7 @@ public class FleetPanelItemController : BaseLanguageBehaviour
                 // Datalarını geri getiriyoruz.
                 FleetController.FC.RefreshReturnFleetData(this.FleetInfo.ReturnFleetId);
             }
-        }));
+        });
     }
 
 }

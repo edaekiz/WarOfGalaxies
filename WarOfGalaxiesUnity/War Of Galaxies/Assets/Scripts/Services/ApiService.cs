@@ -48,7 +48,12 @@ public class ApiService : MonoBehaviour
     /// <param name="formData"> Sadece nesneyi göndererek bu model oluşturulabilir. GetFormFromData methodu kullanılarak.</param>
     /// <param name="trigger">Çağırma işlemi gerçekleştiğinde burası çalışacak.</param>
     /// <returns></returns>
-    public IEnumerator Post<TResponse>(string url, object data, Action<TResponse> trigger) where TResponse : class
+    public void Post<TResponse>(string url, object data, Action<TResponse> trigger) where TResponse : class
+    {
+        StartCoroutine(PostToServer(url, data, trigger));
+    }
+
+    public IEnumerator PostToServer<TResponse>(string url, object data, Action<TResponse> trigger) where TResponse : class
     {
         using (UnityWebRequest webRequest = UnityWebRequest.Post(BaseUrl + url, GetFormFromData(data, true)))
         {
@@ -59,9 +64,8 @@ public class ApiService : MonoBehaviour
             if (!string.IsNullOrEmpty(webRequest.error))
             {
                 Debug.Log(webRequest.url + "->" + webRequest.error);
-                trigger.Invoke(JsonUtility.FromJson<TResponse>("{\"IsSuccess\":false}"));
                 yield return new WaitForSeconds(3);
-                StartCoroutine(Post(url, data, trigger));
+                StartCoroutine(PostToServer(url, data, trigger));
             }
             else
             {

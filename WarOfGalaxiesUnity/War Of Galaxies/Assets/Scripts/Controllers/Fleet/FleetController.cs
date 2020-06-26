@@ -44,7 +44,7 @@ public class FleetController : MonoBehaviour
 
     public void GetLatestFleets()
     {
-        StartCoroutine(ApiService.API.Post("GetLastFleets", new GetLastFleetsDTO { LastFleetId = Fleets.Select(x => x.FleetId).DefaultIfEmpty(0).Max() }, (ApiResult response) =>
+        ApiService.API.Post("GetLastFleets", new GetLastFleetsDTO { LastFleetId = Fleets.Select(x => x.FleetId).DefaultIfEmpty(0).Max() }, (ApiResult response) =>
          {
 
              // Yanıt başarılı ise.
@@ -67,7 +67,7 @@ public class FleetController : MonoBehaviour
                      RefreshProgressIcon();
                  }
              }
-         }));
+         });
     }
 
     public void ShowFleetPanel()
@@ -196,7 +196,7 @@ public class FleetController : MonoBehaviour
 
     public void RefreshReturnFleetData(int returnFleetId)
     {
-        StartCoroutine(ApiService.API.Post("GetFleetById", new GetLastFleetsDTO { LastFleetId = returnFleetId }, (ApiResult response) =>
+        ApiService.API.Post("GetFleetById", new GetLastFleetsDTO { LastFleetId = returnFleetId }, (ApiResult response) =>
         {
             // Yanıt başarılı ise.
             if (response.IsSuccess)
@@ -215,7 +215,7 @@ public class FleetController : MonoBehaviour
                 if (FleetPanelController.FPC != null)
                     FleetPanelController.FPC.RefreshActiveFleets();
             }
-        }));
+        });
     }
 
 }

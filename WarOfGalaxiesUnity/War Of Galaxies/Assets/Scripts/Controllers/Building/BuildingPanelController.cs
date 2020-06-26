@@ -215,7 +215,7 @@ public class BuildingPanelController : BasePanelController
 
     public void UpgradeBuilding()
     {
-        StartCoroutine(ApiService.API.Post("UpgradeUserPlanetBuilding", new UserPlanetUpgradeBuildingDTO
+        ApiService.API.Post("UpgradeUserPlanetBuilding", new UserPlanetUpgradeBuildingDTO
         {
             BuildingID = (int)GlobalBuildingController.GBC.CurrentSelectedBuilding.BuildingType,
             UserPlanetID = GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId
@@ -248,7 +248,7 @@ public class BuildingPanelController : BasePanelController
                 // Paneli kapatıyoruz.
                 base.ClosePanel();
             }
-        }));
+        });
     }
 
     private void OnDestroy()

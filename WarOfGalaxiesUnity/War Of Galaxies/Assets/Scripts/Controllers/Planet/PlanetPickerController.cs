@@ -8,16 +8,6 @@ using UnityEngine.UI;
 
 public class PlanetPickerController : BasePanelController
 {
-    public static PlanetPickerController PPC { get; set; }
-
-    private void Awake()
-    {
-        if (PPC == null)
-            PPC = this;
-        else
-            Destroy(gameObject);
-    }
-
     [Header("Kullanıcının her bir gezegeni için üretilecek.")]
     public GameObject PlanetPickerItem;
 

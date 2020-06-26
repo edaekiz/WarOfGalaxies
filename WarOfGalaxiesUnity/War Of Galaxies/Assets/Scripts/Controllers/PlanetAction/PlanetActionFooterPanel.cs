@@ -244,7 +244,7 @@ public class PlanetActionFooterPanel : BasePanelController
         // Yükleniyor paneli kapatıyoruz.
         LoadingController.LC.ShowLoading();
 
-        StartCoroutine(ApiService.API.Post("FlyNewFleet", requestData, (ApiResult response) =>
+        ApiService.API.Post("FlyNewFleet", requestData, (ApiResult response) =>
         {
             // Yükleniyor paneli kapatıyoruz.
             LoadingController.LC.CloseLoading();
@@ -263,7 +263,7 @@ public class PlanetActionFooterPanel : BasePanelController
                 // Butonu yeniliyoruz.
                 ValidateSpyShipCount();
             }
-        }));
+        });
     }
 
     public void FastHarvestGarbage()
@@ -330,7 +330,7 @@ public class PlanetActionFooterPanel : BasePanelController
         // Yükleniyor panelini açıyoruz.
         LoadingController.LC.ShowLoading();
 
-        StartCoroutine(ApiService.API.Post("FlyNewFleet", requestData, (ApiResult response) =>
+        ApiService.API.Post("FlyNewFleet", requestData, (ApiResult response) =>
         {
             // Yükleniyor paneli kapatıyoruz.
             LoadingController.LC.CloseLoading();
@@ -350,8 +350,7 @@ public class PlanetActionFooterPanel : BasePanelController
                 base.ClosePanel();
             }
 
-        }));
-
+        });
     }
 
     private void ValidateSpyShipCount()

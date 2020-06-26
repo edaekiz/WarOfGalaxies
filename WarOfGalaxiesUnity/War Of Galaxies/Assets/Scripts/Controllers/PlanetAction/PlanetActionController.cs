@@ -296,7 +296,7 @@ public class PlanetActionController : BasePanelController
         // Yükleniyor panelini açıyoruz.
         LoadingController.LC.ShowLoading();
 
-        StartCoroutine(ApiService.API.Post("FlyNewFleet", requestData, (ApiResult response) =>
+        ApiService.API.Post("FlyNewFleet", requestData, (ApiResult response) =>
         {
             // Yükleniyor paneli kapatıyoruz.
             LoadingController.LC.CloseLoading();
@@ -339,7 +339,7 @@ public class PlanetActionController : BasePanelController
                 base.ClosePanel();
             }
 
-        }));
+        });
     }
 
     public void OnActionChanged(FleetTypes fleetType)

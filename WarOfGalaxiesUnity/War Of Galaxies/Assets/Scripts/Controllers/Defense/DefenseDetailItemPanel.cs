@@ -164,7 +164,7 @@ public class DefenseDetailItemPanel : BasePanelController
             // Yükleniyor ekranını açıyoruz.
             LoadingController.LC.ShowLoading();
 
-            StartCoroutine(ApiService.API.Post("AddDefenseToDefenseQueue", new DefenseAddQueueRequestDTO
+            ApiService.API.Post("AddDefenseToDefenseQueue", new DefenseAddQueueRequestDTO
             {
                 Quantity = quantity,
                 DefenseID = CurrentDefense,
@@ -205,7 +205,7 @@ public class DefenseDetailItemPanel : BasePanelController
                     base.ClosePanel();
                 }
 
-            }));
+            });
         }
     }
 

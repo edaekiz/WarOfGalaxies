@@ -5,6 +5,7 @@
         HafifAvci = 1,
         KüçükNakliye = 2,
         CasusSondası = 3,
-        GeriDönüşümcü = 4
+        GeriDönüşümcü = 4,
+        AğırAvcı = 5
     }
 }

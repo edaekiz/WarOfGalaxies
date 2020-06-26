@@ -164,7 +164,7 @@ public class ResearchDetailItemPanel : BasePanelController
 
     public void UpgradeResearch()
     {
-        StartCoroutine(ApiService.API.Post("UpgradeUserResearch", new UserResearchUpgRequest
+        ApiService.API.Post("UpgradeUserResearch", new UserResearchUpgRequest
         {
             ResearchID = CurrentResearch,
             UserPlanetID = GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId
@@ -192,7 +192,7 @@ public class ResearchDetailItemPanel : BasePanelController
                  // Yükselt panelini kapatıyoruz. 
                  base.ClosePanel();
              }
-         }));
+         });
     }
 
     public void ShowConditions() => TechnologyController.TC.ShowTechnologyPanelWithItem(TechnologyCategories.Araştırmalar, (int)CurrentResearch);

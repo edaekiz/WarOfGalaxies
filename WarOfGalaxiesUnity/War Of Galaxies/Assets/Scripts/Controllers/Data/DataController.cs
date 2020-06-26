@@ -23,14 +23,14 @@ public class DataController : MonoBehaviour
 
     public void LoadSystemData()
     {
-        StartCoroutine(ApiService.API.Post("GetSystemData", null, (ApiResult response) =>
+        ApiService.API.Post("GetSystemData", null, (ApiResult response) =>
         {
             if (response.IsSuccess)
             {
                 SystemData = response.GetData<DataDTO>();
                 LoadingController.LC.IncreaseLoadCount();
             }
-        }));
+        });
     }
 
     #region Shorts

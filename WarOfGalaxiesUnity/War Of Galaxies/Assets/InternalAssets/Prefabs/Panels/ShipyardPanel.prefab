@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 570}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &990496957119935140
 MonoBehaviour:
@@ -59,8 +59,8 @@ MonoBehaviour:
   m_StartAxis: 0
   m_CellSize: {x: 250, y: 250}
   m_Spacing: {x: 35, y: 30}
-  m_Constraint: 1
-  m_ConstraintCount: 5
+  m_Constraint: 2
+  m_ConstraintCount: 2
 --- !u!114 &990496957119935141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,8 +73,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalFit: 0
-  m_VerticalFit: 2
+  m_HorizontalFit: 2
+  m_VerticalFit: 0
 --- !u!1 &990496957249718057
 GameObject:
   m_ObjectHideFlags: 0
@@ -163,8 +163,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Content: {fileID: 990496957119935142}
-  m_Horizontal: 0
-  m_Vertical: 1
+  m_Horizontal: 1
+  m_Vertical: 0
   m_MovementType: 1
   m_Elasticity: 0.1
   m_Inertia: 1

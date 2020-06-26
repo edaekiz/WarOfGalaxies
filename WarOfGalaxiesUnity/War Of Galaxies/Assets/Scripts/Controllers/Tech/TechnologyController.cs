@@ -29,7 +29,7 @@ public class TechnologyController : MonoBehaviour
 
     public void LoadTechnologies()
     {
-        StartCoroutine(ApiService.API.Post("GetTechnologyTree", null, (ApiResult response) =>
+        ApiService.API.Post("GetTechnologyTree", null, (ApiResult response) =>
         {
             if (response.IsSuccess)
             {             // Teknoloji listesini alıyoruz.
@@ -41,7 +41,7 @@ public class TechnologyController : MonoBehaviour
                 // Ve yükleme ekranını bir arttırıyoruz.
                 LoadingController.LC.IncreaseLoadCount();
             }
-        }));
+        });
     }
 
     public void ShowTechnologyPanel()

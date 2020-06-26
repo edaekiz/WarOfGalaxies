@@ -2,6 +2,7 @@
 using Assets.Scripts.Enums;
 using Assets.Scripts.Models;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class GalaxyController : MonoBehaviour
@@ -54,14 +55,22 @@ public class GalaxyController : MonoBehaviour
         #endregion
     }
 
+    private void OnEnable()
+    {
+        
+    }
+
     public void LoadSolarSystem(int galaxyIndex, int solarIndex)
     {
         // Loading ekranını açıyoruz.
         LoadingController.LC.ShowLoading();
 
         // Kordinattaki verileri alıyoruz.
-        StartCoroutine(ApiService.API.Post("GetCordinateDetails", new GalaxyInfoRequestDTO { GalaxyIndex = galaxyIndex, SolarIndex = solarIndex }, (ApiResult result) =>
-        {
+        ApiService.API.Post("GetCordinateDetails", new GalaxyInfoRequestDTO { GalaxyIndex = galaxyIndex, SolarIndex = solarIndex }, (ApiResult result) =>
+        { 
+            // Loading ekranını açıyoruz.
+            LoadingController.LC.CloseLoading();
+
             if (result.IsSuccess != true)
                 return;
             
@@ -71,9 +80,6 @@ public class GalaxyController : MonoBehaviour
                 currentSun.Planets.ForEach(e => Destroy(e.gameObject));
                 Destroy(currentSun.gameObject);
             }
-
-            // Loading ekranını açıyoruz.
-            LoadingController.LC.CloseLoading();
 
             // Galaksi bilgisini alıyoruz.
             SolarSystem = result.GetData<GalaxyInfoResponseDTO>();
@@ -145,7 +151,7 @@ public class GalaxyController : MonoBehaviour
                     currentSun.AddPlanet(planetController);
                 }
             }
-        }));
+        });
     }
 
     /// <summary>

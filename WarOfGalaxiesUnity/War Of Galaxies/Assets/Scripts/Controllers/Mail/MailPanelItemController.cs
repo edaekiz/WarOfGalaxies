@@ -96,7 +96,7 @@ public class MailPanelItemController : MonoBehaviour
 
     public void ReadMail()
     {
-        StartCoroutine(ApiService.API.Post("SetMailAsRead", new MailReadRequestDTO { UserMailId = this.MailData.UserMailId }, (ApiResult response) =>
+        ApiService.API.Post("SetMailAsRead", new MailReadRequestDTO { UserMailId = this.MailData.UserMailId }, (ApiResult response) =>
         {
             if (response.IsSuccess)
             {
@@ -113,7 +113,7 @@ public class MailPanelItemController : MonoBehaviour
                 // Mail Miktarını yeniliyoruz.
                 MailController.MC.RefreshMailIconQuantity();
             }
-        }));
+        });
     }
 
 }

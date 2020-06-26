@@ -86,6 +86,7 @@
     <Compile Include="Assets\ExternalAssets\Hi-Tech Buttons and Panels\Resources\Scripts\JustRotate.cs" />
     <Compile Include="Assets\ExternalAssets\SpaceShip\Basic_controller.cs" />
     <Compile Include="Assets\InfoPanelController.cs" />
+    <Compile Include="Assets\IntroController.cs" />
     <Compile Include="Assets\Languages\Language.Designer.cs" />
     <Compile Include="Assets\PlanetCameraController.cs" />
     <Compile Include="Assets\Scripts\ApiModels\ApiResult.cs" />

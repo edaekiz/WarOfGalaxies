@@ -164,7 +164,7 @@
 Its cost is really low.</value>
   </data>
   <data name="S1" xml:space="preserve">
-    <value>Light Hunter</value>
+    <value>Hunter</value>
   </data>
   <data name="SD1" xml:space="preserve">
     <value>Light Hunter description</value>
@@ -191,7 +191,7 @@ Its cost is really low.</value>
     <value>s</value>
   </data>
   <data name="R1" xml:space="preserve">
-    <value>Rocket Technique</value>
+    <value>Spy Technique</value>
   </data>
   <data name="SeviyeParantez" xml:space="preserve">
     <value>Level({0})</value>
@@ -362,7 +362,7 @@ Its cost is really low.</value>
     <value>Return</value>
   </data>
   <data name="S2" xml:space="preserve">
-    <value>Little Transport</value>
+    <value>Little Transport Ship</value>
   </data>
   <data name="SD2" xml:space="preserve">
     <value>Little but very fast tranport ship.</value>
@@ -549,7 +549,10 @@ Fleets return to &lt;color=orange&gt;{SM} [{SC}]&lt;/color&gt; planet.</value>
     <value>Research Time</value>
   </data>
   <data name="RD1" xml:space="preserve">
-    <value>Scientists evolved Rocket Technique to increase accuracy rate and damage power of rockets.</value>
+    <value>Spy Technique let you to spy other players planets.
+You get more information about the destination planet when the diffrence between yours and destination planet Spy Technique level is much.
+Additionaly, Spy Technique between you and destination planet reduces your detect change when you spy.
+</value>
   </data>
   <data name="BD1" xml:space="preserve">
     <value>Produce metal resource that uses almost every thing.
@@ -666,5 +669,127 @@ Ships and defense structures.</value>
   </data>
   <data name="Depo" xml:space="preserve">
     <value>Storage</value>
+  </data>
+  <data name="S5" xml:space="preserve">
+    <value>Heavy Hunter</value>
+  </data>
+  <data name="SD5" xml:space="preserve">
+    <value>Heavy Hunter is more stronger and durable than Light Hunter.</value>
+  </data>
+  <data name="S6" xml:space="preserve">
+    <value>Anatolia Battle Ship</value>
+  </data>
+  <data name="S7" xml:space="preserve">
+    <value>Commander Ship</value>
+  </data>
+  <data name="S8" xml:space="preserve">
+    <value>Andrea Doria Battleship</value>
+  </data>
+  <data name="S9" xml:space="preserve">
+    <value>Bombardment Ship</value>
+  </data>
+  <data name="S10" xml:space="preserve">
+    <value>Fatih Battleship</value>
+  </data>
+  <data name="S11" xml:space="preserve">
+    <value>Big Transport Ship</value>
+  </data>
+  <data name="S12" xml:space="preserve">
+    <value>Colony Ship</value>
+  </data>
+  <data name="R2" xml:space="preserve">
+    <value>Explore Technique</value>
+  </data>
+  <data name="RD2" xml:space="preserve">
+    <value>Each Explore Technology let you to go more distant places of the universe.
+Additionaly, your explore rewards will be more for each explore Technology level.</value>
+  </data>
+  <data name="R3" xml:space="preserve">
+    <value>Spaceship Armor</value>
+  </data>
+  <data name="RD3" xml:space="preserve">
+    <value>With Spaceship Armor You can produce ship with more durable armors.
+This technology makes you stronger in battles.
+Each technology level gives your spaceships %10 bonus armor.</value>
+  </data>
+  <data name="R4" xml:space="preserve">
+    <value>Defense Armor</value>
+  </data>
+  <data name="RD4" xml:space="preserve">
+    <value>Defense Armor, makes your defense structs more durable against to enemy spaceships.
+This technology each level increase your defense units armor %10.</value>
+  </data>
+  <data name="R5" xml:space="preserve">
+    <value>Storage Technology</value>
+  </data>
+  <data name="RD5" xml:space="preserve">
+    <value>Storage Technology increases your ships storage capacity to carry more resources.
+Each level of Storage Technology gives you bonus %5 storage.</value>
+  </data>
+  <data name="R6" xml:space="preserve">
+    <value>Ship Engine</value>
+  </data>
+  <data name="RD6" xml:space="preserve">
+    <value>Ship Engine, you need this technology to increase your ship engine power.
+Each level of this technology makes your ships faster %5.</value>
+  </data>
+  <data name="R7" xml:space="preserve">
+    <value>Impulse Engine</value>
+  </data>
+  <data name="RD7" xml:space="preserve">
+    <value>Impulse Engine, makes your battleships more faster. You will need faster ships for counter attacks.
+With this technology, the speed of the ships below increases by 25%.
+&lt;color=white&gt;Hunter, Heavy Hunter, Anatolia Battle Ship, Commander Ship, Andrea Doria Battleship, Bombardment Ship, Fatih Battleship, Andrea Doria Battleship&lt;/color&gt;.</value>
+  </data>
+  <data name="R8" xml:space="preserve">
+    <value>Rocket Technology</value>
+  </data>
+  <data name="RD8" xml:space="preserve">
+    <value>Rocket Technology increases power of defense and ship units that fires rocket.
+Each technology level, increases %5 power of units in below.
+&lt;color=white&gt;Hunter, Heavy Hunter, Bombardment Ship&lt;/color&gt;.</value>
+  </data>
+  <data name="R9" xml:space="preserve">
+    <value>Laser Technology</value>
+  </data>
+  <data name="RD9" xml:space="preserve">
+    <value>Laser technology increases the power of defense and ship units that fires laser.
+Each technology level, increases %5 power of units below.
+&lt;color=white&gt;Anatolia Battle Ship, Commander Ship, Andrea Doria Battleship, Fatih Battleship&lt;/color&gt;.</value>
+  </data>
+  <data name="R10" xml:space="preserve">
+    <value>Weapon Technology</value>
+  </data>
+  <data name="RD10" xml:space="preserve">
+    <value>Weapon Technology, increases weapon power of all ships and defenses.
+For each level of this technology increases %5 power of all units.</value>
+  </data>
+  <data name="R11" xml:space="preserve">
+    <value>Computer Networks</value>
+  </data>
+  <data name="RD11" xml:space="preserve">
+    <value>Computer Networks manages your fleets that you can do at the same time.
+Each level of this technology increases your maximum fleet number 1.</value>
+  </data>
+  <data name="R12" xml:space="preserve">
+    <value>Atom Technology</value>
+  </data>
+  <data name="RD12" xml:space="preserve">
+    <value>All technologies are based from this technology and this technology is the most important one for your researches.</value>
+  </data>
+  <data name="R13" xml:space="preserve">
+    <value>Fuel Technology</value>
+  </data>
+  <data name="RD13" xml:space="preserve">
+    <value>Battleships were consuming too much fuel when they fly then scientists upgraded Fuel Technology. Now ship fuels reduced.
+Each level of this technology reduces consuming fuel %5.</value>
+  </data>
+  <data name="R14" xml:space="preserve">
+    <value>Gauss Technology</value>
+  </data>
+  <data name="RD14" xml:space="preserve">
+    <value>To destroy enemy ships, scientists evolved gauss technology. This technology is too powerfull so it can destroy a ship with one shoot.
+For each level of this technology increases defense attack power.
+Defense in the below, attack power increased 10% for each level of this technology.</value>
   </data>
 </root>
