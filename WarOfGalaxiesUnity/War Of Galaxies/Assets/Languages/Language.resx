@@ -742,4 +742,16 @@
   <data name="İleti" xml:space="preserve">
     <value></value>
   </data>
+  <data name="PostaDetayı" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="GemiBilgisi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SavunmaBilgisi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="AraştırmaBilgisi" xml:space="preserve">
+    <value></value>
+  </data>
 </root>

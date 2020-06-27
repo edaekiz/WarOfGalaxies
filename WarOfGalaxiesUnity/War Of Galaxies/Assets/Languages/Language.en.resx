@@ -816,4 +816,16 @@ Defense in the below, attack power increased 10% for each level of this technolo
   <data name="İleti" xml:space="preserve">
     <value>Mail Item</value>
   </data>
+  <data name="PostaDetayı" xml:space="preserve">
+    <value>Mail Detail</value>
+  </data>
+  <data name="GemiBilgisi" xml:space="preserve">
+    <value>Ship Info</value>
+  </data>
+  <data name="SavunmaBilgisi" xml:space="preserve">
+    <value>Defense Info</value>
+  </data>
+  <data name="AraştırmaBilgisi" xml:space="preserve">
+    <value>Research Info</value>
+  </data>
 </root>

@@ -4483,6 +4483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a44cb683f9717574ca29c09a5f530934, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PanelNameKeyword: "Ara\u015Ft\u0131rmaBilgisi"
   PanelType: 0
   TransitionSpeed: 8000
   OpenTransition: 2

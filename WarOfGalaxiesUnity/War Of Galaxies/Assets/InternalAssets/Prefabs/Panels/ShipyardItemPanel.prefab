@@ -5335,6 +5335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fdc7de77cfd9c9441a870a9396bcadc4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PanelNameKeyword: GemiBilgisi
   PanelType: 0
   TransitionSpeed: 8000
   OpenTransition: 2

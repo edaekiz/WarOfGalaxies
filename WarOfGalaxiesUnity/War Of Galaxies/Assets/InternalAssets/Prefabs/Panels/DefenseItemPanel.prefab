@@ -5335,6 +5335,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38be2d738ff2cd7438b64d37b94c785d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PanelNameKeyword: SavunmaBilgisi
   PanelType: 0
   TransitionSpeed: 8000
   OpenTransition: 2

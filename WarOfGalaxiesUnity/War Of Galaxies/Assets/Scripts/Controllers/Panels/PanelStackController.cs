@@ -103,7 +103,7 @@ public class PanelStackController : BaseLanguageBehaviour
                 lastItem.gameObject.SetActive(true);
 
                 // Son açık olan panelin ismini basıyoruz.
-                TXT_PanelName.text = LanguageController.LC.GetLanguage(lastItem.PanelNameKeyword);
+                TXT_PanelName.text = base.GetLanguageText(lastItem.PanelNameKeyword);
             }
         }
         catch (System.Exception)

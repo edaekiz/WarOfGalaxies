@@ -816,4 +816,16 @@ Aşağıda yer alan savunma birimlerinin atış gücünü seviye başına %10 ar
   <data name="İleti" xml:space="preserve">
     <value>İleti</value>
   </data>
+  <data name="PostaDetayı" xml:space="preserve">
+    <value>Posta İçeriği</value>
+  </data>
+  <data name="GemiBilgisi" xml:space="preserve">
+    <value>Gemi Bilgisi</value>
+  </data>
+  <data name="SavunmaBilgisi" xml:space="preserve">
+    <value>Savunma Bilgisi</value>
+  </data>
+  <data name="AraştırmaBilgisi" xml:space="preserve">
+    <value>Araştırma Bilgisi</value>
+  </data>
 </root>
