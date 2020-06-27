@@ -1,5 +1,6 @@
 ﻿using Assets.Scripts.ApiModels;
 using Assets.Scripts.Controllers.Base;
+using Assets.Scripts.Models;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -35,8 +36,12 @@ public class ShipyardQueueController : BaseLanguageBehaviour
             // Kuyruk eşyası.
             GameObject go = Instantiate(ShipyardQueueItem, ContentField);
 
+            // Resmi buluyoruz.
+            ShipImageDTO image = ShipyardController.SC.ShipWithImages.Find(x => x.Ship == queue.ShipId);
+
             // Resmi yüklüyoruz.
-            go.transform.Find("ItemImage").GetComponent<Image>().sprite = ShipyardController.SC.ShipWithImages.Find(x => x.Ship == queue.ShipId).ShipImage;
+            if (image != null)
+                go.transform.Find("ItemImage").GetComponent<Image>().sprite = image.ShipImage;
 
             // İsmini basıyoruz.
             go.transform.Find("ItemName").GetComponent<TMP_Text>().text = base.GetLanguageText($"S{(int)queue.ShipId}");

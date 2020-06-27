@@ -792,4 +792,28 @@ Bu teknolojinin her bir seviyesi gemilerin yakıt tüketimini %5 azaltır.</valu
 Bu teknolojinin her bir seviyesi bu teknolojiyi kullanan savunma sistemlerinin atış gücünü arttırır.
 Aşağıda yer alan savunma birimlerinin atış gücünü seviye başına %10 arttırır.</value>
   </data>
+  <data name="TeknolojiAğacı" xml:space="preserve">
+    <value>Teknoloji Ağacı</value>
+  </data>
+  <data name="Binalar" xml:space="preserve">
+    <value>Binalar</value>
+  </data>
+  <data name="RobotFabrikası" xml:space="preserve">
+    <value>Robot Fabrikası</value>
+  </data>
+  <data name="BinaBilgisi" xml:space="preserve">
+    <value>Bina Bilgisi</value>
+  </data>
+  <data name="FiloHareketi" xml:space="preserve">
+    <value>Filo Hareketi</value>
+  </data>
+  <data name="SavaşRaporu" xml:space="preserve">
+    <value>Savaş Raporu</value>
+  </data>
+  <data name="CasuslukRaporu" xml:space="preserve">
+    <value>Casusluk Raporu</value>
+  </data>
+  <data name="İleti" xml:space="preserve">
+    <value>İleti</value>
+  </data>
 </root>

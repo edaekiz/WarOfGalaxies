@@ -718,4 +718,28 @@
   <data name="RD14" xml:space="preserve">
     <value></value>
   </data>
+  <data name="TeknolojiAğacı" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="Binalar" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="RobotFabrikası" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="BinaBilgisi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="FiloHareketi" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="SavaşRaporu" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="CasuslukRaporu" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="İleti" xml:space="preserve">
+    <value></value>
+  </data>
 </root>

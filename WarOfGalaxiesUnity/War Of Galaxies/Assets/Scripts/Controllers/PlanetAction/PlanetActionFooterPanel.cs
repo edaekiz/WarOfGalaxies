@@ -132,7 +132,7 @@ public class PlanetActionFooterPanel : BasePanelController
         ShipDataDTO shipInfo = DataController.DC.GetShip(Ships.GeriDönüşümcü);
 
         // Toplam gidiyor olan gemi miktarı
-        int goingShipQuantity = FleetController.FC.Fleets.Where(x => !x.IsReturnFleet && x.DestinationCordinate == CordinateExtends.ToCordinateString(CurrentShownCordinate)).Select(x =>
+        int goingShipQuantity = FleetController.FC.Fleets.Where(x => !x.IsReturnFleet && x.FleetActionTypeId == FleetTypes.Sök && x.DestinationCordinate == CordinateExtends.ToCordinateString(CurrentShownCordinate)).Select(x =>
         {
             List<Tuple<Ships, int>> fleet = FleetExtends.FleetDataToShipData(x.FleetData);
             Tuple<Ships, int> garbageCollector = fleet.Find(y => y.Item1 == Ships.GeriDönüşümcü);

@@ -8,15 +8,6 @@ using UnityEngine;
 
 public class ResourceController : BaseLanguageBehaviour
 {
-    public static ResourceController RC { get; set; }
-
-    private void Awake()
-    {
-        if (RC == null)
-            RC = this;
-        else
-            Destroy(gameObject);
-    }
 
     [Header("Kaynak kullanıldığında yada alındığında ne kadar hızlı animasyon yapılacak.")]
     [Range(1, 20)]

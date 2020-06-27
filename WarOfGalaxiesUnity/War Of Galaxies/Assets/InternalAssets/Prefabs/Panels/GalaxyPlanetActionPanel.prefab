@@ -5972,6 +5972,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 25554bd7ce708884db858d420267e107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PanelNameKeyword: FiloHareketi
   PanelType: 0
   TransitionSpeed: 8000
   OpenTransition: 2
@@ -10751,7 +10752,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 210, y: 0}
+  m_AnchoredPosition: {x: 210, y: -37.999992}
   m_SizeDelta: {x: 1100, y: 750}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8999363470080303657
@@ -10917,7 +10918,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -550, y: -6}
+  m_AnchoredPosition: {x: -550, y: -44}
   m_SizeDelta: {x: 400, y: 750}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8999363470151241320

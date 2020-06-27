@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using Assets.Scripts.Controllers.Base;
+using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PanelStackController : MonoBehaviour
+public class PanelStackController : BaseLanguageBehaviour
 {
     public static PanelStackController PSC { get; set; }
 
@@ -17,6 +19,12 @@ public class PanelStackController : MonoBehaviour
 
     [Header("Stackden çıkar.")]
     public Button BTN_ExitButton;
+
+    [Header("Kaynaklar ve Panel ismi burada yer alacak.")]
+    public GameObject ResourcesCanvas;
+
+    [Header("Panelin ismini buraya basacağız.")]
+    public TMP_Text TXT_PanelName;
 
     [Header("İki view da kapatılacağında panelleri görüntülemek için kameraya ihtiyacımız olacak.")]
     public Camera PanelCamera;
@@ -49,6 +57,9 @@ public class PanelStackController : MonoBehaviour
                 // Eğer var ise kapatıyoruz.
                 lastItem.gameObject.SetActive(false);
             }
+
+            // Açılan panelin ismini basıyoruz.
+            TXT_PanelName.text = base.GetLanguageText(basePanelController.PanelNameKeyword);
 
             // Ve üstüne açılan paneli ekliyoruz.
             OpenPanels.Push(basePanelController);
@@ -87,7 +98,13 @@ public class PanelStackController : MonoBehaviour
 
             // Tabiki kontrol ediyoruz var mı diye?
             if (lastItem != null)
+            {
+                // Paneli açıyoruz.
                 lastItem.gameObject.SetActive(true);
+
+                // Son açık olan panelin ismini basıyoruz.
+                TXT_PanelName.text = LanguageController.LC.GetLanguage(lastItem.PanelNameKeyword);
+            }
         }
         catch (System.Exception)
         {
@@ -129,12 +146,8 @@ public class PanelStackController : MonoBehaviour
     {
         if (OpenPanels.Count == 0)
         {
-            if (BTN_BackButton.gameObject.activeSelf)
-                BTN_BackButton.gameObject.SetActive(false);
-            if (BTN_ExitButton.gameObject.activeSelf)
-                BTN_ExitButton.gameObject.SetActive(false);
-
-            // Aşağıdaki kodların amacı arkaplanda oyunun kasmasını önlemek.
+            // Panel detaylarını kapatyoruz.
+            CloseStackPanelItems();
 
             // Eğer galaksi görünümünde ve galaksi açık ise kapatıyoruz. Arkada çalışmasına gerek yok.
             if (GlobalGalaxyController.GGC.IsInGalaxyView && !GlobalGalaxyController.GGC.GalaxyView.activeSelf)
@@ -143,28 +156,46 @@ public class PanelStackController : MonoBehaviour
             // Eğer gezegen görünümü aktifse ve planet görünümü hala açık ise kapatıyoruz.
             if (!GlobalGalaxyController.GGC.IsInGalaxyView && !GlobalGalaxyController.GGC.PlanetView.activeSelf)
                 GlobalGalaxyController.GGC.PlanetView.SetActive(true);
-
-            PanelCamera.gameObject.SetActive(false);
         }
         else
         {
-            if (!BTN_BackButton.gameObject.activeSelf)
-                BTN_BackButton.gameObject.SetActive(true);
-            if (!BTN_ExitButton.gameObject.activeSelf)
-                BTN_ExitButton.gameObject.SetActive(true);
+            // Panel detaylarını açıyoruz. Geri butonu felan.
+            OpenStackPanelItems();
 
             // Aşağıdaki kodların amacı arkaplanda oyunun kasmasını önlemek.
 
             // Eğer galaksi görünümünde ve galaksi açık ise kapatıyoruz. Arkada çalışmasına gerek yok.
             if (GlobalGalaxyController.GGC.IsInGalaxyView && GlobalGalaxyController.GGC.GalaxyView.activeSelf)
                 GlobalGalaxyController.GGC.GalaxyView.SetActive(false);
-            
+
             // Eğer gezegen görünümü aktifse ve planet görünümü hala açık ise kapatıyoruz.
             if (!GlobalGalaxyController.GGC.IsInGalaxyView && GlobalGalaxyController.GGC.PlanetView.activeSelf)
                 GlobalGalaxyController.GGC.PlanetView.SetActive(false);
-
-            PanelCamera.gameObject.SetActive(true);
         }
+    }
+
+    public void CloseStackPanelItems()
+    {
+        if (BTN_BackButton.gameObject.activeSelf)
+            BTN_BackButton.gameObject.SetActive(false);
+        if (BTN_ExitButton.gameObject.activeSelf)
+            BTN_ExitButton.gameObject.SetActive(false);
+        if (ResourcesCanvas.activeSelf)
+            ResourcesCanvas.SetActive(false);
+        if (PanelCamera.gameObject.activeSelf)
+            PanelCamera.gameObject.SetActive(false);
+    }
+
+    public void OpenStackPanelItems()
+    {
+        if (!BTN_BackButton.gameObject.activeSelf)
+            BTN_BackButton.gameObject.SetActive(true);
+        if (!BTN_ExitButton.gameObject.activeSelf)
+            BTN_ExitButton.gameObject.SetActive(true);
+        if (!ResourcesCanvas.activeSelf)
+            ResourcesCanvas.SetActive(true);
+        if (!PanelCamera.gameObject.activeSelf)
+            PanelCamera.gameObject.SetActive(true);
     }
 
     public BasePanelController GetCurrentPanel()

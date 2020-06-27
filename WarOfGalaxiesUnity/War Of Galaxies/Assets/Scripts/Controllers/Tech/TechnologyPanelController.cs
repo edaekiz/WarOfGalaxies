@@ -25,7 +25,7 @@ public class TechnologyPanelController : BasePanelController
     public GameObject TechnologyItem;
 
     [Header("Teknoloji itemlerini buraya basacağız.")]
-    public ScrollRect TechnologyContent;
+    public Transform TechnologyContent;
 
     [Header("Keşfedilmemiş ise bu renge boyuyacağız ikonu.")]
     public Color32 NotInventedItemColor;
@@ -69,7 +69,7 @@ public class TechnologyPanelController : BasePanelController
 
     public void ClearOldData()
     {
-        foreach (Transform child in TechnologyContent.content)
+        foreach (Transform child in TechnologyContent)
             Destroy(child.gameObject);
     }
 
@@ -78,7 +78,7 @@ public class TechnologyPanelController : BasePanelController
         foreach (ShipDataDTO ship in DataController.DC.SystemData.Ships)
         {
             // Teknolojiyi ekrana basıyoruz.
-            GameObject techItem = Instantiate(TechnologyItem, TechnologyContent.content);
+            GameObject techItem = Instantiate(TechnologyItem, TechnologyContent);
 
             // Butonu buluyoruz.
             Button button = techItem.GetComponent<Button>();
@@ -109,7 +109,7 @@ public class TechnologyPanelController : BasePanelController
         foreach (DefenseDataDTO defense in DataController.DC.SystemData.Defenses)
         {
             // Teknolojiyi ekrana basıyoruz.
-            GameObject techItem = Instantiate(TechnologyItem, TechnologyContent.content);
+            GameObject techItem = Instantiate(TechnologyItem, TechnologyContent);
 
             // Butonu buluyoruz.
             Button button = techItem.GetComponent<Button>();
@@ -140,7 +140,7 @@ public class TechnologyPanelController : BasePanelController
         foreach (BuildingDataDTO building in DataController.DC.SystemData.Buildings)
         {
             // Teknolojiyi ekrana basıyoruz.
-            GameObject techItem = Instantiate(TechnologyItem, TechnologyContent.content);
+            GameObject techItem = Instantiate(TechnologyItem, TechnologyContent);
 
             // Butonu buluyoruz.
             Button button = techItem.GetComponent<Button>();
@@ -171,7 +171,7 @@ public class TechnologyPanelController : BasePanelController
         foreach (ResearchDataDTO researches in DataController.DC.SystemData.Researches)
         {
             // Teknolojiyi ekrana basıyoruz.
-            GameObject techItem = Instantiate(TechnologyItem, TechnologyContent.content);
+            GameObject techItem = Instantiate(TechnologyItem, TechnologyContent);
 
             // Buton componentini alıyoruz.
             Button button = techItem.GetComponent<Button>();

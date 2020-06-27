@@ -11,6 +11,9 @@ public class BasePanelController : BaseLanguageBehaviour
     [Serializable]
     public enum Transitions { Bottom, Left, Right, Top, Shrink }
 
+    [Header("Panelin ismi, dil dosyasındaki keywordü.")]
+    public string PanelNameKeyword;
+
     [HideInInspector]
     [Header("Panel türü.")]
     public PanelTypes PanelType;

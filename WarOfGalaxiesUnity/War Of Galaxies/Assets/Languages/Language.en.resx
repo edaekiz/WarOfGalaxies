@@ -792,4 +792,28 @@ Each level of this technology reduces consuming fuel %5.</value>
 For each level of this technology increases defense attack power.
 Defense in the below, attack power increased 10% for each level of this technology.</value>
   </data>
+  <data name="TeknolojiAğacı" xml:space="preserve">
+    <value>Technology Tree</value>
+  </data>
+  <data name="Binalar" xml:space="preserve">
+    <value>Buildings</value>
+  </data>
+  <data name="RobotFabrikası" xml:space="preserve">
+    <value>Robot Factory</value>
+  </data>
+  <data name="BinaBilgisi" xml:space="preserve">
+    <value>Building Info</value>
+  </data>
+  <data name="FiloHareketi" xml:space="preserve">
+    <value>Fleet Action</value>
+  </data>
+  <data name="SavaşRaporu" xml:space="preserve">
+    <value>Battle Report</value>
+  </data>
+  <data name="CasuslukRaporu" xml:space="preserve">
+    <value>Spy Report</value>
+  </data>
+  <data name="İleti" xml:space="preserve">
+    <value>Mail Item</value>
+  </data>
 </root>
