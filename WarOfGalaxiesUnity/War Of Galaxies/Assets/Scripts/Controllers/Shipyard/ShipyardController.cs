@@ -107,9 +107,14 @@ public class ShipyardController : MonoBehaviour
                         nextProg.LastVerifyDate = currentDate;
                 }
 
+                // Paneli yeniliyoruz.
+                if (ShipyardPanelController.SPC != null)
+                    ShipyardPanelController.SPC.LoadAllShips();
+
                 // Kuyruğu yeniliyoruz.
                 if (ShipyardQueueController.SQC != null)
                     ShipyardQueueController.SQC.RefreshShipyardQueue();
+
             }
         }
 
@@ -127,7 +132,8 @@ public class ShipyardController : MonoBehaviour
         {
             if (!ShipyardProgressIcon.activeSelf)
                 ShipyardProgressIcon.SetActive(true);
-        }else
+        }
+        else
         {
             if (ShipyardProgressIcon.activeSelf)
                 ShipyardProgressIcon.SetActive(false);

@@ -12,9 +12,6 @@ public class ShipyardPanelController : BasePanelController
     /// </summary>
     public static ShipyardPanelController SPC { get; set; }
 
-    [Header("Tersane gemilerini burada tutacağız.")]
-    public List<ShipyardItemController> _shipyardItems = new List<ShipyardItemController>();
-
     [Header("Basılacak olan gemiler.")]
     public GameObject ShipyardItem;
 
@@ -46,9 +43,6 @@ public class ShipyardPanelController : BasePanelController
         foreach (Transform child in ShipyardItemContent)
             Destroy(child.gameObject);
 
-        // Öncekileri temizliyoruz.
-        _shipyardItems.Clear();
-
         // Bütün gemileri teker teker basıyoruz.
         for (int ii = 0; ii < DataController.DC.SystemData.Ships.Count; ii++)
         {
@@ -63,9 +57,6 @@ public class ShipyardPanelController : BasePanelController
 
             // Detayları yükle.
             sic.LoadShipDetails((Ships)ship.ShipId);
-
-            // Listeye ekle
-            _shipyardItems.Add(sic);
         }
 
         // Hepsini kurduktan sonra kuyruğu yeniliyoruz.

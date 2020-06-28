@@ -257,7 +257,7 @@ public class PlanetActionController : BasePanelController
         if (CurrentFleetType == FleetTypes.Casusluk)
         {
             // Başka bir gemi varsa filo da ozaman uyarı veriyoruz.
-            bool isOtherShipExists = ShipsToSend.Any(x => x.UserPlanetShip.ShipId != Ships.CasusSondası);
+            bool isOtherShipExists = ShipsToSend.Any(x => x.UserPlanetShip.ShipId != Ships.CasusDronu);
 
             // Eğer başka gemi var ise hata dönüyoruz.
             if (isOtherShipExists)

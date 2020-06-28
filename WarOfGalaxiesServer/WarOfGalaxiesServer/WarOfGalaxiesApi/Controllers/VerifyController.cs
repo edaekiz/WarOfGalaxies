@@ -611,14 +611,14 @@ namespace WarOfGalaxiesApi.Controllers
             List<Tuple<Ships, int>> ships = FleetController.FleetDataToShipData(userFleet.FleetData);
 
             // İçerisinden geri dönüşümcüyü buluyoruz.
-            Tuple<Ships, int> garbageShip = ships.Find(x => x.Item1 == Ships.GeriDönüşümcü);
+            Tuple<Ships, int> garbageShip = ships.Find(x => x.Item1 == Ships.EnkazToplamaGemisi);
 
             // Gegri dönüşümcülerin toplayabileceği miktar.
             double garbageSum = 0;
 
             // Eğer geri dönüşümcü var ise miktar ile çarpıp taşıma kapasitesini hesaplıyoruz.
             if (garbageShip != null)
-                garbageSum = controller.StaticValues.GetShip(Ships.GeriDönüşümcü).CargoCapacity * garbageShip.Item2;
+                garbageSum = controller.StaticValues.GetShip(Ships.EnkazToplamaGemisi).CargoCapacity * garbageShip.Item2;
 
             // Alınacak olan kaynakları alıyoruz.
             double ownedMetal = cordinateInfo.Metal;

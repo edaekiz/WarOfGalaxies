@@ -148,7 +148,7 @@ namespace WarOfGalaxiesApi.Controllers
                 case FleetTypes.Casusluk:
                     {
                         // Casus sondasını arıyoruz.
-                        Tuple<Ships, int> spySolar = shipsInData.Find(x => x.Item1 == Ships.CasusSondası);
+                        Tuple<Ships, int> spySolar = shipsInData.Find(x => x.Item1 == Ships.CasusDronu);
 
                         // Eğer yok ise ozaman hata dönüyoruz. Çünkü casusluk da en az bir gemi olmalı.
                         if (spySolar == null || spySolar.Item2 <= 0)
@@ -164,7 +164,7 @@ namespace WarOfGalaxiesApi.Controllers
                 case FleetTypes.Sök:
 
                     // Sok hareketi için geri dönüşümcü olmak zorunda.
-                    Tuple<Ships, int> garbageCollector = shipsInData.Find(x => x.Item1 == Ships.GeriDönüşümcü);
+                    Tuple<Ships, int> garbageCollector = shipsInData.Find(x => x.Item1 == Ships.EnkazToplamaGemisi);
 
                     // Eğer yok ise ozaman hata dönüyoruz. Çünkü casusluk da en az bir gemi olmalı.
                     if (garbageCollector == null || garbageCollector.Item2 <= 0)

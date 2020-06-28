@@ -129,13 +129,13 @@ public class PlanetActionFooterPanel : BasePanelController
         TXT_GarbageBoronQuantity.text = ResourceExtends.ConvertToDottedResource(this.CurrentShownPlanet.GarbageBoron);
 
         // Çöp gemisi bilgisi.
-        ShipDataDTO shipInfo = DataController.DC.GetShip(Ships.GeriDönüşümcü);
+        ShipDataDTO shipInfo = DataController.DC.GetShip(Ships.EnkazToplamaGemisi);
 
         // Toplam gidiyor olan gemi miktarı
         int goingShipQuantity = FleetController.FC.Fleets.Where(x => !x.IsReturnFleet && x.FleetActionTypeId == FleetTypes.Sök && x.DestinationCordinate == CordinateExtends.ToCordinateString(CurrentShownCordinate)).Select(x =>
         {
             List<Tuple<Ships, int>> fleet = FleetExtends.FleetDataToShipData(x.FleetData);
-            Tuple<Ships, int> garbageCollector = fleet.Find(y => y.Item1 == Ships.GeriDönüşümcü);
+            Tuple<Ships, int> garbageCollector = fleet.Find(y => y.Item1 == Ships.EnkazToplamaGemisi);
             if (garbageCollector != null)
                 return garbageCollector.Item2;
             else
@@ -146,7 +146,7 @@ public class PlanetActionFooterPanel : BasePanelController
         int requiredGarbageShipQuantity = Mathf.CeilToInt((float)(CurrentShownPlanet.GarbageMetal + CurrentShownPlanet.GarbageCrystal + CurrentShownPlanet.GarbageBoron) / shipInfo.CargoCapacity);
 
         // Gezegendeki çöp toplayıcıları buluyoruz.
-        UserPlanetShipDTO userPlanetGarbage = LoginController.LC.CurrentUser.UserPlanetShips.Find(x => x.ShipId == Ships.GeriDönüşümcü && x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
+        UserPlanetShipDTO userPlanetGarbage = LoginController.LC.CurrentUser.UserPlanetShips.Find(x => x.ShipId == Ships.EnkazToplamaGemisi && x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
 
         // Çöp toplama aracı sayısı.
         int garbageCollectorCount = 0;
@@ -221,7 +221,7 @@ public class PlanetActionFooterPanel : BasePanelController
         int spyCount = int.Parse(TXT_FastSpyQuantity.text);
 
         // Gönderilecek olan gemiler. Sadece casusluk.
-        List<Tuple<Ships, int>> spyShip = new List<Tuple<Ships, int>> { new Tuple<Ships, int>(Ships.CasusSondası, spyCount) };
+        List<Tuple<Ships, int>> spyShip = new List<Tuple<Ships, int>> { new Tuple<Ships, int>(Ships.CasusDronu, spyCount) };
 
         // Gönderilecek gemi datasını oluşturuyoruz.
         string shipData = FleetExtends.ShipDataToStringData(spyShip);
@@ -269,19 +269,19 @@ public class PlanetActionFooterPanel : BasePanelController
     public void FastHarvestGarbage()
     {
         // Çöp gemisi bilgisi.
-        ShipDataDTO shipInfo = DataController.DC.GetShip(Ships.GeriDönüşümcü);
+        ShipDataDTO shipInfo = DataController.DC.GetShip(Ships.EnkazToplamaGemisi);
 
         // Gereken çöp aracı miktarı.
         int requiredGarbageShipQuantity = Mathf.CeilToInt((float)(CurrentShownPlanet.GarbageMetal + CurrentShownPlanet.GarbageCrystal + CurrentShownPlanet.GarbageBoron) / shipInfo.CargoCapacity);
 
         // Gezegendeki çöp toplayıcıları buluyoruz.
-        UserPlanetShipDTO userPlanetGarbage = LoginController.LC.CurrentUser.UserPlanetShips.Find(x => x.ShipId == Ships.GeriDönüşümcü && x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
+        UserPlanetShipDTO userPlanetGarbage = LoginController.LC.CurrentUser.UserPlanetShips.Find(x => x.ShipId == Ships.EnkazToplamaGemisi && x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId);
 
         // Toplam gidiyor olan gemi miktarı
         int goingShipQuantity = FleetController.FC.Fleets.Where(x => x.DestinationCordinate == CordinateExtends.ToCordinateString(CurrentShownCordinate)).Select(x =>
         {
             List<Tuple<Ships, int>> fleet = FleetExtends.FleetDataToShipData(x.FleetData);
-            Tuple<Ships, int> garbageCollector = fleet.Find(y => y.Item1 == Ships.GeriDönüşümcü);
+            Tuple<Ships, int> garbageCollector = fleet.Find(y => y.Item1 == Ships.EnkazToplamaGemisi);
             if (garbageCollector != null)
                 return garbageCollector.Item2;
             else
@@ -297,7 +297,7 @@ public class PlanetActionFooterPanel : BasePanelController
 
         // Kullanıcının sahip olduğu geri dönüşümcü miktarı.
         int userShipQuantity = LoginController.LC.CurrentUser.UserPlanetShips
-            .Where(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.ShipId == Ships.GeriDönüşümcü)
+            .Where(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.ShipId == Ships.EnkazToplamaGemisi)
             .Select(x => x.ShipCount)
             .DefaultIfEmpty(0)
             .Sum();
@@ -307,7 +307,7 @@ public class PlanetActionFooterPanel : BasePanelController
             sendShipQuantity = userShipQuantity;
 
         // Gönderilecek olan geri dönüşümcüler.
-        List<Tuple<Ships, int>> shipsToSend = new List<Tuple<Ships, int>> { new Tuple<Ships, int>(Ships.GeriDönüşümcü, sendShipQuantity) };
+        List<Tuple<Ships, int>> shipsToSend = new List<Tuple<Ships, int>> { new Tuple<Ships, int>(Ships.EnkazToplamaGemisi, sendShipQuantity) };
 
         // Datayı alıyoruz.
         string shipData = FleetExtends.ShipDataToStringData(shipsToSend);
@@ -379,7 +379,7 @@ public class PlanetActionFooterPanel : BasePanelController
         FastSpyButton.gameObject.SetActive(true);
 
         // Gemi miktarını basıyoruz.
-        int spyShipCount = LoginController.LC.CurrentUser.UserPlanetShips.Count(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.ShipId == Ships.CasusSondası);
+        int spyShipCount = LoginController.LC.CurrentUser.UserPlanetShips.Count(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.ShipId == Ships.CasusDronu);
 
         // Gönderilebilir gemi miktarı
         TXT_FastSpyQuantity.text = spyShipCount.ToString();

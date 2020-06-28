@@ -2,17 +2,17 @@
 {
     public enum Ships
     {
-        HafifAvci = 1,
-        KüçükNakliye = 2,
-        CasusSondası = 3,
-        GeriDönüşümcü = 4,
+        Avcı = 1,
+        KüçükNakliyeGemisi = 2,
+        CasusDronu = 3,
+        EnkazToplamaGemisi = 4,
         AğırAvcı = 5,
-        Kruvazör = 6,
+        AnadoluSavaşGemisi = 6,
         KomutaGemisi = 7,
-        Firkateyn = 8,
-        BombardımanGemisi = 9,
-        Muhrip = 10,
-        BüyükNakliye = 11,
+        TurgutReisSavaşGemisi = 8,
+        MuavenetBombardımanGemisi = 9,
+        FatihSavaşGemisi = 10,
+        BüyükNakliyeGemisi = 11,
         KoloniGemisi = 12
     }
 }
