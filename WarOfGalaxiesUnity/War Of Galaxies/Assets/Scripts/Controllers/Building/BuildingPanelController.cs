@@ -28,9 +28,6 @@ public class BuildingPanelController : BasePanelController
     [Header("Binanın yükseltme süresini buraya basacağız.")]
     public TMP_Text BuildingUpgradeTime;
 
-    [Header("Yükseltme sırasındaki geri sayım.")]
-    public TMP_Text BuildingCountdown;
-
     [Header("Bir uyarı vereceğimiz de burayı kullanacağız.")]
     public TMP_Text TXT_Alert;
 
@@ -72,12 +69,6 @@ public class BuildingPanelController : BasePanelController
         // Yükseltilen bina aktif bina ise değer dolu olacak.
         UserPlanetBuildingUpgDTO upgrade = LoginController.LC.CurrentUser.UserPlanetsBuildingsUpgs.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == CurrentBuilding);
 
-        // Eğer seçili olan bina yükseltiliyor ise ekrana geri sayımı basacağız.
-        if (upgrade == null)
-            BuildingCountdown.text = string.Empty;
-        else
-            BuildingCountdown.text = TimeExtends.GetCountdownText((upgrade.EndDate - DateTime.UtcNow));
-
         // Kullanıcının binassı.
         UserPlanetBuildingDTO userBuilding = LoginController.LC.CurrentUser.UserPlanetsBuildings.Find(x => x.UserPlanetId == GlobalPlanetController.GPC.CurrentPlanet.UserPlanetId && x.BuildingId == CurrentBuilding);
 
@@ -96,8 +87,11 @@ public class BuildingPanelController : BasePanelController
         // Yükseltme süresi.
         double upgradeTime = DataController.DC.CalculateBuildingUpgradeTime(CurrentBuilding, nextLevel, robotBuilding == null ? 0 : robotBuilding.BuildingLevel);
 
-        // Ekrana basıyoruz.
-        BuildingUpgradeTime.text = $"<color=#FF8B00>{base.GetLanguageText("YapımSüresi")}:</color>{Environment.NewLine}{TimeExtends.GetCountdownText(TimeSpan.FromSeconds(upgradeTime))}";
+        // Eğer seçili olan bina yükseltiliyor ise ekrana geri sayımı basacağız.
+        if (upgrade == null)
+            BuildingUpgradeTime.text = $"<color=#FF8B00>{base.GetLanguageText("YapımSüresi")}:</color>{Environment.NewLine}{TimeExtends.GetCountdownText(TimeSpan.FromSeconds(upgradeTime))}";
+        else
+            BuildingUpgradeTime.text = $"<color=#FF8B00>{base.GetLanguageText("YapımSüresi")}:</color>{Environment.NewLine}{TimeExtends.GetCountdownText((upgrade.EndDate - DateTime.UtcNow))}";
 
         // Kaynak kontrolü ve koşulları sağlıyor mu kontorlü
         ResourcesDTO resources = DataController.DC.CalculateCostBuilding(CurrentBuilding, nextLevel);

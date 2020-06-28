@@ -65,9 +65,6 @@ public class GlobalPanelController : MonoBehaviour
         // Paneli açıyoruz.
         GameObject panelObject = Instantiate(panelData.Prefab, Vector3.zero, Quaternion.identity);
 
-        // Panelin order değerini güncelliyoruz.
-        panelObject.GetComponent<Canvas>().sortingOrder = LastOrderIndex;
-
         // Base paneli var mı kontrol ediyoruz.
         BasePanelController basePanel = panelObject.GetComponent<BasePanelController>();
 
@@ -83,6 +80,10 @@ public class GlobalPanelController : MonoBehaviour
             // Boş dönüyoruz.
             return null;
         }
+
+        // Panelin order değerini güncelliyoruz.
+        if (basePanel.IsStackPanel)
+            panelObject.GetComponent<Canvas>().sortingOrder = LastOrderIndex;
 
         // Panel bilgisini veriyoruz.
         basePanel.PanelType = panelType;

@@ -216,7 +216,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 40
   m_TargetDisplay: 0
 --- !u!114 &6371090977824068587
 MonoBehaviour:
@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9b9e551003242b48a721505a2ad20c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  PanelNameKeyword: 
   PanelType: 0
   TransitionSpeed: 4000
   OpenTransition: 2

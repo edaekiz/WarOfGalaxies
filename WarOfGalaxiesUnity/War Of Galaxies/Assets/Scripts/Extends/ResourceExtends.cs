@@ -31,5 +31,12 @@ namespace Assets.Scripts.Extends
                 return ((long)resource).ToString("#,##", new NumberFormatInfo { NumberDecimalSeparator = ",", NumberGroupSeparator = "." });
         }
 
+        public static string ConvertFromDottedResource(string value)
+        {
+            while (value.Contains('.'))
+                value = value.Remove(value.IndexOf('.'), 1);
+            return value;
+        }
+
     }
 }

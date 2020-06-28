@@ -113,9 +113,9 @@ public class DefenseController : MonoBehaviour
                         nextProg.LastVerifyDate = currentDate;
                 }
 
-                // Kuyruğu yeniliyoruz.
-                if (DefenseQueueController.DQC != null)
-                    DefenseQueueController.DQC.RefreshDefenseQueue();
+                // Paneli yeniliyoruz.
+                if (DefensePanelController.DPC!= null)
+                    DefensePanelController.DPC.LoadAllDefenses();
             }
         }
 

@@ -465,7 +465,9 @@ public class PlanetActionController : BasePanelController
 
         #region Gönderilecek metali kontrol ediyoruz.
 
-        double.TryParse(INP_CarryMetal.text, out double metal);
+        string metalString = ResourceExtends.ConvertFromDottedResource(INP_CarryMetal.text);
+
+        double.TryParse(metalString, out double metal);
 
         if (metal > GlobalPlanetController.GPC.CurrentPlanet.Metal)
             metal = GlobalPlanetController.GPC.CurrentPlanet.Metal;
@@ -477,7 +479,9 @@ public class PlanetActionController : BasePanelController
 
         #region Gönderilecek kristali kontrol ediyoruz.
 
-        double.TryParse(INP_CarryCrystal.text, out double crystal);
+        string crystalString = ResourceExtends.ConvertFromDottedResource(INP_CarryCrystal.text);
+
+        double.TryParse(crystalString, out double crystal);
 
         if (crystal > GlobalPlanetController.GPC.CurrentPlanet.Crystal)
             crystal = GlobalPlanetController.GPC.CurrentPlanet.Crystal;
@@ -489,8 +493,10 @@ public class PlanetActionController : BasePanelController
 
         #region Gönderilecek boronu kontrol ediyoruz.
 
+        string boronString = ResourceExtends.ConvertFromDottedResource(INP_CarryBoron.text);
+
         // Taşınacak olan bor miktarı.
-        double.TryParse(INP_CarryBoron.text, out double boron);
+        double.TryParse(boronString, out double boron);
 
         if (boron > GlobalPlanetController.GPC.CurrentPlanet.Boron)
             boron = GlobalPlanetController.GPC.CurrentPlanet.Boron;

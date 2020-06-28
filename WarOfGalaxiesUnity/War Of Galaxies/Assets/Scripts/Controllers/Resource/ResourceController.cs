@@ -33,17 +33,35 @@ public class ResourceController : BaseLanguageBehaviour
 
     IEnumerator Start()
     {
+        // Eğer birden fazla var ise orijinal değildir.
+        if (FindObjectsOfType<ResourceController>().Length > 1)
+        {
+            // Panel içerisindeki resource controller açıldığında tekrar kaynak tüketme animasyonu yapmıyoruz.
+            metalAnimQuantity = (long)GlobalPlanetController.GPC.CurrentPlanet.Metal;
+            MetalQuantityText.text = ResourceExtends.ConvertToDottedResource(metalAnimQuantity);
+
+            // Panel içerisindeki resource controller açıldığında tekrar kaynak tüketme animasyonu yapmıyoruz.
+            crystalAnimQuantity = (long)GlobalPlanetController.GPC.CurrentPlanet.Crystal;
+            CrystalQuantityText.text = ResourceExtends.ConvertToDottedResource(crystalAnimQuantity);
+
+            // Panel içerisindeki resource controller açıldığında tekrar kaynak tüketme animasyonu yapmıyoruz.
+            boronAnimQuantity = (long)GlobalPlanetController.GPC.CurrentPlanet.Boron;
+            BoronQuantityText.text = ResourceExtends.ConvertToDottedResource(boronAnimQuantity);
+        }
+
+        // Oyun yüklenene kadar bekliyoruz.
         yield return new WaitUntil(() => LoadingController.LC.IsGameLoaded);
+
         // Kullanıcının gezegenleri yüklenene kadar bekliyoruz.
         yield return new WaitUntil(() => GlobalPlanetController.GPC.CurrentPlanet != null);
 
         // Hesaplamalara başlıyoruz.
         StartCoroutine(UpdateResources());
-
     }
 
     private void Update()
     {
+
         if (!LoadingController.LC.IsGameLoaded)
             return;
 
@@ -74,7 +92,6 @@ public class ResourceController : BaseLanguageBehaviour
 
     public IEnumerator UpdateResources()
     {
-
         // Kaynakları tekrar hesaplıyoruz.
         LoginController.LC.CurrentUser.UserPlanets.ForEach(e => e.VerifyResources());
 
@@ -298,6 +315,8 @@ public class ResourceController : BaseLanguageBehaviour
 
     #endregion
 
+    #region Detayları yeniliyoruz.
+
     public void RefreshMetalDetails()
     {
         // Eğer panel açık değil ise geri dön.
@@ -398,4 +417,5 @@ public class ResourceController : BaseLanguageBehaviour
         #endregion
     }
 
+    #endregion
 }

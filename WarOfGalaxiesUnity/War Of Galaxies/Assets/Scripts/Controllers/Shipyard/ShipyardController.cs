@@ -111,10 +111,6 @@ public class ShipyardController : MonoBehaviour
                 if (ShipyardPanelController.SPC != null)
                     ShipyardPanelController.SPC.LoadAllShips();
 
-                // Kuyruğu yeniliyoruz.
-                if (ShipyardQueueController.SQC != null)
-                    ShipyardQueueController.SQC.RefreshShipyardQueue();
-
             }
         }
 
